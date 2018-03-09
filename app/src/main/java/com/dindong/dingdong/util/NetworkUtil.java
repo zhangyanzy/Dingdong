@@ -9,7 +9,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 
 /**
- * Created by dzq on 16/7/12.
+ * Created by wangcong on 2018/3/9.
  */
 public class NetworkUtil {
 

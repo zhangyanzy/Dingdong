@@ -1,7 +1,7 @@
 package com.dindong.dingdong.network.bean;
 
 /**
- * Created by NeilSpears on 2016/10/20.
+ * Created by wangcong on 2018/3/9.
  */
 
 public class SumResponse<S, T> extends Response<T> {

@@ -15,7 +15,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 /**
- * Created by dzq on 2016/10/18.
+ * Created by wangcong on 2018/3/9.
  */
 
 public abstract class SumSubscriber<S, T> extends rx.Subscriber<SumResponse<S, T>> {

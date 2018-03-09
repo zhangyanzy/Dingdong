@@ -8,9 +8,7 @@ import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
 
 /**
- * 页面描述：
- * <p>
- * Created by ditclear on 16/10/15.
+ * Created by wangcong on 2018/3/9.
  */
 public class DialogUtil {
 

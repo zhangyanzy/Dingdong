@@ -16,9 +16,7 @@ import java.net.SocketTimeoutException;
 
 
 /**
- * Created by wangcong on 2017/3/6.
- * <p>
- * </>
+ * Created by wangcong on 2018/3/9.
  */
 
 public abstract class HttpSubscriber<T> extends rx.Subscriber<Response<T>> {

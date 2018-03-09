@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--身份切换页 IdentitySwitchActivity-->
+    <string name="identity_btn_student">我要找课</string>
+    <string name="identity_btn_teacher">我是老师</string>
+    <string name="identity_btn_institution">我是机构</string>
+</resources>

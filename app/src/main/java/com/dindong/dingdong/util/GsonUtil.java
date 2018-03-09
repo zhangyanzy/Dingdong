@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * Created by dzq on 2016/10/19.
+ * Created by wangcong on 2018/3/9.
  */
 
 public class GsonUtil {

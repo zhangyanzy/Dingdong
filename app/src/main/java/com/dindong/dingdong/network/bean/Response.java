@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by dzq on 2016/10/18.
+ * Created by wangcong on 2018/3/9.
  */
 
 public class Response<T> {

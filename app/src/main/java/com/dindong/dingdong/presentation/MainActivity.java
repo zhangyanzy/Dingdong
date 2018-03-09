@@ -1,9 +1,11 @@
 package com.dindong.dingdong.presentation;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.dindong.dingdong.R;
+import com.dindong.dingdong.presentation.main.IdentitySwitchActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,5 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startActivity(new Intent(this, IdentitySwitchActivity.class));
     }
 }

@@ -11,9 +11,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
 /**
- * Created by wangcong on 2017/2/28.
- * <p>
- * </>
+ * Created by wangcong on 2018/3/9.
  */
 
 public abstract class BaseUseCase<T> {
@@ -44,9 +42,9 @@ public abstract class BaseUseCase<T> {
     return ApiClient.instance().create(getType());
   }
 
-  protected T createUpdateConnection() {
-    return UpdateClient.updateClient().create(getType());
-  }
+//  protected T createUpdateConnection() {
+//    return UpdateClient.updateClient().create(getType());
+//  }
 
   protected abstract Observable buildCase();
 
