@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--sweet dialog-->
+    <color name="success_stroke_color">#A5DC86</color>
+    <color name="sweet_dialog_bg_color">#FFFFFF</color>
+    <color name="trans_success_stroke_color">#33A5DC86</color>
+
+    <color name="line">#c5c9d4</color>
+
+    <color name="float_transparent">#00000000</color>
+    <color name="red">#fa364e</color>
+    <color name="battleship_grey">#6a6e79</color>
+    <color name="dark_periwinkle">#736dd8</color>
+</resources>
