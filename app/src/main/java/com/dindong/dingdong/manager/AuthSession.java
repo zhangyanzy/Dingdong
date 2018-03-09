@@ -7,7 +7,7 @@ import com.dindong.dingdong.network.bean.auth.User;
  */
 
 public class AuthSession {
-    private User user;
+    private User user = new User();
 
     public User getUser() {
         return user;

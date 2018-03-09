@@ -4,4 +4,11 @@
     <string name="identity_btn_student">我要找课</string>
     <string name="identity_btn_teacher">我是老师</string>
     <string name="identity_btn_institution">我是机构</string>
+
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_discovery">发现</string>
+    <string name="main_tab_msg">消息</string>
+    <string name="main_tab_mine">我的</string>
+    <string name="main_tab_student">我的学员</string>
+    <string name="main_tab_work">工作</string>
 </resources>

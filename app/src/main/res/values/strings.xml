@@ -8,4 +8,5 @@
     <string name="newwork_request_err_404">链接错误</string>
     <string name="newwork_request_err_500">服务器内部错误!</string>
     <string name="newwork_request_err_503">服务器升级中!</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

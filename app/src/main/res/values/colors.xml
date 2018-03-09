@@ -10,10 +10,14 @@
     <color name="trans_success_stroke_color">#33A5DC86</color>
 
     <color name="line">#c5c9d4</color>
+    <color name="silver">#C6C6C8</color><!-- 提示文本色 -->
+    <color name="silverTwo">#DCDDDF</color><!-- 强分割线 -->
+    <color name="silverThree">#EBECEE</color><!-- 弱分割线，默认按钮底色 -->
 
     <color name="float_transparent">#00000000</color>
     <color name="red">#fa364e</color>
     <color name="battleship_grey">#6a6e79</color>
     <color name="dark_periwinkle">#736dd8</color>
     <color name="white">#ffffff</color>
+    <color name="clear_blue">#2e6fff</color>
 </resources>
