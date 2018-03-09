@@ -26,7 +26,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         initComponent();
         loadData(savedInstanceState);
         createEventHandlers();
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
 
     /**

@@ -21,20 +21,23 @@
             android:orientation="vertical">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:onClick="@{()->presenter.onIdentitySwitch(AuthIdentity.STUDENT)}"
                 android:text="@string/identity_btn_student" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:onClick="@{()->presenter.onIdentitySwitch(AuthIdentity.TEACHER)}"
                 android:text="@string/identity_btn_teacher" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:onClick="@{()->presenter.onIdentitySwitch(AuthIdentity.INSTITUTION)}"
                 android:text="@string/identity_btn_institution" />
         </LinearLayout>

@@ -7,6 +7,7 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.databinding.ActivityIdentitySwitchBinding;
 import com.dindong.dingdong.network.bean.auth.AuthIdentity;
+import com.dindong.dingdong.util.ToastUtil;
 
 public class IdentitySwitchActivity extends BaseActivity {
 
@@ -14,7 +15,7 @@ public class IdentitySwitchActivity extends BaseActivity {
 
     @Override
     protected void initComponent() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_identity_switch);
     }
 
     @Override
@@ -31,10 +32,13 @@ public class IdentitySwitchActivity extends BaseActivity {
         public void onIdentitySwitch(AuthIdentity identity) {
             if (identity.equals(AuthIdentity.STUDENT)) {
                 //学生
+                ToastUtil.toastHint(IdentitySwitchActivity.this,"学生");
             } else if (identity.equals(AuthIdentity.TEACHER)) {
                 //老师
+                ToastUtil.toastHint(IdentitySwitchActivity.this,"老师");
             } else if (identity.equals(AuthIdentity.INSTITUTION)) {
                 //机构
+                ToastUtil.toastHint(IdentitySwitchActivity.this,"机构");
             }
         }
     }

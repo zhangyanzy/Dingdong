@@ -10,6 +10,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -41,6 +43,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'org.greenrobot:eventbus:3.0.0'
+
+    compile 'com.android.support:multidex:1.0.1'
 
     testCompile 'junit:junit:4.12'
 }
