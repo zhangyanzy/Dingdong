@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentDiscoveryBinding;
+import com.dindong.dingdong.presentation.main.MainActivity;
 
 /**
  * Created by wcong on 2018/3/10.
@@ -28,4 +29,13 @@ public class DiscoveryFragment extends BaseFragment {
     protected void loadData(Bundle savedInstanceState) {
 
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+            //标记已读
+            ((MainActivity) getActivity()).updateNotifyItem(MainActivity.IDENTIFICATION_DISCOVERY, false);
+    }
 }
+
