@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
-import com.dindong.dingdong.databinding.FragmentHomeBinding;
+import com.dindong.dingdong.databinding.FragmentStudentBinding;
 
 /**
  * Created by wcong on 2018/3/10.
- * 首页
+ * 学员
  */
 
-public class HomeFragment extends BaseFragment {
-    private FragmentHomeBinding binding;
+public class StudentFragment extends BaseFragment {
+    private FragmentStudentBinding binding;
 
     @Override
     protected View initComponent(LayoutInflater inflater, ViewGroup container) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_student, container, false);
         return binding.getRoot();
     }
 

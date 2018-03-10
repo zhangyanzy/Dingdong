@@ -15,6 +15,12 @@ import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityMainBinding;
 import com.dindong.dingdong.network.bean.auth.AuthIdentity;
+import com.dindong.dingdong.presentation.main.fragment.DiscoveryFragment;
+import com.dindong.dingdong.presentation.main.fragment.HomeFragment;
+import com.dindong.dingdong.presentation.main.fragment.MineFragment;
+import com.dindong.dingdong.presentation.main.fragment.MsgFragment;
+import com.dindong.dingdong.presentation.main.fragment.StudentFragment;
+import com.dindong.dingdong.presentation.main.fragment.WorkFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +50,16 @@ public class MainActivity extends BaseActivity {
         tab_institution = new String[]{getString(R.string.main_tab_work),
                 getString(R.string.main_tab_msg), getString(R.string.main_tab_mine)};
 
-        initFragment();
     }
 
     @Override
     protected void loadData(Bundle savedInstanceState) {
-        if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null)
-            initTab((AuthIdentity) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA));
+        if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
+            AuthIdentity identity = (AuthIdentity) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+            initFragment(identity);
+            initTab(identity);
+        }
+
     }
 
 
@@ -90,8 +99,23 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void initFragment() {
+    private void initFragment(AuthIdentity identity) {
         fragments = new ArrayList<>();
+        if (identity.equals(AuthIdentity.STUDENT)) {
+            fragments.add(new HomeFragment());
+            fragments.add(new DiscoveryFragment());
+            fragments.add(new MsgFragment());
+            fragments.add(new MineFragment());
+        } else if (identity.equals(AuthIdentity.TEACHER)) {
+            fragments.add(new DiscoveryFragment());
+            fragments.add(new StudentFragment());
+            fragments.add(new MsgFragment());
+            fragments.add(new MineFragment());
+        } else if (identity.equals(AuthIdentity.INSTITUTION)) {
+            fragments.add(new WorkFragment());
+            fragments.add(new MsgFragment());
+            fragments.add(new MineFragment());
+        }
     }
 
     private void setTabSelect(int index) {
