@@ -5,10 +5,20 @@
     <string name="identity_btn_teacher">我是老师</string>
     <string name="identity_btn_institution">我是机构</string>
 
+    <!--主界面 MainActivity-->
     <string name="main_tab_home">首页</string>
     <string name="main_tab_discovery">发现</string>
     <string name="main_tab_msg">消息</string>
     <string name="main_tab_mine">我的</string>
     <string name="main_tab_student">我的学员</string>
     <string name="main_tab_work">工作</string>
+
+    <!--工作页 WorkFragment-->
+    <string name="work_tab_course">课程管理</string>
+    <string name="work_tab_student">学员管理</string>
+    <string name="work_tab_teacher">师资管理</string>
+    <string name="work_tab_notice">公告管理</string>
+    <string name="work_tab_order_manager">订单管理</string>
+    <string name="work_tab_order_confirm">订单确认</string>
+    <string name="work_tab_order_cancel">订单核销</string>
 </resources>

@@ -43,6 +43,9 @@ public class MainActivity extends BaseActivity {
     public static final int IDENTIFICATION_DISCOVERY = 0X01;
     public static final int IDENTIFICATION_MSG = 0X02;
 
+    private NotifyTimerJob discoveryJob;
+    private NotifyTimerJob msgJob;
+
     @Override
     protected void initComponent() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -54,6 +57,7 @@ public class MainActivity extends BaseActivity {
         tab_institution = new String[]{getString(R.string.main_tab_work),
                 getString(R.string.main_tab_msg), getString(R.string.main_tab_mine)};
 
+        executeJob();
     }
 
     @Override
@@ -151,12 +155,39 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 启动定时任务，用于处理新消息
+     */
+    private void executeJob() {
+        //TODO 更新发现频道
+        discoveryJob = new NotifyTimerJob(IDENTIFICATION_DISCOVERY);
+        discoveryJob.execute(new NotifyTimerJob.TimerListener() {
+            @Override
+            public void onSuccess(boolean hasNew) {
+                if (hasNew)
+                    updateNotifyItem(IDENTIFICATION_DISCOVERY, true);
+            }
+        });
+
+        //TODO 更新消息频道
+        msgJob = new NotifyTimerJob(IDENTIFICATION_MSG);
+        msgJob.execute(new NotifyTimerJob.TimerListener() {
+            @Override
+            public void onSuccess(boolean hasNew) {
+                if (hasNew)
+                    updateNotifyItem(IDENTIFICATION_MSG, true);
+            }
+        });
+    }
+
+    /**
      * 同步未读消息
      *
      * @param identification {@link this#IDENTIFICATION_DISCOVERY}{@link this#IDENTIFICATION_MSG}
      * @param visible
      */
     public void updateNotifyItem(int identification, boolean visible) {
+        if (tabViews==null)
+            return;
         for (ViewGroup viewGroup : tabViews) {
             String tag = "";
             if (identification == IDENTIFICATION_DISCOVERY) {
@@ -170,7 +201,6 @@ public class MainActivity extends BaseActivity {
             }
 
         }
-
     }
 
     private class MainPagerAdapter extends FragmentPagerAdapter {
