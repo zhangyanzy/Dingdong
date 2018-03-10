@@ -33,7 +33,7 @@ public class DiscoveryFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser)
+        if (isVisibleToUser && getActivity() != null)
             //标记已读
             ((MainActivity) getActivity()).updateNotifyItem(MainActivity.IDENTIFICATION_DISCOVERY, false);
     }

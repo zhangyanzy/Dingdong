@@ -186,6 +186,8 @@ public class MainActivity extends BaseActivity {
      * @param visible
      */
     public void updateNotifyItem(int identification, boolean visible) {
+        if (tabViews==null)
+            return;
         for (ViewGroup viewGroup : tabViews) {
             String tag = "";
             if (identification == IDENTIFICATION_DISCOVERY) {

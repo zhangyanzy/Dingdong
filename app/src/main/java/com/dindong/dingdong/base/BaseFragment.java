@@ -17,6 +17,8 @@ public abstract class BaseFragment extends RxFragment {
 
     protected View mRootView;
 
+    private boolean isFirstCreate = true;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -39,5 +41,19 @@ public abstract class BaseFragment extends RxFragment {
     protected abstract void loadData(Bundle savedInstanceState);
 
     protected void createEventHandlers() {
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (isFirstCreate) {
+                isFirstCreate = false;
+                firstCreate();
+            }
+        }
+    }
+
+    protected void firstCreate() {
     }
 }
