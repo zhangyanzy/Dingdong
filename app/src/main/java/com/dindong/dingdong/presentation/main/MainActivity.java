@@ -2,6 +2,9 @@ package com.dindong.dingdong.presentation.main;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,7 @@ public class MainActivity extends BaseActivity {
     private String[] tabs;
 
     private List<View> tabViews;
+    private List<Fragment> fragments;
 
     private View lastSelectView;
 
@@ -39,13 +43,14 @@ public class MainActivity extends BaseActivity {
                 getString(R.string.main_tab_msg), getString(R.string.main_tab_mine)};
         tab_institution = new String[]{getString(R.string.main_tab_work),
                 getString(R.string.main_tab_msg), getString(R.string.main_tab_mine)};
+
+        initFragment();
     }
 
     @Override
     protected void loadData(Bundle savedInstanceState) {
         if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null)
             initTab((AuthIdentity) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA));
-
     }
 
 
@@ -59,9 +64,9 @@ public class MainActivity extends BaseActivity {
         int tabPosition = 0;
         if (identity.equals(AuthIdentity.STUDENT))
             tabs = tab_student;
-        else if (identity.equals(AuthIdentity.STUDENT))
+        else if (identity.equals(AuthIdentity.TEACHER))
             tabs = tab_teacher;
-        else if (identity.equals(AuthIdentity.STUDENT))
+        else if (identity.equals(AuthIdentity.INSTITUTION))
             tabs = tab_institution;
         for (int i = 0; i < binding.tab.getChildCount(); i++) {
             if (binding.tab.getChildAt(i) instanceof CardView) {
@@ -85,6 +90,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void initFragment() {
+        fragments = new ArrayList<>();
+    }
+
     private void setTabSelect(int index) {
         if (tabViews == null)
             return;
@@ -92,6 +101,23 @@ public class MainActivity extends BaseActivity {
         lastSelectView = tabViews.get(index);
         lastSelectView.setSelected(true);
     }
+
+    private class MainPagerAdapter extends FragmentPagerAdapter {
+        MainPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+    }
+
 
     public class Presenter {
         public void onTabSelect(View view) {

@@ -88,6 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:gravity="center_horizontal"
                         android:onClick="@{presenter.onTabSelect}"
                         android:orientation="vertical"
                         android:paddingBottom="2dp"
@@ -115,9 +116,9 @@
                     android:layout_marginTop="-15dp"
                     app:cardBackgroundColor="@color/red"
                     app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="false"
+                    app:cardElevation="5dp"
                     app:cardPreventCornerOverlap="false"
-                    app:cardElevation="5dp">
+                    app:cardUseCompatPadding="false">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -192,6 +193,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/layout_bottom_tab"></LinearLayout>
+            android:layout_above="@id/layout_bottom_tab">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
     </RelativeLayout>
 </layout>
