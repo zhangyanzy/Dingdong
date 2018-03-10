@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,13 @@ public class MainActivity extends BaseActivity {
     private String[] tab_institution;
     private String[] tabs;
 
-    private List<View> tabViews;
+    private List<ViewGroup> tabViews;
     private List<Fragment> fragments;
 
     private View lastSelectView;
+
+    public static final int IDENTIFICATION_DISCOVERY = 0X01;
+    public static final int IDENTIFICATION_MSG = 0X02;
 
     @Override
     protected void initComponent() {
@@ -89,7 +93,7 @@ public class MainActivity extends BaseActivity {
                 binding.tab.getChildAt(i).setVisibility(View.GONE);
                 continue;
             }
-            tabViews.add(((ViewGroup) binding.tab.getChildAt(i)).getChildAt(0));
+            tabViews.add((ViewGroup) ((ViewGroup) binding.tab.getChildAt(i)).getChildAt(0));
             if (tabPosition == 0) {
                 lastSelectView = tabViews.get(0);
                 setTabSelect(0);
@@ -116,6 +120,26 @@ public class MainActivity extends BaseActivity {
             fragments.add(new MsgFragment());
             fragments.add(new MineFragment());
         }
+        binding.vp.setOffscreenPageLimit(identity.equals(AuthIdentity.STUDENT) || identity.equals(AuthIdentity.TEACHER) ? 3 : 4);
+        binding.vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                setTabSelect(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+
+        MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
+        binding.vp.setAdapter(adapter);
+
+        binding.vp.setCurrentItem(0);
     }
 
     private void setTabSelect(int index) {
@@ -124,6 +148,29 @@ public class MainActivity extends BaseActivity {
         lastSelectView.setSelected(false);
         lastSelectView = tabViews.get(index);
         lastSelectView.setSelected(true);
+    }
+
+    /**
+     * 同步未读消息
+     *
+     * @param identification {@link this#IDENTIFICATION_DISCOVERY}{@link this#IDENTIFICATION_MSG}
+     * @param visible
+     */
+    public void updateNotifyItem(int identification, boolean visible) {
+        for (ViewGroup viewGroup : tabViews) {
+            String tag = "";
+            if (identification == IDENTIFICATION_DISCOVERY) {
+                tag = getString(R.string.main_tab_discovery);
+            } else if (identification == IDENTIFICATION_MSG) {
+                tag = getString(R.string.main_tab_msg);
+            }
+            if (((TextView) viewGroup.getChildAt(1)).getText().toString().trim().equals(tag)) {
+                ((ViewGroup) viewGroup.getChildAt(0)).getChildAt(1).setVisibility(visible ? View.VISIBLE : View.GONE);
+                break;
+            }
+
+        }
+
     }
 
     private class MainPagerAdapter extends FragmentPagerAdapter {
@@ -147,6 +194,7 @@ public class MainActivity extends BaseActivity {
         public void onTabSelect(View view) {
             for (int i = 0; i < tabs.length; i++) {
                 if (((TextView) (((ViewGroup) view).getChildAt(1))).getText().toString().equals(tabs[i])) {
+                    binding.vp.setCurrentItem(i);
                     setTabSelect(i);
                     return;
                 }

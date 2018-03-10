@@ -6,7 +6,11 @@ package com.dindong.dingdong.config;
 
 public class AppConfig {
 
-    public static class IntentKey{
+    public static class Http {
+        public static final String BASE_URL = "https://auth-test.qianfan123.com/dpos-auth-web/s/";
+    }
+
+    public static class IntentKey {
         public static final String DATA = "data";
     }
 
