@@ -42,17 +42,17 @@
             <GridView
                 android:id="@+id/gv_channel"
                 android:layout_width="wrap_content"
-                android:layout_height="75dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:numColumns="4" />
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:verticalSpacing="10dp" />
 
             <TextView
                 android:id="@+id/excess_hint_home_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="你的首付款额度超过限额（1万/笔）"
+                android:text="你的首付款额度超过限额（1万/笔）!"
                 android:textColor="@color/clear_blue"
                 android:textSize="16dp" />
 
@@ -80,10 +80,10 @@
 
             </RelativeLayout>
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/subject_list_home_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ListView>
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 

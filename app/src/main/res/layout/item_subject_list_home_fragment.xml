@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -44,33 +44,34 @@
                 android:text="666m" />
 
             <TextView
+                android:id="@+id/item_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="上海市闵行区江文路599弄54号"
                 android:layout_below="@id/item_subject_school_name"
                 android:layout_toRightOf="@+id/item_subject_photo"
-                />
+                android:text="上海市闵行区江文路599弄54号" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_below="@+id/item_subject_photo"
-                >
+                android:orientation="horizontal">
+
                 <TextView
-                    android:id="@+id/price"
+                    android:id="@+id/item_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="567"
-                    android:textSize="18dp"
                     android:layout_marginLeft="10dp"
-                    />
+                    android:layout_marginTop="5dp"
+                    android:text="567"
+                    android:textSize="18dp" />
+
                 <TextView
-                    android:id="@+id/purchase_sum"
+                    android:id="@+id/item_purchase_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="30人购买"
-                    />
+                    android:text="30人购买" />
 
             </RelativeLayout>
 
