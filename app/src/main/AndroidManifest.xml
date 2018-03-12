@@ -22,8 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.main.MainActivity" />
-        <!--全部门店-->
-        <activity android:name=".presentation.main.AllShopActivity"/>
+        <!-- 全部门店 -->
+        <activity android:name=".presentation.main.AllShopActivity" />
+        <!-- 门店教育列表 -->
+        <activity android:name=".presentation.main.ShopTeacherListActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.dindong.dingdong.presentation.main.ShopTeacherListActivity">
+
+        <com.dindong.dingdong.widget.NavigationTopBar
+            android:id="@+id/shop_teacher_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_top_bar_height"></com.dindong.dingdong.widget.NavigationTopBar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+            <TextView
+                android:id="@+id/shop_teacher_list_school_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="海豚教育（迈皋桥店）"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/shop_teacher_list_location_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/shop_teacher_list_school_name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/shop_teacher_list_school_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_teacher_list_school_name"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/shop_teacher_list_location_icon"
+                android:text="上海市闵行区江文路589号一层A商铺" />
+
+            <TextView
+                android:id="@+id/shop_teacher_list_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_teacher_list_school_name"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/shop_teacher_list_school_address"
+                android:text="651m" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@+id/shop_teacher_list_distance"
+                android:background="@color/silver" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/ic_launcher"
+               android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/shop_teacher_list_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+</layout>
+

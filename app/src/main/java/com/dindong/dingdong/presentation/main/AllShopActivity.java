@@ -29,12 +29,7 @@ public class AllShopActivity extends BaseActivity {
     @Override
     protected void initComponent() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_all_shop);
-        initTopBar();
-    }
-
-    private void initTopBar() {
-        mNavigationTopBar = (NavigationTopBar) findViewById(R.id.shop_list_top_bar);
-        mNavigationTopBar.setCenterTitleText(R.string.all_shop);
+        binding.shopListTopBar.setCenterTitleText(R.string.all_shop);
     }
 
     private void initAdapter() {

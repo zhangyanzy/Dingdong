@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!--数据Bean-->
+        <variable
+            name="item"
+            type="com.dindong.dingdong.network.bean.TeacherBase.TeacherInfo" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.presentation.main.ShopTeacherListActivity.Presenter" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->presenter.onItemClick(item)}">
+
+            <ImageView
+                android:id="@+id/item_shop_teacher_list_teacher_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/item_shop_teacher_list_teacher_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/item_shop_teacher_list_teacher_photo"
+                android:orientation="horizontal"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/item_shop_teacher_list_teacher_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_shop_teacher_list_teacher_name"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/item_shop_teacher_list_teacher_photo"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>
+
+
