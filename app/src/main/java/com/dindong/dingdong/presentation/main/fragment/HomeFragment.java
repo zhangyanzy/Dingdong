@@ -1,6 +1,7 @@
 package com.dindong.dingdong.presentation.main.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +20,7 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.adapter.HomeRecycleAdapter;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
+import com.dindong.dingdong.presentation.main.AllShopActivity;
 import com.dindong.dingdong.util.ToastUtil;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -46,8 +48,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     private SimpleAdapter mSimpleAdapter;
     //RecycleView所需List
     private List<String> mData;
+
     private HomeRecycleAdapter mRecycleAdapter;
     private List<String> mBannerList;
+    private Intent intent;
 
 
     @Override
@@ -119,7 +123,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i) {
             case 0:
-                ToastUtil.toastSuccess(getContext(), "全部门店");
+                intent = new Intent(getContext(), AllShopActivity.class);
+                startActivity(intent);
                 break;
             case 1:
                 ToastUtil.toastSuccess(getContext(), "拼团上课");

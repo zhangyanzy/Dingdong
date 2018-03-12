@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:id="@+id/shop_list_subject_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/shop_list_school_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/shop_list_subject_photo"
+                android:paddingTop="5dp"
+                android:text="英孚教育（浦江店）" />
+
+            <TextView
+                android:id="@+id/shop_list_item_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/shop_list_school_name"
+                android:layout_marginRight="10dp"
+                android:text="666m" />
+
+            <TextView
+                android:id="@+id/shop_list_item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shop_list_school_name"
+                android:layout_toRightOf="@+id/shop_list_subject_photo"
+                android:paddingTop="5dp"
+                android:text="上海市闵行区江文路599弄54号" />
+
+            <TextView
+                android:id="@+id/shop_list_Campus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_list_item_address"
+                android:layout_toRightOf="@id/shop_list_subject_photo"
+                android:paddingTop="5dp"
+                android:text="迈皋桥校区" />
+
+            <TextView
+                android:id="@+id/shop_list_english_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shop_list_item_address"
+                android:layout_toRightOf="@+id/shop_list_Campus"
+                android:paddingLeft="8dp"
+                android:paddingTop="5dp"
+                android:text="英语外教" />
+
+            <TextView
+                android:id="@+id/shop_list_tuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/shop_list_Campus"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="5dp"
+                android:text="团"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/shop_list_tuan_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_list_Campus"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/shop_list_tuan"
+                android:text="新概念（青少年版）二年级 全集随到随学" />
+
+            <TextView
+                android:id="@+id/shop_list_tuan_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/shop_list_Campus"
+                android:layout_marginTop="5dp"
+                android:paddingRight="5dp"
+                android:text="¥ 1916" />
+
+            <TextView
+                android:id="@+id/shop_list_ke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_list_tuan"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="5dp"
+                android:text="课" />
+
+            <TextView
+                android:id="@+id/shop_list_ke_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_list_tuan_name"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/shop_list_ke"
+                android:text="新概念（青少年版）一年级 全集随到随学" />
+
+            <TextView
+                android:id="@+id/shop_list_ke_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/shop_list_tuan_money"
+                android:layout_toRightOf="@+id/shop_list_ke_name"
+                android:layout_marginRight="5dp"
+                android:text="2019" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
