@@ -26,4 +26,78 @@
         <attr name="pivotY" format="fraction" />
     </declare-styleable>
 
+    <!--下拉加载，上拉刷新-->
+    <declare-styleable name="DefaultRefreshLayout">
+        <attr name="header_bg" format="color" />
+        <attr name="foot_bg" format="color" />
+        <attr name="header_text_color" format="color" />
+        <attr name="foot_text_color" format="color" />
+        <attr name="header_progressBar" format="reference" />
+        <attr name="foot_progressBar" format="reference" />
+        <attr name="header_drawable_bg" format="reference" />
+        <attr name="foot_drawable_bg" format="reference" />
+        <attr name="footer" format="boolean" />
+        <attr name="header" format="boolean" />
+    </declare-styleable>
+
+    <!--clearEdt-->
+    <declare-styleable name="ClearTextField">
+
+        <attr name="showClear" format="boolean"></attr>
+        <!--edit-->
+        <attr name="edit_text" format="string"></attr>
+        <attr name="edit_text_size" format="dimension"></attr>
+        <attr name="edit_text_color" format="color"></attr>
+        <attr name="edit_maxLength" format="integer"></attr>
+        <attr name="edit_hint" format="string"></attr>
+        <attr name="edit_hint_color" format="color"></attr>
+        <attr name="edit_left_drawable" format="integer"></attr>
+        <attr name="edit_padding" format="dimension"></attr>
+        <attr name="edit_padding_left" format="dimension"></attr>
+        <attr name="edit_padding_top" format="dimension"></attr>
+        <attr name="edit_padding_right" format="dimension"></attr>
+        <attr name="edit_padding_bottom" format="dimension"></attr>
+        <attr name="edit_errMsg" format="string"></attr>
+        <attr name="edit_gravity" format="enum">
+            <enum name="left" value="0"></enum>
+            <enum name="top" value="1"></enum>
+            <enum name="right" value="2"></enum>
+            <enum name="bottom" value="3"></enum>
+            <enum name="center" value="4"></enum>
+            <enum name="center_vertical" value="5"></enum>
+            <enum name="center_horizontal" value="6"></enum>
+        </attr>
+        <attr name="edit_inputType" format="enum">
+            <enum name="phone" value="0x00000003"></enum>
+            <enum name="password" value="0"></enum>
+            <enum name="number" value="0x00000002"></enum>
+        </attr>
+
+        <!--label-->
+        <attr name="label_text" format="string"></attr>
+        <attr name="label_text_size" format="dimension"></attr>
+        <attr name="label_text_color" format="color"></attr>
+        <attr name="label_layout_width" format="dimension"></attr>
+        <attr name="label_padding" format="dimension"></attr>
+        <attr name="label_padding_left" format="dimension"></attr>
+        <attr name="label_padding_top" format="dimension"></attr>
+        <attr name="label_padding_right" format="dimension"></attr>
+        <attr name="label_padding_bottom" format="dimension"></attr>
+        <attr name="label_gravity" format="enum">
+            <enum name="left" value="0"></enum>
+            <enum name="top" value="1"></enum>
+            <enum name="right" value="2"></enum>
+            <enum name="bottom" value="3"></enum>
+            <enum name="center" value="4"></enum>
+            <enum name="center_vertical" value="5"></enum>
+            <enum name="center_horizontal" value="6"></enum>
+        </attr>
+
+
+    </declare-styleable>
+    <declare-styleable name="ClearEditText">
+        <attr name="errMsg" format="string"></attr>
+    </declare-styleable>
+
+
 </resources>

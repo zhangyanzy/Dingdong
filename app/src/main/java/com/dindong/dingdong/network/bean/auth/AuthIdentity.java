@@ -5,14 +5,14 @@ package com.dindong.dingdong.network.bean.auth;
  */
 
 public enum AuthIdentity {
-    STUDENT("学生"), TEACHER("教师"), INSTITUTION("机构");
-    private String name;
+  STUDENT("学生"), TEACHER("教师"), INSTITUTION("机构"), MEMBER("会员/老师");
+  private String name;
 
-    AuthIdentity(String name) {
-        this.name = name;
-    }
+  AuthIdentity(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 }
