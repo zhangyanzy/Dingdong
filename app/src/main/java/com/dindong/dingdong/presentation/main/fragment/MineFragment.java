@@ -21,11 +21,16 @@ public class MineFragment extends BaseFragment {
     @Override
     protected View initComponent(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mine, container, false);
+        binding.setPresenter(new Presenter());
         return binding.getRoot();
     }
 
     @Override
     protected void loadData(Bundle savedInstanceState) {
+
+    }
+
+    public class Presenter{
 
     }
 }

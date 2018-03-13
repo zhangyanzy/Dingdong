@@ -26,6 +26,7 @@
         <activity android:name=".presentation.main.AllShopActivity" />
         <!-- 门店教育列表 -->
         <activity android:name=".presentation.main.ShopTeacherListActivity" />
+        <activity android:name=".presentation.main.ShopInfoActivity"></activity>
     </application>
 
 </manifest>

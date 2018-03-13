@@ -49,7 +49,9 @@
                 android:layout_height="wrap_content"
                 android:horizontalSpacing="10dp"
                 android:numColumns="4"
-                android:verticalSpacing="10dp" />
+                android:verticalSpacing="10dp"
+                android:layout_gravity="center"
+                />
 
             <TextView
                 android:id="@+id/excess_hint_home_fragment"

@@ -5,9 +5,9 @@
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.dindong.dingdong.presentation.main.AllShopActivity"
         android:orientation="vertical"
-        >
+        tools:context="com.dindong.dingdong.presentation.main.AllShopActivity">
+
 
         <com.dindong.dingdong.widget.NavigationTopBar
             android:id="@+id/shop_list_top_bar"
@@ -16,7 +16,25 @@
 
         </com.dindong.dingdong.widget.NavigationTopBar>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="附近"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="10dp"
             android:id="@+id/shop_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

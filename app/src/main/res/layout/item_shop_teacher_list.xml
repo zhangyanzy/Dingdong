@@ -5,7 +5,7 @@
         <!--数据Bean-->
         <variable
             name="item"
-            type="com.dindong.dingdong.network.bean.TeacherBase.TeacherInfo" />
+            type="com.dindong.dingdong.network.bean.TeacherInfo" />
 
         <variable
             name="presenter"

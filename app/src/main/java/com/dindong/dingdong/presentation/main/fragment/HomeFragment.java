@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -17,11 +16,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dindong.dingdong.R;
-import com.dindong.dingdong.adapter.HomeRecycleAdapter;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
-import com.dindong.dingdong.presentation.main.AllShopActivity;
+import com.dindong.dingdong.presentation.main.ShopTeacherListActivity;
 import com.dindong.dingdong.util.ToastUtil;
+import com.github.markzhai.recyclerview.BaseViewAdapter;
+import com.github.markzhai.recyclerview.SingleTypeAdapter;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
@@ -49,10 +49,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     //RecycleView所需List
     private List<String> mData;
 
-    private HomeRecycleAdapter mRecycleAdapter;
+    //    private HomeRecycleAdapter mRecycleAdapter;
     private List<String> mBannerList;
     private Intent intent;
-
+    private SingleTypeAdapter mRecycleAdapter;
 
     @Override
     protected View initComponent(LayoutInflater inflater, ViewGroup container) {
@@ -67,16 +67,13 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
          * 初始化GridView
          */
         dataList = new ArrayList<Map<String, Object>>();
-        mSimpleAdapter = new SimpleAdapter(getContext(), getData(), R.layout.item_grid_view,
+        mSimpleAdapter = new SimpleAdapter(getContext(), getGridViewData(), R.layout.item_grid_view,
                 new String[]{"image", "text"},
                 new int[]{R.id.item_image, R.id.item_textview});
         binding.gvChannel.setAdapter(mSimpleAdapter);
         binding.gvChannel.setOnItemClickListener(this);
 
-        mData = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            mData.add("" + i);
-        }
+
         initRecycleAdapter();
         /**
          * 将获取到的网络图片放置在Banner中
@@ -97,16 +94,22 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
      * 初始化RecycleViewAdapter
      */
     private void initRecycleAdapter() {
-        mRecycleAdapter = new HomeRecycleAdapter(mData, getContext());
+//        mRecycleAdapter = new HomeRecycleAdapter(mData, getContext());
+//        binding.subjectListHomeFragment.setLayoutManager(new LinearLayoutManager(getContext()));
+//        binding.subjectListHomeFragment.setItemAnimator(new DefaultItemAnimator());
+//        binding.subjectListHomeFragment.setAdapter(mRecycleAdapter);
+        mRecycleAdapter = new SingleTypeAdapter(getContext(), R.layout.item_subject_list_home_fragment);
+        mRecycleAdapter.setPresenter(new Presenter());
+        //TODO HomeFragment数据添加
+//        mRecycleAdapter.set();
         binding.subjectListHomeFragment.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.subjectListHomeFragment.setItemAnimator(new DefaultItemAnimator());
         binding.subjectListHomeFragment.setAdapter(mRecycleAdapter);
     }
 
     /**
      * 加载GridView的图片和文件名
      */
-    private List<Map<String, Object>> getData() {
+    private List<Map<String, Object>> getGridViewData() {
         for (int i = 0; i < icon.length; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("image", icon[i]);
@@ -114,6 +117,15 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             dataList.add(map);
         }
         return dataList;
+    }
+    /**
+     *  加载RecycleViewData
+     */
+    private void getRecycleData(){
+        mData = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            mData.add("" + i);
+        }
     }
 
     /**
@@ -123,7 +135,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i) {
             case 0:
-                intent = new Intent(getContext(), AllShopActivity.class);
+//                intent = new Intent(getContext(), AllShopActivity.class);
+                intent = new Intent(getContext(), ShopTeacherListActivity.class);
                 startActivity(intent);
                 break;
             case 1:
@@ -159,7 +172,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    switch (finalIndex){
+                    switch (finalIndex) {
                         case 0:
                             Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
                             break;
@@ -175,5 +188,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
             });
         }
+    }
+    /**
+     * RecycleView Item点击事件
+     */
+    class Presenter implements BaseViewAdapter.Presenter{
+        public void onItemClick(){
+
+        }
+
     }
 }
