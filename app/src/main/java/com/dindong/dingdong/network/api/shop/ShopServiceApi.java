@@ -5,6 +5,8 @@ import java.util.List;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.shop.Shop;
+import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.shop.Teacher;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -40,7 +42,7 @@ public interface ShopServiceApi {
    * @return
    */
   @GET("app/{shop}/shop/subject/list")
-  Observable<Response<List<Shop>>> listSubject(@Path("shop") String id, @Body QueryParam param);
+  Observable<Response<List<Subject>>> listSubject(@Path("shop") String id, @Body QueryParam param);
 
   /**
    * 查询门店老师列表，支持分页查询。
@@ -50,5 +52,5 @@ public interface ShopServiceApi {
    * @return
    */
   @GET("app/{shop}/shop/teacher/list")
-  Observable<Response<List<Shop>>> listTeacher(@Path("shop") String id, @Body QueryParam param);
+  Observable<Response<List<Teacher>>> listTeacher(@Path("shop") String id, @Body QueryParam param);
 }
