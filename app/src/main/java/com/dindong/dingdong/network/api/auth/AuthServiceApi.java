@@ -1,16 +1,17 @@
-package com.dindong.dingdong.network.api;
+package com.dindong.dingdong.network.api.auth;
 
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.auth.RegisterRequest;
 import com.dindong.dingdong.network.bean.auth.User;
 
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by wcong on 2018/3/12. 用户登录相关接口
+ * Created by wcong on 2018/3/12. 用户相关API
  */
 
 public interface AuthServiceApi {
@@ -45,11 +46,11 @@ public interface AuthServiceApi {
    * @return
    * @throws Exception
    */
-  @POST("app/sms/send")
+  @GET("app/sms/send")
   Observable<Response> sendSmsCode(@Query("mobile") String mobile);
 
   /**
-   * 重置密码
+   * 重置密码，用于忘记密码，无需旧密码
    * 
    * @param mobile
    * @param password
@@ -57,7 +58,35 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @POST("app/user/password/reset")
+  @POST("app/auth/password/reset")
   Observable<Response> resetPassword(@Query(("mobile")) String mobile,
       @Query(("password")) String password, @Query(("authCode")) String authCode);
+
+  /**
+   * 重置密码，需旧密码
+   * 
+   * @param mobile
+   * @param oldPassword
+   * @param newPassword
+   * @param authCode
+   * @return
+   */
+  @POST("app/auth/password/resetByOld")
+  Observable<Response> resetPasswordByOld(@Query(("mobile")) String mobile,
+      @Query(("oldPassword")) String oldPassword, @Query(("newPassword")) String newPassword,
+      @Query(("authCode")) String authCode);
+
+  /**
+   * 更换手机号
+   * 
+   * @param oldMobile
+   * @param newMobile
+   * @param password
+   * @param authCode
+   * @return
+   */
+  @POST("app/auth/resetMobil")
+  Observable<Response> resetMobil(@Query(("oldMobile")) String oldMobile,
+      @Query(("newMobile")) String newMobile, @Query(("password")) String password,
+      @Query(("authCode")) String authCode);
 }

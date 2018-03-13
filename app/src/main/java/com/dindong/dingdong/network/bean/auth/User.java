@@ -12,14 +12,15 @@ import com.dindong.dingdong.base.ShallowCopy;
  */
 
 public class User extends ShallowCopy<User> implements Serializable, Cloneable {
-  private String id;// 用户ID
+  private String id;// UUID
+  private String userId;// 用户ID
   private AuthIdentity identity;// 用户身份
   private String name;// 昵称
   private String mobile;// 手机号
   private String sex;// 性别
   private Date birthday;// 生日 格式:YYYY-MM-DD
   private String remark;// 个人说明
-    private String num;//叮咚号
+  private String num;// 叮咚号
 
   public String getId() {
     return id;
@@ -27,6 +28,14 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   public AuthIdentity getIdentity() {
@@ -77,11 +86,11 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
     this.remark = remark;
   }
 
-    public String getNum() {
-        return num;
-    }
+  public String getNum() {
+    return num;
+  }
 
-    public void setNum(String num) {
-        this.num = num;
-    }
+  public void setNum(String num) {
+    this.num = num;
+  }
 }
