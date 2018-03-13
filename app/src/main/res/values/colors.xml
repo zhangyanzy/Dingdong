@@ -9,6 +9,8 @@
     <color name="sweet_dialog_bg_color">#FFFFFF</color>
     <color name="trans_success_stroke_color">#33A5DC86</color>
 
+    <color name="theme">#fa364e</color>
+    <color name="transparent">#00000000</color>
     <color name="line">#c5c9d4</color>
     <color name="silver">#C6C6C8</color><!-- 提示文本色 -->
     <color name="silverTwo">#DCDDDF</color><!-- 强分割线 -->
@@ -19,6 +21,8 @@
     <color name="battleship_grey">#6a6e79</color>
     <color name="dark_periwinkle">#736dd8</color>
     <color name="white">#ffffff</color>
+    <color name="gray">#989898</color>
     <color name="black">#000000</color>
     <color name="clear_blue">#2e6fff</color>
+    <color name="light_black">#333333</color>
 </resources>
