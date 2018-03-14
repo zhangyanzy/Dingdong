@@ -16,7 +16,7 @@ import rx.Observable;
 
 public interface AuthServiceApi {
   /**
-   * 登录
+   * 登录，需帐号密码
    * 
    * @param mobile
    * @param password
@@ -25,6 +25,17 @@ public interface AuthServiceApi {
   @POST("app/auth/login")
   Observable<Response<User>> login(@Query("mobile") String mobile,
       @Query("password") String password);
+
+  /**
+   * 快捷登录，需手机号和验证码
+   * 
+   * @param mobile
+   * @param authCode
+   * @return
+   */
+  @POST("app/auth/shortLogin")
+  Observable<Response<User>> shortLogin(@Query("mobile") String mobile,
+      @Query("authCode") String authCode);
 
   /**
    * 注册
