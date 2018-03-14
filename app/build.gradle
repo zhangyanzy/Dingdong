@@ -59,7 +59,7 @@ dependencies {
     }
 
     //首页banner实现框架
-     compile 'com.youth.banner:banner:1.4.9'
+    compile 'com.youth.banner:banner:1.4.9'
 
     testCompile 'junit:junit:4.12'
 }

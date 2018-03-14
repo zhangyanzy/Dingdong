@@ -96,7 +96,7 @@ public class ApiClient {
     }
   };
 
-  public static Retrofit instance() {
+  public static Retrofit instance(boolean useMock) {
     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
     logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -104,8 +104,9 @@ public class ApiClient {
 
         .addInterceptor(logging).addInterceptor(requestErrorInterceptor)
         .addInterceptor(getUserCookie).addInterceptor(setUserCookie)
-        .connectTimeout(60, TimeUnit.SECONDS).retryOnConnectionFailure(true)
-        .writeTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
+        .addInterceptor(new MockInterceptor(context, useMock)).connectTimeout(60, TimeUnit.SECONDS)
+        .retryOnConnectionFailure(true).writeTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS).build();
 
     Retrofit retrofit = new Retrofit.Builder().client(okClient).baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(gson))
