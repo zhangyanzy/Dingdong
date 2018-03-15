@@ -1,6 +1,4 @@
-package com.dindong.dingdong.network.api.usecase;
-
-import android.content.Context;
+package com.dindong.dingdong.network.api.auth.usecase;
 
 import com.dindong.dingdong.network.BaseUseCase;
 import com.dindong.dingdong.network.api.GlobalTestApi;

@@ -36,7 +36,7 @@ public class DialogUtil {
     return dialog;
   }
 
-  public static SweetAlertDialog showError(Context context, String string) {
+  public static SweetAlertDialog getErrorDialog(Context context, String string) {
     SweetAlertDialog dialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
     dialog.setConfirmText(context.getString(R.string.ok));
     // dialog.setTitleText(string);

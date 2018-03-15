@@ -1,7 +1,7 @@
 package com.dindong.dingdong.presentation.main;
 
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.usecase.TestUseCase;
+import com.dindong.dingdong.network.api.auth.usecase.TestUseCase;
 import com.dindong.dingdong.network.bean.Response;
 
 import java.util.Timer;

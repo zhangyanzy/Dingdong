@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
-        <activity android:name=".presentation.main.IdentitySwitchActivity">
+        <activity android:name=".presentation.main.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,8 @@
         <activity android:name=".presentation.main.AllShopActivity" />
         <!-- 门店教育列表 -->
         <activity android:name=".presentation.main.ShopTeacherListActivity" />
-        <activity android:name=".presentation.main.ShopInfoActivity"></activity>
+        <activity android:name=".presentation.main.ShopInfoActivity" />
+        <activity android:name=".presentation.main.IdentitySwitchActivity"></activity>
     </application>
 
 </manifest>

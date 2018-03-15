@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": "1as5d456as",
+    "userId": "123",
+    "name": "王二",
+    "mobile": "15710129773",
+    "sex": "男",
+    "birthday": "1992-09-14",
+    "remark": "测试数据",
+    "num": "4gfd5g46df"
+  },
+  "success": true,
+  "message": null,
+  "fields": null,
+  "total": null,
+  "more": true
+}

@@ -25,7 +25,7 @@ public abstract class BaseUseCase<T> {
     subscriber = response;
     if (observable == null)
       return;
-    subscription=observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    subscription = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         .subscribe(response);
   }
 
@@ -39,12 +39,16 @@ public abstract class BaseUseCase<T> {
   }
 
   protected T createConnection() {
-    return ApiClient.instance().create(getType());
+    return createConnection(false);
   }
 
-//  protected T createUpdateConnection() {
-//    return UpdateClient.updateClient().create(getType());
-//  }
+  protected T createConnection(boolean useMock) {
+    return ApiClient.instance(useMock).create(getType());
+  }
+
+  // protected T createUpdateConnection() {
+  // return UpdateClient.updateClient().create(getType());
+  // }
 
   protected abstract Observable buildCase();
 
