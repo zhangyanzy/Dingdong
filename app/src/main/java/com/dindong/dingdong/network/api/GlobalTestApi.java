@@ -7,13 +7,11 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by wcong on 2018/3/10.
- * 测试接口，待删
+ * Created by wcong on 2018/3/10. 测试接口，待删
  */
 
 public interface GlobalTestApi {
 
-    @POST("app/v2/auth/login")
-    Observable<Response> test(@Query("mobile") String mobile,
-                               @Query("password") String password);
+  @POST("app/v2/auth/login")
+  Observable<Response> test(@Query("mobile") String mobile, @Query("password") String password);
 }
