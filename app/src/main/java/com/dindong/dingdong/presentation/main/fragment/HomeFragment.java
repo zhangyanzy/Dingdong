@@ -101,7 +101,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         mRecycleAdapter = new SingleTypeAdapter(getContext(), R.layout.item_subject_list_home_fragment);
         mRecycleAdapter.setPresenter(new Presenter());
         //TODO HomeFragment数据添加
-//        mRecycleAdapter.set();
+        mRecycleAdapter.set(getGridViewData());
         binding.subjectListHomeFragment.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.subjectListHomeFragment.setAdapter(mRecycleAdapter);
     }
@@ -121,11 +121,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     /**
      *  加载RecycleViewData
      */
-    private void getRecycleData(){
+    private List<String> getRecycleData(){
         mData = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             mData.add("" + i);
         }
+        return mData;
     }
 
     /**

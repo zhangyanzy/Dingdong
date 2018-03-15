@@ -38,7 +38,7 @@ public class ShopTeacherListActivity extends BaseActivity {
         initAdapter();
     }
 
-    public List<TeacherInfo> getData() {
+    private List<TeacherInfo> getData() {
         teacherInfos = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             info = new TeacherInfo("张琰", "Android 开发工程师，毕业于英国阿尔斯特大学，工科硕士学位");

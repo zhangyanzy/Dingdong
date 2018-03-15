@@ -11,32 +11,31 @@
             android:orientation="vertical">
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/clear_blue"
-            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/clear_blue"
+                android:orientation="horizontal">
 
-            <TextView
-            android:id="@+id/choose_city_home_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="上海市"
-            android:textColor="@color/white"
-            android:textSize="16dp" />
+                <TextView
+                    android:id="@+id/choose_city_home_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="上海市"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
 
-            <EditText
-            android:id="@+id/search_subject_home_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@color/white"
-            android:hint="搜索课程" />
+                <android.support.v7.widget.SearchView
+                    android:id="@+id/home_fragment_search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/white"
+                    android:queryHint="搜索课程"
+                    ></android.support.v7.widget.SearchView>
+
             </LinearLayout>
-            <!--<include-->
-                <!--layout="@layout/search_view_top_bar"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/navigation_top_bar_height" />-->
 
             <com.youth.banner.Banner
                 android:id="@+id/banner_home_fragment"
@@ -47,11 +46,10 @@
                 android:id="@+id/gv_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:horizontalSpacing="10dp"
                 android:numColumns="4"
-                android:verticalSpacing="10dp"
-                android:layout_gravity="center"
-                />
+                android:verticalSpacing="10dp" />
 
             <TextView
                 android:id="@+id/excess_hint_home_fragment"
