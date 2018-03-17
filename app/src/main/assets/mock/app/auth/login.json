@@ -7,7 +7,15 @@
     "sex": "男",
     "birthday": "1992-09-14",
     "remark": "测试数据",
-    "num": "4gfd5g46df"
+    "num": "4gfd5g46df",
+    "favShop": "28",
+    "favSubject": "456",
+    "favUser": "16",
+    "fans": "7894",
+    "userImage": {
+      "url": "http://img5.imgtn.bdimg.com/it/u=3826939049,974612584&fm=11&gp=0.jpg",
+      "id": "1"
+    }
   },
   "success": true,
   "message": null,

@@ -57,6 +57,7 @@ dependencies {
     dependencies {
         compile 'com.github.markzhai:databinding-rv-adapter:1.0.1'
     }
+    compile 'com.github.bumptech.glide:glide:4.0.0'
 
     //首页banner实现框架
     compile 'com.youth.banner:banner:1.4.9'

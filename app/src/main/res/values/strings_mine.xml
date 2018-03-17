@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mine_title_dd">叮咚号：</string>
+    <string name="mine_my_order">我的订单</string>
+    <string name="mine_order_state_wait_pay">待支付</string>
+    <string name="mine_order_state_wait_submit">待确认</string>
+    <string name="mine_order_state_use">可使用</string>
+    <string name="mine_order_state_wait_assess">待评价</string>
+    <string name="mine_label_fav_shop">门店关注</string>
+    <string name="mine_label_fav_subject">课程关注</string>
+    <string name="mine_label_fav_user">关注</string>
+    <string name="mine_label_fans">粉丝</string>
+    <string name="mine_label_reward">收到打赏</string>
+    <string name="mine_label_student_card">我的学员卡</string>
+    <string name="mine_label_blue_wrist">我的蓝手环</string>
+    <string name="mine_label_fav">内容收藏</string>
+    <string name="mine_label_agent">申请成为代理</string>
+    <string name="mine_label_customer">联系客服</string>
+    <string name="mine_label_reset_mobile">更改手机号码</string>
+</resources>

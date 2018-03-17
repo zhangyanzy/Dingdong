@@ -168,7 +168,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                     index = i;
                 }
             }
-            Glide.with(getContext()).load(path).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageView);
+//            Glide.with(getContext()).load(path).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageView);
             final int finalIndex = index;
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

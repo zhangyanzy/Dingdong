@@ -46,6 +46,7 @@ public class LoginActivity extends BaseActivity {
         SessionMgr.updateUser(response.getData());
         ToastUtil.toastHint(LoginActivity.this, "登录成功");
         startActivity(new Intent(LoginActivity.this, IdentitySwitchActivity.class));
+        finish();
       }
     });
   }
