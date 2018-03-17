@@ -3,10 +3,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.main.fragment.HomeFragment" />
+            type="com.dindong.dingdong.presentation.main.fragment.HomeFragment.Presenter" />
     </data>
 
     <LinearLayout
