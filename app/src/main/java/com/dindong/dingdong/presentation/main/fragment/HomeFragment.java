@@ -8,7 +8,13 @@ import java.util.Map;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
-import com.dindong.dingdong.presentation.main.ShopTeacherListActivity;
+import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.shop.usecase.ListHotSubjectCase;
+import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.entity.QueryParam;
+import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.presentation.main.AllShopActivity;
+import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
@@ -20,7 +26,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,29 +45,24 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private List<Map<String, Object>> dataList;
   // GridView图片
   private int[] icon = {
-      R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher };
-  // GridView文字
-  private String[] iconName = {
-      "全部门店", "拼团上课", "叮咚公益", "全部课程" };
+      R.mipmap.seat, R.mipmap.seat, R.mipmap.seat, R.mipmap.seat };
   // GridView适配器
   private SimpleAdapter mSimpleAdapter;
   // RecycleView所需List
   private List<String> mData;
 
-  // private HomeRecycleAdapter mRecycleAdapter;
   private List<String> mBannerList;
-  private Intent intent;
-  private SingleTypeAdapter mRecycleAdapter;
+  private SingleTypeAdapter hotSubjectAdapter;
 
   @Override
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+
     return binding.getRoot();
   }
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    binding.excessHintHomeFragment.setMovementMethod(new ScrollingMovementMethod());
     /**
      * 初始化GridView
      */
@@ -75,63 +75,45 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     binding.gvChannel.setAdapter(mSimpleAdapter);
     binding.gvChannel.setOnItemClickListener(this);
 
-    initRecycleAdapter();
     /**
      * 将获取到的网络图片放置在Banner中
      */
     mBannerList = new ArrayList();
-    mBannerList.add("http://img4.imgtn.bdimg.com/it/u=1849328229,2650485437&fm=214&gp=0.jpg");
     mBannerList.add(
-        "http://images.7723.cn/attachments/jietu/44953/jietub7eee801f9dafadf265e3ad5cd1d132c20141202BM3YYc.jpg");
-    mBannerList.add("http://img2.imgtn.bdimg.com/it/u=4100327403,4075914187&fm=214&gp=0.jpg");
-    for (int i = 0; i < mBannerList.size(); i++) {
-      String image = mBannerList.get(i);
-    }
+        "http://d.hiphotos.baidu.com/image/pic/item/d833c895d143ad4b3ae286d88e025aafa50f06de.jpg");
+    mBannerList.add(
+        "http://f.hiphotos.baidu.com/image/pic/item/9f2f070828381f305c2ce1b9a5014c086e06f0ed.jpg");
+    mBannerList.add(
+        "http://b.hiphotos.baidu.com/image/h%3D300/sign=46a99bea711ed21b66c928e59d6eddae/b21bb051f8198618f747e59c46ed2e738bd4e6a2.jpg");
     binding.bannerHomeFragment.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         .setIndicatorGravity(BannerConfig.CENTER).setDelayTime(2000)
         .setImageLoader(new GlideImageLoader()).setImages(mBannerList).start();
 
+    refreshData();
   }
 
-  /**
-   * 初始化RecycleViewAdapter
-   */
-  private void initRecycleAdapter() {
-    // mRecycleAdapter = new HomeRecycleAdapter(mData, getContext());
-    // binding.subjectListHomeFragment.setLayoutManager(new
-    // LinearLayoutManager(getContext()));
-    // binding.subjectListHomeFragment.setItemAnimator(new DefaultItemAnimator());
-    // binding.subjectListHomeFragment.setAdapter(mRecycleAdapter);
-    mRecycleAdapter = new SingleTypeAdapter(getContext(), R.layout.item_subject_list_home_fragment);
-    mRecycleAdapter.setPresenter(new Presenter());
-    // TODO HomeFragment数据添加
-    mRecycleAdapter.set(getRecycleData());
-    binding.subjectListHomeFragment.setLayoutManager(new LinearLayoutManager(getContext()));
-    binding.subjectListHomeFragment.setAdapter(mRecycleAdapter);
+  @Override
+  public void setUserVisibleHint(boolean isVisibleToUser) {
+    super.setUserVisibleHint(isVisibleToUser);
+    if (isVisibleToUser){
+      if (binding==null)
+        return;
+      refreshData();
+    }
   }
 
   /**
    * 加载GridView的图片和文件名
    */
   private List<Map<String, Object>> getGridViewData() {
+    String[] tab = getResources().getStringArray(R.array.main_home_tab);
     for (int i = 0; i < icon.length; i++) {
       Map<String, Object> map = new HashMap<String, Object>();
       map.put("image", icon[i]);
-      map.put("text", iconName[i]);
+      map.put("text", tab[i]);
       dataList.add(map);
     }
     return dataList;
-  }
-
-  /**
-   * 加载RecycleViewData
-   */
-  private List<String> getRecycleData() {
-    mData = new ArrayList<>();
-    for (int i = 1; i <= 10; i++) {
-      mData.add("" + i);
-    }
-    return mData;
   }
 
   /**
@@ -141,23 +123,54 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
     switch (i) {
     case 0:
-      // intent = new Intent(getContext(), AllShopActivity.class);
-      intent = new Intent(getContext(), ShopTeacherListActivity.class);
-      startActivity(intent);
+      // 附近门店
+      startActivity(new Intent(getContext(), AllShopActivity.class));
       break;
     case 1:
+      // 拼团上课
       ToastUtil.toastSuccess(getContext(), "拼团上课");
       break;
     case 2:
+      // 全部课程
       ToastUtil.toastSuccess(getContext(), "叮咚公益");
       break;
     case 3:
+      // 叮咚公益
       ToastUtil.toastSuccess(getContext(), "全部课程");
-      break;
-    default:
       break;
     }
 
+  }
+
+  /**
+   * 更新数据
+   */
+  private void refreshData() {
+    listHotSubject();
+  }
+
+  /**
+   * 获取热门推荐课程
+   */
+  private void listHotSubject() {
+    QueryParam queryParam = new QueryParam();
+    queryParam.setLimit(2);
+    new ListHotSubjectCase(queryParam).execute(new HttpSubscriber<List<Subject>>() {
+      @Override
+      public void onFailure(String errorMsg, Response<List<Subject>> response) {
+      }
+
+      @Override
+      public void onSuccess(Response<List<Subject>> response) {
+        hotSubjectAdapter = new SingleTypeAdapter(getContext(), R.layout.item_home_hot_subject);
+        hotSubjectAdapter.setPresenter(new Presenter());
+        hotSubjectAdapter.set(response.getData());
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.lstHotSubject.setLayoutManager(manager);
+        binding.lstHotSubject.setAdapter(hotSubjectAdapter);
+      }
+    });
   }
 
   /**
@@ -173,7 +186,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
           index = i;
         }
       }
-      // Glide.with(getContext()).load(path).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(imageView);
+      GlideUtil.load(getContext(), path, imageView);
       final int finalIndex = index;
       imageView.setOnClickListener(new View.OnClickListener() {
         @Override

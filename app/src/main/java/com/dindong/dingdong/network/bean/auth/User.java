@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.dindong.dingdong.base.ShallowCopy;
-import com.dindong.dingdong.network.bean.entity.UserImage;
+import com.dindong.dingdong.network.bean.entity.GlobalImage;
 
 /**
  * Created by wcong on 2018/3/9.
@@ -15,7 +15,6 @@ import com.dindong.dingdong.network.bean.entity.UserImage;
 
 public class User extends ShallowCopy<User> implements Serializable, Cloneable {
   private String id;// UUID
-  private String userId;// 用户ID
   private AuthIdentity identity;// 用户身份
   private String name;// 昵称
   private String mobile;// 手机号
@@ -27,7 +26,7 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
   private BigDecimal favSubject = BigDecimal.ZERO;// 关注课程数
   private BigDecimal favUser = BigDecimal.ZERO;// 关注人数
   private BigDecimal fans = BigDecimal.ZERO;// 粉丝
-  private UserImage userImage;// 用户头像
+  private GlobalImage userImage;// 用户头像
 
   public String getId() {
     return id;
@@ -35,14 +34,6 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public String getUserId() {
-    return userId;
-  }
-
-  public void setUserId(String userId) {
-    this.userId = userId;
   }
 
   public AuthIdentity getIdentity() {
@@ -133,11 +124,11 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
     this.fans = fans;
   }
 
-  public UserImage getUserImage() {
+  public GlobalImage getUserImage() {
     return userImage;
   }
 
-  public void setUserImage(UserImage userImage) {
+  public void setUserImage(GlobalImage userImage) {
     this.userImage = userImage;
   }
 }

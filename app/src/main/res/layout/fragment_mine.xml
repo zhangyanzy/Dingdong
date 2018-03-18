@@ -228,11 +228,7 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="#F4F5F7" />
-
+            <include layout="@layout/space_item" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -615,11 +611,7 @@
                 style="@style/divider_item"
                 android:layout_marginLeft="49dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="#F4F5F7" />
-
+            <include layout="@layout/space_item" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

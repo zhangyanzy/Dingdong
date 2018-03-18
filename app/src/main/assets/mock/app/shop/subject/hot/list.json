@@ -1,0 +1,82 @@
+{
+  "data": [
+    {
+      "id": "1as5d456as",
+      "name": "初中英语1V1体验试学班",
+      "subjectType": "NORMAL",
+      "amount": "289.00",
+      "originalAmount": "323",
+      "unit": "10课时",
+      "favCount": "10",
+      "boughtCount": "30",
+      "shop": {
+        "id": "4aw56e456wq",
+        "name": "英孚教育（浦江店）",
+        "phone": "15710129773",
+        "isProve": true,
+        "address": {
+          "province": {
+            "id": null,
+            "text": "上海市"
+          },
+          "city": {
+            "id": null,
+            "text": "上海市"
+          },
+          "district": {
+            "id": null,
+            "text": "闵行区"
+          },
+          "street": "江文路599弄54号"
+        },
+        "longitude": "84",
+        "latitude": "84",
+        "range": "847.9"
+      }
+    },
+    {
+      "id": "1as5d456as",
+      "name": "初中数学冲刺班",
+      "subjectType": "GROUP",
+      "amount": "323",
+      "originalAmount": "323",
+      "unit": "10课时",
+      "favCount": "12",
+      "boughtCount": "3",
+      "shop": {
+        "id": "4aw56e456wq",
+        "name": "英孚教育（浦江店）",
+        "phone": "15710129773",
+        "isProve": true,
+        "address": {
+          "province": {
+            "id": null,
+            "text": "上海市"
+          },
+          "city": {
+            "id": null,
+            "text": "上海市"
+          },
+          "district": {
+            "id": null,
+            "text": "闵行区"
+          },
+          "street": "江文路599弄54号"
+        },
+        "longitude": "84",
+        "latitude": "84",
+        "range": "847.9",
+        "images": [
+          {
+            "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521373954969&di=6f44b7c59df18e2d14cd96c72201d050&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D3019ea2d69d0f703f2bf9d9c61823451%2Feaf81a4c510fd9f96d20e9532e2dd42a2834a4d1.jpg"
+          }
+        ]
+      }
+    }
+  ],
+  "success": true,
+  "message": null,
+  "fields": null,
+  "total": null,
+  "more": true
+}

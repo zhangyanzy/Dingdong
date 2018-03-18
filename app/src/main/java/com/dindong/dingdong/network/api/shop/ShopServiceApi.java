@@ -10,6 +10,7 @@ import com.dindong.dingdong.network.bean.shop.Teacher;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -42,7 +43,7 @@ public interface ShopServiceApi {
   Observable<Response<Shop>> get(@Query("shopId") String shopId);
 
   /**
-   * 查询课程列表，支持分页查询。
+   * 查询门店课程列表，支持分页查询。
    * 
    * @param id
    *          门店id
@@ -54,6 +55,16 @@ public interface ShopServiceApi {
    */
   @GET("app/{shop}/shop/subject/list")
   Observable<Response<List<Subject>>> listSubject(@Path("shop") String id, @Body QueryParam param);
+
+  /**
+   * 查询热门推荐课程，所有门店
+   *
+   * @param param
+   *          grid:[.)，当前经纬度[longitude经,latitude纬]<br/>
+   * @return
+   */
+  @POST("app/shop/subject/hot/list")
+  Observable<Response<List<Subject>>> listHotSubject(@Body QueryParam param);
 
   /**
    * 查询门店老师列表，支持分页查询。

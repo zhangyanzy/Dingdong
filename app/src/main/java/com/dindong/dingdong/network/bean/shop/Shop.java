@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dindong.dingdong.network.bean.entity.Address;
+import com.dindong.dingdong.network.bean.entity.GlobalImage;
 
 /**
  * Created by wcong on 2018/3/13. 门店实体
@@ -21,7 +22,9 @@ public class Shop {
   private Address address;// 门店地址
   private String longitude;// 经度
   private String latitude;// 纬度
-  private BigDecimal range;// 距离
+  private BigDecimal range = BigDecimal.ZERO;// 距离
+
+  private List<GlobalImage> images = new ArrayList<>();// 门店图片
 
   private List<Subject> subjects = new ArrayList<>();// 门店课程
 
@@ -32,7 +35,6 @@ public class Shop {
   public void setId(String id) {
     this.id = id;
   }
-
 
   public String getName() {
     return name;
@@ -96,6 +98,14 @@ public class Shop {
 
   public void setRange(BigDecimal range) {
     this.range = range;
+  }
+
+  public List<GlobalImage> getImages() {
+    return images;
+  }
+
+  public void setImages(List<GlobalImage> images) {
+    this.images = images;
   }
 
   public List<Subject> getSubjects() {

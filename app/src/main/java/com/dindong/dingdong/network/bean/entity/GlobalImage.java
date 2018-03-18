@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by wcong on 2018/3/15.
  */
 
-public class UserImage implements Serializable {
+public class GlobalImage implements Serializable {
 
   private String id;
   private String storageId;

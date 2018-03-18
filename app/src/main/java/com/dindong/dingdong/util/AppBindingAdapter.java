@@ -24,7 +24,7 @@ public class AppBindingAdapter {
     if (IsEmpty.object(resourceUrl) | IsEmpty.string(String.valueOf(resourceUrl))) {
       Glide.with(view.getContext()).load(R.mipmap.img_placeholder).apply(options).into(view);
     } else if (resourceUrl instanceof String) {
-      Glide.with(view.getContext()).load((String) resourceUrl).apply(options).into(view);
+      Glide.with(view.getContext()).load(resourceUrl).apply(options).into(view);
     } else if (resourceUrl instanceof Integer) {
       Glide.with(view.getContext()).load((Integer) resourceUrl).apply(options).into(view);
     } else {

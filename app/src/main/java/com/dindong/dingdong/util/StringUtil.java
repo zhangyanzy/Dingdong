@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.MessageFormat;
 
+import com.dindong.dingdong.network.bean.entity.Address;
+
 /**
  * Created by wcong on 2018/3/17. 文本格式化
  */
@@ -73,5 +75,18 @@ public class StringUtil {
     } else {
       return MessageFormat.format(temp, bigDecimal.setScale(2, RoundingMode.HALF_UP));
     }
+  }
+
+  /**
+   * 地址转字符串
+   *
+   * @param address
+   * @return
+   */
+  public static String address2Str(Address address) {
+    return address.getDistrict().getText()
+        + (address.getDistrict().getText().equals(address.getCity().getText()) ? ""
+            : address.getCity().getText())
+        + address.getDistrict().getText() + address.getStreet();
   }
 }
