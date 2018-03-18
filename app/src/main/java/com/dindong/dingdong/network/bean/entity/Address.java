@@ -45,6 +45,8 @@ public class Address {
 
   @Override
   public String toString() {
-    return province.getText() + city.getText() + district.getText() + street;
+    return getProvince().getText()
+        + (getProvince().getText().equals(getCity().getText()) ? "" : getCity().getText())
+        + getDistrict().getText() + getStreet();
   }
 }

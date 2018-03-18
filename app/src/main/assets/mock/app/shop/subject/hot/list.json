@@ -31,12 +31,17 @@
         },
         "longitude": "84",
         "latitude": "84",
-        "range": "847.9"
+        "range": "847.9",
+        "images": [
+          {
+            "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521373954969&di=d8fea2b4947e3b8027d2b1557db071b7&imgtype=0&src=http%3A%2F%2Fp1.qhmsg.com%2Ft014b38bbc7b9ff2d72.jpg"
+          }
+        ]
       }
     },
     {
       "id": "1as5d456as",
-      "name": "初中数学冲刺班",
+      "name": "新概念（青少年版）二年级 全集随到随学",
       "subjectType": "GROUP",
       "amount": "323",
       "originalAmount": "323",

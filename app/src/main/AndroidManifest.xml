@@ -25,7 +25,9 @@
             android:name=".presentation.main.MainActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 全部门店 -->
-        <activity android:name=".presentation.main.AllShopActivity" />
+        <activity
+            android:name=".presentation.shop.ShopListActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 门店教育列表 -->
         <activity android:name=".presentation.main.ShopTeacherListActivity" />
         <activity android:name=".presentation.main.ShopInfoActivity" />

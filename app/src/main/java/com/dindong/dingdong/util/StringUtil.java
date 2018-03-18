@@ -84,8 +84,8 @@ public class StringUtil {
    * @return
    */
   public static String address2Str(Address address) {
-    return address.getDistrict().getText()
-        + (address.getDistrict().getText().equals(address.getCity().getText()) ? ""
+    return address.getProvince().getText()
+        + (address.getProvince().getText().equals(address.getCity().getText()) ? ""
             : address.getCity().getText())
         + address.getDistrict().getText() + address.getStreet();
   }

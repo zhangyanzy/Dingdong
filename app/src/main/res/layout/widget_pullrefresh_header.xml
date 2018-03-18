@@ -1,4 +1,4 @@
-<com.qianfan123.jomo.widget.pullrefresh.DefaultHeaderView
+<com.dindong.dingdong.widget.pullrefresh.DefaultHeaderView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -31,4 +31,4 @@
         android:layout_toLeftOf="@id/refresh_text_view"
         android:layout_toStartOf="@id/refresh_text_view"
         android:contentDescription="@null"/>
-</com.qianfan123.jomo.widget.pullrefresh.DefaultHeaderView>
+</com.dindong.dingdong.widget.pullrefresh.DefaultHeaderView>

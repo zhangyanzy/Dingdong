@@ -30,7 +30,7 @@ public interface ShopServiceApi {
    *          range:in，距离包含<br/>
    * @return
    */
-  @GET("app/shop/list")
+  @POST("app/shop/list")
   Observable<Response<List<Shop>>> listShop(@Body QueryParam param);
 
   /**
@@ -53,7 +53,7 @@ public interface ShopServiceApi {
    *          SortParam#property=evaluate,direction=desc，按评价查询<br/>
    * @return
    */
-  @GET("app/{shop}/shop/subject/list")
+  @POST("app/{shop}/shop/subject/list")
   Observable<Response<List<Subject>>> listSubject(@Path("shop") String id, @Body QueryParam param);
 
   /**
@@ -73,6 +73,6 @@ public interface ShopServiceApi {
    * @param param
    * @return
    */
-  @GET("app/{shop}/shop/teacher/list")
+  @POST("app/{shop}/shop/teacher/list")
   Observable<Response<List<Teacher>>> listTeacher(@Path("shop") String id, @Body QueryParam param);
 }

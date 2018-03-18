@@ -8,15 +8,17 @@ import java.util.Map;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
+import com.dindong.dingdong.databinding.ItemHomeHotSubjectBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.shop.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.shop.Subject;
-import com.dindong.dingdong.presentation.main.AllShopActivity;
+import com.dindong.dingdong.presentation.shop.ShopListActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
+import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -24,6 +26,7 @@ import com.youth.banner.loader.ImageLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -45,7 +48,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private List<Map<String, Object>> dataList;
   // GridView图片
   private int[] icon = {
-      R.mipmap.seat, R.mipmap.seat, R.mipmap.seat, R.mipmap.seat };
+      R.mipmap.seat,
+          R.mipmap.seat, R.mipmap.seat, R.mipmap.seat };
   // GridView适配器
   private SimpleAdapter mSimpleAdapter;
   // RecycleView所需List
@@ -95,8 +99,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   @Override
   public void setUserVisibleHint(boolean isVisibleToUser) {
     super.setUserVisibleHint(isVisibleToUser);
-    if (isVisibleToUser){
-      if (binding==null)
+    if (isVisibleToUser) {
+      if (binding == null)
         return;
       refreshData();
     }
@@ -124,7 +128,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     switch (i) {
     case 0:
       // 附近门店
-      startActivity(new Intent(getContext(), AllShopActivity.class));
+      startActivity(new Intent(getContext(), ShopListActivity.class));
       break;
     case 1:
       // 拼团上课
@@ -164,6 +168,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       public void onSuccess(Response<List<Subject>> response) {
         hotSubjectAdapter = new SingleTypeAdapter(getContext(), R.layout.item_home_hot_subject);
         hotSubjectAdapter.setPresenter(new Presenter());
+        hotSubjectAdapter.setDecorator(new Decorator());
         hotSubjectAdapter.set(response.getData());
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -206,6 +211,19 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
           }
         }
       });
+    }
+  }
+
+  class Decorator implements BaseViewAdapter.Decorator {
+    @Override
+    public void decorator(BindingViewHolder holder, int position, int viewType) {
+      if (holder == null || holder.getBinding() == null)
+        return;
+      ItemHomeHotSubjectBinding itemBinding = (ItemHomeHotSubjectBinding) holder.getBinding();
+      itemBinding.txtOriginal.setVisibility(itemBinding.getItem().getAmount()
+          .compareTo(itemBinding.getItem().getOriginalAmount()) == 0 ? View.GONE : View.VISIBLE);
+      itemBinding.txtOriginal.getPaint()
+          .setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
     }
   }
 

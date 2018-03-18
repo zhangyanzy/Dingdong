@@ -22,7 +22,7 @@ public interface AuthServiceApi {
    * @param password
    * @return
    */
-  @POST("app/auth/login")
+  @GET("app/auth/login")
   Observable<Response<User>> login(@Query("mobile") String mobile,
       @Query("password") String password);
 
@@ -33,7 +33,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @POST("app/auth/shortLogin")
+  @GET("app/auth/shortLogin")
   Observable<Response<User>> shortLogin(@Query("mobile") String mobile,
       @Query("authCode") String authCode);
 
@@ -69,7 +69,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @POST("app/auth/password/reset")
+  @GET("app/auth/password/reset")
   Observable<Response> resetPassword(@Query(("mobile")) String mobile,
       @Query(("password")) String password, @Query(("authCode")) String authCode);
 
@@ -82,7 +82,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @POST("app/auth/password/resetByOld")
+  @GET("app/auth/password/resetByOld")
   Observable<Response> resetPasswordByOld(@Query(("mobile")) String mobile,
       @Query(("oldPassword")) String oldPassword, @Query(("newPassword")) String newPassword,
       @Query(("authCode")) String authCode);
@@ -96,7 +96,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @POST("app/auth/resetMobil")
+  @GET("app/auth/resetMobil")
   Observable<Response> resetMobil(@Query(("oldMobile")) String oldMobile,
       @Query(("newMobile")) String newMobile, @Query(("password")) String password,
       @Query(("authCode")) String authCode);

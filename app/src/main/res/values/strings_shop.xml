@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shop_list_near">附近</string>
+    <string name="shop_list_group">团</string>
+    <string name="shop_list_normal">课</string>
+</resources>

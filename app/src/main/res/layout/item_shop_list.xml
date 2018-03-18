@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.dindong.dingdong.util.IsEmpty" />
+
+        <import type="com.dindong.dingdong.util.StringUtil" />
+
+        <variable
+            name="item"
+            type="com.dindong.dingdong.network.bean.shop.Shop" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                app:imageResourceUrl='@{IsEmpty.list(item.images)?"":item.images.get(0).url}' />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.name}"
+                    android:textColor="#333333"
+                    android:textSize="14dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{item.address.toString()}"
+                        android:textColor="#666666"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="@{StringUtil.format(@string/global_range,item.range)}"
+                        android:textColor="#666666"
+                        android:textSize="13dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/divider"
+            style="@style/divider_item"
+            android:layout_marginLeft="12dp"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+        <include layout="@layout/space_item" />
+    </LinearLayout>
+</layout>

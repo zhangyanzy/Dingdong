@@ -1,4 +1,4 @@
-<com.qianfan123.jomo.widget.pullrefresh.DefaultFooterView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dindong.dingdong.widget.pullrefresh.DefaultFooterView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -30,4 +30,4 @@
         android:layout_toLeftOf="@id/footer_text_view1"
         android:layout_toStartOf="@id/footer_text_view1"
         android:contentDescription="@null" />
-</com.qianfan123.jomo.widget.pullrefresh.DefaultFooterView>
+</com.dindong.dingdong.widget.pullrefresh.DefaultFooterView>
