@@ -2,11 +2,13 @@ package com.dindong.dingdong.network.bean.entity;
 
 import com.dindong.dingdong.util.IsEmpty;
 
+import java.io.Serializable;
+
 /**
  * Created by wcong on 2018/3/13.
  */
 
-public class Region {
+public class Region implements Serializable{
   private String id;
   private String text;
 

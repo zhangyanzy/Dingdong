@@ -4,12 +4,16 @@ import java.util.List;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityShopListBinding;
+import com.dindong.dingdong.databinding.ItemShopListBinding;
+import com.dindong.dingdong.databinding.ItemShopListSubjectBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.shop.usecase.ListShopCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.shop.Shop;
+import com.dindong.dingdong.network.bean.shop.Subject;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
@@ -19,9 +23,12 @@ import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
 
 /**
  * Created by wcong on 2018/3/10. 门店列表
@@ -131,11 +138,30 @@ public class ShopListActivity extends BaseActivity {
     public void decorator(BindingViewHolder holder, int position, int viewType) {
       if (holder == null || holder.getBinding() == null)
         return;
+      ItemShopListBinding itemShopListBinding = (ItemShopListBinding) holder.getBinding();
+      itemShopListBinding.layoutSubject.removeAllViews();
+      itemShopListBinding.layoutSubject.setVisibility(View.GONE);
+      itemShopListBinding.divider.setVisibility(View.GONE);
+      for (Subject subject : itemShopListBinding.getItem().getSubjects()) {
+        ItemShopListSubjectBinding itemShopListSubjectBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(ShopListActivity.this), R.layout.item_shop_list_subject, null,
+            false);
+        itemShopListSubjectBinding.setItem(subject);
+        itemShopListBinding.layoutSubject.addView(itemShopListSubjectBinding.getRoot());
+        itemShopListBinding.divider.setVisibility(View.VISIBLE);
+        itemShopListBinding.layoutSubject.setVisibility(View.VISIBLE);
+      }
 
     }
   }
 
   public class Presenter implements BaseViewAdapter.Presenter {
+
+    public void onItemClick(Shop shop) {
+      Intent intent = new Intent(ShopListActivity.this, ShopMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+      startActivity(intent);
+    }
 
   }
 }

@@ -1,5 +1,6 @@
 package com.dindong.dingdong.network.bean.shop;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import com.dindong.dingdong.network.bean.entity.GlobalImage;
  * Created by wcong on 2018/3/13. 门店实体
  */
 
-public class Shop {
+public class Shop implements Serializable{
   private String id;// UUID
   private String name;// 门店名称
   private String phone;// 门店电话

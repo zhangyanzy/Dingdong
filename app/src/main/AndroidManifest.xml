@@ -31,7 +31,8 @@
         <!-- 门店教育列表 -->
         <activity android:name=".presentation.main.ShopTeacherListActivity" />
         <activity android:name=".presentation.main.ShopInfoActivity" />
-        <activity android:name=".presentation.main.IdentitySwitchActivity"></activity>
+        <activity android:name=".presentation.main.IdentitySwitchActivity" />
+        <activity android:name=".presentation.shop.ShopMainActivity"></activity>
     </application>
 
 </manifest>

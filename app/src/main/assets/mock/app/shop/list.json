@@ -37,7 +37,12 @@
           "originalAmount": "323",
           "unit": "10课时",
           "favCount": "10",
-          "boughtCount": "30"
+          "boughtCount": "30",
+          "images": [
+            {
+              "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521570928653&di=9392e7a85bc50638dbdce236b181dcae&imgtype=jpg&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D2627139731%2C1965825508%26fm%3D214%26gp%3D0.jpg"
+            }
+          ]
         },
         {
           "id": "1as5d456as",
@@ -47,7 +52,12 @@
           "originalAmount": "323",
           "unit": "10课时",
           "favCount": "10",
-          "boughtCount": "30"
+          "boughtCount": "30",
+          "images": [
+            {
+              "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521570925325&di=5fd8281dfa961a2aa6f0cbc442649bc3&imgtype=0&src=http%3A%2F%2Fdynamic1.icourses.cn%2Fcoursepic%2F2013%2F0428%2F2198_480.jpg"
+            }
+          ]
         }
       ]
     },
@@ -117,7 +127,12 @@
           "originalAmount": "323",
           "unit": "10课时",
           "favCount": "10",
-          "boughtCount": "30"
+          "boughtCount": "30",
+          "images": [
+            {
+              "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521570925325&di=5fd8281dfa961a2aa6f0cbc442649bc3&imgtype=0&src=http%3A%2F%2Fdynamic1.icourses.cn%2Fcoursepic%2F2013%2F0428%2F2198_480.jpg"
+            }
+          ]
         }
       ]
     }

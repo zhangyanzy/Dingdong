@@ -1,10 +1,12 @@
 package com.dindong.dingdong.network.bean.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by wcong on 2018/3/13. 地址实体
  */
 
-public class Address {
+public class Address implements Serializable {
 
   private Region province;// 省
   private Region city;// 市

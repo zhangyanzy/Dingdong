@@ -99,5 +99,9 @@
         <attr name="errMsg" format="string"></attr>
     </declare-styleable>
 
+    <declare-styleable name="NavigationTopBar">
+        <attr name="title_text" format="string" />
+    </declare-styleable>
+
 
 </resources>

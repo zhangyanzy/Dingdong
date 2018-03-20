@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--门店列表-->
     <string name="shop_list_near">附近</string>
     <string name="shop_list_group">团</string>
     <string name="shop_list_normal">课</string>
+
+    <!--门店主页-->
+    <string name="shop_main_title">门店主页</string>
+    <string name="shop_main_msg_prove">已认证教学场地与工商登记</string>
+    <string name="shop_main_label_prove">认</string>
+    <string name="shop_main_activity">本店活动</string>
 </resources>

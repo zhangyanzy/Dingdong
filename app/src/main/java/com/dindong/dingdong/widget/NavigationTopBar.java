@@ -3,7 +3,9 @@ package com.dindong.dingdong.widget;
 import com.dindong.dingdong.R;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -28,26 +30,30 @@ public class NavigationTopBar extends RelativeLayout implements View.OnClickList
 
   public NavigationTopBar(Context context) {
     super(context);
-    initLayout(context);
+    initLayout(context, null);
   }
 
   public NavigationTopBar(Context context, AttributeSet attrs) {
     super(context, attrs);
-    initLayout(context);
+    initLayout(context, attrs);
   }
 
   public NavigationTopBar(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    initLayout(context);
+    initLayout(context, attrs);
   }
 
-  private void initLayout(Context context) {
+  private void initLayout(Context context, AttributeSet attrs) {
     mLayoutInflater = LayoutInflater.from(context);
     mRootView = mLayoutInflater.inflate(R.layout.layout_navigation_bar, this, true);
     mLeftImage = (ImageView) findViewById(R.id.img_left);
     mTitleText = (TextView) findViewById(R.id.center_title_top_bar);
     findViewById(R.id.layout_left).setOnClickListener(this);
-
+    if (attrs != null) {
+      TypedArray typedArray = getContext().obtainStyledAttributes(attrs,
+          R.styleable.NavigationTopBar);
+      setCenterTitleText(typedArray.getString(R.styleable.NavigationTopBar_title_text));
+    }
   }
 
   @Override
@@ -61,6 +67,23 @@ public class NavigationTopBar extends RelativeLayout implements View.OnClickList
       break;
 
     }
+  }
+
+  public void setContent(ContentType contentType) {
+    if (contentType.equals(ContentType.WHITE)) {
+      mRootView.findViewById(R.id.root)
+          .setBackgroundColor(getContext().getResources().getColor(R.color.white));
+      mTitleText.setTextColor(Color.parseColor("#292C40"));
+      mLeftImage
+          .setImageDrawable(getContext().getResources().getDrawable(R.mipmap.icon_global_chevron));
+    } else if (contentType.equals(ContentType.BLUE)) {
+      mRootView.findViewById(R.id.root).setBackgroundDrawable(
+          getContext().getResources().getDrawable(R.drawable.bg_gradient_blue));
+      mTitleText.setTextColor(getContext().getResources().getColor(R.color.white));
+      mLeftImage
+          .setImageDrawable(getContext().getResources().getDrawable(R.mipmap.ic_global_back_white));
+    }
+
   }
 
   public void setNavigationTopBarClickListener(
@@ -102,5 +125,9 @@ public class NavigationTopBar extends RelativeLayout implements View.OnClickList
 
   public interface NavigationTopBarClickListener {
     public void leftImageClick();
+  }
+
+  public enum ContentType {
+    WHITE, BLUE;
   }
 }

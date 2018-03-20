@@ -14,12 +14,13 @@
 
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.main.fragment.HomeFragment.Presenter" />
+            type="com.dindong.dingdong.adapter.SubjectPresenter" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->presenter.onSubjectItemClick(item)}"
         android:orientation="vertical">
 
 
@@ -72,7 +73,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringUtil.address2Str(item.shop.address)}"
+                            android:text="@{item.shop.address.toString()}"
                             android:textColor="#666666"
                             android:textSize="12dp" />
 

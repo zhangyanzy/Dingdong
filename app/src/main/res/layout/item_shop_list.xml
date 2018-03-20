@@ -11,11 +11,16 @@
         <variable
             name="item"
             type="com.dindong.dingdong.network.bean.shop.Shop" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.presentation.shop.ShopListActivity.Presenter" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->presenter.onItemClick(item)}"
         android:orientation="vertical">
 
         <LinearLayout
@@ -72,7 +77,15 @@
             style="@style/divider_item"
             android:layout_marginLeft="12dp"
             android:orientation="vertical"
-            android:visibility="gone" />
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/layout_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical" />
 
         <include layout="@layout/space_item" />
     </LinearLayout>

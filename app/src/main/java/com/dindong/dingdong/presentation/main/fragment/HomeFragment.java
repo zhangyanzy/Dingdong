@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.dindong.dingdong.R;
+import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
 import com.dindong.dingdong.databinding.ItemHomeHotSubjectBinding;
@@ -48,8 +49,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private List<Map<String, Object>> dataList;
   // GridView图片
   private int[] icon = {
-      R.mipmap.seat,
-          R.mipmap.seat, R.mipmap.seat, R.mipmap.seat };
+      R.mipmap.seat, R.mipmap.seat, R.mipmap.seat, R.mipmap.seat };
   // GridView适配器
   private SimpleAdapter mSimpleAdapter;
   // RecycleView所需List
@@ -166,7 +166,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
       @Override
       public void onSuccess(Response<List<Subject>> response) {
-        hotSubjectAdapter = new SingleTypeAdapter(getContext(), R.layout.item_home_hot_subject);
+        hotSubjectAdapter = new SingleTypeAdapter(getContext(), R.layout.item_global_subject);
         hotSubjectAdapter.setPresenter(new Presenter());
         hotSubjectAdapter.setDecorator(new Decorator());
         hotSubjectAdapter.set(response.getData());
@@ -227,13 +227,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
   }
 
-  /**
-   * RecycleView Item点击事件
-   */
-  public class Presenter implements BaseViewAdapter.Presenter {
-    public void onItemClick() {
+  public class Presenter implements SubjectPresenter {
 
+    @Override
+    public void onSubjectItemClick(Subject subject) {
+      ToastUtil.toastHint(getContext(), subject.getName());
     }
-
   }
 }
