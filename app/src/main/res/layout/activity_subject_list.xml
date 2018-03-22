@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dindong.dingdong.widget.NavigationTopBar
+            android:id="@+id/nb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_text="@string/subject_list_title">
+
+        </com.dindong.dingdong.widget.NavigationTopBar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F4F5F7"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="16dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/subject_list_all_tag"
+                    android:textColor="#333333"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:text="@string/subject_list_near"
+                    android:textColor="#333333"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_search_edit_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/icon_global_search" />
+
+                <com.dindong.dingdong.widget.cleartextfield.ClearEditText
+                    android:id="@+id/mobile_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toEndOf="@+id/mobile_iv"
+                    android:layout_toRightOf="@+id/mobile_iv"
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/subject_list_search_hint"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="#888888"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.dindong.dingdong.widget.pullrefresh.DefaultRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/lst"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.dindong.dingdong.widget.pullrefresh.DefaultRefreshLayout>
+    </LinearLayout>
+</layout>

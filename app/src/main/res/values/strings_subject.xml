@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--课程列表-->
+    <string name="subject_list_title">课程列表</string>
+    <string name="subject_list_search_hint">输入机构名称搜索</string>
+    <string name="subject_list_all_tag">全部分类</string>
+    <string name="subject_list_near">离我最近</string>
+
+    <!--课程详情-->
+    <string name="subject_detail_title">课程详情</string>
+    <string name="subject_detail_btn_fav">收藏</string>
+    <string name="subject_detail_btn_pay_normal">立即拼团</string>
+    <string name="subject_detail_btn_pay_group">立即购买</string>
+</resources>

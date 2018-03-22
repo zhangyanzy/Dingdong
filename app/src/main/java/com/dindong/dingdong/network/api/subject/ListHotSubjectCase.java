@@ -1,7 +1,6 @@
-package com.dindong.dingdong.network.api.shop.usecase;
+package com.dindong.dingdong.network.api.subject;
 
 import com.dindong.dingdong.network.BaseUseCase;
-import com.dindong.dingdong.network.api.shop.ShopServiceApi;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 
 import rx.Observable;
@@ -12,7 +11,7 @@ import rx.Observable;
  * 查询热门推荐课程</>
  */
 
-public class ListHotSubjectCase extends BaseUseCase<ShopServiceApi> {
+public class ListHotSubjectCase extends BaseUseCase<SubjectServiceApi> {
   private QueryParam queryParam;
 
   public ListHotSubjectCase(QueryParam queryParam) {

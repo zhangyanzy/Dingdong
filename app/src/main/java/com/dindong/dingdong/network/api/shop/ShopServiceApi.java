@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by wcong on 2018/3/13. 门店及课程API
+ * Created by wcong on 2018/3/13. 门店API
  */
 
 public interface ShopServiceApi {
@@ -42,29 +42,6 @@ public interface ShopServiceApi {
   @GET("app/shop/get")
   Observable<Response<Shop>> get(@Query("shopId") String shopId);
 
-  /**
-   * 查询门店课程列表，支持分页查询。
-   * 
-   * @param id
-   *          门店id
-   * @param param
-   *          SortParam#property=range,direction=asc，按距离查询<br/>
-   *          SortParam#property=popular,direction=desc，按人气查询<br/>
-   *          SortParam#property=evaluate,direction=desc，按评价查询<br/>
-   * @return
-   */
-  @POST("app/{shop}/shop/subject/list")
-  Observable<Response<List<Subject>>> listSubject(@Path("shop") String id, @Body QueryParam param);
-
-  /**
-   * 查询热门推荐课程，所有门店
-   *
-   * @param param
-   *          grid:[.)，当前经纬度[longitude经,latitude纬]<br/>
-   * @return
-   */
-  @POST("app/shop/subject/hot/list")
-  Observable<Response<List<Subject>>> listHotSubject(@Body QueryParam param);
 
   /**
    * 查询门店老师列表，支持分页查询。

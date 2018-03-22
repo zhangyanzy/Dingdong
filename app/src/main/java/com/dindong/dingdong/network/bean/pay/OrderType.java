@@ -1,17 +1,16 @@
 package com.dindong.dingdong.network.bean.pay;
 
 /**
- * Created by wangcong on 2018/3/22.
+ * Created by wcong on 2018/3/22.
  * <p>
- * 支付方式
+ * 订单类型 </>
  */
 
-public enum PayMode {
-  other("其他"), aliPay("支付宝"), weiXin("微信");
-
+public enum OrderType {
+  subject("门店课程"), good("门店商品");
   private String name;
 
-  PayMode(String name) {
+  OrderType(String name) {
     this.name = name;
   }
 

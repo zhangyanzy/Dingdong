@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
+import com.dindong.dingdong.network.bean.entity.Tag;
 
 /**
  * Created by wcong on 2018/3/13. 门店课程
@@ -17,6 +18,7 @@ public class Subject implements Serializable {
   private SubjectType subjectType;// 课程类型
   private Shop shop;// 所属门店
   private List<GlobalImage> images = new ArrayList<>();// 课程图片
+  private List<Tag> tags = new ArrayList<>();// 课程分类
 
   private BigDecimal amount = BigDecimal.ZERO;// 课程价格，现价
   private BigDecimal originalAmount = BigDecimal.ZERO;// 课程价格，原价
@@ -102,5 +104,13 @@ public class Subject implements Serializable {
 
   public void setImages(List<GlobalImage> images) {
     this.images = images;
+  }
+
+  public List<Tag> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<Tag> tags) {
+    this.tags = tags;
   }
 }

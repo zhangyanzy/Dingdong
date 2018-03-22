@@ -1,25 +1,22 @@
-package com.dindong.dingdong.presentation.shop;
+package com.dindong.dingdong.presentation.subject;
 
 import java.util.List;
 
 import com.dindong.dingdong.R;
+import com.dindong.dingdong.adapter.SubjectAdapter;
+import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
-import com.dindong.dingdong.databinding.ActivityShopListBinding;
-import com.dindong.dingdong.databinding.ItemShopListBinding;
-import com.dindong.dingdong.databinding.ItemShopListSubjectBinding;
+import com.dindong.dingdong.databinding.ActivitySubjectListBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.shop.usecase.ListShopCase;
 import com.dindong.dingdong.network.api.subject.ListSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
-import com.dindong.dingdong.network.bean.shop.Shop;
 import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.presentation.shop.ShopMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
-import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
-import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
-import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
@@ -28,30 +25,23 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
 
-/**
- * Created by wcong on 2018/3/10. 门店列表
- */
+public class SubjectListActivity extends BaseActivity {
 
-public class ShopListActivity extends BaseActivity {
+  ActivitySubjectListBinding binding;
 
-  private ActivityShopListBinding binding;
-
-  private SingleTypeAdapter adapter;
+  private SubjectAdapter adapter;
 
   @Override
   protected void initComponent() {
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_shop_list);
-    binding.nb.setCenterTitleText(R.string.all_shop);
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_subject_list);
 
-    adapter = new SingleTypeAdapter(this, R.layout.item_shop_list);
+    adapter = new SubjectAdapter(this);
   }
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    listShop(true, true);
+    listSubject(true, true);
   }
 
   @Override
@@ -63,27 +53,28 @@ public class ShopListActivity extends BaseActivity {
             finish();
           }
         });
+
     binding.refreshLayout.setOnRefreshListener(new BaseHeaderView.OnRefreshListener() {
       @Override
       public void onRefresh(BaseHeaderView baseHeaderView) {
-        listShop(false, true);
+        listSubject(false, true);
       }
     });
     binding.refreshLayout.setOnLoadListener(new BaseFooterView.OnLoadListener() {
       @Override
       public void onLoad(BaseFooterView baseFooterView) {
-        listShop(false, false);
+        listSubject(false, false);
       }
     });
   }
 
   /**
-   * 查询附近门店
+   * 查询所有课程
    * 
    * @param showProgress
    * @param isRefresh
    */
-  private void listShop(boolean showProgress, final boolean isRefresh) {
+  private void listSubject(boolean showProgress, final boolean isRefresh) {
     final QueryParam param = new QueryParam();
     if (isRefresh)
       param.setStart(0);
@@ -97,16 +88,16 @@ public class ShopListActivity extends BaseActivity {
     }
 
     final SweetAlertDialog finalSweetAlertDialog = sweetAlertDialog;
-    new ListShopCase(param).execute(new HttpSubscriber<List<Shop>>() {
+    new ListSubjectCase(param).execute(new HttpSubscriber<List<Subject>>() {
       @Override
-      public void onFailure(String errorMsg, Response<List<Shop>> response) {
+      public void onFailure(String errorMsg, Response<List<Subject>> response) {
         if (finalSweetAlertDialog != null)
           finalSweetAlertDialog.dismiss();
-        DialogUtil.getErrorDialog(ShopListActivity.this, errorMsg).show();
+        DialogUtil.getErrorDialog(SubjectListActivity.this, errorMsg).show();
       }
 
       @Override
-      public void onSuccess(Response<List<Shop>> response) {
+      public void onSuccess(Response<List<Subject>> response) {
         loadRecyclerView(response.getData(), isRefresh, response.isMore());
         if (finalSweetAlertDialog != null)
           finalSweetAlertDialog.dismiss();
@@ -115,7 +106,7 @@ public class ShopListActivity extends BaseActivity {
     });
   }
 
-  private void loadRecyclerView(List<Shop> data, boolean isRefresh, boolean isMore) {
+  private void loadRecyclerView(List<Subject> data, boolean isRefresh, boolean isMore) {
     if (isRefresh) {
       adapter.clear();
       binding.refreshLayout.stopRefresh();
@@ -123,7 +114,6 @@ public class ShopListActivity extends BaseActivity {
       binding.refreshLayout.stopLoad();
     adapter.addAll(data);
     adapter.setPresenter(new Presenter());
-    adapter.setDecorator(new Decorator());
     binding.refreshLayout.setHasFooter(isMore);
     if (isRefresh) {
       LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -133,36 +123,15 @@ public class ShopListActivity extends BaseActivity {
     }
   }
 
-  class Decorator implements BaseViewAdapter.Decorator {
+  public class Presenter implements SubjectPresenter {
 
     @Override
-    public void decorator(BindingViewHolder holder, int position, int viewType) {
-      if (holder == null || holder.getBinding() == null)
-        return;
-      ItemShopListBinding itemShopListBinding = (ItemShopListBinding) holder.getBinding();
-      itemShopListBinding.layoutSubject.removeAllViews();
-      itemShopListBinding.layoutSubject.setVisibility(View.GONE);
-      itemShopListBinding.divider.setVisibility(View.GONE);
-      for (Subject subject : itemShopListBinding.getItem().getSubjects()) {
-        ItemShopListSubjectBinding itemShopListSubjectBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(ShopListActivity.this), R.layout.item_shop_list_subject, null,
-            false);
-        itemShopListSubjectBinding.setItem(subject);
-        itemShopListBinding.layoutSubject.addView(itemShopListSubjectBinding.getRoot());
-        itemShopListBinding.divider.setVisibility(View.VISIBLE);
-        itemShopListBinding.layoutSubject.setVisibility(View.VISIBLE);
-      }
-
-    }
-  }
-
-  public class Presenter implements BaseViewAdapter.Presenter {
-
-    public void onItemClick(Shop shop) {
-      Intent intent = new Intent(ShopListActivity.this, ShopMainActivity.class);
-      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+    public void onSubjectItemClick(Subject subject) {
+      Intent intent = new Intent(SubjectListActivity.this, SubjectDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, subject);
       startActivity(intent);
     }
 
   }
+
 }

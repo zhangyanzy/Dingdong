@@ -21,6 +21,6 @@ public class LoginCase extends BaseUseCase<AuthServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection().login(mobile,password);
+    return createConnection(true).login(mobile,password);
   }
 }

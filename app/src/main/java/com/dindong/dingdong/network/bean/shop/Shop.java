@@ -7,17 +7,18 @@ import java.util.List;
 
 import com.dindong.dingdong.network.bean.entity.Address;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
+import com.dindong.dingdong.network.bean.entity.Tag;
 
 /**
  * Created by wcong on 2018/3/13. 门店实体
  */
 
-public class Shop implements Serializable{
+public class Shop implements Serializable {
   private String id;// UUID
   private String name;// 门店名称
   private String phone;// 门店电话
   private boolean isProve;// 是否被认证
-  private List<String> tags = new ArrayList<>();// 门店标签可存门店授课类型
+  private List<Tag> tags = new ArrayList<>();// 门店标签可存门店授课类型
 
   // 地址相关
   private Address address;// 门店地址
@@ -61,11 +62,11 @@ public class Shop implements Serializable{
     isProve = prove;
   }
 
-  public List<String> getTags() {
+  public List<Tag> getTags() {
     return tags;
   }
 
-  public void setTags(List<String> tags) {
+  public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
 

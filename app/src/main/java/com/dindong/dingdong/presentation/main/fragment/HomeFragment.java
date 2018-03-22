@@ -5,17 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.amap.api.location.AMapLocation;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.adapter.SubjectAdapter;
 import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseFragment;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
+import com.dindong.dingdong.manager.LocationMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.shop.usecase.ListHotSubjectCase;
+import com.dindong.dingdong.network.api.subject.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.shop.Subject;
 import com.dindong.dingdong.presentation.shop.ShopListActivity;
+import com.dindong.dingdong.presentation.shop.ShopMainActivity;
+import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
+import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.youth.banner.BannerConfig;
@@ -52,6 +59,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private List<String> mData;
 
   private List<String> mBannerList;
+
+  private String[] grid = new String[2];
 
   @Override
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
@@ -131,7 +140,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       break;
     case 2:
       // 全部课程
-      ToastUtil.toastSuccess(getContext(), "叮咚公益");
+      startActivity(new Intent(getContext(), SubjectListActivity.class));
       break;
     case 3:
       // 叮咚公益
@@ -145,7 +154,20 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
    * 更新数据
    */
   private void refreshData() {
-    listHotSubject();
+    LocationMgr.startLocation(new LocationMgr.ILocationCallback() {
+      @Override
+      public void onSuccess(AMapLocation location) {
+        grid[0] = location.getLongitude() + "";
+        grid[1] = location.getLatitude() + "";
+        listHotSubject();
+      }
+
+      @Override
+      public void onFailure(int errorCode, String msg) {
+        listHotSubject();
+      }
+    });
+
   }
 
   /**
@@ -154,6 +176,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private void listHotSubject() {
     QueryParam queryParam = new QueryParam();
     queryParam.setLimit(2);
+    queryParam.getFilters().add(new FilterParam("grid:[.)", grid));
+
     new ListHotSubjectCase(queryParam).execute(new HttpSubscriber<List<Subject>>() {
       @Override
       public void onFailure(String errorMsg, Response<List<Subject>> response) {
@@ -212,7 +236,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onSubjectItemClick(Subject subject) {
-      ToastUtil.toastHint(getContext(), subject.getName());
+      Intent intent = new Intent(getContext(), SubjectDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, subject);
+      startActivity(intent);
     }
   }
 }

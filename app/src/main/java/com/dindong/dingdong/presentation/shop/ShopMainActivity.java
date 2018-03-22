@@ -11,16 +11,19 @@ import com.dindong.dingdong.databinding.ActivityShopMainBinding;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.shop.Shop;
 import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -98,7 +101,16 @@ public class ShopMainActivity extends BaseActivity {
 
     @Override
     public void onSubjectItemClick(Subject subject) {
-      ToastUtil.toastHint(ShopMainActivity.this, subject.getName());
+      Intent intent = new Intent(ShopMainActivity.this, SubjectDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, subject);
+      startActivity(intent);
+    }
+
+    /**
+     * 写评论
+     */
+    public void onComment(View view) {
+      ToastUtil.toastHint(ShopMainActivity.this, "暂不支持");
     }
   }
 }
