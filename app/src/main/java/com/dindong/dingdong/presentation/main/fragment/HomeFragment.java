@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.dindong.dingdong.R;
+import com.dindong.dingdong.adapter.SubjectAdapter;
 import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
-import com.dindong.dingdong.databinding.ItemHomeHotSubjectBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.shop.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
@@ -18,16 +18,12 @@ import com.dindong.dingdong.network.bean.shop.Subject;
 import com.dindong.dingdong.presentation.shop.ShopListActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.ToastUtil;
-import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
-import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
-import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -56,7 +52,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private List<String> mData;
 
   private List<String> mBannerList;
-  private SingleTypeAdapter hotSubjectAdapter;
 
   @Override
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
@@ -166,14 +161,13 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
       @Override
       public void onSuccess(Response<List<Subject>> response) {
-        hotSubjectAdapter = new SingleTypeAdapter(getContext(), R.layout.item_global_subject);
-        hotSubjectAdapter.setPresenter(new Presenter());
-        hotSubjectAdapter.setDecorator(new Decorator());
-        hotSubjectAdapter.set(response.getData());
+        SubjectAdapter subjectAdapter = new SubjectAdapter(getContext());
+        subjectAdapter.setPresenter(new Presenter());
+        subjectAdapter.set(response.getData());
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.lstHotSubject.setLayoutManager(manager);
-        binding.lstHotSubject.setAdapter(hotSubjectAdapter);
+        binding.lstHotSubject.setAdapter(subjectAdapter);
       }
     });
   }
@@ -211,19 +205,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
           }
         }
       });
-    }
-  }
-
-  class Decorator implements BaseViewAdapter.Decorator {
-    @Override
-    public void decorator(BindingViewHolder holder, int position, int viewType) {
-      if (holder == null || holder.getBinding() == null)
-        return;
-      ItemHomeHotSubjectBinding itemBinding = (ItemHomeHotSubjectBinding) holder.getBinding();
-      itemBinding.txtOriginal.setVisibility(itemBinding.getItem().getAmount()
-          .compareTo(itemBinding.getItem().getOriginalAmount()) == 0 ? View.GONE : View.VISIBLE);
-      itemBinding.txtOriginal.getPaint()
-          .setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
     }
   }
 
