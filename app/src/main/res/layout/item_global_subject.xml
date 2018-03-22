@@ -9,6 +9,10 @@
 
 
         <variable
+            name="shop"
+            type="com.dindong.dingdong.network.bean.shop.Shop" />
+
+        <variable
             name="item"
             type="com.dindong.dingdong.network.bean.shop.Subject" />
 
@@ -42,7 +46,7 @@
                 <ImageView
                     android:layout_width="88dp"
                     android:layout_height="66dp"
-                    app:imageResourceUrl='@{IsEmpty.list(item.shop.images)?"":item.shop.images.get(0).url}' />
+                    app:imageResourceUrl='@{IsEmpty.list(item.images)?"":item.images.get(0).url}' />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -61,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="@{item.shop.name}"
+                        android:text="@{shop!=null?shop.name:item.shop.name}"
                         android:textColor="#666666"
                         android:textSize="12dp" />
 
@@ -71,19 +75,23 @@
                         android:layout_marginTop="4dp">
 
                         <TextView
+                            android:id="@+id/txt_range"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{item.shop.address.toString()}"
+                            android:layout_alignParentRight="true"
+                            android:text="@{StringUtil.format(@string/global_range,shop!=null?shop.range:item.shop.range)}"
                             android:textColor="#666666"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:text="@{StringUtil.format(@string/global_range,item.shop.range)}"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@id/txt_range"
+                            android:text="@{shop!=null?shop.address.toString():item.shop.address.toString()}"
                             android:textColor="#666666"
                             android:textSize="12dp" />
+
 
                     </RelativeLayout>
 
