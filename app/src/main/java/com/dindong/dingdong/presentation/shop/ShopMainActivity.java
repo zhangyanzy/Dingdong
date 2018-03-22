@@ -7,7 +7,7 @@ import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityShopMainBinding;
-import com.dindong.dingdong.databinding.ItemHomeHotSubjectBinding;
+import com.dindong.dingdong.databinding.ItemGlobalSubjectBinding;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.shop.Shop;
 import com.dindong.dingdong.network.bean.shop.Subject;
@@ -94,7 +94,7 @@ public class ShopMainActivity extends BaseActivity {
     public void decorator(BindingViewHolder holder, int position, int viewType) {
       if (holder == null || holder.getBinding() == null)
         return;
-      ItemHomeHotSubjectBinding itemBinding = (ItemHomeHotSubjectBinding) holder.getBinding();
+      ItemGlobalSubjectBinding itemBinding = (ItemGlobalSubjectBinding) holder.getBinding();
       itemBinding.txtOriginal.setVisibility(itemBinding.getItem().getAmount()
           .compareTo(itemBinding.getItem().getOriginalAmount()) == 0 ? View.GONE : View.VISIBLE);
       itemBinding.txtOriginal.getPaint()

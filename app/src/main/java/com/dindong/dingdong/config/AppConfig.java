@@ -7,7 +7,7 @@ package com.dindong.dingdong.config;
 public class AppConfig {
 
   public static class Http {
-    public static final String BASE_URL = "https://auth-test.qianfan123.com/";
+    public static final String BASE_URL = "http://demo3.hsweb.me/";
   }
 
   public static class IntentKey {

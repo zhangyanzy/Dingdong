@@ -7,6 +7,7 @@ import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.auth.usecase.LoginCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.auth.AuthLogin;
 import com.dindong.dingdong.network.bean.auth.User;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.ToastUtil;
@@ -35,7 +36,7 @@ public class LoginActivity extends BaseActivity {
   }
 
   private void login(String mobile, String password) {
-    new LoginCase(mobile, password).execute(new HttpSubscriber<User>(LoginActivity.this) {
+    new LoginCase("test", "test").execute(new HttpSubscriber<User>(LoginActivity.this) {
       @Override
       public void onFailure(String errorMsg, Response<User> response) {
         DialogUtil.getErrorDialog(LoginActivity.this, errorMsg).show();

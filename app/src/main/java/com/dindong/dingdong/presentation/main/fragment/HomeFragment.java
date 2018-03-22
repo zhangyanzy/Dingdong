@@ -9,7 +9,7 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
-import com.dindong.dingdong.databinding.ItemHomeHotSubjectBinding;
+import com.dindong.dingdong.databinding.ItemGlobalSubjectBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.shop.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
@@ -219,7 +219,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void decorator(BindingViewHolder holder, int position, int viewType) {
       if (holder == null || holder.getBinding() == null)
         return;
-      ItemHomeHotSubjectBinding itemBinding = (ItemHomeHotSubjectBinding) holder.getBinding();
+      ItemGlobalSubjectBinding itemBinding = (ItemGlobalSubjectBinding) holder.getBinding();
       itemBinding.txtOriginal.setVisibility(itemBinding.getItem().getAmount()
           .compareTo(itemBinding.getItem().getOriginalAmount()) == 0 ? View.GONE : View.VISIBLE);
       itemBinding.txtOriginal.getPaint()

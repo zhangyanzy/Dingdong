@@ -2,6 +2,7 @@ package com.dindong.dingdong.network.api.auth.usecase;
 
 import com.dindong.dingdong.network.BaseUseCase;
 import com.dindong.dingdong.network.api.auth.AuthServiceApi;
+import com.dindong.dingdong.network.bean.auth.AuthLogin;
 
 import rx.Observable;
 
@@ -20,6 +21,6 @@ public class LoginCase extends BaseUseCase<AuthServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).login(mobile, password);
+    return createConnection().login(mobile,password);
   }
 }

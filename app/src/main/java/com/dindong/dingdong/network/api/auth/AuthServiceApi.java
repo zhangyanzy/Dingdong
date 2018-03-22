@@ -1,6 +1,7 @@
 package com.dindong.dingdong.network.api.auth;
 
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.auth.AuthLogin;
 import com.dindong.dingdong.network.bean.auth.RegisterRequest;
 import com.dindong.dingdong.network.bean.auth.User;
 
@@ -18,13 +19,12 @@ public interface AuthServiceApi {
   /**
    * 登录，需帐号密码
    * 
-   * @param mobile
+   * @param username
    * @param password
    * @return
    */
-  @GET("app/auth/login")
-  Observable<Response<User>> login(@Query("mobile") String mobile,
-      @Query("password") String password);
+  @POST("app/auth/login")
+  Observable<Response<User>> login(@Query("username")String username,@Query("password")String password);
 
   /**
    * 快捷登录，需手机号和验证码
