@@ -75,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:alpha="0.9"
-                            android:text="@{user.num}"
+                            android:text="@{user.dingdongId}"
                             android:textColor="@color/white"
                             android:textSize="14dp" />
                     </LinearLayout>

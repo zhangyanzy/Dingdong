@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="order_confirm_title">确认订单</string>
+    <string name="order_confirm_subject">课程</string>
+    <string name="order_confirm_shop">门店</string>
+    <string name="order_confirm_subject_amount">课程价格</string>
+    <string name="order_confirm_count">数量</string>
+    <string name="order_confirm_total">小计</string>
+    <string name="order_confirm_payment">支付方式</string>
+    <string name="order_confirm_wex">微信支付</string>
+    <string name="order_confirm_ali">支付宝支付</string>
+    <string name="order_confirm_msg">课程购买后，门店可能会和您联系，约定到店时间</string>
+    <string name="order_confirm_group_msg">此为团购商品，如果未成团，将自动取消订单，钱款自动返回原支付账户</string>
+    <string name="order_confirm_pay_amount">应付:</string>
+    <string name="order_confirm_btn_pay">去支付</string>
+</resources>

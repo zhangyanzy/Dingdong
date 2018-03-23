@@ -33,7 +33,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
-        <activity android:name=".presentation.main.LoginActivity">
+        <activity android:name=".presentation.main.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,7 +63,9 @@
         <activity
             android:name=".presentation.subject.SubjectListActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".presentation.subject.SubjectDetailActivity"></activity>
+        <activity android:name=".presentation.subject.SubjectDetailActivity" />
+        <activity android:name=".presentation.main.LoginActivity" />
+        <activity android:name=".presentation.pay.OrderConfirmActivity"></activity>
     </application>
 
 </manifest>

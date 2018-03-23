@@ -61,7 +61,7 @@ public class ApiClient {
       Request request = chain.request();
       Response response = chain.proceed(request);
       String cookie = response.headers().get("Set-Cookie");
-      if (!IsEmpty.string(cookie) && cookie.contains("jwt=")) {
+      if (!IsEmpty.string(cookie) && cookie.contains("JSESSIONID=")) {
         TokenMgr.updateToken(cookie);
       }
       return response;
@@ -102,7 +102,7 @@ public class ApiClient {
 
     OkHttpClient okClient = new OkHttpClient.Builder().retryOnConnectionFailure(true)
 
-        .addInterceptor(logging).addInterceptor(requestErrorInterceptor)
+        .addInterceptor(logging)
         .addInterceptor(getUserCookie).addInterceptor(setUserCookie)
         .addInterceptor(new MockInterceptor(context, useMock)).connectTimeout(60, TimeUnit.SECONDS)
         .retryOnConnectionFailure(true).writeTimeout(60, TimeUnit.SECONDS)

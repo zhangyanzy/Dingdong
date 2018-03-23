@@ -1,6 +1,5 @@
 package com.dindong.dingdong.network.bean;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,7 +9,7 @@ import java.util.Map;
 public class Response<T> {
   private boolean success;
   private Map<String, String> fields;
-  private List<String> message;
+  private String message;
   private T data;
   private int total;
   private boolean more;
@@ -47,11 +46,11 @@ public class Response<T> {
     this.fields = fields;
   }
 
-  public List<String> getMessage() {
+  public String getMessage() {
     return message;
   }
 
-  public void setMessage(List<String> message) {
+  public void setMessage(String message) {
     this.message = message;
   }
 

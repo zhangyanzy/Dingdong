@@ -102,6 +102,11 @@
     <declare-styleable name="NavigationTopBar">
         <attr name="title_text" format="string" />
     </declare-styleable>
+    <declare-styleable name="CountView">
+        <attr name="fold_state" format="integer" />
+        <attr name="min_value" format="integer" />
+        <attr name="isCart" format="boolean" />
+    </declare-styleable>
 
 
 </resources>

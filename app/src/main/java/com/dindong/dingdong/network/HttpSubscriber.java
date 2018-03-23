@@ -13,7 +13,6 @@ import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * Created by wangcong on 2018/3/9.
@@ -60,8 +59,8 @@ public abstract class HttpSubscriber<T> extends rx.Subscriber<Response<T>> {
     if (t.isSuccess()) {
       onSuccess(t);
     } else {
-      if (t.getMessage() != null && t.getMessage().size() > 0) {
-        onFailure(t.getMessage().get(0), t);
+      if (t.getMessage() != null) {
+        onFailure(t.getMessage(), t);
       } else {
         onFailure(null, t);
       }

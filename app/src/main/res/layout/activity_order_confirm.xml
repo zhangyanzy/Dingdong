@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.dindong.dingdong.util.StringUtil" />
+
+        <import type="com.dindong.dingdong.network.bean.shop.SubjectType" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.presentation.pay.OrderConfirmActivity.Presenter" />
+
+        <variable
+            name="subject"
+            type="com.dindong.dingdong.network.bean.shop.Subject" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff4f5f7"
+        android:orientation="vertical">
+
+        <com.dindong.dingdong.widget.NavigationTopBar
+            android:id="@+id/nb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_text="@string/order_confirm_title" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_label_subject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/order_confirm_subject"
+                            android:textColor="#333333"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="8dp"
+                            android:gravity="right"
+                            android:text="@{subject.name}"
+                            android:textColor="#888888"
+                            android:textSize="15dp" />
+
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        style="@style/divider_item"
+                        android:layout_marginLeft="12dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_label_shop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/order_confirm_shop"
+                            android:textColor="#333333"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/txt_label_shop"
+                            android:gravity="right"
+                            android:text="@{subject.shop.name}"
+                            android:textColor="#888888"
+                            android:textSize="15dp" />
+
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/space_item" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/order_confirm_group_msg"
+                        android:textColor="#FF1E1E"
+                        android:textSize="13dp"
+                        android:visibility="@{subject.subjectType.equals(SubjectType.GROUP)?View.VISIBLE:View.GONE}" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/order_confirm_subject_amount"
+                            android:textColor="#333333"
+                            android:textSize="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/global_amount_unit"
+                                android:textColor="#FF9C09"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="@{StringUtil.amount(subject.amount)}"
+                                android:textColor="#FF9C09"
+                                android:textSize="17dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:text='@{"/"+subject.unit}'
+                                android:textColor="#888888"
+                                android:textSize="11dp" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        style="@style/divider_item"
+                        android:layout_marginLeft="12dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/order_confirm_subject_amount"
+                            android:textColor="#333333"
+                            android:textSize="15dp" />
+
+                        <com.dindong.dingdong.widget.CountView
+                            android:id="@+id/cv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            app:min_value="1" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        style="@style/divider_item"
+                        android:layout_marginLeft="12dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/order_confirm_total"
+                            android:textColor="#333333"
+                            android:textSize="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/global_amount_unit"
+                                android:textColor="#FF9C09"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/txt_total_amount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="@{StringUtil.amount(subject.amount)}"
+                                android:textColor="#FF9C09"
+                                android:textSize="17dp" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/space_item" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="7dp"
+                        android:text="@string/order_confirm_payment"
+                        android:textColor="#333333"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout style="@style/divider_item" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="12dp"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="12dp">
+
+                        <RelativeLayout
+                            android:id="@+id/tab_wex"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/tab_payment"
+                            android:onClick="@{(View)->presenter.onPaymentSelect(View,0)}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="@string/order_confirm_wex"
+                                android:textColor="@color/color_tab_payment"
+                                android:textSize="15dp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="22dp"
+                            android:background="@drawable/tab_payment"
+                            android:onClick="@{(View)->presenter.onPaymentSelect(View,1)}"
+                            android:textColor="@color/color_tab_payment">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="@string/order_confirm_ali"
+                                android:textSize="15dp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="@string/order_confirm_msg"
+                    android:textColor="#888888"
+                    android:textSize="12dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/divider_title" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/order_confirm_pay_amount"
+                        android:textColor="#666666"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_pay_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:text="@{StringUtil.format(@string/global_amount_format,subject.amount)}"
+                        android:textColor="#FF9C09"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_gradient_blue"
+                    android:gravity="center"
+                    android:onClick="@{presenter.onPay}"
+                    android:text="@string/order_confirm_btn_pay"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -3,6 +3,7 @@ package com.dindong.dingdong.network.bean.auth;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.dindong.dingdong.base.ShallowCopy;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
@@ -15,13 +16,13 @@ import com.dindong.dingdong.network.bean.entity.GlobalImage;
 
 public class User extends ShallowCopy<User> implements Serializable, Cloneable {
   private String id;// UUID
-  private AuthIdentity identity;// 用户身份
+  private List<AuthIdentity> identities;// 用户身份
   private String name;// 昵称
   private String mobile;// 手机号
   private String sex;// 性别
   private Date birthday;// 生日 格式:YYYY-MM-DD
   private String remark;// 个人说明
-  private String num;// 叮咚号
+  private String dingdongId;// 叮咚号
   private BigDecimal favShop = BigDecimal.ZERO;// 关注门店数
   private BigDecimal favSubject = BigDecimal.ZERO;// 关注课程数
   private BigDecimal favUser = BigDecimal.ZERO;// 关注人数
@@ -36,12 +37,12 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
     this.id = id;
   }
 
-  public AuthIdentity getIdentity() {
-    return identity;
+  public List<AuthIdentity> getIdentities() {
+    return identities;
   }
 
-  public void setIdentity(AuthIdentity identity) {
-    this.identity = identity;
+  public void setIdentities(List<AuthIdentity> identities) {
+    this.identities = identities;
   }
 
   public String getName() {
@@ -84,12 +85,12 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
     this.remark = remark;
   }
 
-  public String getNum() {
-    return num;
+  public String getDingdongId() {
+    return dingdongId;
   }
 
-  public void setNum(String num) {
-    this.num = num;
+  public void setDingdongId(String dingdongId) {
+    this.dingdongId = dingdongId;
   }
 
   public BigDecimal getFavShop() {

@@ -35,9 +35,9 @@ public class IdentitySwitchActivity extends BaseActivity {
   public class Presenter {
     public void onIdentitySwitch(AuthIdentity identity) {
       // 同步登录信息
-      User user = SessionMgr.getUser();
-      user.setIdentity(identity);
-      SessionMgr.updateUser(user);
+//      User user = SessionMgr.getUser();
+//      user.setIdentities(identity.);
+//      SessionMgr.updateUser(user);
 
       Intent intent = new Intent(IdentitySwitchActivity.this, MainActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, identity);

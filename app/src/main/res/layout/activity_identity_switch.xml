@@ -24,14 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:onClick="@{()->presenter.onIdentitySwitch(AuthIdentity.STUDENT)}"
-                android:text="@string/identity_btn_student" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:onClick="@{()->presenter.onIdentitySwitch(AuthIdentity.TEACHER)}"
+                android:onClick="@{()->presenter.onIdentitySwitch(AuthIdentity.MEMBER)}"
                 android:text="@string/identity_btn_teacher" />
 
             <Button
