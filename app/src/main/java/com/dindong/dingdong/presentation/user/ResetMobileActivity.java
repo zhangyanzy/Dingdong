@@ -64,6 +64,7 @@ public class ResetMobileActivity extends BaseActivity {
       @Override
       public void onFailure(String errorMsg, Response<User> response) {
         DialogUtil.getErrorDialog(ResetMobileActivity.this, errorMsg).show();
+        binding.ct.startCount();
       }
 
       @Override
