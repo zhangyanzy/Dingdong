@@ -37,5 +37,10 @@
     <string name="reset_mobile_hint_mobile"> 请输入新手机号</string>
     <string name="reset_mobile_hint_code"> 请输入验证码</string>
     <string name="reset_mobile_hint_password"> 请输入登录密码</string>
+    <string name="reset_mobile_tip_mobile">新手机号不能为空</string>
+    <string name="reset_mobile_tip_mobile_len">请输入正确手机号</string>
+    <string name="reset_mobile_tip_code">验证码不能为空</string>
+    <string name="reset_mobile_tip_password">登录密码不能为空</string>
+    <string name="reset_mobile_success">修改成功</string>
     <string name="reset_mobile_msg">收不到短信验证码？\n1.网络通信异常可能会造成短信丢失，请重新获取或稍后再试。\n2.请核实手机是否已经欠费停机，或者屏蔽了系统短信。</string>
 </resources>

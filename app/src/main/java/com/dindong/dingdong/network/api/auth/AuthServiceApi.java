@@ -96,8 +96,8 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @GET("app/auth/resetMobil")
-  Observable<Response> resetMobil(@Query(("oldMobile")) String oldMobile,
+  @GET("app/auth/resetMobile")
+  Observable<Response> resetMobile(@Query(("oldMobile")) String oldMobile,
       @Query(("newMobile")) String newMobile, @Query(("password")) String password,
       @Query(("authCode")) String authCode);
 }
