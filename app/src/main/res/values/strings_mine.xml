@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--我的界面-->
     <string name="mine_title_dd">叮咚号：</string>
     <string name="mine_my_order">我的订单</string>
     <string name="mine_order_state_wait_pay">待支付</string>
-    <string name="mine_order_state_wait_submit">待确认</string>
     <string name="mine_order_state_use">可使用</string>
     <string name="mine_order_state_wait_assess">待评价</string>
     <string name="mine_label_fav_shop">门店关注</string>
     <string name="mine_label_fav_subject">课程关注</string>
     <string name="mine_label_fav_user">关注</string>
     <string name="mine_label_fans">粉丝</string>
-    <string name="mine_label_reward">收到打赏</string>
-    <string name="mine_label_student_card">我的学员卡</string>
-    <string name="mine_label_blue_wrist">我的蓝手环</string>
+    <string name="mine_label_home">我的主页</string>
+    <string name="mine_label_account">我的账户</string>
+    <string name="mine_label_welfare">叮咚公益</string>
+    <string name="mine_label_activity">我的活动</string>
     <string name="mine_label_fav">内容收藏</string>
-    <string name="mine_label_agent">申请成为代理</string>
-    <string name="mine_label_customer">联系客服</string>
-    <string name="mine_label_reset_mobile">更改手机号码</string>
+    <string name="mine_label_cooperation">我要合作</string>
+
+    <!--设置界面-->
+    <string name="setting_title">设置</string>
+    <string name="setting_info">个人信息</string>
+    <string name="setting_reset_mobile">更换手机号</string>
+    <string name="setting_reset_password">修改密码</string>
+    <string name="setting_identity_switch">切换身份</string>
+    <string name="setting_current_identity">当前为{0}</string>
+    <string name="setting_contact_service">联系客服</string>
+    <string name="setting_about">关于</string>
+    <string name="setting_logout">退出登录</string>
+
+    <!--更换手机号-->
+    <string name="reset_mobile_title">更换手机号</string>
+    <string name="reset_mobile_old_mobile">手机号</string>
+    <string name="reset_mobile_new_mobile">新手机号</string>
+    <string name="reset_mobile_code">短信验证码</string>
+    <string name="reset_mobile_password">登录密码</string>
+    <string name="reset_mobile_hint_mobile"> 请输入新手机号</string>
+    <string name="reset_mobile_hint_code"> 请输入验证码</string>
+    <string name="reset_mobile_hint_password"> 请输入登录密码</string>
+    <string name="reset_mobile_msg">收不到短信验证码？\n1.网络通信异常可能会造成短信丢失，请重新获取或稍后再试。\n2.请核实手机是否已经欠费停机，或者屏蔽了系统短信。</string>
 </resources>

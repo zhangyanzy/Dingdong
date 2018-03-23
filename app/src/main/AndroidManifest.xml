@@ -65,7 +65,9 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".presentation.subject.SubjectDetailActivity" />
         <activity android:name=".presentation.main.LoginActivity" />
-        <activity android:name=".presentation.pay.OrderConfirmActivity"></activity>
+        <activity android:name=".presentation.pay.OrderConfirmActivity" />
+        <activity android:name=".presentation.user.SettingActivity" />
+        <activity android:name=".presentation.user.ResetMobileActivity"></activity>
     </application>
 
 </manifest>

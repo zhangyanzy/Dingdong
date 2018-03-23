@@ -4,7 +4,9 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
+import com.dindong.dingdong.presentation.user.SettingActivity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,9 +49,6 @@ public class MineFragment extends BaseFragment {
       case 0:
         // 待支付
         break;
-      case 1:
-        // 待确认
-        break;
       case 2:
         // 可使用
         break;
@@ -79,6 +78,15 @@ public class MineFragment extends BaseFragment {
         // 粉丝
         break;
       }
+    }
+
+    /**
+     * 个人设置
+     * 
+     * @param view
+     */
+    public void onSetting(View view) {
+      startActivity(new Intent(getContext(), SettingActivity.class));
     }
   }
 }

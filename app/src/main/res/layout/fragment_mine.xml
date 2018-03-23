@@ -27,61 +27,75 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_gradient_blue"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="27dp"
-                android:paddingTop="27dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/mine_fragment_photo"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_marginLeft="18dp"
-                    app:imageResourceUrl="@{user.userImage.url}" />
+                android:background="@drawable/bg_gradient_blue">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:paddingBottom="27dp"
+                    android:paddingTop="27dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{user.name}"
-                        android:textColor="@color/white"
-                        android:textSize="24dp" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/mine_fragment_photo"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_marginLeft="18dp"
+                        app:imageResourceUrl="@{user.userImage.url}" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:orientation="horizontal">
+                        android:layout_marginLeft="17dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:alpha="0.9"
-                            android:text="@string/mine_title_dd"
+                            android:text="@{user.name}"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:alpha="0.9"
-                            android:text="@{user.dingdongId}"
-                            android:textColor="@color/white"
-                            android:textSize="14dp" />
-                    </LinearLayout>
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.9"
+                                android:text="@string/mine_title_dd"
+                                android:textColor="@color/white"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:alpha="0.9"
+                                android:text="@{user.dingdongId}"
+                                android:textColor="@color/white"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="6dp"
+                    android:onClick="@{presenter.onSetting}"
+                    android:padding="6dp"
+                    android:src="@mipmap/img_load_failed" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -129,37 +143,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="@string/mine_order_state_wait_pay"
-                            android:textColor="#333333"
-                            android:textSize="14dp" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="@{()->presenter.onOrderStateSelect(1)}"
-                    android:orientation="vertical"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:src="@mipmap/img_load_failed" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="@string/mine_order_state_wait_submit"
                             android:textColor="#333333"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -396,7 +379,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/mine_label_reward"
+                        android:text="@string/mine_label_home"
                         android:textColor="#333333"
                         android:textSize="14dp" />
 
@@ -445,7 +428,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/mine_label_student_card"
+                        android:text="@string/mine_label_account"
                         android:textColor="#333333"
                         android:textSize="14dp" />
 
@@ -494,7 +477,56 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/mine_label_blue_wrist"
+                        android:text="@string/mine_label_welfare"
+                        android:textColor="#333333"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@mipmap/icon_global_chevron" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                style="@style/divider_item"
+                android:layout_marginLeft="49dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/img_load_failed" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/mine_label_activity"
                         android:textColor="#333333"
                         android:textSize="14dp" />
 
@@ -568,55 +600,6 @@
                 style="@style/divider_item"
                 android:layout_marginLeft="49dp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_white"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="@string/mine_label_agent"
-                        android:textColor="#333333"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <View
-                style="@style/divider_item"
-                android:layout_marginLeft="49dp" />
-
             <include layout="@layout/space_item" />
 
             <RelativeLayout
@@ -643,56 +626,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/mine_label_customer"
-                        android:textColor="#333333"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <View
-                style="@style/divider_item"
-                android:layout_marginLeft="49dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_white"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="@string/mine_label_reset_mobile"
+                        android:text="@string/mine_label_cooperation"
                         android:textColor="#333333"
                         android:textSize="14dp" />
 

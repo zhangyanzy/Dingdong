@@ -8,6 +8,7 @@ import com.dindong.dingdong.widget.cleartextfield.validator.FieldValidateError;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -182,7 +183,7 @@ public class ClearEditText extends EditText {
       layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
       setLayoutParams(layoutParams);
       setHintTextColor(typedArray.getColor(R.styleable.ClearTextField_edit_hint_color,
-          getResources().getColor(R.color.gray)));
+          Color.parseColor("#B0B0B0")));
     }
     updateClearIcon(hasFocus() ? getText().length() > 0 : hasFocus(), getRightImg());
   }
