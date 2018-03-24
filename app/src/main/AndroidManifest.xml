@@ -67,7 +67,12 @@
         <activity android:name=".presentation.main.LoginActivity" />
         <activity android:name=".presentation.pay.OrderConfirmActivity" />
         <activity android:name=".presentation.user.SettingActivity" />
-        <activity android:name=".presentation.user.ResetMobileActivity"></activity>
+        <activity android:name=".presentation.user.ResetMobileActivity" />
+        <activity android:name=".presentation.user.ResetPasswordActivity" />
+        <activity android:name=".presentation.user.UserInfoActivity" />
+        <activity
+            android:name=".presentation.main.RegionSwitchActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
     </application>
 
 </manifest>

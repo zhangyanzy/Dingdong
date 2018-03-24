@@ -34,4 +34,10 @@
     <string name="work_tab_order_manager">订单管理</string>
     <string name="work_tab_order_confirm">订单确认</string>
     <string name="work_tab_order_cancel">订单核销</string>
+
+    <!--城市切换-->
+    <string name="province_switch_edt_hint">输入城市名或拼音查询</string>
+    <string name="province_switch_location">GPS定位</string>
+    <string name="province_switch_label_history">历史访问城市</string>
+    <string name="province_switch_label_hot">国内热门城市</string>
 </resources>

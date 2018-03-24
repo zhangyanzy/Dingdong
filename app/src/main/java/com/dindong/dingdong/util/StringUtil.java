@@ -89,4 +89,14 @@ public class StringUtil {
             : address.getCity().getText())
         + address.getDistrict().getText() + address.getStreet();
   }
+
+  /**
+   * 城市格式化，去掉市用来UI显示
+   * 
+   * @param province
+   * @return
+   */
+  public static String formatProvince(String province) {
+    return province.contains("市") ? province.substring(0, province.indexOf("市")) : province;
+  }
 }

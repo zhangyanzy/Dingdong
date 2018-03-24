@@ -28,4 +28,5 @@
     <string name="confirm">确定</string>
     <string name="confirm2">确认</string>
     <string name="cancel">取消</string>
+    <string name="location_fail">定位失败</string>
 </resources>

@@ -7,6 +7,7 @@ import com.dindong.dingdong.network.bean.auth.User;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -69,7 +70,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @GET("app/auth/password/reset")
+  @PUT("app/auth/password/reset")
   Observable<Response> resetPassword(@Query(("mobile")) String mobile,
       @Query(("password")) String password, @Query(("authCode")) String authCode);
 
@@ -82,7 +83,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @GET("app/auth/password/resetByOld")
+  @PUT("app/auth/password/resetByOld")
   Observable<Response> resetPasswordByOld(@Query(("mobile")) String mobile,
       @Query(("oldPassword")) String oldPassword, @Query(("newPassword")) String newPassword,
       @Query(("authCode")) String authCode);
@@ -96,7 +97,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @GET("app/auth/resetMobile")
+  @PUT("app/auth/mobile/reset")
   Observable<Response> resetMobile(@Query(("oldMobile")) String oldMobile,
       @Query(("newMobile")) String newMobile, @Query(("password")) String password,
       @Query(("authCode")) String authCode);

@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity {
    * @param password
    */
   private void login(String mobile, String password) {
-    new LoginCase("15710129773", "888888").execute(new HttpSubscriber<User>(LoginActivity.this) {
+    new LoginCase("13761140966", "admin").execute(new HttpSubscriber<User>(LoginActivity.this) {
       @Override
       public void onFailure(String errorMsg, Response<User> response) {
         DialogUtil.getErrorDialog(LoginActivity.this, errorMsg).show();
@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity {
 
       @Override
       public void onSuccess(Response<User> response) {
-        ShortcutMgr.login(response.getData());
+
       }
     });
   }

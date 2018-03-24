@@ -30,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_white"
+                android:onClick="@{presenter.onUserInfo}"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp">
 
@@ -127,6 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_white"
+                android:onClick="@{presenter.onResetPassword}"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp">
 

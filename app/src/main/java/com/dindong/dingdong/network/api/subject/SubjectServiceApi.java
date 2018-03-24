@@ -12,8 +12,8 @@ import rx.Observable;
 
 /**
  * Created by wcong on 2018/3/22.
- * <p>课程
- * </>
+ * <p>
+ * 课程 </>
  */
 
 public interface SubjectServiceApi {
@@ -32,9 +32,10 @@ public interface SubjectServiceApi {
   Observable<Response<List<Subject>>> listSubject(@Body QueryParam param);
 
   /**
-   * 查询热门推荐课程，所有门店
+   * 查询热门推荐课程，所有门店，优先按城市
    *
    * @param param
+   *          province:=，城市名<br/>
    *          grid:[.)，当前经纬度[longitude经,latitude纬]<br/>
    * @return
    */

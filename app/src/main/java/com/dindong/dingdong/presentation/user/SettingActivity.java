@@ -46,12 +46,30 @@ public class SettingActivity extends BaseActivity {
   public class Presenter {
 
     /**
+     * 个人信息
+     * 
+     * @param view
+     */
+    public void onUserInfo(View view) {
+      startActivity(new Intent(SettingActivity.this, UserInfoActivity.class));
+    }
+
+    /**
      * 更换手机号
      * 
      * @param view
      */
     public void onResetMobile(View view) {
       startActivity(new Intent(SettingActivity.this, ResetMobileActivity.class));
+    }
+
+    /**
+     * 修改密码
+     * 
+     * @param view
+     */
+    public void onResetPassword(View view) {
+      startActivity(new Intent(SettingActivity.this, ResetPasswordActivity.class));
     }
 
     /**

@@ -102,8 +102,8 @@ public class ApiClient {
 
     OkHttpClient okClient = new OkHttpClient.Builder().retryOnConnectionFailure(true)
 
-        .addInterceptor(logging)
-        .addInterceptor(getUserCookie).addInterceptor(setUserCookie)
+        .addInterceptor(logging).addInterceptor(getUserCookie).addInterceptor(setUserCookie)
+        .addInterceptor(requestErrorInterceptor)
         .addInterceptor(new MockInterceptor(context, useMock)).connectTimeout(60, TimeUnit.SECONDS)
         .retryOnConnectionFailure(true).writeTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS).build();

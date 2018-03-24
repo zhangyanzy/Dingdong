@@ -33,6 +33,8 @@ public abstract class HttpSubscriber<T> extends rx.Subscriber<Response<T>> {
 
   @Override
   public void onCompleted() {
+    if (dialog != null && context != null)
+      dialog.dismiss();
     if (isUnsubscribed()) {
       unsubscribe();
     }

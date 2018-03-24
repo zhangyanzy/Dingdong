@@ -13,21 +13,24 @@ import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentHomeBinding;
 import com.dindong.dingdong.manager.LocationMgr;
+import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.subject.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
 import com.dindong.dingdong.presentation.shop.ShopListActivity;
-import com.dindong.dingdong.presentation.shop.ShopMainActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.util.GlideUtil;
+import com.dindong.dingdong.util.RegionStorageUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -59,8 +62,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private List<String> mData;
 
   private List<String> mBannerList;
-
-  private String[] grid = new String[2];
 
   @Override
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
@@ -98,6 +99,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         .setImageLoader(new GlideImageLoader()).setImages(mBannerList).start();
 
     refreshData();
+  }
+
+  @Override
+  protected void createEventHandlers() {
+    binding.setPresenter(new Presenter());
   }
 
   @Override
@@ -154,17 +160,21 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
    * 更新数据
    */
   private void refreshData() {
+    // 获取当前地理位置
     LocationMgr.startLocation(new LocationMgr.ILocationCallback() {
       @Override
       public void onSuccess(AMapLocation location) {
-        grid[0] = location.getLongitude() + "";
-        grid[1] = location.getLatitude() + "";
-        listHotSubject();
+        SessionMgr.setCurrentProvince(location.getProvince());
+        binding.txtProvince.setText(location.getProvince());
+        RegionStorageUtil.add(location.getProvince());
+        String[] grid = new String[] {
+            location.getLongitude() + "", location.getLatitude() + "" };
+        listHotSubject(location.getProvince(), grid);
       }
 
       @Override
       public void onFailure(int errorCode, String msg) {
-        listHotSubject();
+        listHotSubject(SessionMgr.getCurrentProvince(), null);
       }
     });
 
@@ -173,10 +183,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   /**
    * 获取热门推荐课程
    */
-  private void listHotSubject() {
+  private void listHotSubject(String province, String[] grid) {
     QueryParam queryParam = new QueryParam();
     queryParam.setLimit(2);
-    queryParam.getFilters().add(new FilterParam("grid:[.)", grid));
+    queryParam.getFilters().add(new FilterParam("province:=", province));
+    if (grid != null)
+      queryParam.getFilters().add(new FilterParam("grid:[.)", grid));
 
     new ListHotSubjectCase(queryParam).execute(new HttpSubscriber<List<Subject>>() {
       @Override
@@ -232,13 +244,41 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
   }
 
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+      if (data.getStringExtra(AppConfig.IntentKey.DATA) == null
+          || data.getStringExtra(AppConfig.IntentKey.DATA).equals(SessionMgr.getCurrentProvince()))
+        return;
+      String province = data.getStringExtra(AppConfig.IntentKey.DATA);
+      SessionMgr.setCurrentProvince(province);
+      binding.txtProvince.setText(province);
+      listHotSubject(province, null);
+    }
+  }
+
   public class Presenter implements SubjectPresenter {
+
+    /**
+     * 城市切换
+     */
+    public void onProvinceSwitch() {
+      startActivityForResult(new Intent(getContext(), RegionSwitchActivity.class), 0);
+    }
 
     @Override
     public void onSubjectItemClick(Subject subject) {
       Intent intent = new Intent(getContext(), SubjectDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, subject);
       startActivity(intent);
+    }
+
+    /**
+     * 更多课程
+     */
+    public void onMoreSubject() {
+      startActivity(new Intent(getContext(), SubjectListActivity.class));
     }
   }
 }

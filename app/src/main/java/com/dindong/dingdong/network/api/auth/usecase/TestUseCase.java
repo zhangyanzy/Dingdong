@@ -13,6 +13,6 @@ public class TestUseCase extends BaseUseCase<GlobalTestApi>{
 
     @Override
     protected Observable buildCase() {
-        return createConnection().test("13900001092","111111");
+        return createConnection().test();
     }
 }

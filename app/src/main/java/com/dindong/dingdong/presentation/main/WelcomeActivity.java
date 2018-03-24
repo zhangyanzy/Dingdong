@@ -15,12 +15,11 @@ public class WelcomeActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_welcome);
 
-    ShortcutMgr.logout();
     // token过期或未登录去登录，否则直接进入主界面
-//    if (TokenMgr.isExpired() || SessionMgr.getUser() == null) {
-//      ShortcutMgr.logout();
-//    } else {
-//      ShortcutMgr.login(SessionMgr.getUser());
-//    }
+    if (TokenMgr.isExpired() || SessionMgr.getUser() == null) {
+      ShortcutMgr.logout();
+    } else {
+      ShortcutMgr.login(SessionMgr.getUser());
+    }
   }
 }

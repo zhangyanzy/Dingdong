@@ -16,14 +16,14 @@ import android.text.TextUtils;
 
 public class RegionStorageUtil {
 
-  private final String key = "login";
+  private static final String key = "login";
 
   /**
    * 添加历史访问城市
    * 
    * @param region
    */
-  public void add(String region) {
+  public static void add(String region) {
     List<String> regions = getLocalRegion();
     int index = validateLocalData(region, regions);
     if (index >= 0) {
@@ -39,14 +39,14 @@ public class RegionStorageUtil {
    * 
    * @return
    */
-  public List<String> getLocalRegion() {
+  public static List<String> getLocalRegion() {
     if (TextUtils.isEmpty(StorageMgr.get(key)))
       return new ArrayList<String>();
     return GsonUtil.parse(StorageMgr.get(key), new TypeToken<List<String>>() {
     }.getType());
   }
 
-  private void setLocalList(List<String> list) {
+  private static void setLocalList(List<String> list) {
     if (list == null || list.size() == 0) {
       StorageMgr.set(key, null);
       return;
@@ -61,7 +61,7 @@ public class RegionStorageUtil {
    * @param regions
    * @return -1为不存在
    */
-  private int validateLocalData(String currentRegion, List<String> regions) {
+  private static int validateLocalData(String currentRegion, List<String> regions) {
     int index = -1;
     for (int i = 0; i < regions.size(); i++) {
       if (regions.get(i).equals(currentRegion)) {
