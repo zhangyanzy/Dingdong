@@ -13,7 +13,6 @@ public class QueryParam implements Serializable, Cloneable {
   private int limit = 10;
   private List<FilterParam> filters = new ArrayList();
   private List<SortParam> sorters = new ArrayList();
-  private transient int position;
 
   public QueryParam() {
   }

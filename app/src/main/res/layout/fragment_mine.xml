@@ -105,7 +105,8 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/mine_my_order"
                 android:textColor="#666666"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:textStyle="bold" />
 
             <View
                 style="@style/divider_item"

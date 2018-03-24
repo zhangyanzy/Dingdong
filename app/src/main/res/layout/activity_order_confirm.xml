@@ -310,6 +310,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:text="@string/order_confirm_ali"
+                                android:textColor="@color/color_tab_payment"
                                 android:textSize="15dp" />
                         </RelativeLayout>
                     </LinearLayout>

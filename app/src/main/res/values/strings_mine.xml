@@ -2,7 +2,7 @@
 <resources>
     <!--我的界面-->
     <string name="mine_title_dd">叮咚号：</string>
-    <string name="mine_my_order">我的订单</string>
+    <string name="mine_my_order">订单</string>
     <string name="mine_order_state_wait_pay">待支付</string>
     <string name="mine_order_state_use">可使用</string>
     <string name="mine_order_state_wait_assess">待评价</string>

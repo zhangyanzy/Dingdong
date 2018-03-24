@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--确认订单-->
     <string name="order_confirm_title">确认订单</string>
     <string name="order_confirm_subject">课程</string>
     <string name="order_confirm_shop">门店</string>
@@ -13,4 +14,15 @@
     <string name="order_confirm_group_msg">此为团购商品，如果未成团，将自动取消订单，钱款自动返回原支付账户</string>
     <string name="order_confirm_pay_amount">应付:</string>
     <string name="order_confirm_btn_pay">去支付</string>
+
+    <!--我的订单-->
+    <string name="order_list_title">我的订单</string>
+    <string-array name="order_list_tab">
+        <item>全部</item>
+        <item>待付款</item>
+        <item>拼团中</item>
+        <item>可使用</item>
+        <item>已完成</item>
+    </string-array>
+    <string name="order_list_num">订单号：{0}</string>
 </resources>

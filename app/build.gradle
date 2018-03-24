@@ -71,5 +71,6 @@ dependencies {
     compile 'com.amap.api:search:latest.integration'    //定位
 
     compile 'com.yuhoon.validator:validator:v0.3' //表单校验
+    compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     testCompile 'junit:junit:4.12'
 }

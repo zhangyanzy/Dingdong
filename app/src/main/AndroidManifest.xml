@@ -73,6 +73,7 @@
         <activity
             android:name=".presentation.main.RegionSwitchActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".presentation.pay.OrderListActivity"></activity>
     </application>
 
 </manifest>

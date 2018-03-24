@@ -1,5 +1,7 @@
 package com.dindong.dingdong.network.api.pay;
 
+import java.util.List;
+
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.pay.Order;
@@ -73,6 +75,7 @@ public interface PayServiceApi {
    * @return
    */
   @POST("app/pay/order/list")
-  Observable<Response<Order>> listOrder(@Query("userId") String userId, @Body QueryParam param);
+  Observable<Response<List<Order>>> listOrder(@Query("userId") String userId,
+      @Body QueryParam param);
 
 }

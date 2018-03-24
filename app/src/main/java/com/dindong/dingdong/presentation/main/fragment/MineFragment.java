@@ -2,8 +2,10 @@ package com.dindong.dingdong.presentation.main.fragment;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
+import com.dindong.dingdong.presentation.pay.OrderListActivity;
 import com.dindong.dingdong.presentation.user.SettingActivity;
 
 import android.content.Intent;
@@ -45,17 +47,22 @@ public class MineFragment extends BaseFragment {
      * @param index
      */
     public void onOrderStateSelect(int index) {
+      Intent intent = new Intent(getContext(), OrderListActivity.class);
       switch (index) {
       case 0:
         // 待支付
+        intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_WAIT_PAY);
         break;
       case 2:
         // 可使用
+        intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_USE);
         break;
       case 3:
         // 待评价
+        intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_FINISH);
         break;
       }
+      startActivity(intent);
     }
 
     /**
