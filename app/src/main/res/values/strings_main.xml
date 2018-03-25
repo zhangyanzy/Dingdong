@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--登录页-->
+    <string name="login_short_login">手机快速登录</string>
+    <string name="login_login">账户密码登录</string>
+    <string name="login_mobile_hint">手机号</string>
+    <string name="login_password_hint">密码</string>
+    <string name="login_code_hint">请输入验证码</string>
+    <string name="login_forget_password">忘记密码?</string>
+    <string name="login_register">立即注册</string>
+    <string name="login_btn_login">登录</string>
+    <string name="login_check_msg">已阅读并同意</string>
+    <string name="login_agreement">用户协议及隐私政策</string>
+    <string name="login_tip_agreement">请同意用户协议</string>
+    <string name="login_empty_msg_mobile">手机号不能为空</string>
+    <string name="login_empty_msg_code">验证码不能为空</string>
+    <string name="login_empty_msg_password">密码不能为空</string>
+    <string name="login_len_mobile">请输入正确手机号</string>
+
     <!--身份切换页 IdentitySwitchActivity-->
     <string name="identity_btn_student">我要找课</string>
     <string name="identity_btn_teacher">我是老师</string>

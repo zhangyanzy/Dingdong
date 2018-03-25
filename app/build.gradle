@@ -72,5 +72,6 @@ dependencies {
 
     compile 'com.yuhoon.validator:validator:v0.3' //表单校验
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    compile 'commons-io:commons-io:2.4'
     testCompile 'junit:junit:4.12'
 }

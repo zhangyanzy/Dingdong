@@ -28,12 +28,18 @@ public class CountTimeTextView extends TextView {
     super(context, attrs);
     setGravity(Gravity.CENTER);
 
-    initView();
+    setViewType(LayoutType.yellow);
   }
 
-  private void initView() {
-    setBackgroundResource(R.drawable.bg_count_timer);
-    setTextColor(Color.parseColor("#FFFF9C09"));
+  public void setViewType(LayoutType type) {
+    if (type.equals(LayoutType.yellow)) {
+      setBackgroundResource(R.drawable.bg_count_timer);
+      setTextColor(Color.parseColor("#FFFF9C09"));
+    } else if (type.equals(LayoutType.red)) {
+      setBackgroundResource(R.drawable.bg_count_timer_red);
+      setTextColor(Color.parseColor("#FA364E"));
+    }
+
     setText(getContext().getString(R.string.send_text));
     setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
   }
@@ -86,5 +92,9 @@ public class CountTimeTextView extends TextView {
     if (!isCount) {
       super.setEnabled(enabled);
     }
+  }
+
+  public enum LayoutType {
+    yellow, red
   }
 }
