@@ -19,12 +19,14 @@ import com.dindong.dingdong.network.api.subject.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
+import com.dindong.dingdong.network.bean.entity.Region;
 import com.dindong.dingdong.network.bean.shop.Subject;
 import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
 import com.dindong.dingdong.presentation.shop.ShopListActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.util.GlideUtil;
+import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.RegionStorageUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.youth.banner.BannerConfig;
@@ -164,17 +166,22 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     LocationMgr.startLocation(new LocationMgr.ILocationCallback() {
       @Override
       public void onSuccess(AMapLocation location) {
-        SessionMgr.setCurrentProvince(location.getProvince());
+        SessionMgr.SessionAddress add = new SessionMgr.SessionAddress();
+        Region city = new Region();
+        city.setId(location.getCityCode());
+        city.setText(location.getCity());
+        add.setCity(city);
+        add.setLongitude(location.getLongitude() + "");
+        add.setLatitude(location.getLatitude() + "");
+        SessionMgr.setCurrentAdd(add);
         binding.txtProvince.setText(location.getProvince());
-        RegionStorageUtil.add(location.getProvince());
-        String[] grid = new String[] {
-            location.getLongitude() + "", location.getLatitude() + "" };
-        listHotSubject(location.getProvince(), grid);
+        RegionStorageUtil.add(city);
+        listHotSubject();
       }
 
       @Override
       public void onFailure(int errorCode, String msg) {
-        listHotSubject(SessionMgr.getCurrentProvince(), null);
+        listHotSubject();
       }
     });
 
@@ -183,12 +190,17 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   /**
    * 获取热门推荐课程
    */
-  private void listHotSubject(String province, String[] grid) {
+  private void listHotSubject() {
     QueryParam queryParam = new QueryParam();
     queryParam.setLimit(2);
-    queryParam.getFilters().add(new FilterParam("province:=", province));
-    if (grid != null)
-      queryParam.getFilters().add(new FilterParam("grid:[.)", grid));
+    queryParam.getFilters()
+        .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
+    if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
+      queryParam.getFilters()
+          .add(new FilterParam("longitude", SessionMgr.getCurrentAdd().getLongitude()));
+      queryParam.getFilters()
+          .add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
+    }
 
     new ListHotSubjectCase(queryParam).execute(new HttpSubscriber<List<Subject>>() {
       @Override
@@ -248,13 +260,16 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
-      if (data.getStringExtra(AppConfig.IntentKey.DATA) == null
-          || data.getStringExtra(AppConfig.IntentKey.DATA).equals(SessionMgr.getCurrentProvince()))
+      if (data.getSerializableExtra(AppConfig.IntentKey.DATA) == null
+          || ((Region) data.getSerializableExtra(AppConfig.IntentKey.DATA)).getId()
+              .equals(SessionMgr.getCurrentAdd().getCity().getId()))
         return;
-      String province = data.getStringExtra(AppConfig.IntentKey.DATA);
-      SessionMgr.setCurrentProvince(province);
-      binding.txtProvince.setText(province);
-      listHotSubject(province, null);
+      Region city = (Region) data.getSerializableExtra(AppConfig.IntentKey.DATA);
+      SessionMgr.SessionAddress address = new SessionMgr.SessionAddress();
+      address.setCity(city);
+      SessionMgr.setCurrentAdd(address);
+      binding.txtProvince.setText(city.getText());
+      listHotSubject();
     }
   }
 

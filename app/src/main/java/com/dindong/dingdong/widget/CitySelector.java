@@ -3,6 +3,7 @@ package com.dindong.dingdong.widget;
 import java.util.List;
 
 import com.dindong.dingdong.R;
+import com.dindong.dingdong.network.bean.entity.Region;
 import com.dindong.dingdong.util.DensityUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.StringUtil;
@@ -21,38 +22,38 @@ import android.widget.TextView;
  * </>
  */
 
-public class   ProvinceSelector extends GridLayout {
+public class CitySelector extends GridLayout {
   private int column = 3;// 列数
   private int margin = 12;// item间距 unit/dp
   private int padding = 8;// 文本内间距 unit/dp
 
-  private ProvinceSelectListener provinceSelectListener;
+  private CitySelectListener citySelectListener;
 
-  public ProvinceSelector(Context context) {
+  public CitySelector(Context context) {
     super(context);
   }
 
-  public ProvinceSelector(Context context, AttributeSet attrs) {
+  public CitySelector(Context context, AttributeSet attrs) {
     super(context, attrs);
   }
 
-  public ProvinceSelector(Context context, AttributeSet attrs, int defStyleAttr) {
+  public CitySelector(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
   }
 
-  public void init(List<String> provinces) {
-    init(null, provinces);
+  public void init(List<Region> cities) {
+    init(null, cities);
   }
 
-  public void init(String currentProvince, List<String> provinces) {
-    addView(currentProvince, provinces);
+  public void init(String currentCity, List<Region> cities) {
+    addView(currentCity, cities);
   }
 
-  public void setProvinceSelectListener(ProvinceSelectListener provinceSelectListener) {
-    this.provinceSelectListener = provinceSelectListener;
+  public void setCitySelectListener(CitySelectListener citySelectListener) {
+    this.citySelectListener = citySelectListener;
   }
 
-  private void addView(final String currentProvince, final List<String> provinces) {
+  private void addView(final String currentProvince, final List<Region> cities) {
     setColumnCount(column);
     // 计算item宽度
     postDelayed(new Runnable() {
@@ -60,7 +61,7 @@ public class   ProvinceSelector extends GridLayout {
       public void run() {
         int itemWidth = (getMeasuredWidth()
             - (column - 1) * DensityUtil.dip2px(getContext(), margin)) / column;
-        for (int i = 0; i < provinces.size(); i++) {
+        for (int i = 0; i < cities.size(); i++) {
           GridLayout.Spec rowSpec = GridLayout.spec(i / column);
           GridLayout.Spec columnSpec = GridLayout.spec(i % column);
           GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(rowSpec, columnSpec);
@@ -75,9 +76,9 @@ public class   ProvinceSelector extends GridLayout {
               getContext().getResources().getColorStateList(R.color.color_tab_payment));
           textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
           textView.setGravity(Gravity.CENTER);
-          textView.setText(StringUtil.formatProvince(provinces.get(i)));
-          textView.setTag(provinces.get(i));
-          if (!IsEmpty.string(currentProvince) && provinces.get(i).equals(currentProvince))
+          textView.setText(StringUtil.formatProvince(cities.get(i).getText()));
+          textView.setTag(cities.get(i));
+          if (!IsEmpty.string(currentProvince) && cities.get(i).getText().equals(currentProvince))
             // 设置被选中城市
             textView.setSelected(true);
           else {
@@ -89,8 +90,8 @@ public class   ProvinceSelector extends GridLayout {
           textView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-              if (provinceSelectListener != null)
-                provinceSelectListener.onSelect((String) v.getTag());
+              if (citySelectListener != null)
+                citySelectListener.onSelect((Region) v.getTag());
             }
           });
           addView(textView);
@@ -100,7 +101,7 @@ public class   ProvinceSelector extends GridLayout {
 
   }
 
-  public interface ProvinceSelectListener {
-    void onSelect(String province);
+  public interface CitySelectListener {
+    void onSelect(Region city);
   }
 }

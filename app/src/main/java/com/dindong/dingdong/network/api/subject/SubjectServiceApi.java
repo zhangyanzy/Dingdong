@@ -35,8 +35,11 @@ public interface SubjectServiceApi {
    * 查询热门推荐课程，所有门店，优先按城市
    *
    * @param param
-   *          province:=，城市名<br/>
-   *          grid:[.)，当前经纬度[longitude经,latitude纬]<br/>
+   *          keyword，关键字<br/>
+   *          cityCode，城市名<br/>
+   *          range，距离<br/>
+   *          longitude，经度<br/>
+   *          latitude，纬度<br/>
    * @return
    */
   @POST("app/subject/hot/list")

@@ -3,6 +3,7 @@ package com.dindong.dingdong.network.api.region;
 import java.util.List;
 
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.entity.Region;
 
 import retrofit2.http.GET;
 import rx.Observable;
@@ -19,5 +20,5 @@ public interface RegionServiceApi {
    * @return
    */
   @GET("app/region/serviceCity/list/")
-  Observable<Response<List<String>>> listRegion();
+  Observable<Response<List<Region>>> listRegion();
 }

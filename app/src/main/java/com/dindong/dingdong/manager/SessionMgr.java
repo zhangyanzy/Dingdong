@@ -1,6 +1,8 @@
 package com.dindong.dingdong.manager;
 
 import com.dindong.dingdong.network.bean.auth.User;
+import com.dindong.dingdong.network.bean.entity.Address;
+import com.dindong.dingdong.network.bean.entity.Region;
 import com.dindong.dingdong.util.IsEmpty;
 
 import android.content.Context;
@@ -15,7 +17,7 @@ public class SessionMgr {
   // private static Timer timer;
   private static Context mContext;
 
-  private static String currentProvince = "湖州市";// 当前定位城市
+  private static SessionAddress currentAdd;// 当前定位位置
 
   // 初始化
   public static void init(Context context) {
@@ -28,7 +30,24 @@ public class SessionMgr {
     if (IsEmpty.object(session)) {
       session = new AuthSession();
     }
+
+    initDefaultAddress();
     // timer.schedule(new Task(), 100, 1000 * 60 * 60);
+  }
+
+  /**
+   * 初始化默认城市
+   */
+  private static void initDefaultAddress() {
+    SessionAddress address = new SessionAddress();
+    Region city = new Region();
+    city.setId("330500");
+    city.setText("湖州市");
+    address.setCity(city);
+    address.setDistrict(city);
+    address.setLongitude("120.106040");
+    address.setLatitude("30.869070");
+    currentAdd = address;
   }
 
   // 更新 Session
@@ -53,11 +72,32 @@ public class SessionMgr {
     return session.getUser();
   }
 
-  public static String getCurrentProvince() {
-    return currentProvince;
+  public static SessionAddress getCurrentAdd() {
+    return currentAdd;
   }
 
-  public static void setCurrentProvince(String currentProvince) {
-    SessionMgr.currentProvince = currentProvince;
+  public static void setCurrentAdd(SessionAddress currentAdd) {
+    SessionMgr.currentAdd = currentAdd;
+  }
+
+  public static class SessionAddress extends Address {
+    private String longitude;// 当前经度
+    private String latitude;// 当前纬度
+
+    public String getLongitude() {
+      return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+      this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+      return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+      this.latitude = latitude;
+    }
   }
 }

@@ -12,11 +12,12 @@ import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.region.usecase.ListRegionCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.entity.Region;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.RegionStorageUtil;
 import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.util.ToastUtil;
-import com.dindong.dingdong.widget.ProvinceSelector;
+import com.dindong.dingdong.widget.CitySelector;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -26,7 +27,7 @@ public class RegionSwitchActivity extends BaseActivity {
 
   ActivityRegionSwitchBinding binding;
 
-  private String selectProvince;
+  private Region selectCity;
 
   @Override
   protected void initComponent() {
@@ -35,8 +36,8 @@ public class RegionSwitchActivity extends BaseActivity {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    selectProvince = SessionMgr.getCurrentProvince();
-    binding.txtCurrentProvince.setText(StringUtil.formatProvince(selectProvince));
+    selectCity = SessionMgr.getCurrentAdd().getCity();
+    binding.txtCurrentProvince.setText(StringUtil.formatProvince(selectCity.getText()));
     listHistoryRegions();
     listHotRegions();
   }
@@ -44,19 +45,20 @@ public class RegionSwitchActivity extends BaseActivity {
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
-    binding.psHistory.setProvinceSelectListener(new ProvinceSelector.ProvinceSelectListener() {
+    binding.psHistory.setCitySelectListener(new CitySelector.CitySelectListener() {
       @Override
-      public void onSelect(String province) {
-        selectProvince = province;
-        RegionStorageUtil.add(province);
+      public void onSelect(Region city) {
+        selectCity = city;
+        RegionStorageUtil.add(city);
         onBackPressed();
       }
+
     });
-    binding.psHot.setProvinceSelectListener(new ProvinceSelector.ProvinceSelectListener() {
+    binding.psHot.setCitySelectListener(new CitySelector.CitySelectListener() {
       @Override
-      public void onSelect(String province) {
-        selectProvince = province;
-        RegionStorageUtil.add(province);
+      public void onSelect(Region city) {
+        selectCity = city;
+        RegionStorageUtil.add(city);
         onBackPressed();
       }
     });
@@ -66,7 +68,7 @@ public class RegionSwitchActivity extends BaseActivity {
   public void onBackPressed() {
     // 界面销毁时，将选择城市返回给前一界面
     Intent intent = new Intent();
-    intent.putExtra(AppConfig.IntentKey.DATA, selectProvince);
+    intent.putExtra(AppConfig.IntentKey.DATA, selectCity);
     setResult(RESULT_OK, intent);
 
     super.onBackPressed();
@@ -76,21 +78,21 @@ public class RegionSwitchActivity extends BaseActivity {
    * 加载历史城市
    */
   private void listHistoryRegions() {
-    binding.psHistory.init(selectProvince, RegionStorageUtil.getLocalRegion());
+    binding.psHistory.init(selectCity.getText(), RegionStorageUtil.getLocalRegion());
   }
 
   /**
    * 获取热门城市
    */
   private void listHotRegions() {
-    new ListRegionCase().execute(new HttpSubscriber<List<String>>(this) {
+    new ListRegionCase().execute(new HttpSubscriber<List<Region>>(this) {
       @Override
-      public void onFailure(String errorMsg, Response<List<String>> response) {
+      public void onFailure(String errorMsg, Response<List<Region>> response) {
         DialogUtil.getErrorDialog(RegionSwitchActivity.this, errorMsg).show();
       }
 
       @Override
-      public void onSuccess(Response<List<String>> response) {
+      public void onSuccess(Response<List<Region>> response) {
         binding.psHot.init(response.getData());
       }
     });
@@ -108,7 +110,8 @@ public class RegionSwitchActivity extends BaseActivity {
       LocationMgr.startLocation(new LocationMgr.ILocationCallback() {
         @Override
         public void onSuccess(AMapLocation location) {
-          selectProvince = location.getProvince();
+          selectCity.setId(location.getCityCode());
+          selectCity.setText(location.getCity());
           binding.txtCurrentProvince.setText(location.getProvince());
         }
 

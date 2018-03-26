@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dindong.dingdong.manager.StorageMgr;
+import com.dindong.dingdong.network.bean.entity.Region;
 import com.google.gson.reflect.TypeToken;
 
 import android.text.TextUtils;
@@ -23,8 +24,8 @@ public class RegionStorageUtil {
    * 
    * @param region
    */
-  public static void add(String region) {
-    List<String> regions = getLocalRegion();
+  public static void add(Region region) {
+    List<Region> regions = getLocalRegion();
     int index = validateLocalData(region, regions);
     if (index >= 0) {
       regions.remove(index);
@@ -39,14 +40,14 @@ public class RegionStorageUtil {
    * 
    * @return
    */
-  public static List<String> getLocalRegion() {
+  public static List<Region> getLocalRegion() {
     if (TextUtils.isEmpty(StorageMgr.get(key)))
-      return new ArrayList<String>();
-    return GsonUtil.parse(StorageMgr.get(key), new TypeToken<List<String>>() {
+      return new ArrayList<Region>();
+    return GsonUtil.parse(StorageMgr.get(key), new TypeToken<List<Region>>() {
     }.getType());
   }
 
-  private static void setLocalList(List<String> list) {
+  private static void setLocalList(List<Region> list) {
     if (list == null || list.size() == 0) {
       StorageMgr.set(key, null);
       return;
@@ -61,10 +62,10 @@ public class RegionStorageUtil {
    * @param regions
    * @return -1为不存在
    */
-  private static int validateLocalData(String currentRegion, List<String> regions) {
+  private static int validateLocalData(Region currentRegion, List<Region> regions) {
     int index = -1;
     for (int i = 0; i < regions.size(); i++) {
-      if (regions.get(i).equals(currentRegion)) {
+      if (regions.get(i).getText().equals(currentRegion.getText())) {
         index = i;
         break;
       }
