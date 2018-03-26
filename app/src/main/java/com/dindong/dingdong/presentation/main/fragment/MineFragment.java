@@ -6,6 +6,7 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.presentation.pay.OrderListActivity;
+import com.dindong.dingdong.presentation.user.wrist.BlueWristScanActivity;
 import com.dindong.dingdong.presentation.user.SettingActivity;
 
 import android.content.Intent;
@@ -94,6 +95,13 @@ public class MineFragment extends BaseFragment {
      */
     public void onSetting(View view) {
       startActivity(new Intent(getContext(), SettingActivity.class));
+    }
+
+    /**
+     * 叮咚公益
+     */
+    public void onWelfare() {
+      startActivity(new Intent(getContext(), BlueWristScanActivity.class));
     }
   }
 }

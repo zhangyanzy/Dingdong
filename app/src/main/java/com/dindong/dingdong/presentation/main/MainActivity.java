@@ -7,9 +7,6 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityMainBinding;
-import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.auth.usecase.TestUseCase;
-import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.auth.AuthIdentity;
 import com.dindong.dingdong.presentation.main.fragment.DiscoveryFragment;
 import com.dindong.dingdong.presentation.main.fragment.HomeFragment;
@@ -58,7 +55,7 @@ public class MainActivity extends BaseActivity {
         getString(R.string.main_tab_work), getString(R.string.main_tab_msg),
         getString(R.string.main_tab_mine) };
 
-//    executeJob();
+    // executeJob();
   }
 
   @Override
@@ -69,7 +66,6 @@ public class MainActivity extends BaseActivity {
       initFragment(identity);
       initTab(identity);
     }
-    test();
 
   }
 
@@ -147,24 +143,6 @@ public class MainActivity extends BaseActivity {
     lastSelectView.setSelected(false);
     lastSelectView = tabViews.get(index);
     lastSelectView.setSelected(true);
-  }
-
-  /**
-   * 测试接口，用来判断token
-   */
-  @Deprecated
-  private void test(){
-    new TestUseCase().execute(new HttpSubscriber<Response>() {
-      @Override
-      public void onFailure(String errorMsg, Response<Response> response) {
-
-      }
-
-      @Override
-      public void onSuccess(Response<Response> response) {
-      }
-    });
-
   }
 
   /**

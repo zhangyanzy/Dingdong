@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--新增蓝手环-->
+    <string name="wrist_add_title">新增蓝手环</string>
+    <string name="wrist_add_num">手环编号：</string>
+    <string name="wrist_add_name">儿童姓名</string>
+    <string name="wrist_add_sex">性别</string>
+    <string name="wrist_add_birthday">出生年月</string>
+    <string name="wrist_add_mobile1">联系电话1</string>
+    <string name="wrist_add_mobile2">联系电话2</string>
+    <string name="wrist_add_mobile3">联系电话3</string>
+    <string name="wrist_add_add">家庭住址</string>
+    <string name="wrist_add_remark">儿童介绍</string>
+    <string name="wrist_add_hint_add">省/市/区</string>
+    <string name="wrist_add_hint_street">详细地址</string>
+    <string name="wrist_add_hint_remark">输入介绍内容</string>
+</resources>

@@ -183,7 +183,7 @@ public class ClearEditText extends EditText {
       layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
       setLayoutParams(layoutParams);
       setHintTextColor(typedArray.getColor(R.styleable.ClearTextField_edit_hint_color,
-          Color.parseColor("#B0B0B0")));
+          Color.parseColor("#C6C6C8")));
     }
     updateClearIcon(hasFocus() ? getText().length() > 0 : hasFocus(), getRightImg());
   }

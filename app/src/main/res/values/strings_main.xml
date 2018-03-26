@@ -16,6 +16,14 @@
     <string name="login_empty_msg_code">验证码不能为空</string>
     <string name="login_empty_msg_password">密码不能为空</string>
     <string name="login_len_mobile">请输入正确手机号</string>
+    <string name="login_send_sms_success">发送成功</string>
+
+    <!--注册界面-->
+    <string name="register_title">手机注册</string>
+    <string name="register_password_hint">设置密码，6～11位</string>
+    <string name="register_tip_password">密码至少为6位</string>
+    <string name="register_btn">注册</string>
+    <string name="register_success">注册成功</string>
 
     <!--身份切换页 IdentitySwitchActivity-->
     <string name="identity_btn_student">我要找课</string>

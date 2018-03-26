@@ -21,6 +21,7 @@ import com.wcong.validator.Validator;
 import com.wcong.validator.rules.MinLengthRule;
 import com.wcong.validator.rules.RequiredRule;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.InputType;
@@ -101,7 +102,20 @@ public class LoginActivity extends BaseActivity {
     this.loginType = loginType;
     boolean isShortLogin = loginType == 0;
     binding.txtShortLogin.getPaint().setFakeBoldText(isShortLogin);
+    binding.txtShortLogin.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        binding.txtShortLogin.invalidate();
+      }
+    }, 0);
     binding.txtNormalLogin.getPaint().setFakeBoldText(!isShortLogin);
+    binding.txtNormalLogin.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        binding.txtNormalLogin.invalidate();
+      }
+    }, 0);
+
     binding.indicatorShortLogin
         .setBackgroundColor(isShortLogin ? getResources().getColor(R.color.white) : 0);
     binding.layoutShortLogin.setVisibility(isShortLogin ? View.VISIBLE : View.GONE);
@@ -159,6 +173,7 @@ public class LoginActivity extends BaseActivity {
 
       @Override
       public void onSuccess(Response<User> response) {
+        ToastUtil.toastSuccess(LoginActivity.this, getString(R.string.login_send_sms_success));
         binding.ct.startCount();
       }
     });
@@ -239,8 +254,18 @@ public class LoginActivity extends BaseActivity {
       if (IsEmpty.string(binding.edtShortMobile.getText().toString().trim())) {
         ToastUtil.toastHint(LoginActivity.this, getString(R.string.login_empty_msg_mobile));
         return;
+      } else if (binding.edtShortMobile.getText().toString().trim().length() < 11) {
+        ToastUtil.toastHint(LoginActivity.this, getString(R.string.login_len_mobile));
+        return;
       }
       sendSms(binding.edtShortMobile.toString().trim());
+    }
+
+    /**
+     * 新用户注册
+     */
+    public void onRegister() {
+      startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
   }
 }
