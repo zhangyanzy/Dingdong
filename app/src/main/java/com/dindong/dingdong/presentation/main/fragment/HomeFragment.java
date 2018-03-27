@@ -15,7 +15,7 @@ import com.dindong.dingdong.databinding.FragmentHomeBinding;
 import com.dindong.dingdong.manager.LocationMgr;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.subject.ListHotSubjectCase;
+import com.dindong.dingdong.network.api.subject.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
@@ -25,6 +25,7 @@ import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
 import com.dindong.dingdong.presentation.shop.ShopListActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
+import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.RegionStorageUtil;
@@ -152,7 +153,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       break;
     case 3:
       // 叮咚公益
-      ToastUtil.toastSuccess(getContext(), "全部课程");
+      startActivity(new Intent(getContext(), BlueWristMainActivity.class));
       break;
     }
 
@@ -192,7 +193,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
    */
   private void listHotSubject() {
     QueryParam queryParam = new QueryParam();
-    queryParam.setLimit(2);
+    queryParam.setLimit(6);
     queryParam.getFilters()
         .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
     if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {

@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        debug {
-            keyAlias 'wangcong'
-            keyPassword '664543330'
-            storeFile file('D:/develop/StudioProjects/key/dingdong.jks')
-            storePassword '664543330'
-        }
+//        debug {
+//            keyAlias 'wangcong'
+//            keyPassword '664543330'
+//            storeFile file('D:/develop/StudioProjects/key/dingdong.jks')
+//            storePassword '664543330'
+//        }
     }
     compileSdkVersion 25
     buildToolsVersion '26.0.2'

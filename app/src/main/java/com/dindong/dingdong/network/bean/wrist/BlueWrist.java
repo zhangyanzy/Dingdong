@@ -1,8 +1,6 @@
 package com.dindong.dingdong.network.bean.wrist;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import com.dindong.dingdong.network.bean.entity.Address;
 
@@ -16,9 +14,12 @@ public class BlueWrist {
   private String name;// 姓名
   private String sex;// 性别
   private Date birthday;// 出生年月 格式YYYY-MM-DD
-  private List<String> phone = new ArrayList<>();// 联系电话
+  private String phone1;// 联系电话
+  private String phone2;
+  private String phone3;
   private Address address;// 家庭住址
   private String remark;// 简介
+  private String status;// 手环状态：0-未绑定，1-已绑定
 
   public String getId() {
     return id;
@@ -60,12 +61,28 @@ public class BlueWrist {
     this.birthday = birthday;
   }
 
-  public List<String> getPhone() {
-    return phone;
+  public String getPhone1() {
+    return phone1;
   }
 
-  public void setPhone(List<String> phone) {
-    this.phone = phone;
+  public void setPhone1(String phone1) {
+    this.phone1 = phone1;
+  }
+
+  public String getPhone2() {
+    return phone2;
+  }
+
+  public void setPhone2(String phone2) {
+    this.phone2 = phone2;
+  }
+
+  public String getPhone3() {
+    return phone3;
+  }
+
+  public void setPhone3(String phone3) {
+    this.phone3 = phone3;
   }
 
   public Address getAddress() {
@@ -82,5 +99,13 @@ public class BlueWrist {
 
   public void setRemark(String remark) {
     this.remark = remark;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 }

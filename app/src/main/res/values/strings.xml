@@ -24,6 +24,7 @@
     <string name="global_amount_format">￥{0, number,0.00}</string>
     <string name="global_range">{0}m</string>
     <string name="global_required">*</string>
+    <string name="global_colon">:</string>
 
     <string name="confirm">确定</string>
     <string name="confirm2">确认</string>

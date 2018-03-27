@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--蓝手环首页-->
+    <string name="wrist_main_title">我的蓝手环</string>
+    <string name="wrist_main_num">编号:</string>
+    <string name="wrist_main_scan">点击扫一扫</string>
+    <string name="wrist_main_mobile">联系电话:</string>
+
     <!--新增蓝手环-->
     <string name="wrist_add_title">新增蓝手环</string>
-    <string name="wrist_add_num">手环编号：</string>
+    <string name="wrist_add_num">手环编号:</string>
     <string name="wrist_add_name">儿童姓名</string>
     <string name="wrist_add_sex">性别</string>
     <string name="wrist_add_birthday">出生年月</string>

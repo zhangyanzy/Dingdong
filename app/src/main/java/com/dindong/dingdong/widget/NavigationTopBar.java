@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -125,6 +126,10 @@ public class NavigationTopBar extends RelativeLayout implements View.OnClickList
 
   public interface NavigationTopBarClickListener {
     public void leftImageClick();
+  }
+
+  public void addRightView(View view) {
+    ((LinearLayout) mRootView.findViewById(R.id.layout_right)).addView(view);
   }
 
   public enum ContentType {

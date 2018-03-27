@@ -1,6 +1,7 @@
-package com.dindong.dingdong.network.api.subject;
+package com.dindong.dingdong.network.api.subject.usecase;
 
 import com.dindong.dingdong.network.BaseUseCase;
+import com.dindong.dingdong.network.api.subject.SubjectServiceApi;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 
 import rx.Observable;

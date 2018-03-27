@@ -10,7 +10,6 @@ import com.dindong.dingdong.databinding.ItemShopListBinding;
 import com.dindong.dingdong.databinding.ItemShopListSubjectBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.shop.usecase.ListShopCase;
-import com.dindong.dingdong.network.api.subject.ListSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.shop.Shop;

@@ -81,7 +81,8 @@
             android:name=".presentation.main.RegisterActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".presentation.user.wrist.BlueWristScanActivity" />
-        <activity android:name=".presentation.user.wrist.BlueWristAddActivity"></activity>
+        <activity android:name=".presentation.user.wrist.BlueWristAddActivity" />
+        <activity android:name=".presentation.user.wrist.BlueWristMainActivity"></activity>
     </application>
 
 </manifest>
