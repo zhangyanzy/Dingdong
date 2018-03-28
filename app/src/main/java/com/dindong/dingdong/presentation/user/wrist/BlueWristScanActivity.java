@@ -147,7 +147,7 @@ public class BlueWristScanActivity extends BaseActivity implements ZXingScannerV
                 }).show();
             return;
           }
-          Intent intent = new Intent(BlueWristScanActivity.this, BlueWristAddActivity.class);
+          Intent intent = new Intent(BlueWristScanActivity.this, BlueWristDetailActivity.class);
           intent.putExtra(AppConfig.IntentKey.DATA, response.getData());
           startActivity(intent);
           resumeCamera();
