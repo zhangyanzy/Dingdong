@@ -1,6 +1,7 @@
 package com.dindong.dingdong.util;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 
 /**
  * Created by wcong on 2018/3/20.
@@ -25,4 +26,16 @@ public class DensityUtil {
     final float scale = context.getResources().getDisplayMetrics().density;
     return (int) (pxValue / scale + 0.5f);
   }
+
+  /**
+   * 获取屏幕高度
+   * 
+   * @param context
+   * @return
+   */
+  public static int getScreenHeight(Context context) {
+    DisplayMetrics metrics = context.getResources().getSystem().getDisplayMetrics();
+    return metrics.heightPixels;
+  }
+
 }

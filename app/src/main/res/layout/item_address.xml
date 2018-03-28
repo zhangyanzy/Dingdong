@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.dindong.dingdong.network.bean.entity.Region" />
+
+        <variable
+            name="selectItem"
+            type="com.dindong.dingdong.network.bean.entity.Region" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.widget.picker.PickerDialog.Presenter" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:onClick="@{()->presenter.onItemClick(item)}"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="@{item.text}"
+            android:textColor="@{selectItem == null ?  @color/dark : selectItem.text.equals(item.text) ? @color/red : @color/dark}"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="8dp"
+            android:src="@mipmap/ic_address_checked"
+            android:visibility="@{selectItem == null  ? View.GONE: selectItem.text.equals(item.text)? View.VISIBLE : View.GONE}" />
+
+    </LinearLayout>
+</layout>

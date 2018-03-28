@@ -6,6 +6,7 @@ import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.Region;
 
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -21,4 +22,12 @@ public interface RegionServiceApi {
    */
   @GET("app/region/serviceCity/list/")
   Observable<Response<List<Region>>> listRegion();
+
+  /**
+   * 获取地址
+   *
+   * @return
+   */
+  @GET("/app/region/children")
+  Observable<Response<List<Region>>> getRegion(@Query("parentCode") String parentCode);
 }
