@@ -58,7 +58,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   private List<Map<String, Object>> dataList;
   // GridView图片
   private int[] icon = {
-      R.mipmap.seat, R.mipmap.seat, R.mipmap.seat, R.mipmap.seat };
+      R.mipmap.ic_fujin, R.mipmap.ic_pintuan, R.mipmap.ic_kecheng, R.mipmap.ic_dingdong };
   // GridView适配器
   private SimpleAdapter mSimpleAdapter;
   // RecycleView所需List

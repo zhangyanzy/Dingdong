@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dingdong</string>
+    <string name="app_name">叮咚办学</string>
 
     <!--network-->
     <string name="newwork_err">网络未连接!</string>

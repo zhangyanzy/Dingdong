@@ -12,7 +12,7 @@
 
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.main.RegisterActivity.Presenter" />
+            type="com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity.Presenter" />
     </data>
 
     <LinearLayout
@@ -39,6 +39,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:id="@+id/layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="12dp"
@@ -157,6 +158,7 @@
                             android:textColor="@color/light_black"
                             android:textSize="15dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -175,9 +177,10 @@
                             android:textSize="15dp" />
 
                         <LinearLayout
-                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -205,6 +208,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/btn_corner_gradient_blue"
+                android:onClick="@{presenter.onScan}"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp">
 
@@ -224,7 +228,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
                         android:gravity="center"
-                        android:onClick="@{presenter.onConfirm}"
                         android:text="@string/wrist_main_scan"
                         android:textColor="@color/white"
                         android:textSize="18dp" />

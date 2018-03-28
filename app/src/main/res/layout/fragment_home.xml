@@ -49,7 +49,7 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_marginLeft="4dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_down_w" />
 
                 </LinearLayout>
 
@@ -98,7 +98,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_map_w" />
 
                     <TextView
                         android:layout_width="55dp"
@@ -147,7 +147,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_title" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -209,7 +209,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_title" />
 
                     <TextView
                         android:layout_width="wrap_content"

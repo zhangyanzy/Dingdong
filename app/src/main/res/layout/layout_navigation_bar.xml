@@ -26,7 +26,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="11dp"
-                android:src="@mipmap/ic_global_back_white" />
+                android:src="@mipmap/ic_back_wht" />
 
         </RelativeLayout>
 

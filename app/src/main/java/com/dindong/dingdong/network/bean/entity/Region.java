@@ -1,16 +1,18 @@
 package com.dindong.dingdong.network.bean.entity;
 
-import com.dindong.dingdong.util.IsEmpty;
-
 import java.io.Serializable;
+
+import com.dindong.dingdong.util.IsEmpty;
 
 /**
  * Created by wcong on 2018/3/13.
  */
 
-public class Region implements Serializable{
+public class Region implements Serializable {
   private String id;
   private String text;
+  private String name;
+  private String code;
 
   public Region() {
     super();
@@ -38,6 +40,22 @@ public class Region implements Serializable{
       return "";
     }
     return text;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public void setText(String text) {

@@ -6,4 +6,9 @@
     <string name="send_code">发送验证码</string>
     <string name="send_code_during">已发送</string>
     <string name="send_code_time">s</string>
+
+    <!--日期选择组件-->
+    <string name="date_picker_year">年</string>
+    <string name="date_picker_month">月</string>
+    <string name="date_picker_day">日</string>
 </resources>

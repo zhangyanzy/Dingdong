@@ -92,9 +92,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="6dp"
-                    android:onClick="@{presenter.onSetting}"
                     android:padding="6dp"
-                    android:src="@mipmap/img_load_failed" />
+                    android:src="@mipmap/ic_right_w" />
             </RelativeLayout>
 
             <TextView
@@ -137,7 +136,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:src="@mipmap/img_load_failed" />
+                            android:src="@mipmap/ic_pay" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -168,7 +167,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:src="@mipmap/img_load_failed" />
+                            android:src="@mipmap/ic_use" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -199,7 +198,7 @@
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:src="@mipmap/img_load_failed" />
+                            android:src="@mipmap/ic_evaluate" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -374,7 +373,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_personal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -397,7 +396,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -423,7 +422,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_account" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -446,7 +445,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -455,10 +454,10 @@
                 android:layout_marginLeft="49dp" />
 
             <RelativeLayout
-                android:onClick="@{()->presenter.onWelfare()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_white"
+                android:onClick="@{()->presenter.onWelfare()}"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp">
 
@@ -473,7 +472,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_dinggong" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -496,7 +495,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -522,7 +521,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_activity" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -545,7 +544,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -571,7 +570,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_cottion" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -594,7 +593,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -622,7 +621,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_cooperation" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -645,7 +644,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -653,6 +652,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:background="#F4F5F7" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white"
+                android:onClick="@{presenter.onSetting}"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_cooperation" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/mine_label_setting"
+                        android:textColor="#333333"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@mipmap/ic_chevron_grey" />
+                </LinearLayout>
+            </RelativeLayout>
+
         </LinearLayout>
 
     </ScrollView>

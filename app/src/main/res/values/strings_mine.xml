@@ -16,6 +16,7 @@
     <string name="mine_label_activity">我的活动</string>
     <string name="mine_label_fav">内容收藏</string>
     <string name="mine_label_cooperation">我要合作</string>
+    <string name="mine_label_setting">设置</string>
 
     <!--设置界面-->
     <string name="setting_title">设置</string>

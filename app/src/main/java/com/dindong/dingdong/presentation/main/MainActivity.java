@@ -23,6 +23,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends BaseActivity {
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity {
     else if (identity.equals(AuthIdentity.INSTITUTION))
       tabs = tab_institution;
     for (int i = 0; i < binding.tab.getChildCount(); i++) {
-      if (binding.tab.getChildAt(i) instanceof CardView) {
+      if (binding.tab.getChildAt(i) instanceof ImageView) {
         if (identity.equals(AuthIdentity.INSTITUTION))
           // 机构身份，隐藏中间btn
           binding.tab.getChildAt(i).setVisibility(View.GONE);

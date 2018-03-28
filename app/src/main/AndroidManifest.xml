@@ -30,7 +30,7 @@
     <application
         android:name=".DDApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_dingdong"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
@@ -81,7 +81,9 @@
             android:name=".presentation.main.RegisterActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".presentation.user.wrist.BlueWristScanActivity" />
-        <activity android:name=".presentation.user.wrist.BlueWristAddActivity" />
+        <activity
+            android:name=".presentation.user.wrist.BlueWristAddActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".presentation.user.wrist.BlueWristMainActivity"></activity>
     </application>
 

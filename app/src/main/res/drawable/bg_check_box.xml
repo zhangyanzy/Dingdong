@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@mipmap/check_box_selected" android:state_checked="true" />
-    <item android:drawable="@mipmap/check_box_selected" android:state_selected="true"></item>
-    <item android:drawable="@mipmap/check_box_selected" android:state_pressed="true"></item>
-    <item android:drawable="@mipmap/check_box_blank" android:state_checked="false" android:state_pressed="false" android:state_selected="false" />
+    <item android:drawable="@mipmap/ic_cb_rectangle_hl" android:state_checked="true" />
+    <item android:drawable="@mipmap/ic_cb_rectangle_hl" android:state_selected="true"></item>
+    <item android:drawable="@mipmap/ic_cb_rectangle_hl" android:state_pressed="true"></item>
+    <item android:drawable="@mipmap/ic_cb_rectangle_n" android:state_checked="false" android:state_pressed="false" android:state_selected="false" />
 </selector>

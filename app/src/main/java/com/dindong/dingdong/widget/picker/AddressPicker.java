@@ -26,7 +26,7 @@ public class AddressPicker extends PickerDialog {
 
   public AddressPicker(Context context, Region province, Region city, Region district) {
     super(context);
-    tabSize = 4;
+    tabSize = 3;
     if (province != null && city != null && district != null) {
       selectMapDatas.put(LEVEL_PROVINCE, province);
       selectMapDatas.put(LEVEL_CITY, city);

@@ -31,10 +31,10 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:onClick="@{()->presenter.onBack()}"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@mipmap/img_load_failed" />
+                    android:onClick="@{()->presenter.onBack()}"
+                    android:src="@mipmap/ic_close_w" />
 
             </LinearLayout>
 

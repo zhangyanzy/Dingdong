@@ -3,10 +3,14 @@ package com.dindong.dingdong.base;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import com.dindong.dingdong.DDApp;
+import com.dindong.dingdong.R;
+import com.dindong.dingdong.manager.ShortcutMgr;
+import com.dindong.dingdong.network.AuthEvent;
+import com.dindong.dingdong.util.ToastUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -63,22 +67,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     return true;
   }
 
-//  @Subscribe(threadMode = ThreadMode.MAIN)
-//  public void handleTokenExpired(AuthEvent event) {
-//    // 如果删除成功，就将详情页设置为前一页
-//    if (event.type == AuthEvent.TOKEN_EXPIRED) {
-//      ToastUtil.toastHint(DposApp.getInstance(), ApiClient.TOKEN_EXPIRED);
-//      ShortcutMgr.logout();
-//    } else if (event.type == AuthEvent.SHOP_LOCKED) {
-//      ShopUtil.showLocked(this);
-//    } else if (event.type == AuthEvent.SHOP_SUSPEND) {
-//      Intent intent = new Intent(this, ShopSwitchActivity.class);
-//      intent.putExtra(ShopSwitchActivity.EXTRA_LOGOUT, true);
-//      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//      DposApp.getInstance().startActivity(intent);
-//    }
-//  }
-
   /**
    * 点击空白处隐藏软键盘
    *
@@ -101,6 +89,14 @@ public abstract class BaseActivity extends RxAppCompatActivity {
       return true;
     }
     return onTouchEvent(ev);
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void handleTokenExpired(AuthEvent event) {
+    if (event.type == AuthEvent.TOKEN_EXPIRED) {
+      ToastUtil.toastHint(DDApp.getInstance(), getString(R.string.newwork_request_err_401));
+      ShortcutMgr.logout();
+    }
   }
 
   /**

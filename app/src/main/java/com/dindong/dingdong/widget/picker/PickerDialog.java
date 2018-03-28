@@ -72,7 +72,7 @@ public abstract class PickerDialog extends Dialog {
       int count = getTabSize();
       for (int i = 0; i < count; i++) {
         ((TextView) getTabLayout().getChildAt(i)).setVisibility(View.VISIBLE);
-        ((TextView) getTabLayout().getChildAt(i)).setText(selectMapDatas.get(i).getText());
+        ((TextView) getTabLayout().getChildAt(i)).setText(selectMapDatas.get(i).getName());
       }
       currentLevel = getTabSize() - 1;
     }
@@ -195,7 +195,7 @@ public abstract class PickerDialog extends Dialog {
     if (item == null)
       return -1;
     for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).getText().equals(item.getText()))
+      if (list.get(i).getName().equals(item.getName()))
         return i;
     }
 
@@ -316,7 +316,7 @@ public abstract class PickerDialog extends Dialog {
         selectMapDatas.remove(i);
       }
 
-      ((TextView) binding.llTabLayout.getChildAt(currentLevel)).setText(item.getText());
+      ((TextView) binding.llTabLayout.getChildAt(currentLevel)).setText(item.getName());
 
       for (int i = 0; i < getTabSize(); i++) {
         if (i <= currentLevel) {

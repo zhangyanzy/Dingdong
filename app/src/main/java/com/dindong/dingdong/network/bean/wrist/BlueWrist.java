@@ -12,7 +12,7 @@ public class BlueWrist {
   private String id;// UUID
   private String num;// 手环编号
   private String name;// 姓名
-  private String sex;// 性别
+  private String sex;// 性别 0-男 1-女
   private Date birthday;// 出生年月 格式YYYY-MM-DD
   private String phone1;// 联系电话
   private String phone2;
