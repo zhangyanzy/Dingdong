@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity {
 
     binding.ct.setViewType(CountTimeTextView.LayoutType.red);
     binding.cbAgreement.setSelected(true);
+    binding.edtPassword.setText("admin");
     switchLoginType(loginType);
     registerEditValidator();
     registerFocusValidator();

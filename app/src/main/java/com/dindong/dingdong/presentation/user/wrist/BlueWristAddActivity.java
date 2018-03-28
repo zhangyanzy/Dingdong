@@ -3,7 +3,6 @@ package com.dindong.dingdong.presentation.user.wrist;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 import org.joda.time.DateTime;
 
@@ -45,6 +44,8 @@ public class BlueWristAddActivity extends BaseActivity {
 
   private Validator validator;
 
+  private BlueWrist blueWrist;
+
   @Override
   protected void initComponent() {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_blue_wrist_add);
@@ -55,7 +56,8 @@ public class BlueWristAddActivity extends BaseActivity {
   @Override
   protected void loadData(Bundle savedInstanceState) {
     // 设置默认值
-    binding.txtWristNum.setText(getIntent().getStringExtra(AppConfig.IntentKey.DATA));
+    blueWrist = (BlueWrist) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+    binding.txtWristNum.setText(blueWrist.getNum());
     binding.txtBirthday.setText(DateUtil.format(new Date(), DateUtil.DEFAULT_DATE_FORMAT_3));
 
     registerEditValidator();
@@ -88,9 +90,11 @@ public class BlueWristAddActivity extends BaseActivity {
 
   private BlueWrist createWrist() {
     BlueWrist blueWrist = new BlueWrist();
-    blueWrist.setId(UUID.randomUUID().toString());
+    blueWrist.setId(this.blueWrist.getId());
+    blueWrist.setNum(binding.txtWristNum.getText().toString());
     blueWrist.setName(binding.edtName.getText().toString().trim());
-    blueWrist.setSex(binding.txtSex.getText().toString().equals(SexDialog.Sex.man) ? "0" : "1");
+    blueWrist.setSex(
+        binding.txtSex.getText().toString().equals(SexDialog.Sex.man.getName()) ? "0" : "1");
     try {
       blueWrist.setBirthday(
           DateUtil.parse(binding.txtBirthday.getText().toString(), DateUtil.DEFAULT_DATE_FORMAT_3));

@@ -1,5 +1,10 @@
 package com.dindong.dingdong.widget.sweetAlert;
 
+import java.util.List;
+
+import com.dindong.dingdong.R;
+import com.dindong.dingdong.util.IsEmpty;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -18,10 +23,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.dindong.dingdong.R;
-
-import java.util.List;
 
 public class SweetAlertDialog extends Dialog implements View.OnClickListener {
   private View mDialogView;
@@ -49,13 +50,13 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
   private View mSuccessLeftMask;
   private View mSuccessRightMask;
   private Drawable mCustomImgDrawable;
-  private ImageView mCustomImage,mAnimationIV;
+  private ImageView mCustomImage, mAnimationIV;
   private Button mConfirmButton;
   private Button mCancelButton;
   private ProgressHelper mProgressHelper;
   private FrameLayout mWarningFrame;
-  private LinearLayout mButtonLi,loading;
-  private View line,line_;
+  private LinearLayout mButtonLi, loading;
+  private View line, line_;
   private OnSweetClickListener mCancelClickListener;
   private OnSweetClickListener mConfirmClickListener;
   private boolean mCloseFromCancel;
@@ -187,7 +188,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     mProgressFrame.setVisibility(View.GONE);
     mConfirmButton.setVisibility(View.VISIBLE);
 
-//    mConfirmButton.setBackgroundResource(R.drawable.blue_button_background);
+    // mConfirmButton.setBackgroundResource(R.drawable.blue_button_background);
     mErrorFrame.clearAnimation();
     mErrorX.clearAnimation();
     mSuccessTick.clearAnimation();
@@ -231,7 +232,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         mSuccessRightMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(1));
         break;
       case WARNING_TYPE:
-//        mConfirmButton.setBackgroundResource(R.drawable.red_button_background);
+        // mConfirmButton.setBackgroundResource(R.drawable.red_button_background);
         mWarningFrame.setVisibility(View.GONE);
         break;
       case CUSTOM_IMAGE_TYPE:
@@ -243,7 +244,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         line.setVisibility(View.GONE);
         mButtonLi.setVisibility(View.GONE);
         mTitleTextView.setVisibility(View.GONE);
-//        mConfirmButton.setVisibility(View.GONE);
+        // mConfirmButton.setVisibility(View.GONE);
         break;
       }
       if (!fromCreate) {
@@ -251,6 +252,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
       }
     }
   }
+
   public int getAlerType() {
     return mAlertType;
   }
@@ -264,9 +266,13 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
   }
 
   public SweetAlertDialog setTitleText(String text) {
-    mTitleText = text;
-    if (mTitleTextView != null && mTitleText != null) {
-      mTitleTextView.setText(mTitleText);
+    mTitleText = IsEmpty.string(text) ? "" : text;
+    if (mTitleTextView != null) {
+      if (!IsEmpty.string(mTitleText)) {
+        mTitleTextView.setVisibility(View.VISIBLE);
+        mTitleTextView.setText(mTitleText);
+      } else
+        mTitleTextView.setVisibility(View.GONE);
     }
     return this;
   }
@@ -281,7 +287,10 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
   }
 
   public SweetAlertDialog setCustomImage(int resourceId) {
-    return setCustomImage(getContext().getResources().getDrawable(resourceId));
+    if (resourceId == 0) {
+      return setCustomImage(null);
+    } else
+      return setCustomImage(getContext().getResources().getDrawable(resourceId));
   }
 
   public String getContentText() {
@@ -289,10 +298,13 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
   }
 
   public SweetAlertDialog setContentText(String text) {
-    mContentText = text;
-    if (mContentTextView != null && mContentText != null) {
-      showContentText(true);
-      mContentTextView.setText(mContentText);
+    mContentText = IsEmpty.string(text) ? "" : text;
+    if (mContentTextView != null) {
+      if (!IsEmpty.string(mContentText)) {
+        mContentTextView.setVisibility(View.VISIBLE);
+        mContentTextView.setText(mContentText);
+      } else
+        mContentTextView.setVisibility(View.GONE);
     }
     return this;
   }
@@ -328,11 +340,19 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
   }
 
   public SweetAlertDialog setCancelText(String text) {
-    mCancelText = text;
-    if (mCancelButton != null && mCancelText != null) {
-      showCancelButton(true);
-      mCancelButton.setText(mCancelText);
+    mCancelText = IsEmpty.string(text) ? "" : text;
+    if (mCancelButton != null) {
+      if (!IsEmpty.string(mCancelText)) {
+        showCancelButton(true);
+        mCancelButton.setText(mCancelText);
+      } else
+        showCancelButton(false);
     }
+    return this;
+  }
+
+  public SweetAlertDialog setDismissListener(OnDismissListener dismissListener) {
+    setOnDismissListener(dismissListener);
     return this;
   }
 

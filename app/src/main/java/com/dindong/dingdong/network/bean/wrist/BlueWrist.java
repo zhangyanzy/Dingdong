@@ -1,5 +1,6 @@
 package com.dindong.dingdong.network.bean.wrist;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.dindong.dingdong.network.bean.entity.Address;
@@ -8,7 +9,7 @@ import com.dindong.dingdong.network.bean.entity.Address;
  * Created by wcong on 2018/3/14. 蓝手环信息
  */
 
-public class BlueWrist {
+public class BlueWrist implements Serializable {
   private String id;// UUID
   private String num;// 手环编号
   private String name;// 姓名

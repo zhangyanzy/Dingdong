@@ -27,4 +27,9 @@
     <string name="wrist_add_empty_add">地址不能为空</string>
     <string name="wrist_add_len_mobile">请输入正确手机号</string>
     <string name="wrist_add_bind_success">绑定成功</string>
+    <string name="wrist_add_state_un_bind">手环未绑定</string>
+    <string name="wrist_add_state_bind">手环已绑定</string>
+
+    <!--蓝手环信息-->
+    <string name="wrist_detail_title">手环已绑定</string>
 </resources>

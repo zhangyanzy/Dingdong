@@ -84,7 +84,8 @@
         <activity
             android:name=".presentation.user.wrist.BlueWristAddActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".presentation.user.wrist.BlueWristMainActivity"></activity>
+        <activity android:name=".presentation.user.wrist.BlueWristMainActivity" />
+        <activity android:name=".presentation.user.wrist.BlueWristDetailActivity"></activity>
     </application>
 
 </manifest>

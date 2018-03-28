@@ -1,11 +1,10 @@
 package com.dindong.dingdong.util;
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
-
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 
 /**
  * Created by wangcong on 2018/3/9.
@@ -45,17 +44,22 @@ public class DialogUtil {
   }
 
   public static SweetAlertDialog getConfirmDialog(Context context, String title) {
-    final SweetAlertDialog dialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
-    dialog.setTitleText(title);
-    dialog.setConfirmText(context.getString(R.string.confirm));
-    dialog.setCancelText(context.getString(R.string.cancel));
-    dialog.showCancelButton(true);
-    dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-      @Override
-      public void onClick(SweetAlertDialog sweetAlertDialog) {
-        dialog.dismiss();
-      }
-    });
+    String confirm = context.getString(R.string.confirm);
+    return getCustomDialog(context, title, "", "", confirm, 0);
+  }
+
+  public static SweetAlertDialog getNoContentDialog(Context context, String title) {
+    String confirm = context.getString(R.string.confirm);
+    String cancel = context.getString(R.string.cancel);
+    return getCustomDialog(context, title, "", cancel, confirm, 0);
+  }
+
+  public static SweetAlertDialog getCustomDialog(Context context, String title, String content,
+      String cancel, String confirm, int resourceId) {
+    SweetAlertDialog dialog = new SweetAlertDialog(context, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+    dialog.setTitleText(title).setContentText(content).setCancelText(cancel).setConfirmText(confirm)
+        .setCustomImage(resourceId);
     return dialog;
   }
+
 }

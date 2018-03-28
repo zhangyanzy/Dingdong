@@ -15,8 +15,10 @@ import com.dindong.dingdong.databinding.FragmentHomeBinding;
 import com.dindong.dingdong.manager.LocationMgr;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.banner.usecase.ListBannerCase;
 import com.dindong.dingdong.network.api.subject.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.banner.Banner;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.entity.Region;
@@ -87,20 +89,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     binding.gvChannel.setAdapter(mSimpleAdapter);
     binding.gvChannel.setOnItemClickListener(this);
 
-    /**
-     * 将获取到的网络图片放置在Banner中
-     */
-    mBannerList = new ArrayList();
-    mBannerList.add(
-        "http://d.hiphotos.baidu.com/image/pic/item/d833c895d143ad4b3ae286d88e025aafa50f06de.jpg");
-    mBannerList.add(
-        "http://f.hiphotos.baidu.com/image/pic/item/9f2f070828381f305c2ce1b9a5014c086e06f0ed.jpg");
-    mBannerList.add(
-        "http://b.hiphotos.baidu.com/image/h%3D300/sign=46a99bea711ed21b66c928e59d6eddae/b21bb051f8198618f747e59c46ed2e738bd4e6a2.jpg");
-    binding.bannerHomeFragment.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-        .setIndicatorGravity(BannerConfig.CENTER).setDelayTime(2000)
-        .setImageLoader(new GlideImageLoader()).setImages(mBannerList).start();
-
     refreshData();
   }
 
@@ -163,6 +151,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
    * 更新数据
    */
   private void refreshData() {
+    listBanner();
     // 获取当前地理位置
     LocationMgr.startLocation(new LocationMgr.ILocationCallback() {
       @Override
@@ -186,6 +175,29 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       }
     });
 
+  }
+
+  /**
+   * 获取轮播图片
+   */
+  private void listBanner() {
+    new ListBannerCase().execute(new HttpSubscriber<List<Banner>>() {
+      @Override
+      public void onFailure(String errorMsg, Response<List<Banner>> response) {
+
+      }
+
+      @Override
+      public void onSuccess(Response<List<Banner>> response) {
+        mBannerList = new ArrayList();
+        for (Banner banner : response.getData()) {
+          mBannerList.add(banner.getImageUrl());
+        }
+        binding.bannerHomeFragment.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+            .setIndicatorGravity(BannerConfig.CENTER).setDelayTime(2000)
+            .setImageLoader(new GlideImageLoader()).setImages(mBannerList).start();
+      }
+    });
   }
 
   /**

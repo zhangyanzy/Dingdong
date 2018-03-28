@@ -51,4 +51,10 @@ public class Address implements Serializable {
         + (getProvince().getText().equals(getCity().getText()) ? "" : getCity().getText())
         + getDistrict().getText() + getStreet();
   }
+
+  public String toStringOfName() {
+    return getProvince().getName()
+        + (getProvince().getName().equals(getCity().getName()) ? "" : getCity().getName())
+        + getDistrict().getName() + getStreet();
+  }
 }

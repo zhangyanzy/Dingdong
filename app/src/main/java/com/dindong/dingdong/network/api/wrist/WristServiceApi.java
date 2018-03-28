@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -26,8 +27,8 @@ public interface WristServiceApi {
    * @param id
    * @return
    */
-  @GET("/app/lsh/:id")
-  Observable<Response<BlueWrist>> get(@Query("id") String id);
+  @GET("/app/lsh/{id}")
+  Observable<Response<BlueWrist>> get(@Path("id") String id);
 
   /**
    * 更新
@@ -36,8 +37,8 @@ public interface WristServiceApi {
    * @param blueWrist
    * @return
    */
-  @PUT("/app/lsh/:id")
-  Observable<Response> update(@Query("id") String id, @Body BlueWrist blueWrist);
+  @PUT("/app/lsh/{id}")
+  Observable<Response> update(@Path("id") String id, @Body BlueWrist blueWrist);
 
   /**
    * 绑定手环
@@ -67,6 +68,6 @@ public interface WristServiceApi {
    * 
    * @return
    */
-  @POST("/app/lsh/user/list/")
+  @GET("/app/lsh/user/list/")
   Observable<Response<List<BlueWrist>>> list();
 }

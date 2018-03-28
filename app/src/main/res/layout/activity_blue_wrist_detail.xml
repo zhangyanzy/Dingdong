@@ -48,8 +48,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="12dp"
                     android:background="@drawable/btn_corner_white2"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -286,48 +285,6 @@
 
                 </LinearLayout>
             </ScrollView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/btn_corner_gradient_blue"
-                android:onClick="@{presenter.onScan}"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@mipmap/ic_scan" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="13dp"
-                        android:gravity="center"
-                        android:text="@string/wrist_main_scan"
-                        android:textColor="@color/white"
-                        android:textSize="18dp" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>
