@@ -1,8 +1,8 @@
-package com.dindong.dingdong.presentation.shop;
+package com.dindong.dingdong.presentation.store;
 
 import com.dindong.dingdong.DDApp;
 import com.dindong.dingdong.R;
-import com.dindong.dingdong.network.bean.shop.SubjectType;
+import com.dindong.dingdong.network.bean.store.SubjectType;
 
 import android.graphics.drawable.Drawable;
 

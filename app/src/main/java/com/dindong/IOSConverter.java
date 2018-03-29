@@ -49,7 +49,7 @@ import rx.Observable;
 public class IOSConverter {
   public static Map<String, String> globalPathMap = new HashMap<>();
   static {
-    globalPathMap.put("shop", "SessionMgr.instance.getShop()?.id ?? \"\"");
+    globalPathMap.put("shop", "SessionMgr.instance.getStore()?.id ?? \"\"");
   }
 
   public static List<String> fileContent = new ArrayList<>();

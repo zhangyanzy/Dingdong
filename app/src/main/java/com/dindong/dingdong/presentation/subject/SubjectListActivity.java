@@ -8,12 +8,15 @@ import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivitySubjectListBinding;
+import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.subject.usecase.ListSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
-import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
@@ -78,6 +81,13 @@ public class SubjectListActivity extends BaseActivity {
       param.setStart(0);
     else
       param.setStart(adapter.getData().size());
+    param.getFilters()
+        .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
+    if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
+      param.getFilters()
+          .add(new FilterParam("longitude", SessionMgr.getCurrentAdd().getLongitude()));
+      param.getFilters().add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
+    }
 
     SweetAlertDialog sweetAlertDialog = null;
     if (showProgress) {

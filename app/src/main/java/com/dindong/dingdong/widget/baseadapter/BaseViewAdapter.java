@@ -2,11 +2,11 @@ package com.dindong.dingdong.widget.baseadapter;
 
 import java.util.List;
 
+import com.dindong.dingdong.BR;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import com.dindong.dingdong.BR;
-
 
 /**
  * Created by wcong on 2018/3/18.
@@ -20,6 +20,8 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BindingVie
   protected Presenter mPresenter;
   protected Decorator mDecorator;
 
+  protected Context context;
+
   public interface Presenter {
 
   }
@@ -29,6 +31,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BindingVie
   }
 
   public BaseViewAdapter(Context context) {
+    this.context = context;
     mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
-import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.store.Subject;
 
 import retrofit2.http.Body;
 import retrofit2.http.POST;

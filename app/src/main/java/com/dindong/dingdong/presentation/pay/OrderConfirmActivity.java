@@ -14,7 +14,7 @@ import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.network.bean.pay.PayMode;
-import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.widget.CountView;

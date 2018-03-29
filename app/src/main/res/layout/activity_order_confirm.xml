@@ -6,7 +6,7 @@
 
         <import type="com.dindong.dingdong.util.StringUtil" />
 
-        <import type="com.dindong.dingdong.network.bean.shop.SubjectType" />
+        <import type="com.dindong.dingdong.network.bean.store.SubjectType" />
 
         <import type="android.view.View" />
 
@@ -16,7 +16,7 @@
 
         <variable
             name="subject"
-            type="com.dindong.dingdong.network.bean.shop.Subject" />
+            type="com.dindong.dingdong.network.bean.store.Subject" />
     </data>
 
     <LinearLayout
@@ -110,7 +110,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/txt_label_shop"
                             android:gravity="right"
-                            android:text="@{subject.shop.name}"
+                            android:text="@{subject.store.name}"
                             android:textColor="#888888"
                             android:textSize="15dp" />
 

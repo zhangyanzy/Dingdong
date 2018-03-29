@@ -7,12 +7,12 @@
         <import type="com.dindong.dingdong.util.StringUtil" />
 
         <variable
-            name="shop"
-            type="com.dindong.dingdong.network.bean.shop.Shop" />
+            name="store"
+            type="com.dindong.dingdong.network.bean.store.Shop" />
 
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.shop.ShopMainActivity.Presenter" />
+            type="com.dindong.dingdong.presentation.store.ShopMainActivity.Presenter" />
     </data>
 
     <LinearLayout
@@ -65,7 +65,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{shop.name}"
+                                android:text="@{store.name}"
                                 android:textColor="#333333"
                                 android:textSize="14dp" />
 
@@ -125,7 +125,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
-                            android:text="@{shop.address.toString()}"
+                            android:text="@{store.address.toString()}"
                             android:textColor="#666666"
                             android:textSize="12dp" />
                     </LinearLayout>

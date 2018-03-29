@@ -2,7 +2,7 @@ package com.dindong.dingdong.adapter;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.databinding.ItemGlobalSubjectBinding;
-import com.dindong.dingdong.network.bean.shop.Shop;
+import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
@@ -39,7 +39,7 @@ public class SubjectAdapter extends SingleTypeAdapter {
       if (holder == null || holder.getBinding() == null)
         return;
       ItemGlobalSubjectBinding itemBinding = (ItemGlobalSubjectBinding) holder.getBinding();
-      itemBinding.setShop(shop);
+      itemBinding.setStore(shop);
       itemBinding.txtOriginal.setVisibility(itemBinding.getItem().getAmount()
           .compareTo(itemBinding.getItem().getOriginalAmount()) == 0 ? View.GONE : View.VISIBLE);
       itemBinding.txtOriginal.getPaint()

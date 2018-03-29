@@ -2,6 +2,8 @@ package com.dindong.dingdong.network.bean.entity;
 
 import java.io.Serializable;
 
+import com.dindong.dingdong.util.IsEmpty;
+
 /**
  * Created by wcong on 2018/3/13. 地址实体
  */
@@ -49,12 +51,12 @@ public class Address implements Serializable {
   public String toString() {
     return getProvince().getText()
         + (getProvince().getText().equals(getCity().getText()) ? "" : getCity().getText())
-        + getDistrict().getText() + getStreet();
+        + getDistrict().getText() + (IsEmpty.string(getStreet()) ? "" : getStreet());
   }
 
   public String toStringOfName() {
     return getProvince().getName()
         + (getProvince().getName().equals(getCity().getName()) ? "" : getCity().getName())
-        + getDistrict().getName() + getStreet();
+        + getDistrict().getName() + (IsEmpty.string(getStreet()) ? "" : getStreet());
   }
 }

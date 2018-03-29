@@ -10,11 +10,11 @@
 
         <variable
             name="item"
-            type="com.dindong.dingdong.network.bean.shop.Shop" />
+            type="com.dindong.dingdong.network.bean.store.Shop" />
 
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.shop.ShopListActivity.Presenter" />
+            type="com.dindong.dingdong.adapter.StorePresenter" />
     </data>
 
     <LinearLayout
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:foreground="?attr/selectableItemBackground"
-        android:onClick="@{()->presenter.onItemClick(item)}"
+        android:onClick="@{()->presenter.onStoreItemClick(item)}"
         android:orientation="vertical">
 
         <LinearLayout

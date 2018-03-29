@@ -1,4 +1,4 @@
-package com.dindong.dingdong.presentation.shop;
+package com.dindong.dingdong.presentation.store;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityShopMainBinding;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
-import com.dindong.dingdong.network.bean.shop.Shop;
-import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -44,7 +44,7 @@ public class ShopMainActivity extends BaseActivity {
   protected void loadData(Bundle savedInstanceState) {
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
       shop = (Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
-      binding.setShop(shop);
+      binding.setStore(shop);
       initShopImg(shop.getImages());
       initHotSubject(shop.getSubjects());
     }

@@ -1,6 +1,6 @@
 package com.dindong.dingdong.adapter;
 
-import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 
 /**

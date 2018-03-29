@@ -9,12 +9,12 @@
 
 
         <variable
-            name="shop"
-            type="com.dindong.dingdong.network.bean.shop.Shop" />
+            name="store"
+            type="com.dindong.dingdong.network.bean.store.Shop" />
 
         <variable
             name="item"
-            type="com.dindong.dingdong.network.bean.shop.Subject" />
+            type="com.dindong.dingdong.network.bean.store.Subject" />
 
         <variable
             name="presenter"
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="@{shop!=null?shop.name:item.shop.name}"
+                        android:text="@{store!=null?store.name:item.store.name}"
                         android:textColor="#666666"
                         android:textSize="12dp" />
 
@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="@{StringUtil.format(@string/global_range,shop!=null?shop.range:item.shop.range)}"
+                            android:text="@{StringUtil.format(@string/global_range,store!=null?store.range:item.store.range)}"
                             android:textColor="#666666"
                             android:textSize="12dp" />
 
@@ -91,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@id/txt_range"
-                            android:text="@{shop!=null?shop.address.toString():item.shop.address.toString()}"
+                            android:text="@{store!=null?store.address.toString():item.store.address.toString()}"
                             android:textColor="#666666"
                             android:textSize="12dp" />
 

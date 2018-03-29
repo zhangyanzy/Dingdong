@@ -7,7 +7,7 @@ import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivitySubjectDetailBinding;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
-import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.pay.OrderConfirmActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;

@@ -1,4 +1,4 @@
-package com.dindong.dingdong.network.bean.shop;
+package com.dindong.dingdong.network.bean.store;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -16,12 +16,13 @@ public class Subject implements Serializable {
   private String id;// UUID
   private String name;// 课程名称
   private SubjectType subjectType;// 课程类型
-  private Shop shop;// 所属门店
+  private Shop store;// 所属门店
   private List<GlobalImage> images = new ArrayList<>();// 课程图片
   private List<Tag> tags = new ArrayList<>();// 课程分类
 
   private BigDecimal amount = BigDecimal.ZERO;// 课程价格，现价
   private BigDecimal originalAmount = BigDecimal.ZERO;// 课程价格，原价
+  private BigDecimal qty = BigDecimal.ZERO;// 数量
   private String unit;// 价格单位即课时，如果10课节
   private BigDecimal favCount = BigDecimal.ZERO;// 收藏数
   private BigDecimal boughtCount = BigDecimal.ZERO;// 购买量
@@ -50,12 +51,12 @@ public class Subject implements Serializable {
     this.subjectType = subjectType;
   }
 
-  public Shop getShop() {
-    return shop;
+  public Shop getStore() {
+    return store;
   }
 
-  public void setShop(Shop shop) {
-    this.shop = shop;
+  public void setStore(Shop store) {
+    this.store = store;
   }
 
   public BigDecimal getAmount() {

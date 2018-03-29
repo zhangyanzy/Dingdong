@@ -54,13 +54,13 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 全部门店 -->
         <activity
-            android:name=".presentation.shop.ShopListActivity"
+            android:name=".presentation.store.ShopListActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 门店教育列表 -->
         <activity android:name=".presentation.main.ShopTeacherListActivity" />
         <activity android:name=".presentation.main.ShopInfoActivity" />
         <activity android:name=".presentation.main.IdentitySwitchActivity" />
-        <activity android:name=".presentation.shop.ShopMainActivity" />
+        <activity android:name=".presentation.store.ShopMainActivity" />
         <activity
             android:name=".presentation.subject.SubjectListActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />

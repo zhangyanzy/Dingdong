@@ -179,7 +179,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -240,7 +240,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@mipmap/icon_global_chevron" />
+                        android:src="@mipmap/ic_chevron_grey" />
                 </LinearLayout>
 
             </RelativeLayout>

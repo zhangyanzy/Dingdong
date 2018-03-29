@@ -5,11 +5,11 @@
 
         <import type="com.dindong.dingdong.util.StringUtil" />
 
-        <import type="com.dindong.dingdong.presentation.shop.ShopXml" />
+        <import type="com.dindong.dingdong.presentation.store.ShopXml" />
 
         <variable
             name="item"
-            type="com.dindong.dingdong.network.bean.shop.Subject" />
+            type="com.dindong.dingdong.network.bean.store.Subject" />
     </data>
 
     <RelativeLayout

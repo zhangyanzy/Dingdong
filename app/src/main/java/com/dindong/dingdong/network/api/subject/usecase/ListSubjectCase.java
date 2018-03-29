@@ -21,6 +21,6 @@ public class ListSubjectCase extends BaseUseCase<SubjectServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).listSubject(queryParam);
+    return createConnection().listSubject(queryParam);
   }
 }

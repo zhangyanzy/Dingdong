@@ -16,22 +16,26 @@ import com.dindong.dingdong.manager.LocationMgr;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.banner.usecase.ListBannerCase;
+import com.dindong.dingdong.network.api.shop.usecase.ListShopCase;
 import com.dindong.dingdong.network.api.subject.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.banner.Banner;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.entity.Region;
-import com.dindong.dingdong.network.bean.shop.Subject;
+import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
-import com.dindong.dingdong.presentation.shop.ShopListActivity;
+import com.dindong.dingdong.presentation.store.ShopListActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
+import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.RegionStorageUtil;
 import com.dindong.dingdong.util.ToastUtil;
+import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
@@ -166,15 +170,23 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         SessionMgr.setCurrentAdd(add);
         binding.txtProvince.setText(location.getProvince());
         RegionStorageUtil.add(city);
-        listHotSubject();
+        loadListData();
       }
 
       @Override
       public void onFailure(int errorCode, String msg) {
-        listHotSubject();
+        loadListData();
       }
     });
 
+  }
+
+  /**
+   * 加载列表数据
+   */
+  private void loadListData() {
+    listHotSubject();
+    listShop();
   }
 
   /**
@@ -234,6 +246,33 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   }
 
   /**
+   * 获取附近门店，最多6条
+   */
+  private void listShop() {
+    QueryParam param = new QueryParam();
+    param.setLimit(6);
+    param.getFilters()
+        .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
+    if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
+      param.getFilters()
+          .add(new FilterParam("longitude", SessionMgr.getCurrentAdd().getLongitude()));
+      param.getFilters().add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
+    }
+
+    new ListShopCase(param).execute(new HttpSubscriber<List<Shop>>() {
+      @Override
+      public void onFailure(String errorMsg, Response<List<Shop>> response) {
+        DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+      }
+
+      @Override
+      public void onSuccess(Response<List<Shop>> response) {
+        SingleTypeAdapter adapter=new SingleTypeAdapter(getContext(),R.layout.item_shop_list);
+      }
+    });
+  }
+
+  /**
    * banner类图片加载
    */
   public class GlideImageLoader extends ImageLoader {
@@ -282,7 +321,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       address.setCity(city);
       SessionMgr.setCurrentAdd(address);
       binding.txtProvince.setText(city.getText());
-      listHotSubject();
+      loadListData();
     }
   }
 
@@ -307,6 +346,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
      */
     public void onMoreSubject() {
       startActivity(new Intent(getContext(), SubjectListActivity.class));
+    }
+
+
+    /**
+     * 更多门店
+     */
+    public void onMoreStore() {
+      startActivity(new Intent(getContext(), ShopListActivity.class));
     }
   }
 }

@@ -21,6 +21,6 @@ public class ListShopCase extends BaseUseCase<ShopServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).listShop(queryParam);
+    return createConnection().listShop(queryParam);
   }
 }

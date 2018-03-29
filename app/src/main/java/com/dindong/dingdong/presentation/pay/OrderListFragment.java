@@ -13,7 +13,7 @@ import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderState;
-import com.dindong.dingdong.presentation.shop.ShopMainActivity;
+import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;

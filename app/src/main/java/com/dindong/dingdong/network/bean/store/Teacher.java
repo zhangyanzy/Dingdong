@@ -1,4 +1,4 @@
-package com.dindong.dingdong.network.bean.shop;
+package com.dindong.dingdong.network.bean.store;
 
 /**
  * Created by wcong on 2018/3/13.

@@ -4,9 +4,8 @@ import java.util.List;
 
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
-import com.dindong.dingdong.network.bean.shop.Shop;
-import com.dindong.dingdong.network.bean.shop.Subject;
-import com.dindong.dingdong.network.bean.shop.Teacher;
+import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.network.bean.store.Teacher;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -25,9 +24,12 @@ public interface ShopServiceApi {
    * 查询门店列表，支持分页查询。
    * 
    * @param param
-   *          keyword:%=%，关键字类似于，支持门店名称<br/>
-   *          grid:[.)，当前经纬度[longitude经,latitude纬]<br/>
-   *          range:in，距离包含<br/>
+   *          keyword，关键字类似于，支持门店名称<br/>
+   *          longitude，经度<br/>
+   *          latitude，纬度<br/>
+   *          cityCode，城市编号<br/>
+   *          districtCode，地区编号<br/>
+   *          range，距离<br/>
    * @return
    */
   @POST("app/shop/list")
@@ -41,7 +43,6 @@ public interface ShopServiceApi {
    */
   @GET("app/shop/get")
   Observable<Response<Shop>> get(@Query("shopId") String shopId);
-
 
   /**
    * 查询门店老师列表，支持分页查询。

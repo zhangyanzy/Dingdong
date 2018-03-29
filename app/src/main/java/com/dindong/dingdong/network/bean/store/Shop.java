@@ -1,4 +1,4 @@
-package com.dindong.dingdong.network.bean.shop;
+package com.dindong.dingdong.network.bean.store;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.dindong.dingdong.network.bean.entity.Address;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
-import com.dindong.dingdong.network.bean.entity.Tag;
 
 /**
  * Created by wcong on 2018/3/13. 门店实体
@@ -17,8 +16,8 @@ public class Shop implements Serializable {
   private String id;// UUID
   private String name;// 门店名称
   private String phone;// 门店电话
-  private boolean isProve;// 是否被认证
-  private List<Tag> tags = new ArrayList<>();// 门店标签可存门店授课类型
+  private boolean prove;// 是否被认证
+  private List<String> tags = new ArrayList<>();// 门店标签可存门店授课类型
 
   // 地址相关
   private Address address;// 门店地址
@@ -26,9 +25,10 @@ public class Shop implements Serializable {
   private String latitude;// 纬度
   private BigDecimal range = BigDecimal.ZERO;// 距离
 
-  private List<GlobalImage> images = new ArrayList<>();// 门店图片
+  private List<GlobalImage> images = new ArrayList<>();// 门店展示图
+  private GlobalImage logoImage;// 门店LOGO/首图
 
-  private List<Subject> subjects = new ArrayList<>();// 门店课程
+  private List<Subject> subjects = new ArrayList<>();// 课程列表，当为门店列表时最多有两个课程
 
   public String getId() {
     return id;
@@ -55,18 +55,18 @@ public class Shop implements Serializable {
   }
 
   public boolean isProve() {
-    return isProve;
+    return prove;
   }
 
   public void setProve(boolean prove) {
-    isProve = prove;
+    this.prove = prove;
   }
 
-  public List<Tag> getTags() {
+  public List<String> getTags() {
     return tags;
   }
 
-  public void setTags(List<Tag> tags) {
+  public void setTags(List<String> tags) {
     this.tags = tags;
   }
 
