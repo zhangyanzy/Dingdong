@@ -1,5 +1,6 @@
 package com.dindong.dingdong.base;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -32,7 +33,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     initComponent();
     loadData(savedInstanceState);
     createEventHandlers();
-    // EventBus.getDefault().register(this);
+    EventBus.getDefault().register(this);
   }
 
   /**
@@ -125,4 +126,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     return false;
   }
 
+  @Override
+  protected void onDestroy() {
+    EventBus.getDefault().unregister(this);
+
+    super.onDestroy();
+  }
 }

@@ -44,6 +44,10 @@ public abstract class HttpSubscriber<T> extends rx.Subscriber<Response<T>> {
   public void onError(Throwable throwable) {
     if (dialog != null && context != null)
       dialog.dismiss();
+    if (throwable instanceof TokenExpiredException) {
+      EventBus.getDefault().post(new AuthEvent(AuthEvent.TOKEN_EXPIRED));
+      return;
+    }
     onFailure(parseException(throwable), null);
   }
 
