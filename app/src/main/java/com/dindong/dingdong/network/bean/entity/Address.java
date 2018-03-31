@@ -49,12 +49,18 @@ public class Address implements Serializable {
 
   @Override
   public String toString() {
+    if (getProvince() == null || getCity() == null || getDistrict() == null)
+      return "";
+
     return getProvince().getText()
         + (getProvince().getText().equals(getCity().getText()) ? "" : getCity().getText())
         + getDistrict().getText() + (IsEmpty.string(getStreet()) ? "" : getStreet());
   }
 
   public String toStringOfName() {
+    if (getProvince().getName() == null || getCity().getName() == null
+        || getDistrict().getName() == null)
+      return "";
     return getProvince().getName()
         + (getProvince().getName().equals(getCity().getName()) ? "" : getCity().getName())
         + getDistrict().getName() + (IsEmpty.string(getStreet()) ? "" : getStreet());

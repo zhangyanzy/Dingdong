@@ -29,6 +29,7 @@ import com.wcong.validator.Validator;
 import com.wcong.validator.rules.MinLengthRule;
 import com.wcong.validator.rules.RequiredRule;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -84,8 +85,6 @@ public class BlueWristAddActivity extends BaseActivity {
     validator.register(binding.edtMobile1,
         new RequiredRule(getString(R.string.wrist_add_empty_mobile)),
         new MinLengthRule(11, getString(R.string.wrist_add_len_mobile)));
-    validator.register(binding.edtStreet,
-        new RequiredRule(getString(R.string.wrist_add_empty_add)));
   }
 
   private BlueWrist createWrist() {
@@ -104,8 +103,11 @@ public class BlueWristAddActivity extends BaseActivity {
     blueWrist.setPhone1(binding.edtMobile1.getText().toString().trim());
     blueWrist.setPhone2(binding.edtMobile2.getText().toString().trim());
     blueWrist.setPhone3(binding.edtMobile3.getText().toString().trim());
-    tempAddress.setStreet(binding.edtStreet.getText().toString().trim());
-    blueWrist.setAddress(tempAddress);
+    if (tempAddress != null) {
+      blueWrist.setAddress(tempAddress);
+      tempAddress.setStreet(binding.edtStreet.getText().toString().trim());
+    }
+
     blueWrist.setRemark(binding.edtRemark.getText().toString().trim());
     return blueWrist;
   }
@@ -124,7 +126,7 @@ public class BlueWristAddActivity extends BaseActivity {
       public void onSuccess(Response<Object> response) {
         ToastUtil.toastSuccess(BlueWristAddActivity.this,
             getString(R.string.wrist_add_bind_success));
-        finish();
+        startActivity(new Intent(BlueWristAddActivity.this, BlueWristMainActivity.class));
       }
     });
   }
@@ -205,11 +207,12 @@ public class BlueWristAddActivity extends BaseActivity {
       validator.validateAll(new ValidateResultCall() {
         @Override
         public void onSuccess() {
-          if (tempAddress == null || tempAddress.getProvince() == null
-              || tempAddress.getCity() == null) {
-            ToastUtil.toastHint(BlueWristAddActivity.this, getString(R.string.wrist_add_empty_add));
-            return;
-          }
+          // if (tempAddress == null || tempAddress.getProvince() == null
+          // || tempAddress.getCity() == null) {
+          // ToastUtil.toastHint(BlueWristAddActivity.this,
+          // getString(R.string.wrist_add_empty_add));
+          // return;
+          // }
           bindWrist();
 
         }

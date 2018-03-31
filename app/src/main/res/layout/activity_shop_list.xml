@@ -89,7 +89,7 @@
                 <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@mipmap/img_load_failed" />
+                    android:src="@mipmap/ic_map" />
             </LinearLayout>
 
         </LinearLayout>

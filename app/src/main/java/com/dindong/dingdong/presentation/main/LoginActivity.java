@@ -11,6 +11,7 @@ import com.dindong.dingdong.network.api.auth.usecase.SendSmsCase;
 import com.dindong.dingdong.network.api.auth.usecase.ShortLoginCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.auth.User;
+import com.dindong.dingdong.presentation.main.fragment.UserAgreementActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.FocusValidator;
 import com.dindong.dingdong.util.IsEmpty;
@@ -43,7 +44,6 @@ public class LoginActivity extends BaseActivity {
 
     binding.ct.setViewType(CountTimeTextView.LayoutType.red);
     binding.cbAgreement.setSelected(true);
-    binding.edtPassword.setText("admin");
     switchLoginType(loginType);
     registerEditValidator();
     registerFocusValidator();
@@ -166,7 +166,7 @@ public class LoginActivity extends BaseActivity {
   }
 
   private void sendSms(String mobile) {
-    new SendSmsCase(mobile).execute(new HttpSubscriber<User>(LoginActivity.this) {
+    new SendSmsCase(mobile, "3").execute(new HttpSubscriber<User>(LoginActivity.this) {
       @Override
       public void onFailure(String errorMsg, Response<User> response) {
         DialogUtil.getErrorDialog(LoginActivity.this, errorMsg).show();
@@ -259,7 +259,7 @@ public class LoginActivity extends BaseActivity {
         ToastUtil.toastHint(LoginActivity.this, getString(R.string.login_len_mobile));
         return;
       }
-      sendSms(binding.edtShortMobile.toString().trim());
+      sendSms(binding.edtShortMobile.getText().toString().trim());
     }
 
     /**
@@ -267,6 +267,13 @@ public class LoginActivity extends BaseActivity {
      */
     public void onRegister() {
       startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
+
+    /**
+     * 用户协议
+     */
+    public void onAgreement() {
+      startActivity(new Intent(LoginActivity.this, UserAgreementActivity.class));
     }
   }
 }

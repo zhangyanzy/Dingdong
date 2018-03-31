@@ -103,6 +103,7 @@ public class ShopMainActivity extends BaseActivity {
     public void onSubjectItemClick(Subject subject) {
       Intent intent = new Intent(ShopMainActivity.this, SubjectDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, subject);
+      intent.putExtra(AppConfig.IntentKey.SUMMARY,shop);
       startActivity(intent);
     }
 

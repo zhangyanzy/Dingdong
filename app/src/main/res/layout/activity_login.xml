@@ -383,6 +383,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:onClick="@{()->presenter.onAgreement()}"
                         android:text="@string/login_agreement"
                         android:textColor="#468DE6"
                         android:textSize="14dp" />

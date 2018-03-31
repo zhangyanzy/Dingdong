@@ -26,7 +26,7 @@ public class Shop implements Serializable {
   private BigDecimal range = BigDecimal.ZERO;// 距离
 
   private List<GlobalImage> images = new ArrayList<>();// 门店展示图
-  private GlobalImage logoImage;// 门店LOGO/首图
+  private GlobalImage logoImage = new GlobalImage();// 门店LOGO/首图
 
   private List<Subject> subjects = new ArrayList<>();// 课程列表，当为门店列表时最多有两个课程
 
@@ -116,5 +116,13 @@ public class Shop implements Serializable {
 
   public void setSubjects(List<Subject> subjects) {
     this.subjects = subjects;
+  }
+
+  public GlobalImage getLogoImage() {
+    return logoImage;
+  }
+
+  public void setLogoImage(GlobalImage logoImage) {
+    this.logoImage = logoImage;
   }
 }

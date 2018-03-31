@@ -1,18 +1,24 @@
 package com.dindong.dingdong.presentation.user.wrist;
 
+import java.util.List;
+
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityBlueWristScanBinding;
+import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.wrist.usecase.GetWristCase;
+import com.dindong.dingdong.network.api.wrist.usecase.ScanLshCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.wrist.BlueWrist;
 import com.dindong.dingdong.util.DensityUtil;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.PermissionUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.google.zxing.Result;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,8 +34,10 @@ import android.util.AttributeSet;
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class BlueWristScanActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
+public class BlueWristScanActivity extends BaseActivity
+    implements ZXingScannerView.ResultHandler, EasyPermissions.PermissionCallbacks {
   ActivityBlueWristScanBinding binding;
   private ZXingScannerView mScannerView;
 
@@ -37,6 +45,9 @@ public class BlueWristScanActivity extends BaseActivity implements ZXingScannerV
   public static final String TYPE_INFO = "info";
 
   private String type;
+
+  String[] perms = {
+      Manifest.permission.CAMERA };
 
   @Override
   protected void initComponent() {
@@ -59,6 +70,8 @@ public class BlueWristScanActivity extends BaseActivity implements ZXingScannerV
   @Override
   protected void onResume() {
     super.onResume();
+    PermissionUtil.check(this, perms, 100, getString(R.string.permission_req_photo),
+        getString(R.string.permission_photo));
     mScannerView.setResultHandler(this);
     mScannerView.startCamera();
   }
@@ -107,14 +120,16 @@ public class BlueWristScanActivity extends BaseActivity implements ZXingScannerV
   }
 
   private void getWristInfo(final String id) {
-    new GetWristCase(id).execute(new HttpSubscriber<BlueWrist>() {
+    new GetWristCase(id).execute(new HttpSubscriber<BlueWrist>(BlueWristScanActivity.this) {
       @Override
       public void onFailure(String errorMsg, Response<BlueWrist> response) {
         DialogUtil.getErrorDialog(BlueWristScanActivity.this, errorMsg).show();
+        resumeCamera();
       }
 
       @Override
       public void onSuccess(Response<BlueWrist> response) {
+        final BlueWrist wrist = response.getData();
         if (type.equals(TYPE_ADD)) {
           if (response.getData().getStatus().equals("1")) {
             DialogUtil
@@ -147,13 +162,43 @@ public class BlueWristScanActivity extends BaseActivity implements ZXingScannerV
                 }).show();
             return;
           }
-          Intent intent = new Intent(BlueWristScanActivity.this, BlueWristDetailActivity.class);
-          intent.putExtra(AppConfig.IntentKey.DATA, response.getData());
-          startActivity(intent);
-          resumeCamera();
+          new ScanLshCase(wrist.getId(), SessionMgr.getCurrentAdd().getLongitude(),
+              SessionMgr.getCurrentAdd().getLatitude())
+                  .execute(new HttpSubscriber<Object>(BlueWristScanActivity.this) {
+                    @Override
+                    public void onFailure(String errorMsg, Response response) {
+                      Intent intent = new Intent(BlueWristScanActivity.this,
+                          BlueWristDetailActivity.class);
+                      intent.putExtra(AppConfig.IntentKey.DATA, wrist);
+                      startActivity(intent);
+                      resumeCamera();
+                    }
+
+                    @Override
+                    public void onSuccess(Response response) {
+                      Intent intent = new Intent(BlueWristScanActivity.this,
+                          BlueWristDetailActivity.class);
+                      intent.putExtra(AppConfig.IntentKey.DATA, wrist);
+                      startActivity(intent);
+                      resumeCamera();
+                    }
+
+                  });
+
         }
       }
     });
+  }
+
+  @Override
+  public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    resumeCamera();
+  }
+
+  @Override
+  public void onPermissionsDenied(int requestCode, List<String> perms) {
+
   }
 
   private static class CustomViewFinderView extends ViewFinderView {

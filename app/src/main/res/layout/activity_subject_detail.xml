@@ -15,6 +15,10 @@
         <variable
             name="subject"
             type="com.dindong.dingdong.network.bean.store.Subject" />
+
+        <variable
+            name="shop"
+            type="com.dindong.dingdong.network.bean.store.Shop" />
     </data>
 
     <LinearLayout
@@ -142,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:text="@{subject.store.name}"
+                            android:text="@{shop==null?subject.store.name:shop.name}"
                             android:textColor="#333333"
                             android:textSize="14dp" />
 
@@ -157,13 +161,13 @@
                                 android:layout_width="22dp"
                                 android:layout_height="22dp"
                                 android:layout_marginLeft="12dp"
-                                android:src="@mipmap/img_load_failed" />
+                                android:src="@mipmap/ic_map" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
-                                android:text="@{subject.store.address.toString()}"
+                                android:text="@{shop==null?subject.store.address.toString():shop.address.toString()}"
                                 android:textColor="#666666"
                                 android:textSize="12dp" />
                         </LinearLayout>
@@ -176,7 +180,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="12dp"
-                        android:src="@mipmap/img_load_failed" />
+                        android:src="@mipmap/ic_phone" />
                 </RelativeLayout>
 
 
@@ -200,7 +204,7 @@
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@mipmap/img_load_failed" />
+                            android:src="@mipmap/ic_title" />
 
                         <TextView
                             android:layout_width="wrap_content"

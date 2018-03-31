@@ -74,7 +74,7 @@ public class ResetPasswordActivity extends BaseActivity {
    * @param mobile
    */
   private void sendSms(String mobile) {
-    new SendSmsCase(mobile).execute(new HttpSubscriber<User>() {
+    new SendSmsCase(mobile, "2").execute(new HttpSubscriber<User>() {
       @Override
       public void onFailure(String errorMsg, Response<User> response) {
         DialogUtil.getErrorDialog(ResetPasswordActivity.this, errorMsg).show();

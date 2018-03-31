@@ -115,7 +115,7 @@ public class RegisterActivity extends BaseActivity {
    * @param mobile
    */
   private void sendSms(String mobile) {
-    new SendSmsCase(mobile).execute(new HttpSubscriber<User>(RegisterActivity.this) {
+    new SendSmsCase(mobile, "0").execute(new HttpSubscriber<User>(RegisterActivity.this) {
       @Override
       public void onFailure(String errorMsg, Response<User> response) {
         DialogUtil.getErrorDialog(RegisterActivity.this, errorMsg).show();
@@ -177,7 +177,7 @@ public class RegisterActivity extends BaseActivity {
         ToastUtil.toastHint(RegisterActivity.this, getString(R.string.login_len_mobile));
         return;
       }
-      sendSms(binding.edtMobile.toString().trim());
+      sendSms(binding.edtMobile.getText().toString().trim());
     }
 
   }

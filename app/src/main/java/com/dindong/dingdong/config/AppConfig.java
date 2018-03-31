@@ -12,6 +12,7 @@ public class AppConfig {
 
   public static class IntentKey {
     public static final String DATA = "data";
+    public static final String SUMMARY = "summary";
   }
 
   // 第三方申请key

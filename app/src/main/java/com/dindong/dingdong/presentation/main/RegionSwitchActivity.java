@@ -49,6 +49,9 @@ public class RegionSwitchActivity extends BaseActivity {
       @Override
       public void onSelect(Region city) {
         selectCity = city;
+        //手动切换城市无
+        SessionMgr.getCurrentAdd().setLatitude("");
+        SessionMgr.getCurrentAdd().setLongitude("");
         RegionStorageUtil.add(city);
         onBackPressed();
       }
@@ -58,6 +61,8 @@ public class RegionSwitchActivity extends BaseActivity {
       @Override
       public void onSelect(Region city) {
         selectCity = city;
+        SessionMgr.getCurrentAdd().setLatitude("");
+        SessionMgr.getCurrentAdd().setLongitude("");
         RegionStorageUtil.add(city);
         onBackPressed();
       }
@@ -113,6 +118,17 @@ public class RegionSwitchActivity extends BaseActivity {
           selectCity.setId(location.getCityCode());
           selectCity.setText(location.getCity());
           binding.txtCurrentProvince.setText(location.getProvince());
+
+          // 更新当前地理位置
+          SessionMgr.SessionAddress add = new SessionMgr.SessionAddress();
+          Region city = new Region();
+          city.setId(location.getAdCode());
+          city.setText(location.getCity());
+          add.setCity(city);
+          add.setLongitude(location.getLongitude() + "");
+          add.setLatitude(location.getLatitude() + "");
+          SessionMgr.setCurrentAdd(add);
+          RegionStorageUtil.add(city);
         }
 
         @Override

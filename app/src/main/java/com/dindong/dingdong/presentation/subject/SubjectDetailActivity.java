@@ -7,14 +7,14 @@ import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivitySubjectDetailBinding;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
+import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
-import com.dindong.dingdong.presentation.pay.OrderConfirmActivity;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -40,6 +40,9 @@ public class SubjectDetailActivity extends BaseActivity {
       subject = (Subject) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
       binding.setSubject(subject);
       initSubjectImg(subject.getImages());
+    }
+    if (getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY) != null) {
+      binding.setShop((Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY));
     }
   }
 
@@ -73,9 +76,11 @@ public class SubjectDetailActivity extends BaseActivity {
     }
 
     public void onPay(Subject subject) {
-      Intent intent = new Intent(SubjectDetailActivity.this, OrderConfirmActivity.class);
-      intent.putExtra(AppConfig.IntentKey.DATA, subject);
-      startActivity(intent);
+      ToastUtil.toastHint(SubjectDetailActivity.this, "暂未开放");
+      // Intent intent = new Intent(SubjectDetailActivity.this,
+      // OrderConfirmActivity.class);
+      // intent.putExtra(AppConfig.IntentKey.DATA, subject);
+      // startActivity(intent);
     }
   }
 

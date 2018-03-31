@@ -30,10 +30,10 @@
                 android:paddingTop="8dp">
 
                 <LinearLayout
-                    android:onClick="@{()->presenter.onProvinceSwitch()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:onClick="@{()->presenter.onProvinceSwitch()}"
                     android:orientation="horizontal">
 
                     <TextView
@@ -184,6 +184,8 @@
 
             </RelativeLayout>
 
+            <LinearLayout style="@style/divider_item" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lst_hot_subject"
                 android:layout_width="match_parent"
@@ -227,6 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
+                    android:onClick="@{()->presenter.onMoreStore()}"
                     android:orientation="horizontal">
 
                     <TextView
@@ -244,6 +247,8 @@
                 </LinearLayout>
 
             </RelativeLayout>
+
+            <LinearLayout style="@style/divider_item" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lst_near_shop"

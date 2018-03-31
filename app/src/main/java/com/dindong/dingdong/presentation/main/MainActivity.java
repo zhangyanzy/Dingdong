@@ -13,14 +13,20 @@ import com.dindong.dingdong.presentation.main.fragment.HomeFragment;
 import com.dindong.dingdong.presentation.main.fragment.MineFragment;
 import com.dindong.dingdong.presentation.main.fragment.MsgFragment;
 import com.dindong.dingdong.presentation.main.fragment.WorkFragment;
+import com.dindong.dingdong.util.PermissionUtil;
+import com.dindong.dingdong.util.ToastUtil;
+import com.dindong.dingdong.util.UpgradeUtil;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -45,6 +51,9 @@ public class MainActivity extends BaseActivity {
   private NotifyTimerJob discoveryJob;
   private NotifyTimerJob msgJob;
 
+  String[] perms = {
+      Manifest.permission.ACCESS_COARSE_LOCATION };
+
   @Override
   protected void initComponent() {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -68,11 +77,29 @@ public class MainActivity extends BaseActivity {
       initTab(identity);
     }
 
+    UpgradeUtil.getInstance().checkVersion(this);
+
   }
 
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if (ContextCompat.checkSelfPermission(this,
+        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        || ContextCompat.checkSelfPermission(this,
+            Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+      // 申请WRITE_EXTERNAL_STORAGE权限
+      ActivityCompat.requestPermissions(this, new String[] {
+          Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CAMERA }, 100);// 自定义的code
+    }
+    PermissionUtil.check(this, perms, 100, getString(R.string.permission_req_location_camera),
+        getString(R.string.permission_dialog));
+
   }
 
   private void initTab(AuthIdentity identity) {
@@ -120,6 +147,13 @@ public class MainActivity extends BaseActivity {
     binding.vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
       public void onPageSelected(int position) {
+        if (position == 1 || position == 2) {
+          ToastUtil.toastHint(MainActivity.this, "敬请期待");
+          binding.vp.setCurrentItem(0);
+          setTabSelect(0);
+          return;
+        }
+
         setTabSelect(position);
       }
 
@@ -217,6 +251,10 @@ public class MainActivity extends BaseActivity {
     public void onTabSelect(View view) {
       for (int i = 0; i < tabs.length; i++) {
         if (((TextView) (((ViewGroup) view).getChildAt(1))).getText().toString().equals(tabs[i])) {
+          if (i == 1 || i == 2) {
+            ToastUtil.toastHint(MainActivity.this, "敬请期待");
+            return;
+          }
           binding.vp.setCurrentItem(i);
           setTabSelect(i);
           return;

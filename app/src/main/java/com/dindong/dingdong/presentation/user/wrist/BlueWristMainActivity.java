@@ -66,6 +66,12 @@ public class BlueWristMainActivity extends BaseActivity {
   }
 
   @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    listWrist();
+  }
+
+  @Override
   protected void onResume() {
     super.onResume();
     listWrist();

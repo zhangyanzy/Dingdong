@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.amap.api.location.AMapLocation;
 import com.dindong.dingdong.R;
+import com.dindong.dingdong.adapter.StoreAdapter;
+import com.dindong.dingdong.adapter.StorePresenter;
 import com.dindong.dingdong.adapter.SubjectAdapter;
 import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseFragment;
@@ -27,6 +29,7 @@ import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
 import com.dindong.dingdong.presentation.store.ShopListActivity;
+import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
@@ -35,7 +38,6 @@ import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.RegionStorageUtil;
 import com.dindong.dingdong.util.ToastUtil;
-import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
@@ -162,7 +164,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       public void onSuccess(AMapLocation location) {
         SessionMgr.SessionAddress add = new SessionMgr.SessionAddress();
         Region city = new Region();
-        city.setId(location.getCityCode());
+        city.setId(location.getAdCode());
         city.setText(location.getCity());
         add.setCity(city);
         add.setLongitude(location.getLongitude() + "");
@@ -237,7 +239,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         SubjectAdapter subjectAdapter = new SubjectAdapter(getContext());
         subjectAdapter.setPresenter(new Presenter());
         subjectAdapter.set(response.getData());
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        LinearLayoutManager manager = new LinearLayoutManager(getContext()) {
+          @Override
+          public boolean canScrollVertically() {
+            return false;
+          }
+        };
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.lstHotSubject.setLayoutManager(manager);
         binding.lstHotSubject.setAdapter(subjectAdapter);
@@ -267,7 +274,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
       @Override
       public void onSuccess(Response<List<Shop>> response) {
-        SingleTypeAdapter adapter=new SingleTypeAdapter(getContext(),R.layout.item_shop_list);
+        StoreAdapter storeAdapter = new StoreAdapter(getContext());
+        storeAdapter.setPresenter(new Presenter());
+        storeAdapter.set(response.getData());
+        LinearLayoutManager manager = new LinearLayoutManager(getContext()) {
+          @Override
+          public boolean canScrollVertically() {
+            return false;
+          }
+        };
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.lstNearShop.setLayoutManager(manager);
+        binding.lstNearShop.setAdapter(storeAdapter);
       }
     });
   }
@@ -325,7 +343,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
   }
 
-  public class Presenter implements SubjectPresenter {
+  public class Presenter implements SubjectPresenter, StorePresenter {
 
     /**
      * 城市切换
@@ -348,12 +366,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       startActivity(new Intent(getContext(), SubjectListActivity.class));
     }
 
-
     /**
      * 更多门店
      */
     public void onMoreStore() {
       startActivity(new Intent(getContext(), ShopListActivity.class));
+    }
+
+    @Override
+    public void onStoreItemClick(Shop shop) {
+      Intent intent = new Intent(getContext(), ShopMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+      startActivity(intent);
     }
   }
 }

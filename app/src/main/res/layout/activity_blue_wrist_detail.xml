@@ -251,7 +251,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
                             android:layout_weight="1"
-                            android:text="@{wrist.address.toStringOfName()}"
+                            android:text='@{wrist.address==null?"":wrist.address.toStringOfName()}'
                             android:textColor="@color/light_black"
                             android:textSize="15dp" />
                     </LinearLayout>

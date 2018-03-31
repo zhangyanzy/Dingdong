@@ -55,11 +55,13 @@ public interface AuthServiceApi {
    *
    * @param mobile
    *          手机号
+   * @param operator
+   *          操作。0-注册，1-忘记密码，2-修改密码，3-快捷登录，4-更换手机
    * @return
-   * @throws Exception
    */
   @GET("app/sms/send")
-  Observable<Response> sendSmsCode(@Query("mobile") String mobile);
+  Observable<Response> sendSmsCode(@Query("mobile") String mobile,
+      @Query("operator") String operator);
 
   /**
    * 重置密码，用于忘记密码，无需旧密码

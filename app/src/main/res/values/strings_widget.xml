@@ -11,4 +11,17 @@
     <string name="date_picker_year">年</string>
     <string name="date_picker_month">月</string>
     <string name="date_picker_day">日</string>
+
+    <!--权限判断-->
+    <string name="permission_title">权限设置</string>
+    <string name="permission_photo2dStorage">当前应用缺少必要权限。\n请点击\"设置\"-\"权限\"-打开【相机】、【读写文件】权限。</string>
+    <string name="permission_photo">当前应用缺少必要权限。\n请点击\"设置\"-\"权限\"-打开【相机】权限。</string>
+    <string name="permission_device">当前应用缺少必要权限。\n请点击\"设置\"-\"权限\"-打开【设备】权限。</string>
+    <string name="permission_req_location_camera">申请相机、位置权限</string>
+    <string name="permission_dialog">当前应用缺少必要权限。\n请点击\"设置\"-\"权限\"-打开【相机】、【位置】权限。</string>
+    <string name="permission_req_photo2dStorage">申请相机、读写权限</string>
+    <string name="permission_req_photo">申请相机权限</string>
+    <string name="permission_req_device">申请设备权限</string>
+    <string name="permission_ok">去设置</string>
+    <string name="permission_cancel">取消</string>
 </resources>

@@ -25,7 +25,7 @@ public class StringUtil {
   }
 
   public static String qty(BigDecimal qty) {
-    return MessageFormat.format("{0,number,#.###}", qty);
+    return MessageFormat.format("{0,number,0}", qty);
   }
 
   public static String amount(BigDecimal amount) {
@@ -98,5 +98,19 @@ public class StringUtil {
    */
   public static String formatProvince(String province) {
     return province.contains("市") ? province.substring(0, province.indexOf("市")) : province;
+  }
+
+  public static String formatRange(String range) {
+    return new BigDecimal("range").compareTo(BigDecimal.valueOf(1000)) >= 0
+        ? new BigDecimal("range").divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP) + "K"
+        : qty(new BigDecimal("range"));
+  }
+
+  public static String formatRange(BigDecimal range) {
+    if (range==null)
+      return "";
+    return range.compareTo(BigDecimal.valueOf(1000)) >= 0
+        ? range.divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP) + "k"
+        : qty(range);
   }
 }
