@@ -8,7 +8,7 @@ import com.dindong.dingdong.util.IsEmpty;
  * Created by wcong on 2018/3/13. 地址实体
  */
 
-public class Address implements Serializable {
+public class Address implements Serializable,Cloneable {
 
   private Region province;// 省
   private Region city;// 市

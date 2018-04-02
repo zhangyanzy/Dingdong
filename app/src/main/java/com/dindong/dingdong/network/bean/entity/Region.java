@@ -8,7 +8,7 @@ import com.dindong.dingdong.util.IsEmpty;
  * Created by wcong on 2018/3/13.
  */
 
-public class Region implements Serializable {
+public class Region implements Serializable, Cloneable {
   private String id;
   private String text;
   private String name;
@@ -61,4 +61,15 @@ public class Region implements Serializable {
   public void setText(String text) {
     this.text = text;
   }
+
+  public Region clone() {
+    Region o = null;
+    try {
+      o = (Region) super.clone();
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    return o;
+  }
+
 }
