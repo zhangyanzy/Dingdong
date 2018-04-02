@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.dindong.dingdong.network.bean.entity.Address;
+import com.dindong.dingdong.util.IsEmpty;
 
 /**
  * Created by wcong on 2018/3/14. 蓝手环信息
@@ -47,7 +48,7 @@ public class BlueWrist implements Serializable {
   }
 
   public String getSex() {
-    return sex;
+    return sex == null || IsEmpty.string(sex) ? "" : ((Integer.valueOf(sex) == 0) ? "男" : "女");
   }
 
   public void setSex(String sex) {

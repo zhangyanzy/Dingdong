@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.dindong.dingdong.base.ShallowCopy;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
+import com.dindong.dingdong.util.IsEmpty;
 
 /**
  * Created by wcong on 2018/3/9.
@@ -62,7 +63,7 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
   }
 
   public String getSex() {
-    return sex;
+    return sex == null || IsEmpty.string(sex) ? "" : ((Integer.valueOf(sex) == 0) ? "男" : "女");
   }
 
   public void setSex(String sex) {

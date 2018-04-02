@@ -105,7 +105,7 @@ public class UpgradeUtil {
         switch (tmSelfUpdateUpdateInfo.getUpdateMethod()) {
         case TMSelfUpdateUpdateInfo.UpdateMethod_NoUpdate:
           // 无更新
-          ToastUtil.toastHint(context, "已是最新版本" + tmSelfUpdateUpdateInfo.versioncode);
+//          ToastUtil.toastHint(context, "已是最新版本" + tmSelfUpdateUpdateInfo.versioncode);
           break;
         default:
           if (TMSelfUpdateManager.getInstance()

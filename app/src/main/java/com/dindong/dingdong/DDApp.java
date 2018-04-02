@@ -5,6 +5,7 @@ import com.dindong.dingdong.listener.ActivityLifecycleListener;
 import com.dindong.dingdong.manager.LocationMgr;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.manager.StorageMgr;
+import com.dindong.dingdong.manager.TokenMgr;
 import com.dindong.dingdong.network.ApiClient;
 
 import android.app.Activity;
@@ -36,6 +37,8 @@ public class DDApp extends MultiDexApplication {
     SessionMgr.init(this);
     // 初始化定位服务
     LocationMgr.init(this);
+    // 初始化cookie
+    TokenMgr.init();
 
     listenForForeground();
   }
