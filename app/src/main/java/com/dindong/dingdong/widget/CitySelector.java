@@ -76,7 +76,7 @@ public class CitySelector extends GridLayout {
               getContext().getResources().getColorStateList(R.color.color_tab_payment));
           textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
           textView.setGravity(Gravity.CENTER);
-          textView.setText(StringUtil.formatProvince(cities.get(i).getText()));
+          textView.setText(StringUtil.formatCity(cities.get(i).getText()));
           textView.setTag(cities.get(i));
           if (!IsEmpty.string(currentProvince) && cities.get(i).getText().equals(currentProvince))
             // 设置被选中城市

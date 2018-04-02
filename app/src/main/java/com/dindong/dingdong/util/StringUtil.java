@@ -96,7 +96,7 @@ public class StringUtil {
    * @param province
    * @return
    */
-  public static String formatProvince(String province) {
+  public static String formatCity(String province) {
     return province.contains("市") ? province.substring(0, province.indexOf("市")) : province;
   }
 
@@ -107,10 +107,9 @@ public class StringUtil {
   }
 
   public static String formatRange(BigDecimal range) {
-    if (range==null)
+    if (range == null)
       return "";
     return range.compareTo(BigDecimal.valueOf(1000)) >= 0
-        ? range.divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP) + "k"
-        : qty(range);
+        ? range.divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP) + "k" : qty(range);
   }
 }
