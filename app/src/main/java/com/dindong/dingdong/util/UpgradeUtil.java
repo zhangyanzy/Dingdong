@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Created by wcong on 2018/3/30.
@@ -104,8 +105,10 @@ public class UpgradeUtil {
 
         switch (tmSelfUpdateUpdateInfo.getUpdateMethod()) {
         case TMSelfUpdateUpdateInfo.UpdateMethod_NoUpdate:
+          Log.i(this.getClass().getSimpleName(), "无更新");
           // 无更新
-//          ToastUtil.toastHint(context, "已是最新版本" + tmSelfUpdateUpdateInfo.versioncode);
+          // ToastUtil.toastHint(context, "已是最新版本" +
+          // tmSelfUpdateUpdateInfo.versioncode);
           break;
         default:
           if (TMSelfUpdateManager.getInstance()

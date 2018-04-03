@@ -11,4 +11,6 @@
     <string name="shop_main_label_prove">认</string>
     <string name="shop_main_activity">本店活动</string>
     <string name="shop_main_comment">写评价</string>
+    <string name="shop_main_mobile">拨打</string>
+    <string name="shop_main_mobile_err">当前设备不支持拨号功能</string>
 </resources>

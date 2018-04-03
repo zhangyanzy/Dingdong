@@ -12,14 +12,17 @@ import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
+import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
+import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
@@ -95,6 +98,7 @@ public class ShopMainActivity extends BaseActivity {
             finish();
           }
         });
+    binding.setPresenter(new Presenter());
   }
 
   public class Presenter implements SubjectPresenter {
@@ -103,7 +107,7 @@ public class ShopMainActivity extends BaseActivity {
     public void onSubjectItemClick(Subject subject) {
       Intent intent = new Intent(ShopMainActivity.this, SubjectDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, subject);
-      intent.putExtra(AppConfig.IntentKey.SUMMARY,shop);
+      intent.putExtra(AppConfig.IntentKey.SUMMARY, shop);
       startActivity(intent);
     }
 
@@ -113,5 +117,37 @@ public class ShopMainActivity extends BaseActivity {
     public void onComment(View view) {
       ToastUtil.toastHint(ShopMainActivity.this, "暂不支持");
     }
+
+    public void onMobile(final String mobile) {
+      SweetAlertDialog dialog = DialogUtil.getConfirmDialog(ShopMainActivity.this, mobile);
+      dialog.setConfirmText(getString(R.string.shop_main_mobile));
+      dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+        @Override
+        public void onClick(SweetAlertDialog sweetAlertDialog) {
+          try {
+            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mobile)));
+          } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtil.toastFailure(ShopMainActivity.this, getString(R.string.shop_main_mobile_err));
+          }
+          sweetAlertDialog.dismiss();
+        }
+      });
+      dialog.show();
+    }
+
+    /**
+     * 地址详情
+     *
+     * @param latitude
+     * @param longitude
+     */
+    public void onAdd(String latitude, String longitude) {
+      Intent intent = new Intent(ShopMainActivity.this, ShopMapActivity.class);
+      intent.putExtra(AppConfig.IntentKey.LATITUDE, latitude);
+      intent.putExtra(AppConfig.IntentKey.LONGITUDE, longitude);
+      startActivity(intent);
+    }
+
   }
 }

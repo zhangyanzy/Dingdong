@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
 
-        <!--应用宝加固 android name-->
+        <!-- 应用宝加固 android name -->
         <meta-data
             android:name="dingdong"
             android:value="1" />
@@ -50,8 +50,7 @@
         <service
             android:name="com.tencent.tmdownloader.TMAssistantDownloadService"
             android:exported="false"
-            android:process=":TMAssistantDownloadSDKService" >
-        </service>
+            android:process=":TMAssistantDownloadSDKService"></service>
 
         <!-- 高德地图 -->
         <meta-data
@@ -95,10 +94,12 @@
         <activity
             android:name=".presentation.user.wrist.BlueWristAddActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".presentation.user.wrist.BlueWristMainActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".presentation.user.wrist.BlueWristMainActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".presentation.user.wrist.BlueWristDetailActivity" />
-        <activity android:name=".presentation.main.fragment.UserAgreementActivity"></activity>
+        <activity android:name=".presentation.main.fragment.UserAgreementActivity" />
+        <activity android:name=".presentation.store.ShopMapActivity"></activity>
     </application>
 
 </manifest>

@@ -109,11 +109,24 @@
                     android:paddingBottom="7dp"
                     android:paddingTop="7dp">
 
+                    <ImageView
+                        android:id="@+id/img_mobile"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="12dp"
+                        android:onClick="@{()->presenter.onMobile(store.phone)}"
+                        android:src="@mipmap/ic_phone" />
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:gravity="center_vertical">
+                        android:layout_toLeftOf="@id/img_mobile"
+                        android:gravity="center_vertical"
+                        android:onClick="@{()->presenter.onAdd(store.latitude,store.longitude)}">
 
                         <ImageView
                             android:layout_width="22dp"
@@ -129,14 +142,6 @@
                             android:textColor="#666666"
                             android:textSize="12dp" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="12dp"
-                        android:src="@mipmap/ic_phone" />
                 </RelativeLayout>
 
                 <include layout="@layout/space_item" />

@@ -13,6 +13,8 @@ public class AppConfig {
   public static class IntentKey {
     public static final String DATA = "data";
     public static final String SUMMARY = "summary";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
   }
 
   // 第三方申请key
