@@ -6,22 +6,27 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentOrderListBinding;
+import com.dindong.dingdong.databinding.ItemOrderListBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.pay.usecase.CancelOrderCase;
 import com.dindong.dingdong.network.api.pay.usecase.ListOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderState;
-import com.dindong.dingdong.presentation.store.ShopMainActivity;
+import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
+import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -44,6 +49,8 @@ public class OrderListFragment extends BaseFragment {
 
   private OrderState orderState;
 
+  public static int REQUEST_CODE = 0x01;
+
   public OrderListFragment(OrderState orderState) {
     this.orderState = orderState;
   }
@@ -62,10 +69,15 @@ public class OrderListFragment extends BaseFragment {
 
   @Override
   protected void firstVisible() {
-    if (binding == null)
-      return;
-    // 第一次显示，请求数据，再次显示用户手动刷新
     listOrder(true, true);
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+      listOrder(true, true);
+    }
   }
 
   @Override
@@ -126,6 +138,7 @@ public class OrderListFragment extends BaseFragment {
       binding.refreshLayout.stopLoad();
     adapter.addAll(data);
     adapter.setPresenter(new Presenter());
+    adapter.setDecorator(new Decorator());
     binding.refreshLayout.setHasFooter(isMore);
     if (isRefresh) {
       LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -135,12 +148,74 @@ public class OrderListFragment extends BaseFragment {
     }
   }
 
+  class Decorator implements BaseViewAdapter.Decorator {
+    @Override
+    public void decorator(BindingViewHolder holder, int position, int viewType) {
+      if (holder == null || holder.getBinding() == null)
+        return;
+      ItemOrderListBinding itemBinding = (ItemOrderListBinding) holder.getBinding();
+
+      GlideUtil.load(getContext(),
+          itemBinding.getItem().getOrderType().equals(OrderType.subject)
+              ? itemBinding.getItem().getSubject().getImages().get(0).getUrl()
+              : itemBinding.getItem().getShopGood().getImages().get(0).getUrl(),
+          itemBinding.img);
+      itemBinding.txtName.setText(itemBinding.getItem().getOrderType().equals(OrderType.subject)
+          ? itemBinding.getItem().getSubject().getName()
+          : itemBinding.getItem().getShopGood().getName());
+      itemBinding.txtShopName.setText(itemBinding.getItem().getOrderType().equals(OrderType.subject)
+          ? itemBinding.getItem().getSubject().getStore().getName()
+          : itemBinding.getItem().getShopGood().getStore().getName());
+    }
+  }
+
   public class Presenter implements BaseViewAdapter.Presenter {
 
     public void onItemClick(Order order) {
-      Intent intent = new Intent(getContext(), ShopMainActivity.class);
+      Intent intent = new Intent(getContext(), OrderDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, order);
-      startActivity(intent);
+      startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    /**
+     * 取消订单
+     * 
+     * @param order
+     */
+    public void onCancel(final Order order) {
+      new CancelOrderCase(order.getId()).execute(new HttpSubscriber<Void>(getContext()) {
+        @Override
+        public void onFailure(String errorMsg, Response<Void> response) {
+          DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+        }
+
+        @Override
+        public void onSuccess(Response<Void> response) {
+          List<Order> orders = adapter.getData();
+          int index = -1;
+          for (int i = 0; i < orders.size(); i++) {
+            if (orders.get(i).getId().equals(order.getId())) {
+              index = i;
+              break;
+            }
+          }
+          if (index >= 0) {
+            orders.remove(index);
+            adapter.notifyDataSetChanged();
+          }
+        }
+      });
+    }
+
+    /**
+     * 立即付款
+     * 
+     * @param order
+     */
+    public void onCommit(Order order) {
+      Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, order);
+      startActivityForResult(intent, REQUEST_CODE);
     }
 
   }

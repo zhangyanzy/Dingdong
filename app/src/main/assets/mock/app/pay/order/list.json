@@ -25,7 +25,242 @@
         ],
         "name": "初中英语1V1体验试学班",
         "originalAmount": 323,
-        "shop": {
+        "store": {
+          "address": {
+            "city": {
+              "text": "上海市"
+            },
+            "district": {
+              "text": "闵行区"
+            },
+            "province": {
+              "text": "上海市"
+            },
+            "street": "江文路599弄54号"
+          },
+          "id": "4aw56e456wq",
+          "images": [
+            {
+              "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521373954969&di=d8fea2b4947e3b8027d2b1557db071b7&imgtype=0&src=http://p1.qhmsg.com/t014b38bbc7b9ff2d72.jpg"
+            }
+          ],
+          "isProve": true,
+          "latitude": "84",
+          "longitude": "84",
+          "name": "英孚教育（浦江店）",
+          "phone": "15710129773",
+          "range": 847.9,
+          "subjects": [],
+          "tags": []
+        },
+        "subjectType": "NORMAL",
+        "tags": [],
+        "unit": "月"
+      },
+      "totalAmount": 289.000
+    },
+    {
+      "count": 1.0,
+      "date": "2018-03-25 01:16:57",
+      "favourAmount": 0,
+      "id": "0cff746c-b741-449e-ad94-e1c9bcf9f2f4",
+      "orderType": "good",
+      "orderNum": "KC78787878787",
+      "code": "KC856485565665",
+      "originalPrice": 323,
+      "payAmount": 289.000,
+      "orderState": "wait",
+      "payMode": "weiXin",
+      "price": 289.00,
+      "shopGood": {
+        "amount": 289.00,
+        "boughtCount": 30,
+        "favCount": 10,
+        "id": "1as5d456as",
+        "images": [
+          {
+            "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1523906990004&di=21e08bc6f2698d2434cbd84585c26866&imgtype=0&src=http%3A%2F%2Fzximg.ingping.com%2Fueditor%2Fjsp%2Fupload%2F201602%2F20811454486597318.jpg"
+          }
+        ],
+        "name": "大音琴行吉他",
+        "originalAmount": 323,
+        "store": {
+          "address": {
+            "city": {
+              "text": "上海市"
+            },
+            "district": {
+              "text": "闵行区"
+            },
+            "province": {
+              "text": "上海市"
+            },
+            "street": "江文路599弄54号"
+          },
+          "id": "4aw56e456wq",
+          "images": [
+            {
+              "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521373954969&di=d8fea2b4947e3b8027d2b1557db071b7&imgtype=0&src=http://p1.qhmsg.com/t014b38bbc7b9ff2d72.jpg"
+            }
+          ],
+          "isProve": true,
+          "latitude": "84",
+          "longitude": "84",
+          "name": "英孚教育（浦江店）",
+          "phone": "15710129773",
+          "range": 847.9,
+          "subjects": [],
+          "tags": []
+        },
+        "tags": [],
+        "unit": "把"
+      },
+      "totalAmount": 289.000
+    },
+    {
+      "count": 1.0,
+      "date": "2018-03-25 01:16:57",
+      "favourAmount": 0,
+      "id": "0cff746c-b741-449e-ad94-e1c9bcf9f2f4",
+      "orderType": "subject",
+      "orderNum": "KC78787878787",
+      "code": "KC856485565665",
+      "originalPrice": 323,
+      "payAmount": 289.000,
+      "orderState": "wait_group",
+      "payMode": "weiXin",
+      "price": 289.00,
+      "subject": {
+        "amount": 289.00,
+        "boughtCount": 30,
+        "favCount": 10,
+        "id": "1as5d456as",
+        "images": [
+          {
+            "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521570925325&di=5fd8281dfa961a2aa6f0cbc442649bc3&imgtype=0&src=http://dynamic1.icourses.cn/coursepic/2013/0428/2198_480.jpg"
+          }
+        ],
+        "name": "初中英语1V1体验试学班",
+        "originalAmount": 323,
+        "store": {
+          "address": {
+            "city": {
+              "text": "上海市"
+            },
+            "district": {
+              "text": "闵行区"
+            },
+            "province": {
+              "text": "上海市"
+            },
+            "street": "江文路599弄54号"
+          },
+          "id": "4aw56e456wq",
+          "images": [
+            {
+              "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521373954969&di=d8fea2b4947e3b8027d2b1557db071b7&imgtype=0&src=http://p1.qhmsg.com/t014b38bbc7b9ff2d72.jpg"
+            }
+          ],
+          "isProve": true,
+          "latitude": "84",
+          "longitude": "84",
+          "name": "英孚教育（浦江店）",
+          "phone": "15710129773",
+          "range": 847.9,
+          "subjects": [],
+          "tags": []
+        },
+        "subjectType": "NORMAL",
+        "tags": [],
+        "unit": "月"
+      },
+      "totalAmount": 289.000
+    },
+    {
+      "count": 1.0,
+      "date": "2018-03-25 01:16:57",
+      "favourAmount": 0,
+      "id": "0cff746c-b741-449e-ad94-e1c9bcf9f2f4",
+      "orderType": "subject",
+      "orderNum": "KC78787878787",
+      "code": "KC856485565665",
+      "originalPrice": 323,
+      "payAmount": 289.000,
+      "orderState": "can_use",
+      "payMode": "weiXin",
+      "price": 289.00,
+      "subject": {
+        "amount": 289.00,
+        "boughtCount": 30,
+        "favCount": 10,
+        "id": "1as5d456as",
+        "images": [
+          {
+            "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521570925325&di=5fd8281dfa961a2aa6f0cbc442649bc3&imgtype=0&src=http://dynamic1.icourses.cn/coursepic/2013/0428/2198_480.jpg"
+          }
+        ],
+        "name": "初中英语1V1体验试学班",
+        "originalAmount": 323,
+        "store": {
+          "address": {
+            "city": {
+              "text": "上海市"
+            },
+            "district": {
+              "text": "闵行区"
+            },
+            "province": {
+              "text": "上海市"
+            },
+            "street": "江文路599弄54号"
+          },
+          "id": "4aw56e456wq",
+          "images": [
+            {
+              "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521373954969&di=d8fea2b4947e3b8027d2b1557db071b7&imgtype=0&src=http://p1.qhmsg.com/t014b38bbc7b9ff2d72.jpg"
+            }
+          ],
+          "isProve": true,
+          "latitude": "84",
+          "longitude": "84",
+          "name": "英孚教育（浦江店）",
+          "phone": "15710129773",
+          "range": 847.9,
+          "subjects": [],
+          "tags": []
+        },
+        "subjectType": "NORMAL",
+        "tags": [],
+        "unit": "月"
+      },
+      "totalAmount": 289.000
+    },
+    {
+      "count": 1.0,
+      "date": "2018-03-25 01:16:57",
+      "favourAmount": 0,
+      "id": "0cff746c-b741-449e-ad94-e1c9bcf9f2f4",
+      "orderType": "subject",
+      "orderNum": "KC78787878787",
+      "code": "KC856485565665",
+      "originalPrice": 323,
+      "payAmount": 289.000,
+      "orderState": "success",
+      "payMode": "weiXin",
+      "price": 289.00,
+      "subject": {
+        "amount": 289.00,
+        "boughtCount": 30,
+        "favCount": 10,
+        "id": "1as5d456as",
+        "images": [
+          {
+            "url": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521570925325&di=5fd8281dfa961a2aa6f0cbc442649bc3&imgtype=0&src=http://dynamic1.icourses.cn/coursepic/2013/0428/2198_480.jpg"
+          }
+        ],
+        "name": "初中英语1V1体验试学班",
+        "originalAmount": 323,
+        "store": {
           "address": {
             "city": {
               "text": "上海市"

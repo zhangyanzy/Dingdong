@@ -8,15 +8,21 @@ import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityShopMainBinding;
+import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.shop.usecase.ListTeacherCase;
+import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
+import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
+import com.dindong.dingdong.network.bean.store.Teacher;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.GlideUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
+import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
 import android.content.Context;
@@ -50,6 +56,7 @@ public class ShopMainActivity extends BaseActivity {
       binding.setStore(shop);
       initShopImg(shop.getImages());
       initHotSubject(shop.getSubjects());
+      listTeacher(shop.getId());
     }
   }
 
@@ -87,6 +94,33 @@ public class ShopMainActivity extends BaseActivity {
     binding.lstHotSubject.setLayoutManager(manager);
     binding.lstHotSubject.setAdapter(subjectAdapter);
 
+  }
+
+  /**
+   * 获取老师列表
+   */
+  private void listTeacher(String shopId) {
+    final QueryParam param = new QueryParam();
+    param.setLimit(2);
+
+    new ListTeacherCase(shopId, param).execute(new HttpSubscriber<List<Teacher>>() {
+      @Override
+      public void onFailure(String errorMsg, Response<List<Teacher>> response) {
+        DialogUtil.getErrorDialog(ShopMainActivity.this, errorMsg).show();
+      }
+
+      @Override
+      public void onSuccess(Response<List<Teacher>> response) {
+        SingleTypeAdapter adapter = new SingleTypeAdapter(ShopMainActivity.this,
+            R.layout.item_teahcer_list);
+        adapter.addAll(response.getData());
+        LinearLayoutManager manager = new LinearLayoutManager(ShopMainActivity.this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.lstTeacher.setLayoutManager(manager);
+        binding.lstTeacher.setAdapter(adapter);
+
+      }
+    });
   }
 
   @Override
@@ -133,7 +167,17 @@ public class ShopMainActivity extends BaseActivity {
           sweetAlertDialog.dismiss();
         }
       });
+      dialog.setCanceledOnTouchOutside(true);
       dialog.show();
+    }
+
+    /**
+     * 更多教师
+     */
+    public void onMoreTeacher() {
+      Intent intent = new Intent(ShopMainActivity.this, TeacherListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+      startActivity(intent);
     }
 
     /**

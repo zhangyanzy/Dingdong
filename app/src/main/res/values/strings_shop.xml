@@ -10,7 +10,12 @@
     <string name="shop_main_msg_prove">已认证教学场地与工商登记</string>
     <string name="shop_main_label_prove">认</string>
     <string name="shop_main_activity">本店活动</string>
+    <string name="shop_main_teacher">本店师资</string>
     <string name="shop_main_comment">写评价</string>
     <string name="shop_main_mobile">拨打</string>
     <string name="shop_main_mobile_err">当前设备不支持拨号功能</string>
+
+    <!--老师列表-->
+    <string name="teacher_list_title">门店老师列表</string>
+    <string name="teacher_list_item_name">{0} （老师）</string>
 </resources>

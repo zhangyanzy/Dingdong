@@ -1,11 +1,13 @@
 package com.dindong.dingdong.presentation.user.wrist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityBlueWristMainBinding;
+import com.dindong.dingdong.databinding.LayoutBlueWristMainInfoBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.wrist.usecase.ListLshCase;
 import com.dindong.dingdong.network.bean.Response;
@@ -19,6 +21,7 @@ import com.dindong.dingdong.widget.NavigationTopBar;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -50,7 +53,6 @@ public class BlueWristMainActivity extends BaseActivity {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    binding.setWrist(new BlueWrist());
   }
 
   @Override
@@ -89,14 +91,25 @@ public class BlueWristMainActivity extends BaseActivity {
 
       @Override
       public void onSuccess(Response<List<BlueWrist>> response) {
-        if (IsEmpty.list(response.getData()))
-          return;
-        binding.layout.setVisibility(View.VISIBLE);
-        binding.setWrist(response.getData().get(0));
-        binding.imgQr.setImageBitmap(CuteR.ProductNormal(
-            AppConfig.Wrist.BASE_RULE + response.getData().get(0).getId(), false, 0));
+        setViewPager(response.getData());
       }
     });
+  }
+
+  private void setViewPager(List<BlueWrist> wrists) {
+    if (IsEmpty.list(wrists))
+      return;
+    List<View> views = new ArrayList<>();
+    for (BlueWrist wrist : wrists) {
+      LayoutBlueWristMainInfoBinding itemBinding = DataBindingUtil
+          .inflate(LayoutInflater.from(this), R.layout.layout_blue_wrist_main_info, null, false);
+      itemBinding.layout.setVisibility(View.VISIBLE);
+      itemBinding.setWrist(wrist);
+      itemBinding.imgQr
+          .setImageBitmap(CuteR.ProductNormal(AppConfig.Wrist.BASE_RULE + wrist.getId(), false, 0));
+      views.add(itemBinding.getRoot());
+    }
+    binding.cvp.setViewList(views);
   }
 
   public class Presenter {

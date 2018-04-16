@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.dindong.dingdong.network.bean.store.ShopGood;
 import com.dindong.dingdong.network.bean.store.Subject;
 
 /**
@@ -17,7 +18,7 @@ public class Order implements Serializable {
   private Date date;// 订单创建时间
   private String orderNum;// 订单号
 
-  private OrderType orderType;// 订单类型 当前版本只支持门店课程
+  private OrderType orderType;// 订单类型
   private OrderState orderState;// 订单状态
   private BigDecimal price = BigDecimal.ZERO;// 商品现价
   private BigDecimal originalPrice = BigDecimal.ZERO;// 商品原价
@@ -28,8 +29,9 @@ public class Order implements Serializable {
   private PayMode payMode;// 支付方式
   private String code;// 销核码
 
-  // 具体订单商品信息，现只支持课程购买，后续增加商品购买
+  // 具体订单商品信息，购买类型为课程则shopGood=null，类型为门店商品subject=null
   private Subject subject;
+  private ShopGood shopGood;
 
   public String getId() {
     return id;
@@ -141,5 +143,13 @@ public class Order implements Serializable {
 
   public void setSubject(Subject subject) {
     this.subject = subject;
+  }
+
+  public ShopGood getShopGood() {
+    return shopGood;
+  }
+
+  public void setShopGood(ShopGood shopGood) {
+    this.shopGood = shopGood;
   }
 }

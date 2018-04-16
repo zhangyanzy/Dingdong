@@ -50,7 +50,7 @@
         <service
             android:name="com.tencent.tmdownloader.TMAssistantDownloadService"
             android:exported="false"
-            android:process=":TMAssistantDownloadSDKService"></service>
+            android:process=":TMAssistantDownloadSDKService" />
 
         <!-- 高德地图 -->
         <meta-data
@@ -67,7 +67,6 @@
             android:name=".presentation.store.ShopListActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 门店教育列表 -->
-        <activity android:name=".presentation.main.ShopTeacherListActivity" />
         <activity android:name=".presentation.main.ShopInfoActivity" />
         <activity android:name=".presentation.main.IdentitySwitchActivity" />
         <activity android:name=".presentation.store.ShopMainActivity" />
@@ -99,7 +98,9 @@
             android:launchMode="singleTask" />
         <activity android:name=".presentation.user.wrist.BlueWristDetailActivity" />
         <activity android:name=".presentation.main.fragment.UserAgreementActivity" />
-        <activity android:name=".presentation.store.ShopMapActivity"></activity>
+        <activity android:name=".presentation.store.ShopMapActivity" />
+        <activity android:name=".presentation.store.TeacherListActivity" />
+        <activity android:name=".presentation.pay.OrderDetailActivity"></activity>
     </application>
 
 </manifest>

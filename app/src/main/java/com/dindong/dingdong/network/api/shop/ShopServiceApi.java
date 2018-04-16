@@ -5,6 +5,8 @@ import java.util.List;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.network.bean.store.ShopComment;
+import com.dindong.dingdong.network.bean.store.ShopGood;
 import com.dindong.dingdong.network.bean.store.Teacher;
 
 import retrofit2.http.Body;
@@ -47,10 +49,43 @@ public interface ShopServiceApi {
   /**
    * 查询门店老师列表，支持分页查询。
    * 
-   * @param id
+   * @param shopId
    * @param param
    * @return
    */
-  @POST("app/{shop}/shop/teacher/list")
-  Observable<Response<List<Teacher>>> listTeacher(@Path("shop") String id, @Body QueryParam param);
+  @POST("app/shop/{shopId}/teacher/list")
+  Observable<Response<List<Teacher>>> listTeacher(@Path("shopId") String shopId,
+      @Body QueryParam param);
+
+  /**
+   * 获取门店商品
+   * 
+   * @param shopId
+   * @param param
+   * @return
+   */
+  @POST("app/shop/{shopId}/good/list")
+  Observable<Response<List<ShopGood>>> listGood(@Path("shopId") String shopId,
+      @Body QueryParam param);
+
+  /**
+   * 获取门店评价
+   * 
+   * @param shopId
+   * @param param
+   * @return
+   */
+  @POST("app/shop/{shopId}/comment/listShopComment")
+  Observable<Response<List<ShopComment>>> listShopComment(@Path("shopId") String shopId,
+      @Body QueryParam param);
+
+  /**
+   * 提交门店评价
+   * 
+   * @param shopId
+   * @param shopComment
+   * @return
+   */
+  @POST("app/shop/{shopId}/comment/commit")
+  Observable<Response> commitComment(@Path("shopId") String shopId, @Body ShopComment shopComment);
 }

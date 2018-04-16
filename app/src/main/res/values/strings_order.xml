@@ -25,4 +25,22 @@
         <item>已完成</item>
     </string-array>
     <string name="order_list_num">订单号：{0}</string>
+    <string name="order_list_cancel">取消订单</string>
+    <string name="order_list_pay">立即付款</string>
+
+    <string name="order_detail_title">订单详情</string>
+    <string name="order_detail_state_wait">订单待付款</string>
+    <string name="order_detail_state_wait_group">等待拼团确认中</string>
+    <string name="order_detail_state_can_use">订单可使用</string>
+    <string name="order_detail_state_success">订单待付款</string>
+    <string name="order_detail_tip_wait_group">未成团</string>
+    <string name="order_detail_tip_can_use">已成团</string>
+    <string name="order_detail_msg_cancel">把确认码出示给门店核销上课</string>
+    <string name="order_detail_order_num">订单编号：</string>
+    <string name="order_detail_order_date">订单时间：</string>
+    <string name="order_detail_payment">支付方式：</string>
+    <string name="order_detail_amount">商品总额：</string>
+    <string name="order_detail_favour_amount">优惠：</string>
+    <string name="order_detail_pay_amount">应付金额：</string>
+    <string name="order_detail_pay_online">在线支付</string>
 </resources>
