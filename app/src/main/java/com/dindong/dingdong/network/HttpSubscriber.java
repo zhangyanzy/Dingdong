@@ -28,7 +28,8 @@ public abstract class HttpSubscriber<T> extends rx.Subscriber<Response<T>> {
 
   public HttpSubscriber(Context context) {
     this.context = context;
-    dialog = DialogUtil.getProgressDialog(context);
+    if (context != null)
+      dialog = DialogUtil.getProgressDialog(context);
   }
 
   @Override

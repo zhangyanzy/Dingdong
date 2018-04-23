@@ -13,8 +13,8 @@ import com.dindong.dingdong.presentation.main.fragment.HomeFragment;
 import com.dindong.dingdong.presentation.main.fragment.MineFragment;
 import com.dindong.dingdong.presentation.main.fragment.MsgFragment;
 import com.dindong.dingdong.presentation.main.fragment.WorkFragment;
+import com.dindong.dingdong.util.ExitHelper;
 import com.dindong.dingdong.util.PermissionUtil;
-import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.util.UpgradeUtil;
 
 import android.Manifest;
@@ -27,10 +27,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends BaseActivity {
 
@@ -53,6 +55,8 @@ public class MainActivity extends BaseActivity {
 
   String[] perms = {
       Manifest.permission.ACCESS_COARSE_LOCATION };
+
+  private ExitHelper.TwicePressHolder mExitHelper;
 
   @Override
   protected void initComponent() {
@@ -84,6 +88,26 @@ public class MainActivity extends BaseActivity {
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
+    mExitHelper = new ExitHelper.TwicePressHolder(new ExitHelper.IExitInterface() {
+
+      @Override
+      public void showExitTip() {
+        Toast.makeText(MainActivity.this, R.string.then_click_one_exit_procedure, Toast.LENGTH_LONG)
+            .show();
+
+      }
+
+      @Override
+      public void exit() {
+        finish();
+      }
+    }, 3000);
+
+  }
+
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    return mExitHelper.onKeyDown(keyCode, event);
   }
 
   @Override
@@ -147,13 +171,6 @@ public class MainActivity extends BaseActivity {
     binding.vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
       public void onPageSelected(int position) {
-        if (position == 1 || position == 2) {
-          ToastUtil.toastHint(MainActivity.this, "敬请期待");
-          binding.vp.setCurrentItem(0);
-          setTabSelect(0);
-          return;
-        }
-
         setTabSelect(position);
       }
 
@@ -251,10 +268,6 @@ public class MainActivity extends BaseActivity {
     public void onTabSelect(View view) {
       for (int i = 0; i < tabs.length; i++) {
         if (((TextView) (((ViewGroup) view).getChildAt(1))).getText().toString().equals(tabs[i])) {
-          if (i == 1 || i == 2) {
-            ToastUtil.toastHint(MainActivity.this, "敬请期待");
-            return;
-          }
           binding.vp.setCurrentItem(i);
           setTabSelect(i);
           return;

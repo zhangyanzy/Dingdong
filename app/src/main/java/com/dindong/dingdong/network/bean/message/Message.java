@@ -12,6 +12,7 @@ public class Message implements Serializable {
   private String id;
   private String title;// 消息标题
   private String msg;// 消息内容
+  private MessageType type;// 消息类型
 
   public String getId() {
     return id;
@@ -35,5 +36,13 @@ public class Message implements Serializable {
 
   public void setMsg(String msg) {
     this.msg = msg;
+  }
+
+  public MessageType getType() {
+    return type;
+  }
+
+  public void setType(MessageType type) {
+    this.type = type;
   }
 }

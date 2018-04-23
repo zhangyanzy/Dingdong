@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "title": "系统消息标题",
+      "msg": "资讯类信息文案可以打满多行资讯类信息文案可以打满多行资讯类信息文案可以打满多行",
+      "type": "system"
+    },
+    {
+      "id": "2",
+      "title": "系统消息标题2",
+      "msg": "阿刷卡缴费哈萨克交话费凯撒喝咖啡",
+      "type": "system"
+    },
+    {
+      "id": "3",
+      "title": "系统消息标题3",
+      "msg": "内容为空",
+      "type": "system"
+    }
+  ],
+  "success": true,
+  "message": null,
+  "fields": null,
+  "total": null,
+  "more": true
+}

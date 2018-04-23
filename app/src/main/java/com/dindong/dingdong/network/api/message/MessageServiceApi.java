@@ -21,6 +21,7 @@ public interface MessageServiceApi {
    * 获取消息列表
    * 
    * @param param
+   *          type，消息类型 system-系统消息，notice-公告<br/>
    * @return
    */
   @POST("app/message/listMsg")
