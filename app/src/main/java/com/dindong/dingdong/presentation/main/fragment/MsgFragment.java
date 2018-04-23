@@ -33,7 +33,7 @@ public class MsgFragment extends BaseFragment {
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_msg, container, false);
 
-    binding.nb.setLeftImageVisiable(View.GONE);
+    binding.nb.setLeftImageVisiable();
     initViewPager();
     return binding.getRoot();
   }

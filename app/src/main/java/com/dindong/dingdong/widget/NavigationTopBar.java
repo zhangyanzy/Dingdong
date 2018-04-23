@@ -103,8 +103,8 @@ public class NavigationTopBar extends RelativeLayout implements View.OnClickList
     mLeftImage.setImageBitmap(bitmap);
   }
 
-  public void setLeftImageVisiable(int visiable) {
-    mLeftImage.setVisibility(visiable);
+  public void setLeftImageVisiable() {
+    mLeftImage.setImageBitmap(null);
   }
 
   public void setCenterTitleText(String title) {

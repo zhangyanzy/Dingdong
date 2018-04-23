@@ -20,7 +20,7 @@
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/st_layout"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="40dp"
             android:background="@color/white"
             app:stl_clickable="true"
             app:stl_defaultTabBackground="?attr/selectableItemBackground"
@@ -47,6 +47,8 @@
             app:stl_titleOffset="24dp"
             app:stl_underlineColor="@color/silverThree"
             app:stl_underlineThickness="0.5dp" />
+
+        <include layout="@layout/space_item" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp"
