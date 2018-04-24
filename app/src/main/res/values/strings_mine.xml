@@ -68,4 +68,9 @@
     <string name="reset_password_tip_confirm_password">确认密码不能为空</string>
     <string name="reset_password_tip_uniformity">两次密码不一致</string>
     <string name="reset_password_hint_confirm_password">请输入确认密码</string>
+
+
+    <string name="about_title">关于</string>
+    <string name="about_version">版本{0}V</string>
+    <string name="about_tip">叮咚伴学 版本所有</string>
 </resources>

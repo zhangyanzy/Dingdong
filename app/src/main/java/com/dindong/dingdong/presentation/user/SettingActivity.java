@@ -73,6 +73,13 @@ public class SettingActivity extends BaseActivity {
     }
 
     /**
+     * 关于界面
+     */
+    public void onAbout() {
+      startActivity(new Intent(SettingActivity.this, AboutActivity.class));
+    }
+
+    /**
      * 退出登录
      * 
      * @param view

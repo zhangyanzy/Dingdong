@@ -100,7 +100,8 @@
         <activity android:name=".presentation.main.fragment.UserAgreementActivity" />
         <activity android:name=".presentation.store.ShopMapActivity" />
         <activity android:name=".presentation.store.TeacherListActivity" />
-        <activity android:name=".presentation.pay.OrderDetailActivity"></activity>
+        <activity android:name=".presentation.pay.OrderDetailActivity" />
+        <activity android:name=".presentation.user.AboutActivity"></activity>
     </application>
 
 </manifest>
