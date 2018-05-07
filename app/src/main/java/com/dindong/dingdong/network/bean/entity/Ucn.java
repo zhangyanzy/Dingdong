@@ -1,12 +1,14 @@
 package com.dindong.dingdong.network.bean.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by wcong on 2018/4/14.
  * <p>
  * 用户基本信息</>
  */
 
-public class Ucn {
+public class Ucn implements Serializable{
   private String userId;// 用户Id
   private String userName;// 用户名
   private GlobalImage image;// 用户头像

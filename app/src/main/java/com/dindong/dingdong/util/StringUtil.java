@@ -41,23 +41,27 @@ public class StringUtil {
   public static String formatAmount(BigDecimal count) {
     String tempCount = StringUtil.amount(count);
     if (Integer.valueOf(tempCount.substring(tempCount.indexOf('.') + 1, tempCount.length())) == 0)
-      return transQty(count, true);
+      return transQty(count, 1);
     else
       return transAmount(count);
   }
 
-  public static String transQty(BigDecimal bigDecimal, boolean sum) {
+  public static String transQty(int count, int scale) {
+    return transQty(new BigDecimal(count), scale);
+  }
+
+  public static String transQty(BigDecimal bigDecimal, int scale) {
     if (IsEmpty.object(bigDecimal))
       bigDecimal = BigDecimal.ZERO;
     String temp = "{0, number,0.###}";
     if (bigDecimal.compareTo(new BigDecimal(1000000000)) > 0) {
       return MessageFormat.format(temp,
-          bigDecimal.divide(new BigDecimal(100000000), sum ? 0 : 3, RoundingMode.HALF_UP)) + "亿";
+          bigDecimal.divide(new BigDecimal(100000000), scale, RoundingMode.HALF_UP)) + "亿";
     } else if (bigDecimal.compareTo(new BigDecimal(100000)) > 0) {
       return MessageFormat.format(temp,
-          bigDecimal.divide(new BigDecimal(10000), sum ? 0 : 3, RoundingMode.HALF_UP)) + "万";
+          bigDecimal.divide(new BigDecimal(10000), scale, RoundingMode.HALF_UP)) + "万";
     } else {
-      return MessageFormat.format(temp, bigDecimal.setScale(sum ? 0 : 3, RoundingMode.HALF_UP));
+      return MessageFormat.format(temp, bigDecimal.setScale(scale, RoundingMode.HALF_UP));
     }
   }
 
@@ -110,6 +114,7 @@ public class StringUtil {
     if (range == null)
       return "";
     return range.compareTo(BigDecimal.valueOf(1000)) >= 0
-        ? range.divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP) + "k" : qty(range);
+        ? range.divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP) + "k"
+        : qty(range);
   }
 }

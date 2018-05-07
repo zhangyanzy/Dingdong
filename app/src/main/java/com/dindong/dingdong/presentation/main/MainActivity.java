@@ -14,6 +14,7 @@ import com.dindong.dingdong.presentation.main.fragment.MineFragment;
 import com.dindong.dingdong.presentation.main.fragment.MsgFragment;
 import com.dindong.dingdong.presentation.main.fragment.WorkFragment;
 import com.dindong.dingdong.util.ExitHelper;
+import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.util.PermissionUtil;
 import com.dindong.dingdong.util.UpgradeUtil;
 
@@ -102,7 +103,13 @@ public class MainActivity extends BaseActivity {
         finish();
       }
     }, 3000);
-
+    KeyboardUtil.setKeyboardVisibleListener(binding.getRoot(), this,
+        new KeyboardUtil.OnKeyboardVisibleListener() {
+          @Override
+          public void onKeyboardVisible(boolean visible) {
+            binding.layoutBottomTab.setVisibility(visible ? View.GONE : View.VISIBLE);
+          }
+        });
   }
 
   @Override
@@ -171,6 +178,12 @@ public class MainActivity extends BaseActivity {
     binding.vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
       public void onPageSelected(int position) {
+        // if (position == 1 ) {
+        // ToastUtil.toastHint(MainActivity.this, "敬请期待");
+        // binding.vp.setCurrentItem(0);
+        // setTabSelect(0);
+        // return;
+        // }
         setTabSelect(position);
       }
 
@@ -268,6 +281,10 @@ public class MainActivity extends BaseActivity {
     public void onTabSelect(View view) {
       for (int i = 0; i < tabs.length; i++) {
         if (((TextView) (((ViewGroup) view).getChildAt(1))).getText().toString().equals(tabs[i])) {
+          // if (i == 1 ) {
+          // ToastUtil.toastHint(MainActivity.this, "敬请期待");
+          // return;
+          // }
           binding.vp.setCurrentItem(i);
           setTabSelect(i);
           return;

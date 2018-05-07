@@ -34,7 +34,7 @@ import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
-import com.dindong.dingdong.util.GlideUtil;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.RegionStorageUtil;
 import com.dindong.dingdong.util.ToastUtil;
@@ -303,7 +303,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
           index = i;
         }
       }
-      GlideUtil.load(getContext(), path, imageView);
+      PhotoUtil.load(getContext(), path, imageView);
       final int finalIndex = index;
       imageView.setOnClickListener(new View.OnClickListener() {
         @Override

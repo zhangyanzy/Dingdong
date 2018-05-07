@@ -34,7 +34,7 @@ public interface ShopServiceApi {
    *          range，距离<br/>
    * @return
    */
-  @POST("app/shop/list")
+  @POST("shop/list")
   Observable<Response<List<Shop>>> listShop(@Body QueryParam param);
 
   /**
@@ -43,7 +43,7 @@ public interface ShopServiceApi {
    * @param shopId
    * @return
    */
-  @GET("app/shop/get")
+  @GET("shop/get")
   Observable<Response<Shop>> get(@Query("shopId") String shopId);
 
   /**
@@ -53,7 +53,7 @@ public interface ShopServiceApi {
    * @param param
    * @return
    */
-  @POST("app/shop/{shopId}/teacher/list")
+  @POST("shop/{shopId}/teacher/list")
   Observable<Response<List<Teacher>>> listTeacher(@Path("shopId") String shopId,
       @Body QueryParam param);
 
@@ -64,7 +64,7 @@ public interface ShopServiceApi {
    * @param param
    * @return
    */
-  @POST("app/shop/{shopId}/good/list")
+  @POST("shop/{shopId}/good/list")
   Observable<Response<List<ShopGood>>> listGood(@Path("shopId") String shopId,
       @Body QueryParam param);
 
@@ -75,7 +75,7 @@ public interface ShopServiceApi {
    * @param param
    * @return
    */
-  @POST("app/shop/{shopId}/comment/listShopComment")
+  @POST("shop/{shopId}/comment/listShopComment")
   Observable<Response<List<ShopComment>>> listShopComment(@Path("shopId") String shopId,
       @Body QueryParam param);
 
@@ -86,6 +86,6 @@ public interface ShopServiceApi {
    * @param shopComment
    * @return
    */
-  @POST("app/shop/{shopId}/comment/commit")
+  @POST("shop/{shopId}/comment/commit")
   Observable<Response> commitComment(@Path("shopId") String shopId, @Body ShopComment shopComment);
 }

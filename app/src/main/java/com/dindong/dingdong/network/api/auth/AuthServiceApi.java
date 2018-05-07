@@ -23,7 +23,7 @@ public interface AuthServiceApi {
    * @param password
    * @return
    */
-  @POST("app/auth/login")
+  @POST("auth/login")
   Observable<Response<User>> login(@Query("username") String username,
       @Query("password") String password);
 
@@ -34,7 +34,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @POST("app/auth/shortLogin")
+  @POST("auth/shortLogin")
   Observable<Response<User>> shortLogin(@Query("mobile") String mobile,
       @Query("authCode") String authCode);
 
@@ -46,7 +46,7 @@ public interface AuthServiceApi {
    * @param req
    * @return
    */
-  @POST("app/auth/register")
+  @POST("auth/register")
   Observable<Response<User>> register(@Query("authCode") String authCode,
       @Body RegisterRequest req);
 
@@ -59,7 +59,7 @@ public interface AuthServiceApi {
    *          操作。0-注册，1-忘记密码，2-修改密码，3-快捷登录，4-更换手机
    * @return
    */
-  @GET("app/sms/send")
+  @GET("sms/send")
   Observable<Response> sendSmsCode(@Query("mobile") String mobile,
       @Query("operator") String operator);
 
@@ -72,7 +72,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @PUT("app/auth/password/reset")
+  @PUT("auth/password/reset")
   Observable<Response> resetPassword(@Query(("mobile")) String mobile,
       @Query(("password")) String password, @Query(("authCode")) String authCode);
 
@@ -85,7 +85,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @PUT("app/auth/password/resetByOld")
+  @PUT("auth/password/resetByOld")
   Observable<Response> resetPasswordByOld(@Query(("mobile")) String mobile,
       @Query(("oldPassword")) String oldPassword, @Query(("newPassword")) String newPassword,
       @Query(("authCode")) String authCode);
@@ -99,7 +99,7 @@ public interface AuthServiceApi {
    * @param authCode
    * @return
    */
-  @PUT("app/auth/mobile/reset")
+  @PUT("auth/mobile/reset")
   Observable<Response> resetMobile(@Query(("oldMobile")) String oldMobile,
       @Query(("newMobile")) String newMobile, @Query(("password")) String password,
       @Query(("authCode")) String authCode);

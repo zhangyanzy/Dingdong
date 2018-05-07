@@ -16,7 +16,7 @@ import com.dindong.dingdong.util.DensityUtil;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.PermissionUtil;
 import com.dindong.dingdong.util.ToastUtil;
-import com.google.zxing.Result;
+//import com.google.zxing.Result;
 
 import android.Manifest;
 import android.content.Context;
@@ -31,15 +31,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.AttributeSet;
 
+//import me.dm7.barcodescanner.core.IViewFinder;
+//import me.dm7.barcodescanner.core.ViewFinderView;
+//import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.core.ViewFinderView;
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class BlueWristScanActivity extends BaseActivity
-    implements ZXingScannerView.ResultHandler, EasyPermissions.PermissionCallbacks {
+    implements ZBarScannerView.ResultHandler, EasyPermissions.PermissionCallbacks {
   ActivityBlueWristScanBinding binding;
-  private ZXingScannerView mScannerView;
+  private ZBarScannerView mScannerView;
 
   public static final String TYPE_ADD = "add";
   public static final String TYPE_INFO = "info";
@@ -83,7 +87,7 @@ public class BlueWristScanActivity extends BaseActivity
   }
 
   private void initScannerView() {
-    mScannerView = new ZXingScannerView(this) {
+    mScannerView = new ZBarScannerView(this) {
       @Override
       protected IViewFinder createViewFinderView(final Context context) {
         return new CustomViewFinderView(context, new CustomViewFinderView.IRectView() {
@@ -109,7 +113,7 @@ public class BlueWristScanActivity extends BaseActivity
 
   @Override
   public void handleResult(Result result) {
-    String barcode = result.getText();
+    String barcode = result.getContents();
     if (barcode.startsWith(AppConfig.Wrist.BASE_RULE)) {
       getWristInfo(barcode.substring(AppConfig.Wrist.BASE_RULE.length()));
     } else {

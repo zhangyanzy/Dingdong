@@ -27,7 +27,7 @@ public interface WristServiceApi {
    * @param id
    * @return
    */
-  @GET("/app/lsh/{id}")
+  @GET("lsh/{id}")
   Observable<Response<BlueWrist>> get(@Path("id") String id);
 
   /**
@@ -37,7 +37,7 @@ public interface WristServiceApi {
    * @param blueWrist
    * @return
    */
-  @PUT("/app/lsh/{id}")
+  @PUT("lsh/{id}")
   Observable<Response> update(@Path("id") String id, @Body BlueWrist blueWrist);
 
   /**
@@ -46,7 +46,7 @@ public interface WristServiceApi {
    * @param blueWrist
    * @return
    */
-  @PUT("/app/lsh/bind")
+  @PUT("lsh/bind")
   Observable<Response> bind(@Body BlueWrist blueWrist);
 
   /**
@@ -59,7 +59,7 @@ public interface WristServiceApi {
    *          纬度
    * @return
    */
-  @POST("/app/lsh/scan")
+  @POST("lsh/scan")
   Observable<Response> scan(@Query("lshId") String lshId, @Query("longitude") String longitude,
       @Query("latitude") String latitude);
 
@@ -68,6 +68,6 @@ public interface WristServiceApi {
    * 
    * @return
    */
-  @GET("/app/lsh/user/list/")
+  @GET("lsh/user/list/")
   Observable<Response<List<BlueWrist>>> list();
 }

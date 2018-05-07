@@ -62,4 +62,17 @@
         <item name="android:background">@color/silverThree</item>
     </style>
 
+    <style name="divider_up_item">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/silverThree</item>
+    </style>
+
+    <style name="divider_up_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/silverTwo</item>
+    </style>
+
+
 </resources>

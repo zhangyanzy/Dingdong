@@ -27,6 +27,7 @@
     <string name="global_required">*</string>
     <string name="global_colon">:</string>
 
+    <string name="send">发送</string>
     <string name="confirm">确定</string>
     <string name="confirm2">确认</string>
     <string name="cancel">取消</string>

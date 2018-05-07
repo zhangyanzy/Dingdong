@@ -7,7 +7,7 @@ package com.dindong.dingdong.config;
 public class AppConfig {
 
   public static class Http {
-    public static final String BASE_URL = "http://console.dingdongbanxue.com/";
+    public static final String BASE_URL = "http://console.dingdongbanxue.com/app/api/";
   }
 
   public static class IntentKey {

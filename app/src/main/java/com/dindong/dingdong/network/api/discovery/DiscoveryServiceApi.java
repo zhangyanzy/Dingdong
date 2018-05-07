@@ -22,11 +22,13 @@ public interface DiscoveryServiceApi {
   /**
    * 获取发现列表
    * 
+   * @param userId
    * @param param
    * @return
    */
   @POST("app/discovery/listDiscovery")
-  Observable<Response<List<Discovery>>> listDiscovery(@Body QueryParam param);
+  Observable<Response<List<Discovery>>> listDiscovery(@Query("userId") String userId,
+      @Body QueryParam param);
 
   /**
    * 发布评论
@@ -36,8 +38,7 @@ public interface DiscoveryServiceApi {
    * @return
    */
   @POST("app/discovery/comment")
-  Observable<Response> comment(@Query("discoveryId") String discoveryId,
-      @Body Comment comment);
+  Observable<Response> comment(@Query("discoveryId") String discoveryId, @Body Comment comment);
 
   /**
    * 点赞

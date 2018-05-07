@@ -20,7 +20,7 @@ public interface RegionServiceApi {
    * 
    * @return
    */
-  @GET("app/region/serviceCity/list/")
+  @GET("region/serviceCity/list/")
   Observable<Response<List<Region>>> listRegion();
 
   /**
@@ -28,6 +28,6 @@ public interface RegionServiceApi {
    *
    * @return
    */
-  @GET("/app/region/children")
+  @GET("region/children")
   Observable<Response<List<Region>>> getRegion(@Query("parentCode") String parentCode);
 }

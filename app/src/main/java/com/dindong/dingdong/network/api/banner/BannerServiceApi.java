@@ -20,6 +20,6 @@ public interface BannerServiceApi {
    * 
    * @return
    */
-  @GET("/app/banner/list")
+  @GET("banner/list")
   Observable<Response<List<Banner>>> listBanner();
 }

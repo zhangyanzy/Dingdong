@@ -28,7 +28,7 @@ public interface SubjectServiceApi {
    *          SortParam#property=evaluate,direction=desc，按评价查询<br/>
    * @return
    */
-  @POST("app/subject/list")
+  @POST("subject/list")
   Observable<Response<List<Subject>>> listSubject(@Body QueryParam param);
 
   /**
@@ -42,7 +42,7 @@ public interface SubjectServiceApi {
    *          latitude，纬度<br/>
    * @return
    */
-  @POST("app/subject/hot/list")
+  @POST("subject/hot/list")
   Observable<Response<List<Subject>>> listHotSubject(@Body QueryParam param);
 
 }

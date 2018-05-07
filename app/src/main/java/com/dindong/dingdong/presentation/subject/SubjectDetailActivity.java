@@ -10,9 +10,8 @@ import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.pay.OrderConfirmActivity;
-import com.dindong.dingdong.util.GlideUtil;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.IsEmpty;
-import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
 import android.content.Context;
@@ -69,7 +68,7 @@ public class SubjectDetailActivity extends BaseActivity {
         .getLayoutParams();
     params.height = (int) (width * 0.5);
     binding.imgSubject.setLayoutParams(params);
-    GlideUtil.load(this, IsEmpty.list(images) ? "" : images.get(0).getUrl(), binding.imgSubject);
+    PhotoUtil.load(this, IsEmpty.list(images) ? "" : images.get(0).getUrl(), binding.imgSubject);
   }
 
   public class Presenter {

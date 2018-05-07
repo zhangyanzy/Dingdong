@@ -60,6 +60,12 @@ public abstract class BaseFragment extends RxFragment {
     }
   }
 
+  public void addInterceptView(View view) {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).addInterceptView(view);
+    }
+  }
+
   protected void firstVisible() {
   }
 }

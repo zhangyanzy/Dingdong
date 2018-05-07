@@ -11,7 +11,7 @@ import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.util.CuteR;
 import com.dindong.dingdong.util.DialogUtil;
-import com.dindong.dingdong.util.GlideUtil;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
@@ -62,7 +62,7 @@ public class OrderDetailActivity extends BaseActivity {
       binding.txtShopAddress.setText(order.getSubject().getStore().getAddress().toString());
       binding.txtRange.setText(StringUtil.format(getString(R.string.global_range),
           StringUtil.formatRange(order.getSubject().getStore().getRange())));
-      GlideUtil.load(this, order.getSubject().getImages().get(0).getUrl(), binding.img);
+      PhotoUtil.load(this, order.getSubject().getImages().get(0).getUrl(), binding.img);
       binding.txtGoodName.setText(order.getSubject().getName());
       binding.txtAmount.setText(StringUtil.amount(order.getSubject().getAmount()));
     } else if (order.getOrderType().equals(OrderType.good)) {
@@ -70,7 +70,7 @@ public class OrderDetailActivity extends BaseActivity {
       binding.txtShopAddress.setText(order.getShopGood().getStore().getAddress().toString());
       binding.txtRange.setText(StringUtil.format(getString(R.string.global_range),
           StringUtil.formatRange(order.getShopGood().getStore().getRange())));
-      GlideUtil.load(this, order.getShopGood().getImages().get(0).getUrl(), binding.img);
+      PhotoUtil.load(this, order.getShopGood().getImages().get(0).getUrl(), binding.img);
       binding.txtGoodName.setText(order.getShopGood().getName());
       binding.txtAmount.setText(StringUtil.amount(order.getShopGood().getAmount()));
     }

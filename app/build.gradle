@@ -15,8 +15,8 @@ android {
         applicationId "com.dindong.dingdong"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -31,6 +31,10 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
     dataBinding {
         enabled = true
     }
@@ -79,6 +83,8 @@ dependencies {
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'commons-io:commons-io:2.4'
     compile 'me.dm7.barcodescanner:zxing:1.9.8'
+    compile 'me.dm7.barcodescanner:zbar:1.9.8'
     testCompile 'junit:junit:4.12'
     implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
+    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
 }

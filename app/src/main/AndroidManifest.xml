@@ -101,7 +101,12 @@
         <activity android:name=".presentation.store.ShopMapActivity" />
         <activity android:name=".presentation.store.TeacherListActivity" />
         <activity android:name=".presentation.pay.OrderDetailActivity" />
-        <activity android:name=".presentation.user.AboutActivity"></activity>
+        <activity android:name=".presentation.user.AboutActivity" />
+        <activity android:name=".presentation.discovery.DiscoveryDetailActivity" />
+        <activity android:name=".presentation.store.CommentShopActivity" />
+        <activity
+            android:name=".widget.photo.PhotoSelectActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden" />
     </application>
 
 </manifest>

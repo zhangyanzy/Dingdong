@@ -1,5 +1,8 @@
 package com.dindong.dingdong.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,6 +28,9 @@ import android.widget.EditText;
  */
 
 public abstract class BaseActivity extends RxAppCompatActivity {
+
+  private List<View> interceptViews = new ArrayList<>();
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -80,7 +86,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
       if (!hideInputOut())
         return super.dispatchTouchEvent(ev);
       View v = getCurrentFocus();
-      if (isEdt(v, ev)) {
+      if (closeSoft(v, ev)) {
         InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         im.hideSoftInputFromWindow(v.getWindowToken(), 0);
       }
@@ -101,13 +107,26 @@ public abstract class BaseActivity extends RxAppCompatActivity {
   }
 
   /**
-   * 判断当前焦点是否是输入框
+   * 是否隐藏软键盘
    *
    * @param v
    * @param event
    * @return
    */
-  public boolean isEdt(View v, MotionEvent event) {
+  public boolean closeSoft(View v, MotionEvent event) {
+    for (View view : interceptViews) {
+      int[] leftTop = {
+          0, 0 };
+      view.getLocationInWindow(leftTop);
+      int left = leftTop[0];
+      int top = leftTop[1];
+      int bottom = top + view.getHeight();
+      int right = left + view.getWidth();
+      if (event.getX() > left && event.getX() < right && event.getY() > top
+          && event.getY() < bottom) {
+        return false;
+      }
+    }
     if (v != null && (v instanceof EditText)) {
       int[] leftTop = {
           0, 0 };
@@ -124,6 +143,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
       }
     }
     return false;
+  }
+
+  public void addInterceptView(View view) {
+    interceptViews.add(view);
   }
 
   @Override

@@ -6,9 +6,9 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.presentation.pay.OrderListActivity;
-import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
-import com.dindong.dingdong.presentation.user.wrist.BlueWristScanActivity;
+import com.dindong.dingdong.presentation.store.CommentShopActivity;
 import com.dindong.dingdong.presentation.user.SettingActivity;
+import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -103,6 +103,10 @@ public class MineFragment extends BaseFragment {
      */
     public void onWelfare() {
       startActivity(new Intent(getContext(), BlueWristMainActivity.class));
+    }
+
+    public void onHome() {
+      startActivity(new Intent(getContext(), CommentShopActivity.class));
     }
   }
 }

@@ -26,7 +26,7 @@ public interface PayServiceApi {
    * @param order
    * @return
    */
-  @POST("app/pay/submit/pre")
+  @POST("pay/submit/pre")
   Observable<Response<Order>> preSubmit(@Query("userId") String userId, @Body Order order);
 
   /**
@@ -37,7 +37,7 @@ public interface PayServiceApi {
    *          订单
    * @return
    */
-  @GET("app/pay/get")
+  @GET("pay/get")
   Observable<Response<Order>> get(@Query("userId") String userId, @Query("orderId") String orderId);
 
   /**
@@ -47,7 +47,7 @@ public interface PayServiceApi {
    * @param orderId
    * @return
    */
-  @POST("app/pay/cancel")
+  @POST("pay/cancel")
   Observable<Response<Order>> cancel(@Query("userId") String userId,
       @Query("orderId") String orderId);
 
@@ -59,7 +59,7 @@ public interface PayServiceApi {
    *          销核码
    * @return
    */
-  @POST("app/pay/submitAndCancel")
+  @POST("pay/submitAndCancel")
   Observable<Response<Order>> submitAndCancel(@Query("userId") String userId,
       @Query("code") String code);
 
@@ -74,7 +74,7 @@ public interface PayServiceApi {
    *          为空则查询全部<br/>
    * @return
    */
-  @POST("app/pay/order/list")
+  @POST("pay/order/list")
   Observable<Response<List<Order>>> listOrder(@Query("userId") String userId,
       @Body QueryParam param);
 

@@ -17,7 +17,7 @@ import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderState;
 import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.util.DialogUtil;
-import com.dindong.dingdong.util.GlideUtil;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
@@ -155,7 +155,7 @@ public class OrderListFragment extends BaseFragment {
         return;
       ItemOrderListBinding itemBinding = (ItemOrderListBinding) holder.getBinding();
 
-      GlideUtil.load(getContext(),
+      PhotoUtil.load(getContext(),
           itemBinding.getItem().getOrderType().equals(OrderType.subject)
               ? itemBinding.getItem().getSubject().getImages().get(0).getUrl()
               : itemBinding.getItem().getShopGood().getImages().get(0).getUrl(),

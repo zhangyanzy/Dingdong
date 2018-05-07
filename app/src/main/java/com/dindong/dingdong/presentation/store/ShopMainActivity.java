@@ -18,7 +18,7 @@ import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.network.bean.store.Teacher;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.DialogUtil;
-import com.dindong.dingdong.util.GlideUtil;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
@@ -74,7 +74,7 @@ public class ShopMainActivity extends BaseActivity {
         .getLayoutParams();
     params.height = (int) (width * 0.7);
     binding.imgShop.setLayoutParams(params);
-    GlideUtil.load(this, IsEmpty.list(images) ? "" : images.get(0).getUrl(), binding.imgShop);
+    PhotoUtil.load(this, IsEmpty.list(images) ? "" : images.get(0).getUrl(), binding.imgShop);
   }
 
   /**

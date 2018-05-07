@@ -24,6 +24,6 @@ public interface MessageServiceApi {
    *          type，消息类型 system-系统消息，notice-公告<br/>
    * @return
    */
-  @POST("app/message/listMsg")
+  @POST("message/listMsg")
   Observable<Response<List<Message>>> listMsg(@Body QueryParam param);
 }
