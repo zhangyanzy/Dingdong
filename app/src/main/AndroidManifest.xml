@@ -107,6 +107,12 @@
         <activity
             android:name=".widget.photo.PhotoSelectActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden" />
+        <activity
+            android:name=".presentation.main.ForgetPasswordActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden" />
+        <activity
+            android:name=".presentation.main.SendMomentActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden" />
     </application>
 
 </manifest>

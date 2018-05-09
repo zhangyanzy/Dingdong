@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4F5F7"
+        android:orientation="vertical">
+
+        <com.dindong.dingdong.widget.NavigationTopBar
+            android:id="@+id/nb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_text="@string/send_moment_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <EditText
+                android:id="@+id/edt_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="@string/send_moment_hint"
+                android:lines="10"
+                android:textColorHint="#888888"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/white">
+
+            <com.dindong.dingdong.widget.photo.PhotoLayout
+                android:id="@+id/pl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img2333"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </LinearLayout>
+</layout>

@@ -1,21 +1,18 @@
 package com.dindong.dingdong.widget.photo;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.databinding.ItemWidgetPhotoBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.image.usecase.UploadMultiImageCase;
+import com.dindong.dingdong.network.api.image.usecase.UploadImageCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.util.DensityUtil;
@@ -28,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
@@ -113,6 +111,7 @@ public class PhotoLayout extends GridLayout {
   @Override
   public void setColumnCount(int columnCount) {
     this.columnCount = columnCount;
+    super.setColumnCount(columnCount);
   }
 
   public void setSource(List<GlobalImage> source) {
@@ -137,23 +136,28 @@ public class PhotoLayout extends GridLayout {
     final ItemWidgetPhotoBinding binding = itemUploadPhotoBindings
         .get(itemUploadPhotoBindings.size() - 1);
 
-    Glide.with(getContext()).load(image.getUrl())
-        .apply(
-            RequestOptions.placeholderOf(R.mipmap.img_placeholder).error(R.mipmap.img_load_failed))
-        .listener(new RequestListener<Drawable>() {
-          @Override
-          public boolean onLoadFailed(@Nullable GlideException e, Object model,
-              Target<Drawable> target, boolean isFirstResource) {
-            return false;
-          }
-
-          @Override
-          public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
-              DataSource dataSource, boolean isFirstResource) {
-            return false;
-          }
-        }).into(binding.imgPhoto);
+    PhotoUtil.load(getContext(), image.getUrl(), binding.imgPhoto);
     addImg(binding, image, isShowDelete);
+  }
+
+  public Bitmap getImageBitmap(String url) {
+    URL imgUrl = null;
+    Bitmap bitmap = null;
+    try {
+      imgUrl = new URL(url);
+      HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+      conn.setDoInput(true);
+      conn.connect();
+      InputStream is = conn.getInputStream();
+      bitmap = BitmapFactory.decodeStream(is);
+      is.close();
+    } catch (MalformedURLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return bitmap;
   }
 
   private void addImg(final ItemWidgetPhotoBinding binding, GlobalImage image,
@@ -198,10 +202,10 @@ public class PhotoLayout extends GridLayout {
         .inflate(LayoutInflater.from(getContext()), R.layout.item_widget_photo, null, false);
 
     int i = getChildCount();
-    GridLayout.Spec rowSpec = GridLayout.spec(i / columnCount);
-    GridLayout.Spec columnSpec = GridLayout.spec(i % columnCount);
-    GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(rowSpec, columnSpec);
-    layoutParams.leftMargin = DensityUtil.dip2px(getContext(), i % columnCount == 0 ? 0 : margin);
+    // GridLayout.Spec rowSpec = GridLayout.spec(i / columnCount);
+    // GridLayout.Spec columnSpec = GridLayout.spec(i % columnCount);
+    GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+    layoutParams.leftMargin = DensityUtil.dip2px(getContext(), margin);
     layoutParams.bottomMargin = DensityUtil.dip2px(getContext(), margin);
     newBinding.getRoot().setLayoutParams(layoutParams);
     if (itemParams != null) {
@@ -248,38 +252,13 @@ public class PhotoLayout extends GridLayout {
     if (IsEmpty.list(photos))
       return;
 
-    // MultipartBody.Part[] parts = new MultipartBody.Part[photos.size()];
     File file = new File(photos.get(0));
-    RequestBody requestFile;
+    final RequestBody requestFile;
     requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
     MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file", file.getName(),
         requestFile);
-    // parts[i] = imagePart;
-    MultipartBody.Part[] parts = new MultipartBody.Part[] {
-        imagePart };
 
-    // MultipartBody.Builder builder = new MultipartBody.Builder()
-    // .setType(MultipartBody.FORM)//表单类型
-    // .addFormDataPart(ParamKey.TOKEN, token);//ParamKey.TOKEN 自定义参数key常量类，即参数名
-    // RequestBody imageBody =
-    // RequestBody.create(MediaType.parse("multipart/form-data"), file);
-    // builder.addFormDataPart("imgfile", file.getName(), imageBody);//imgfile
-    // 后台接收图片流的参数名
-    //
-    // List<MultipartBody.Part> parts = builder.build().parts();
-    // for (int i = 0; i < photos.size(); i++) {
-    // // 上传图片
-    // File file = new File(photos.get(i));
-    // RequestBody requestFile;
-    // requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),
-    // file);
-    // MultipartBody.Part imagePart = MultipartBody.Part.createFormData("files",
-    // file.getName(),
-    // requestFile);
-    //// parts[i] = imagePart;
-    // parts=new MultipartBody.Part[]{imagePart};
-    // }
-    new UploadMultiImageCase(parts).execute(new HttpSubscriber<GlobalImage>(getContext()) {
+    new UploadImageCase(imagePart).execute(new HttpSubscriber<GlobalImage>(getContext()) {
       @Override
       public void onFailure(String errorMsg, Response<GlobalImage> response) {
         DialogUtil.getErrorDialog(getContext(), errorMsg).show();
@@ -287,7 +266,7 @@ public class PhotoLayout extends GridLayout {
 
       @Override
       public void onSuccess(Response<GlobalImage> response) {
-
+        addItem(response.getData(), true);
       }
     });
 
@@ -337,7 +316,8 @@ public class PhotoLayout extends GridLayout {
     public void onRemove(View view, int index) {
       removeView(itemUploadPhotoBindings.get(index).getRoot());
       source.remove(index);
-      itemUploadPhotoBindings.remove(index);
+      itemUploadPhotoBindings.remove(itemUploadPhotoBindings.size() - 1);
+      invalidate();
       boolean hasAdd = false;
       for (ItemWidgetPhotoBinding binding : itemUploadPhotoBindings) {
         boolean hasImg = binding.getHasImage();

@@ -2,6 +2,7 @@ package com.dindong.dingdong.presentation.main;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityLoginBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.manager.ShortcutMgr;
@@ -274,6 +275,17 @@ public class LoginActivity extends BaseActivity {
      */
     public void onAgreement() {
       startActivity(new Intent(LoginActivity.this, UserAgreementActivity.class));
+    }
+
+    /**
+     * 重置密码
+     */
+    public void onResetPassword() {
+      Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+      String mobile = binding.edtMobile.getText().toString().trim();
+      if (!IsEmpty.string(mobile) && mobile.length() == 11)
+        intent.putExtra(AppConfig.IntentKey.DATA, mobile);
+      startActivity(intent);
     }
   }
 }

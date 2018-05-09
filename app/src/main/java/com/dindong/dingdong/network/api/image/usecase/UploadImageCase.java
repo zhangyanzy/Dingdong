@@ -12,15 +12,15 @@ import rx.Observable;
  * </>
  */
 
-public class UploadMultiImageCase extends BaseUseCase<ImageServiceApi> {
-  private MultipartBody.Part[] files;
+public class UploadImageCase extends BaseUseCase<ImageServiceApi> {
+  private MultipartBody.Part file;
 
-  public UploadMultiImageCase(MultipartBody.Part[] files) {
-    this.files = files;
+  public UploadImageCase(MultipartBody.Part files) {
+    this.file = files;
   }
 
   @Override
   protected Observable buildCase() {
-    return createConnection().uploadMulti(files);
+    return createConnection().upload(file);
   }
 }

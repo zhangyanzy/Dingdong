@@ -23,6 +23,6 @@ public class ListTeacherCase extends BaseUseCase<ShopServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection().listTeacher(shopId, queryParam);
+    return createConnection(true).listTeacher(shopId, queryParam);
   }
 }

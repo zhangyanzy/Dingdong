@@ -21,14 +21,14 @@ import rx.Observable;
 
 public interface MomentServiceApi {
   /**
-   * 发表动态评论
+   * 发表动态/评论
    * 
    * @param comment
    * 
    * @return
    */
   @POST("moments")
-  Observable<Response<Comment>> commentMoment(@Body Comment comment);
+  Observable<Response<Comment>> moment(@Body Comment comment);
 
   /**
    * 获取动态评论列表

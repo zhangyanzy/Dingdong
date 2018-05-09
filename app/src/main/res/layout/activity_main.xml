@@ -129,6 +129,8 @@
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="@{()->presenter.onSendMoment()}"
                     android:src="@mipmap/ic_increase" />
                 <!--<android.support.v7.widget.CardView-->
                 <!--android:id="@+id/tab_sale"-->

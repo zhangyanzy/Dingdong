@@ -15,7 +15,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="224dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/bg_vertical_gradient_blue">
 
             <LinearLayout
@@ -228,6 +229,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{()->presenter.onResetPassword()}"
                         android:text="@string/login_forget_password"
                         android:textColor="#EF314B"
                         android:textSize="16dp" />
@@ -405,5 +407,127 @@
             android:text="@string/login_btn_login"
             android:textColor="@color/white"
             android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/line_left"
+                    style="@style/divider_title"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:layout_toLeftOf="@id/txt_one_key" />
+
+                <TextView
+                    android:id="@+id/txt_one_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/login_one_key_login"
+                    android:textColor="#888888"
+                    android:textSize="13dp" />
+
+                <View
+                    android:id="@+id/line_right"
+                    style="@style/divider_title"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@id/txt_one_key" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="53dp"
+                android:layout_marginTop="24dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@mipmap/weibo" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:text="@string/weibo"
+                            android:textColor="#888888"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_weight="1.2"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/weixin" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:text="@string/wex"
+                            android:textColor="#888888"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@mipmap/qq" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:text="@string/qq"
+                            android:textColor="#888888"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </layout>

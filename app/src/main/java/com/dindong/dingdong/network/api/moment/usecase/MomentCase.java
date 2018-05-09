@@ -12,15 +12,15 @@ import rx.Observable;
  * </>
  */
 
-public class CommentMomentCase extends BaseUseCase<MomentServiceApi> {
+public class MomentCase extends BaseUseCase<MomentServiceApi> {
   private Comment comment;
 
-  public CommentMomentCase(Comment comment) {
+  public MomentCase(Comment comment) {
     this.comment = comment;
   }
 
   @Override
   protected Observable buildCase() {
-    return createConnection().commentMoment(comment);
+    return createConnection().moment(comment);
   }
 }

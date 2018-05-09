@@ -63,20 +63,21 @@
                         android:layout_height="wrap_content"
                         android:text="@{item.name}"
                         android:textColor="#333333"
-                        android:textSize="14dp" />
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
                         android:text="@{store!=null?store.name:item.store.name}"
                         android:textColor="#666666"
-                        android:textSize="12dp" />
+                        android:textSize="14dp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp">
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:id="@+id/txt_range"
@@ -85,12 +86,11 @@
                             android:layout_alignParentRight="true"
                             android:text="@{StringUtil.format(@string/global_range,store!=null?StringUtil.formatRange(store.range):StringUtil.formatRange(item.store.range))}"
                             android:textColor="#666666"
-                            android:textSize="12dp" />
+                            android:textSize="13dp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
                             android:layout_toLeftOf="@id/txt_range"
                             android:text="@{store!=null?store.address.toString():item.store.address.toString()}"
                             android:textColor="#666666"
@@ -106,6 +106,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
@@ -119,7 +120,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/global_amount_unit+StringUtil.amount(item.amount)}"
+                        android:text="@{@string/global_amount_unit+StringUtil.transAmount(item.amount)}"
                         android:textColor="#FF9C09"
                         android:textSize="17dp" />
 
@@ -128,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dp"
-                        android:text="@{@string/global_amount_unit+StringUtil.amount(item.originalAmount)}"
+                        android:text="@{@string/global_amount_unit+StringUtil.transAmount(item.originalAmount)}"
                         android:textColor="#888888"
                         android:textSize="17dp"
                         android:visibility="gone" />

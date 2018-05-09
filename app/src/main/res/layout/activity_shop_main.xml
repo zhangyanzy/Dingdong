@@ -7,7 +7,7 @@
         <import type="com.dindong.dingdong.util.StringUtil" />
 
         <variable
-            name="store"
+            name="item"
             type="com.dindong.dingdong.network.bean.store.Shop" />
 
         <variable
@@ -27,308 +27,214 @@
             android:layout_height="wrap_content"
             app:title_text="@string/shop_main_title" />
 
-        <ScrollView
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <LinearLayout
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/sv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_weight="1">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/top_layout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@mipmap/img_load_failed" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{store.name}"
-                                android:textColor="#333333"
-                                android:textSize="14dp" />
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="center_vertical">
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
 
-                                <TextView
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@mipmap/img_load_failed" />
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_shop_prove"
-                                    android:paddingLeft="2dp"
-                                    android:paddingRight="2dp"
-                                    android:text="@string/shop_main_label_prove"
-                                    android:textColor="@color/white"
-                                    android:textSize="12dp" />
+                                    android:layout_marginLeft="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{item.name}"
+                                        android:textColor="#333333"
+                                        android:textSize="14dp" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:gravity="center_vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/bg_shop_prove"
+                                            android:paddingLeft="2dp"
+                                            android:paddingRight="2dp"
+                                            android:text="@string/shop_main_label_prove"
+                                            android:textColor="@color/white"
+                                            android:textSize="12dp" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="6dp"
+                                            android:text="@string/shop_main_msg_prove"
+                                            android:textColor="#888888"
+                                            android:textSize="11dp" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/img_shop"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="7dp"
+                            android:paddingTop="7dp">
+
+                            <ImageView
+                                android:id="@+id/img_mobile"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="12dp"
+                                android:onClick="@{()->presenter.onMobile(item.phone)}"
+                                android:src="@mipmap/ic_phone" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@id/img_mobile"
+                                android:gravity="center_vertical"
+                                android:onClick="@{()->presenter.onAdd(item.latitude,item.longitude)}">
+
+                                <ImageView
+                                    android:layout_width="22dp"
+                                    android:layout_height="22dp"
+                                    android:layout_marginLeft="12dp"
+                                    android:src="@mipmap/ic_map" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="6dp"
-                                    android:text="@string/shop_main_msg_prove"
-                                    android:textColor="#888888"
-                                    android:textSize="11dp" />
+                                    android:text="@{item.address.toString()}"
+                                    android:textColor="#666666"
+                                    android:textSize="12dp" />
                             </LinearLayout>
-                        </LinearLayout>
+                        </RelativeLayout>
                     </LinearLayout>
-                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/img_shop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="7dp"
-                    android:paddingTop="7dp">
-
-                    <ImageView
-                        android:id="@+id/img_mobile"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="12dp"
-                        android:onClick="@{()->presenter.onMobile(store.phone)}"
-                        android:src="@mipmap/ic_phone" />
-
-                    <LinearLayout
+                    <com.ogaclejapan.smarttablayout.SmartTabLayout
+                        android:id="@+id/st_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/img_mobile"
-                        android:gravity="center_vertical"
-                        android:onClick="@{()->presenter.onAdd(store.latitude,store.longitude)}">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_marginLeft="12dp"
-                            android:src="@mipmap/ic_map" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:text="@{store.address.toString()}"
-                            android:textColor="#666666"
-                            android:textSize="12dp" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <include layout="@layout/space_item" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="7dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_title" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:text="@string/main_home_hot_subject"
-                            android:textColor="#333333"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
+                        android:layout_height="40dp"
+                        android:background="#F4F5F7"
+                        app:stl_clickable="true"
+                        app:stl_defaultTabBackground="?attr/selectableItemBackground"
+                        app:stl_defaultTabTextAllCaps="true"
+                        app:stl_defaultTabTextColor="#FC000000"
+                        app:stl_defaultTabTextHorizontalPadding="16dp"
+                        app:stl_defaultTabTextMinWidth="0dp"
+                        app:stl_defaultTabTextSize="12sp"
+                        app:stl_distributeEvenly="true"
+                        app:stl_dividerColor="#4D000000"
+                        app:stl_dividerThickness="0dp"
+                        app:stl_drawDecorationAfterTab="false"
+                        app:stl_indicatorAlwaysInCenter="false"
+                        app:stl_indicatorColor="#468DE6"
+                        app:stl_indicatorCornerRadius="0dp"
+                        app:stl_indicatorGravity="bottom"
+                        app:stl_indicatorInFront="false"
+                        app:stl_indicatorInterpolation="linear"
+                        app:stl_indicatorThickness="2dp"
+                        app:stl_indicatorWidth="40dp"
+                        app:stl_indicatorWithoutPadding="false"
+                        app:stl_overlineColor="@color/silverThree"
+                        app:stl_overlineThickness="0dp"
+                        app:stl_titleOffset="24dp"
+                        app:stl_underlineColor="@color/silverThree"
+                        app:stl_underlineThickness="0.5dp" />
 
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                    <com.dindong.dingdong.widget.CustomViewPager
+                        android:id="@+id/vp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="@string/global_more"
-                            android:textColor="#888888"
-                            android:textSize="14dp" />
+                    </com.dindong.dingdong.widget.CustomViewPager>
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_chevron_grey" />
-                    </LinearLayout>
+                </LinearLayout>
 
-                </RelativeLayout>
+            </android.support.v4.widget.NestedScrollView>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/lst_hot_subject"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+            <com.ogaclejapan.smarttablayout.SmartTabLayout
+                android:id="@+id/st_layout_suspend"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F4F5F7"
+                android:visibility="gone"
+                app:stl_clickable="true"
+                app:stl_defaultTabBackground="?attr/selectableItemBackground"
+                app:stl_defaultTabTextAllCaps="true"
+                app:stl_defaultTabTextColor="#FC000000"
+                app:stl_defaultTabTextHorizontalPadding="16dp"
+                app:stl_defaultTabTextMinWidth="0dp"
+                app:stl_defaultTabTextSize="12sp"
+                app:stl_distributeEvenly="true"
+                app:stl_dividerColor="#4D000000"
+                app:stl_dividerThickness="0dp"
+                app:stl_drawDecorationAfterTab="false"
+                app:stl_indicatorAlwaysInCenter="false"
+                app:stl_indicatorColor="#468DE6"
+                app:stl_indicatorCornerRadius="0dp"
+                app:stl_indicatorGravity="bottom"
+                app:stl_indicatorInFront="false"
+                app:stl_indicatorInterpolation="linear"
+                app:stl_indicatorThickness="2dp"
+                app:stl_indicatorWidth="40dp"
+                app:stl_indicatorWithoutPadding="false"
+                app:stl_overlineColor="@color/silverThree"
+                app:stl_overlineThickness="0dp"
+                app:stl_titleOffset="24dp"
+                app:stl_underlineColor="@color/silverThree"
+                app:stl_underlineThickness="0.5dp" />
 
-                <include layout="@layout/space_item" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="7dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_title" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:text="@string/shop_main_activity"
-                            android:textColor="#333333"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="@string/global_more"
-                            android:textColor="#888888"
-                            android:textSize="14dp" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_chevron_grey" />
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/lst_near_shop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include layout="@layout/space_item" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="7dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_title" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:text="@string/shop_main_teacher"
-                            android:textColor="#333333"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:onClick="@{()->presenter.onMoreTeacher()}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="@string/global_more"
-                            android:textColor="#888888"
-                            android:textSize="14dp" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_chevron_grey" />
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/lst_teacher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </ScrollView>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

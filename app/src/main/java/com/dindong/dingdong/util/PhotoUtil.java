@@ -2,9 +2,16 @@ package com.dindong.dingdong.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.luck.picture.lib.PictureSelector;
@@ -12,6 +19,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 /**
@@ -27,11 +35,23 @@ public class PhotoUtil {
    * @param imgPath
    * @param imageView
    */
-  public static void load(Context context, Object imgPath, ImageView imageView) {
-    Glide
-        .with(context).load(imageView).apply(new RequestOptions()
-            .placeholder(R.mipmap.img_placeholder).error(R.mipmap.img_load_failed))
-        .load(imgPath).into(imageView);
+  public static void load(Context context, Object imgPath, final ImageView imageView) {
+    Glide.with(context).load(imageView)
+        .apply(new RequestOptions().placeholder(R.mipmap.img_placeholder)
+            .error(R.mipmap.img_load_failed))
+        .load(imgPath).listener(new RequestListener<Drawable>() {
+          @Override
+          public boolean onLoadFailed(@Nullable GlideException e, Object model,
+              Target<Drawable> target, boolean isFirstResource) {
+            return false;
+          }
+
+          @Override
+          public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+              DataSource dataSource, boolean isFirstResource) {
+            return false;
+          }
+        }).into(imageView);
   }
 
   /**

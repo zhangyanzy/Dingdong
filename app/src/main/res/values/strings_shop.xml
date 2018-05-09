@@ -14,6 +14,12 @@
     <string name="shop_main_comment">写评价</string>
     <string name="shop_main_mobile">拨打</string>
     <string name="shop_main_mobile_err">当前设备不支持拨号功能</string>
+    <string-array name="shop_main_tabs">
+        <item >首页</item>
+        <item >动态</item>
+        <item >机构介绍</item>
+    </string-array>
+
 
     <!--老师列表-->
     <string name="teacher_list_title">门店老师列表</string>

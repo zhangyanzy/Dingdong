@@ -19,6 +19,7 @@ import com.dindong.dingdong.util.PermissionUtil;
 import com.dindong.dingdong.util.UpgradeUtil;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -290,6 +291,13 @@ public class MainActivity extends BaseActivity {
           return;
         }
       }
+    }
+
+    /**
+     * 发动态
+     */
+    public void onSendMoment() {
+      startActivity(new Intent(MainActivity.this, SendMomentActivity.class));
     }
   }
 }

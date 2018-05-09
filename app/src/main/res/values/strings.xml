@@ -32,4 +32,7 @@
     <string name="confirm2">确认</string>
     <string name="cancel">取消</string>
     <string name="location_fail">定位失败</string>
+    <string name="qq">QQ</string>
+    <string name="wex">微信</string>
+    <string name="weibo">微博</string>
 </resources>

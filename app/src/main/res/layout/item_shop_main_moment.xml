@@ -10,7 +10,7 @@
 
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.discovery.DiscoveryMomentFragment.Presenter" />
+            type="com.dindong.dingdong.presentation.store.ShopMainMomentFragment.Presenter" />
 
         <variable
             name="item"
@@ -105,34 +105,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@mipmap/ic_use" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="@string/discovery_reward"
-                    android:textColor="#FF9C09"
-                    android:textSize="13dp" />
-            </LinearLayout>
-
-            <View
-                style="@style/divider_up_item"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal"
-                android:onClick="@{()->presenter.onCommentClick(item)}"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp">
 

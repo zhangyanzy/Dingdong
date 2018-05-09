@@ -3,11 +3,13 @@ package com.dindong.dingdong.presentation.store;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.databinding.ActivityCommentShopBinding;
-import com.dindong.dingdong.widget.photo.PhotoLayout;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
+/**
+ * 门店评论
+ */
 public class CommentShopActivity extends BaseActivity {
 
   ActivityCommentShopBinding binding;

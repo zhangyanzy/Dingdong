@@ -8,7 +8,7 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityDiscoveryDetailBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.like.PraiseLikeCase;
-import com.dindong.dingdong.network.api.moment.usecase.CommentMomentCase;
+import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCommentCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
@@ -105,7 +105,7 @@ public class DiscoveryDetailActivity extends BaseActivity {
         ToastUtil.toastHint(DiscoveryDetailActivity.this, R.string.discovery_comment_empty);
         return;
       }
-      new CommentMomentCase(DiscoveryConvertor
+      new MomentCase(MomentConverter
           .createComment(binding.edtComment.getText().toString(), comment.getId()))
               .execute(new HttpSubscriber<Comment>(DiscoveryDetailActivity.this) {
                 @Override

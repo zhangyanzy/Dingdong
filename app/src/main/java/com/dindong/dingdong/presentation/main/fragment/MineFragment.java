@@ -106,7 +106,7 @@ public class MineFragment extends BaseFragment {
     }
 
     public void onHome() {
-      startActivity(new Intent(getContext(), CommentShopActivity.class));
+
     }
   }
 }
