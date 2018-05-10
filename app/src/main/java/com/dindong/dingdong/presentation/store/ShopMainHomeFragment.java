@@ -23,6 +23,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class ShopMainHomeFragment extends BaseFragment {
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_main_home, container, false);
 
-    ((ShopMainActivity)getActivity()).updateViewPagerHeight();
+    ((ShopMainActivity) getActivity()).updateViewPagerHeight();
     return binding.getRoot();
   }
 
@@ -80,27 +81,28 @@ public class ShopMainHomeFragment extends BaseFragment {
    */
   private void listTeacher(String shopId) {
     final QueryParam param = new QueryParam();
-    param.setLimit(2);
+    param.setLimit(4);
 
     new ListTeacherCase(shopId, param).execute(new HttpSubscriber<List<Teacher>>() {
       @Override
       public void onFailure(String errorMsg, Response<List<Teacher>> response) {
         DialogUtil.getErrorDialog(getContext(), errorMsg).show();
 
-        ((ShopMainActivity)getActivity()).updateViewPagerHeight();
+        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
       }
 
       @Override
       public void onSuccess(Response<List<Teacher>> response) {
-        SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(), R.layout.item_teahcer_list);
+        SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(),
+            R.layout.item_shop_main_teahcer);
         adapter.addAll(response.getData());
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.lstTeacher.setLayoutManager(manager);
         binding.lstTeacher.setAdapter(adapter);
         binding.lstTeacher.setNestedScrollingEnabled(false);
 
-        ((ShopMainActivity)getActivity()).updateViewPagerHeight();
+        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
       }
     });
   }

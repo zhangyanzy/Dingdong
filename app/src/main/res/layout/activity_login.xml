@@ -422,13 +422,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <View
-                    android:id="@+id/line_left"
-                    style="@style/divider_title"
-                    android:layout_height="1dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:layout_toLeftOf="@id/txt_one_key" />
 
                 <TextView
                     android:id="@+id/txt_one_key"
@@ -438,6 +431,14 @@
                     android:text="@string/login_one_key_login"
                     android:textColor="#888888"
                     android:textSize="13dp" />
+
+                <View
+                    android:id="@+id/line_left"
+                    style="@style/divider_title"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:layout_toLeftOf="@id/txt_one_key" />
 
                 <View
                     android:id="@+id/line_right"
