@@ -19,6 +19,7 @@ public class ListMomentCommentCase extends BaseUseCase<MomentServiceApi> {
 
   public ListMomentCommentCase(String relationId) {
     queryParam = new QueryParam();
+    queryParam.setLimit(99);
     queryParam.getFilters().add(new FilterParam("relationId", relationId));
   }
 

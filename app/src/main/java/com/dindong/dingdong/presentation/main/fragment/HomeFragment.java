@@ -34,8 +34,8 @@ import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
-import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.RegionStorageUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.youth.banner.BannerConfig;
@@ -62,15 +62,6 @@ import android.widget.Toast;
 public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
   private FragmentHomeBinding binding;
-  // GridView数据放置在此List中
-  private List<Map<String, Object>> dataList;
-  // GridView图片
-  private int[] icon = {
-      R.mipmap.ic_fujin, R.mipmap.ic_pintuan, R.mipmap.ic_kecheng, R.mipmap.ic_dingdong };
-  // GridView适配器
-  private SimpleAdapter mSimpleAdapter;
-  // RecycleView所需List
-  private List<String> mData;
 
   private List<String> mBannerList;
 
@@ -83,17 +74,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    /**
-     * 初始化GridView
-     */
-    dataList = new ArrayList<Map<String, Object>>();
-    mSimpleAdapter = new SimpleAdapter(getContext(), getGridViewData(), R.layout.item_grid_view,
-        new String[] {
-            "image", "text" },
-        new int[] {
-            R.id.item_image, R.id.item_textview });
-    binding.gvChannel.setAdapter(mSimpleAdapter);
-    binding.gvChannel.setOnItemClickListener(this);
 
     refreshData();
   }
@@ -113,19 +93,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
   }
 
-  /**
-   * 加载GridView的图片和文件名
-   */
-  private List<Map<String, Object>> getGridViewData() {
-    String[] tab = getResources().getStringArray(R.array.main_home_tab);
-    for (int i = 0; i < icon.length; i++) {
-      Map<String, Object> map = new HashMap<String, Object>();
-      map.put("image", icon[i]);
-      map.put("text", tab[i]);
-      dataList.add(map);
-    }
-    return dataList;
-  }
 
   /**
    * GridView点击事件
@@ -344,6 +311,29 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   }
 
   public class Presenter implements SubjectPresenter, StorePresenter {
+
+    public void onTabClick(int index) {
+      switch (index) {
+      case 0:
+        // 拼团上课
+        break;
+      case 1:
+        // 试听课
+        break;
+      case 2:
+        // 所有课程
+        startActivity(new Intent(getContext(), SubjectListActivity.class));
+        break;
+      case 3:
+        // 有声有色
+        break;
+      case 4:
+        // 叮咚公益
+        startActivity(new Intent(getContext(), BlueWristMainActivity.class));
+        break;
+      }
+
+    }
 
     /**
      * 城市切换

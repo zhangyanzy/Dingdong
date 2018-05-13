@@ -77,6 +77,7 @@ public class PhotoLayout extends GridLayout {
   }
 
   public void init(ItemParams itemParams) {
+    removeAllViews();
     this.itemParams = itemParams;
     setColumnCount(columnCount);
     source = new ArrayList<>();
@@ -115,6 +116,7 @@ public class PhotoLayout extends GridLayout {
   }
 
   public void setSource(List<GlobalImage> source) {
+    removeAllViews();
     if (source == null)
       return;
     removeAllViews();

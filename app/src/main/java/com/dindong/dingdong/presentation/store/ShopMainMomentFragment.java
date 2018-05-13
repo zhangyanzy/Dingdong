@@ -12,6 +12,7 @@ import com.dindong.dingdong.network.api.like.PraiseLikeCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
+import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.util.DialogUtil;
@@ -22,6 +23,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +68,7 @@ public class ShopMainMomentFragment extends BaseFragment {
   protected void firstVisible() {
     super.firstVisible();
 
-    listMoment(true, true);
+    listComment(true, true);
   }
 
   @Override
@@ -74,13 +76,13 @@ public class ShopMainMomentFragment extends BaseFragment {
     binding.refreshLayout.setOnRefreshListener(new BaseHeaderView.OnRefreshListener() {
       @Override
       public void onRefresh(BaseHeaderView baseHeaderView) {
-        listMoment(false, true);
+        listComment(false, true);
       }
     });
     binding.refreshLayout.setOnLoadListener(new BaseFooterView.OnLoadListener() {
       @Override
       public void onLoad(BaseFooterView baseFooterView) {
-        listMoment(false, false);
+        listComment(false, false);
       }
     });
   }
@@ -91,14 +93,14 @@ public class ShopMainMomentFragment extends BaseFragment {
    * @param showProgress
    * @param isRefresh
    */
-  private void listMoment(boolean showProgress, final boolean isRefresh) {
+  private void listComment(boolean showProgress, final boolean isRefresh) {
     final QueryParam param = new QueryParam();
-    if (isRefresh){
+    if (isRefresh) {
       binding.lst.setNestedScrollingEnabled(false);
       param.setStart(0);
-    }
-    else
+    } else
       param.setStart(adapter.getData().size());
+    param.getFilters().add(new FilterParam("relationId", shop.getId()));
 
     new ListMomentCase(param)
         .execute(new HttpSubscriber<List<Comment>>(showProgress ? getContext() : null) {
@@ -123,7 +125,7 @@ public class ShopMainMomentFragment extends BaseFragment {
     } else
       binding.refreshLayout.stopLoad();
     adapter.addAll(data);
-    binding.refreshLayout.setHasFooter(true);
+    binding.refreshLayout.setHasFooter(isMore);
     if (isRefresh) {
       final LinearLayoutManager manager = new LinearLayoutManager(getContext());
       manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -133,7 +135,21 @@ public class ShopMainMomentFragment extends BaseFragment {
       binding.lst.setAdapter(adapter);
 
       binding.lst.setHasFixedSize(true);
+      binding.lst.setNestedScrollingEnabled(false);
     }
+  }
+
+  /**
+   * 刷新动态的评论数
+   */
+  public void refreshMomentCommentCount(String relationId) {
+    for (Comment comment1 : adapter.getData()) {
+      if (relationId.equals(comment1.getId())) {
+        comment1.setPraise(true);
+        comment1.setCommentCount(comment1.getCommentCount() + 1);
+      }
+    }
+    adapter.notifyDataSetChanged();
   }
 
   public RecyclerView getRecyclerView() {
@@ -150,6 +166,10 @@ public class ShopMainMomentFragment extends BaseFragment {
           .getBinding();
       itemShopMainMomentBinding.pl.setRatio(0.67f);
       itemShopMainMomentBinding.pl.setSource(itemShopMainMomentBinding.getItem().getImages(), true);
+      if (position == binding.lst.getAdapter().getItemCount() - 1)
+        // 图片全部加载完时更新UI
+        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+
     }
   }
 
@@ -161,6 +181,15 @@ public class ShopMainMomentFragment extends BaseFragment {
      */
     public void onItemClick(Comment comment) {
 
+    }
+
+    /**
+     * 评论门店状态
+     * 
+     * @param comment
+     */
+    public void onCommentShopMoment(Comment comment) {
+      ((ShopMainActivity) getActivity()).commentMomentFromFragment(comment.getId());// 通知容器activity发送评论
     }
 
     /**

@@ -105,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
+                android:onClick="@{()->presenter.onCommentShopMoment(item)}"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp">
 

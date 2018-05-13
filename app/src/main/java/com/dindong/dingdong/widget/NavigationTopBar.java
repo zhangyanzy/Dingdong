@@ -78,7 +78,7 @@ public class NavigationTopBar extends RelativeLayout implements View.OnClickList
       mLeftImage.setImageDrawable(getContext().getResources().getDrawable(R.mipmap.ic_back_blue));
     } else if (contentType.equals(ContentType.BLUE)) {
       mRootView.findViewById(R.id.root).setBackgroundDrawable(
-          getContext().getResources().getDrawable(R.drawable.bg_gradient_blue));
+          getContext().getResources().getDrawable(R.drawable.bg_gradient_blue90));
       mTitleText.setTextColor(getContext().getResources().getColor(R.color.white));
       mLeftImage
           .setImageDrawable(getContext().getResources().getDrawable(R.mipmap.ic_global_back_white));

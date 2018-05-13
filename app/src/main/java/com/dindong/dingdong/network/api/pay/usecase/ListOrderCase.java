@@ -22,6 +22,6 @@ public class ListOrderCase extends BaseUseCase<PayServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).listOrder(SessionMgr.getUser().getId(), queryParam);
+    return createConnection(BaseUseCase.isMock).listOrder(SessionMgr.getUser().getId(), queryParam);
   }
 }

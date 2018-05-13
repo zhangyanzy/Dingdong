@@ -41,6 +41,7 @@
                     app:imageUserResourceUrl="@{item.ucn.image.url}" />
 
                 <LinearLayout
+                    android:layout_marginLeft="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -49,7 +50,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:ellipsize="end"
                         android:lines="1"
                         android:text="@{item.ucn.userName}"
@@ -59,11 +59,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:layout_marginTop="3dp"
                         android:text="@{item.message}"
-                        android:textColor="#888888"
+                        android:textColor="@color/light_black"
                         android:textSize="13dp" />
 
                 </LinearLayout>

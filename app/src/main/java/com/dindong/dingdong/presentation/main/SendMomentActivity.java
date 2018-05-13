@@ -1,6 +1,5 @@
 package com.dindong.dingdong.presentation.main;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
@@ -22,6 +21,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * 发动态
+ */
 public class SendMomentActivity extends BaseActivity {
 
   ActivitySendMomentBinding binding;

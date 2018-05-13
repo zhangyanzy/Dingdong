@@ -21,6 +21,6 @@ public class ListMsgCase extends BaseUseCase<MessageServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).listMsg(queryParam);
+    return createConnection(BaseUseCase.isMock).listMsg(queryParam);
   }
 }

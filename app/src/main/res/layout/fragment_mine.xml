@@ -103,7 +103,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/mine_my_order"
-                android:textColor="#666666"
+                android:textColor="@color/light_black"
                 android:textSize="14dp"
                 android:textStyle="bold" />
 
@@ -143,7 +143,37 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="@string/mine_order_state_wait_pay"
-                            android:textColor="#333333"
+                            android:textColor="@color/light_black"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="@{()->presenter.onOrderStateSelect(1)}"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@mipmap/ic_pay" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/mine_order_state_group"
+                            android:textColor="@color/light_black"
                             android:textSize="14dp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -174,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="@string/mine_order_state_use"
-                            android:textColor="#333333"
+                            android:textColor="@color/light_black"
                             android:textSize="14dp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -205,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="@string/mine_order_state_wait_assess"
-                            android:textColor="#333333"
+                            android:textColor="@color/light_black"
                             android:textSize="14dp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -673,7 +703,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/ic_cooperation" />
+                        android:src="@mipmap/ic_shezhi" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.dindong.dingdong.presentation.discovery.DiscoveryXml" />
+
+        <import type="com.dindong.dingdong.util.DateUtil" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.presentation.store.ShopCommentDetailActivity.Presenter" />
+
+        <variable
+            name="comment"
+            type="com.dindong.dingdong.network.bean.comment.Comment" />
+
+        <variable
+            name="shop"
+            type="com.dindong.dingdong.network.bean.store.Shop" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.dindong.dingdong.widget.NavigationTopBar
+            android:id="@+id/nb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_text="@string/shop_comment_detail_title" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/mine_fragment_photo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:imageUserResourceUrl="@{comment.ucn.image.url}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:text="@{comment.ucn.userName}"
+                                android:textColor="#2B4C77"
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:text="@{DateUtil.format(comment.date,DateUtil.DEFAULT_DATE_FORMAT_3)}"
+                                android:textColor="#888888"
+                                android:textSize="12dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/shop_comment_list_rating"
+                                android:textColor="#666666"
+                                android:textSize="12dp" />
+
+                            <com.lx.ratingbarlib.MyRatingBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="19dp"
+                                app:isIndicator="true"
+                                app:progressColor="@color/star_color"
+                                app:rating="@{comment.rating.floatValue()}"
+                                app:space="2dp"
+                                app:starDrawable="@drawable/ic_star_border"
+                                app:starHeight="12dp"
+                                app:starWidth="12dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="14dp"
+                        android:text="@{comment.message}"
+                        android:textColor="@color/light_black"
+                        android:textSize="14dp" />
+
+                    <com.dindong.dingdong.widget.photo.PhotoLayout
+                        android:id="@+id/pl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="-8dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F4F5F7"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="center"
+                            android:src="@mipmap/img_load_failed" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{shop.name}"
+                                android:textColor="@color/light_black"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@{shop.address.toString()}"
+                                android:textColor="#888888"
+                                android:textSize="11dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="浏览0"
+                            android:textColor="#888888"
+                            android:textSize="12dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="68dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:background="@drawable/btn_comment"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:onClick="@{()->presenter.onPraise(comment)}"
+                                android:paddingBottom="6dp"
+                                android:paddingTop="6dp">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:src="@{DiscoveryXml.getPraiseDrawable(comment.praise)}" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="11dp"
+                                    android:text="@string/discovery_praise"
+                                    android:textColor="#666666"
+                                    android:textSize="11dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="68dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:background="@drawable/btn_comment"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:onClick="@{()->presenter.onCommentClick()}"
+                                android:paddingBottom="6dp"
+                                android:paddingTop="6dp">
+
+                                <ImageView
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:src="@mipmap/ic_eva" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="11dp"
+                                    android:text="@string/discovery_comment"
+                                    android:textColor="#666666"
+                                    android:textSize="11dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        style="@style/divider_item"
+                        android:layout_marginTop="13dp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/lst"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/layout_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <View style="@style/divider_title" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edt_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_comment_edit"
+                    android:hint="@string/discovery_detail_hint"
+                    android:maxLines="3"
+                    android:padding="4dp"
+                    android:textColor="@color/dark"
+                    android:textColorHint="#888888"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="42dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/btn_corner_gradient_blue"
+                    android:gravity="center"
+                    android:onClick="@{()->presenter.onComment()}"
+                    android:text="@string/send"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

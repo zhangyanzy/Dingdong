@@ -42,6 +42,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -110,12 +112,6 @@
                             </LinearLayout>
                         </RelativeLayout>
 
-                        <ImageView
-                            android:id="@+id/img_shop"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:scaleType="fitXY" />
-
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -139,7 +135,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_toLeftOf="@id/img_mobile"
                                 android:gravity="center_vertical"
-                                android:onClick="@{()->presenter.onAdd(item.latitude,item.longitude)}">
+                                android:onClick="@{()->presenter.onAdd(item)}">
 
                                 <ImageView
                                     android:layout_width="22dp"
@@ -194,7 +190,7 @@
                     <com.dindong.dingdong.widget.CustomViewPager
                         android:id="@+id/vp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
 
                     </com.dindong.dingdong.widget.CustomViewPager>
 
@@ -237,6 +233,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/layout_bottom_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -244,9 +241,34 @@
             <LinearLayout style="@style/divider_title" />
 
             <RelativeLayout
+                android:id="@+id/layout_join"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/shop_main_join"
+                    android:textColor="@color/light_black"
+                    android:textSize="15dp" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:src="@mipmap/ic_chevron_grey" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_home_comment"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:onClick="@{presenter.onComment}">
+                android:onClick="@{presenter.onShopComment}">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -269,6 +291,43 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/edt_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_comment_edit"
+                    android:hint="@string/discovery_detail_hint"
+                    android:maxLines="3"
+                    android:padding="4dp"
+                    android:textColor="@color/dark"
+                    android:textColorHint="#888888"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="42dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/btn_corner_gradient_blue"
+                    android:gravity="center"
+                    android:onClick="@{presenter.onMomentComment}"
+                    android:text="@string/send"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

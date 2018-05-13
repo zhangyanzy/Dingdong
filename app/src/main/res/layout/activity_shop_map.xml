@@ -2,7 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data></data>
+    <data>
+
+        <import type="com.dindong.dingdong.util.StringUtil" />
+
+        <variable
+            name="shop"
+            type="com.dindong.dingdong.network.bean.store.Shop" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,17 +21,62 @@
             android:id="@+id/nb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title_text="@string/reset_mobile_title" />
+            app:title_text="@string/shop_map_title" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <com.amap.api.maps2d.MapView
                 android:id="@+id/map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="26dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="26dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:text="@{shop.name}"
+                    android:textColor="@color/light_black"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{StringUtil.format(@string/global_range,StringUtil.formatRange(shop.range))}"
+                    android:textColor="#666666"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{shop.address.toString()}"
+                android:textColor="#666666"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </layout>

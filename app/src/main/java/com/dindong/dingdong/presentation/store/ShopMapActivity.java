@@ -9,6 +9,7 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityShopMapBinding;
+import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
 import android.databinding.DataBindingUtil;
@@ -29,8 +30,10 @@ public class ShopMapActivity extends BaseActivity {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    String latitude = getIntent().getStringExtra(AppConfig.IntentKey.LATITUDE);
-    String longitude = getIntent().getStringExtra(AppConfig.IntentKey.LONGITUDE);
+    Shop shop = (Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+    binding.setShop(shop);
+    String latitude = shop.getLatitude();
+    String longitude = shop.getLongitude();
     binding.map.onCreate(savedInstanceState);// 此方法必须重写
     if (aMap == null) {
       aMap = binding.map.getMap();

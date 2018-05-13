@@ -26,18 +26,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
                 android:background="@{ShopXml.getSubjectBg(item.subjectType)}"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:text="@{ShopXml.getSubjectStr(item.subjectType)}"
                 android:textColor="@color/white"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:layout_marginRight="20dp"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@{item.name}"
                 android:textColor="#888888"
                 android:textSize="11dp" />

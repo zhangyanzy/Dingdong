@@ -21,6 +21,6 @@ public class CancelOrderCase extends BaseUseCase<PayServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).cancel(SessionMgr.getUser().getId(), orderId);
+    return createConnection(BaseUseCase.isMock).cancel(SessionMgr.getUser().getId(), orderId);
   }
 }

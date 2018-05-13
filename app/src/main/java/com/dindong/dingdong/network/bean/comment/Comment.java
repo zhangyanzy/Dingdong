@@ -1,6 +1,7 @@
 package com.dindong.dingdong.network.bean.comment;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Comment implements Serializable{
   private List<GlobalImage> images;// 添加
   private boolean isPraise = false;// 是否被当前用户点赞
   private int praiseCount = 0;// 点赞次数
-  private int rating = 0;// 评分
+  private BigDecimal rating = BigDecimal.ZERO;// 评分
   private int shareCount = 0;// 分享次数
 
   public String getId() {
@@ -108,11 +109,11 @@ public class Comment implements Serializable{
     this.praiseCount = praiseCount;
   }
 
-  public int getRating() {
+  public BigDecimal getRating() {
     return rating;
   }
 
-  public void setRating(int rating) {
+  public void setRating(BigDecimal rating) {
     this.rating = rating;
   }
 

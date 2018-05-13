@@ -20,6 +20,8 @@ public abstract class BaseUseCase<T> {
   protected Subscription subscription = Subscriptions.empty();
   protected Subscriber subscriber;
 
+  public static final boolean isMock = true;
+
   public void execute(final Subscriber response) {
     observable = buildCase();
     subscriber = response;

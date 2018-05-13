@@ -103,7 +103,9 @@
         <activity android:name=".presentation.pay.OrderDetailActivity" />
         <activity android:name=".presentation.user.AboutActivity" />
         <activity android:name=".presentation.discovery.DiscoveryDetailActivity" />
-        <activity android:name=".presentation.store.CommentShopActivity" />
+        <activity
+            android:name=".presentation.store.CommentShopActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden" />
         <activity
             android:name=".widget.photo.PhotoSelectActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden" />
@@ -113,6 +115,10 @@
         <activity
             android:name=".presentation.main.SendMomentActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden" />
+        <activity
+            android:name=".presentation.store.ShopCommentListActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden" />
+        <activity android:name=".presentation.store.ShopCommentDetailActivity"></activity>
     </application>
 
 </manifest>

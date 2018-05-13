@@ -30,6 +30,7 @@ public class OrderListActivity extends BaseActivity {
   public static final int TYPE_WAIT_PAY = 0X01;// 代付款
   public static final int TYPE_USE = 0X02;// 可用
   public static final int TYPE_FINISH = 0X03;// 已完成，待评价
+  public static final int TYPE_GROUP = 0X04;// 团购中
 
   private int tabPosition = 0;
 
@@ -50,6 +51,9 @@ public class OrderListActivity extends BaseActivity {
       switch (intentType) {
       case OrderListActivity.TYPE_WAIT_PAY:
         tabPosition = 1;
+        break;
+      case OrderListActivity.TYPE_GROUP:
+        tabPosition = 2;
         break;
       case OrderListActivity.TYPE_USE:
         tabPosition = 3;

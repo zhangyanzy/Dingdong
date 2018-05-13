@@ -6,7 +6,6 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.presentation.pay.OrderListActivity;
-import com.dindong.dingdong.presentation.store.CommentShopActivity;
 import com.dindong.dingdong.presentation.user.SettingActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 
@@ -54,6 +53,10 @@ public class MineFragment extends BaseFragment {
       case 0:
         // 待支付
         intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_WAIT_PAY);
+        break;
+      case 1:
+        // 团购中
+        intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_GROUP);
         break;
       case 2:
         // 可使用

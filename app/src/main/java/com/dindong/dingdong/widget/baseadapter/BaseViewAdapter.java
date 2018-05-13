@@ -1,5 +1,6 @@
 package com.dindong.dingdong.widget.baseadapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dindong.dingdong.BR;
@@ -22,6 +23,8 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BindingVie
 
   protected Context context;
 
+  private List<BindingViewHolder> bindingViewHolders;
+
   public interface Presenter {
 
   }
@@ -32,6 +35,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BindingVie
 
   public BaseViewAdapter(Context context) {
     this.context = context;
+    bindingViewHolders = new ArrayList<>();
     mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
@@ -41,9 +45,14 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BindingVie
     holder.getBinding().setVariable(BR.item, item);
     holder.getBinding().setVariable(BR.presenter, getPresenter());
     holder.getBinding().executePendingBindings();
+    bindingViewHolders.add(holder);
     if (mDecorator != null) {
       mDecorator.decorator(holder, position, getItemViewType(position));
     }
+  }
+
+  public List<BindingViewHolder> getBindingViewHolders() {
+    return bindingViewHolders;
   }
 
   @Override

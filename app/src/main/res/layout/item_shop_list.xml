@@ -31,12 +31,12 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="66dp"
-                android:layout_height="66dp"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:scaleType="centerCrop"
                 app:imageResourceUrl='@{item.logoImage.url}' />
 
             <LinearLayout
@@ -50,12 +50,14 @@
                     android:layout_height="wrap_content"
                     android:text="@{item.name}"
                     android:textColor="#333333"
-                    android:textSize="14dp" />
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp">
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:id="@+id/txt_range"
@@ -63,25 +65,40 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:text="@{StringUtil.format(@string/global_range,StringUtil.formatRange(item.range))}"
-                        android:textColor="#666666"
-                        android:textSize="13dp" />
+                        android:textColor="#888888"
+                        android:textSize="14dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
                         android:layout_toLeftOf="@id/txt_range"
                         android:text="@{item.address.toString()}"
                         android:textColor="#666666"
-                        android:textSize="13dp" />
+                        android:textSize="14dp" />
 
                 </RelativeLayout>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/layout_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone"
+                    app:alignItems="stretch"
+                    app:flexWrap="nowrap">
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/divider"
             style="@style/divider_item"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="86dp"
             android:orientation="vertical"
             android:visibility="visible" />
 
@@ -90,6 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="9dp"
+            android:layout_marginLeft="86dp"
             android:layout_marginTop="6dp"
             android:orientation="vertical" />
 

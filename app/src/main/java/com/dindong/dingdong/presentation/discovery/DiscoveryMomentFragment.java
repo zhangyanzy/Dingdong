@@ -1,6 +1,5 @@
 package com.dindong.dingdong.presentation.discovery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.dindong.dingdong.R;
@@ -10,11 +9,10 @@ import com.dindong.dingdong.databinding.FragmentDiscoveryMomentBinding;
 import com.dindong.dingdong.databinding.ItemDiscoveryMomentBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.like.PraiseLikeCase;
-import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
+import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
-import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -187,7 +185,6 @@ public class DiscoveryMomentFragment extends BaseFragment {
               public void onSuccess(Response<Comment> response) {
                 for (Comment comment1 : adapter.getData()) {
                   if (relationId.equals(comment1.getId())) {
-                    comment1.setPraise(true);
                     comment1.setCommentCount(comment1.getCommentCount() + 1);
                   }
                 }
@@ -225,6 +222,9 @@ public class DiscoveryMomentFragment extends BaseFragment {
      * @param comment
      */
     public void onCommentClick(Comment comment) {
+      if (relationId != null && !relationId.equals(comment.getId())) {
+        binding.edtComment.setText(null);
+      }
       relationId = comment.getId();
       binding.layoutEdit.setVisibility(View.VISIBLE);
       binding.layoutEdit.post(new Runnable() {
@@ -258,7 +258,6 @@ public class DiscoveryMomentFragment extends BaseFragment {
           for (Comment comment1 : adapter.getData()) {
             if (comment.getId().equals(comment1.getId())) {
               comment.setPraise(true);
-              comment.setPraiseCount(comment.getPraiseCount() + 1);
             }
 
           }

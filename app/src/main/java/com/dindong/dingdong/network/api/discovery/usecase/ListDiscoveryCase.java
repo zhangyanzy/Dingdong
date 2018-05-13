@@ -22,6 +22,6 @@ public class ListDiscoveryCase extends BaseUseCase<DiscoveryServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).listDiscovery(SessionMgr.getUser().getId(), queryParam);
+    return createConnection(BaseUseCase.isMock).listDiscovery(SessionMgr.getUser().getId(), queryParam);
   }
 }

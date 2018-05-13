@@ -11,6 +11,7 @@ import java.util.List;
 public class QueryParam implements Serializable, Cloneable {
   private int start = 0;
   private int limit = 10;
+  private int pageInde=0;
   private List<FilterParam> filters = new ArrayList();
   private List<SortParam> sorters = new ArrayList();
 
@@ -51,6 +52,14 @@ public class QueryParam implements Serializable, Cloneable {
 
   public void setSorters(List<SortParam> sorters) {
     this.sorters = sorters;
+  }
+
+  public int getPageInde() {
+    return pageInde;
+  }
+
+  public void setPageInde(int pageInde) {
+    this.pageInde = pageInde;
   }
 
   public QueryParam clone() {

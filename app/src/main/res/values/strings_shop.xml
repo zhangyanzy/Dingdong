@@ -11,17 +11,32 @@
     <string name="shop_main_label_prove">认</string>
     <string name="shop_main_activity">本店活动</string>
     <string name="shop_main_teacher">本店师资</string>
+    <string name="shop_main_comment_title">评价   ({0})</string>
     <string name="shop_main_comment">写评价</string>
+    <string name="shop_main_join">我是机构，入驻让人气翻倍</string>
     <string name="shop_main_mobile">拨打</string>
     <string name="shop_main_mobile_err">当前设备不支持拨号功能</string>
     <string-array name="shop_main_tabs">
-        <item >首页</item>
-        <item >动态</item>
-        <item >机构介绍</item>
+        <item>首页</item>
+        <item>动态</item>
+        <item>机构介绍</item>
     </string-array>
 
+    <!--评论门店-->
+    <string name="comment_shop_title">智慧学堂</string>
+    <string name="comment_shop_fating">总分</string>
+    <string name="comment_shop_hint">您的评价对其他会员都是很重要的参考（加油，还差30个字）</string>
 
     <!--老师列表-->
     <string name="teacher_list_title">门店老师列表</string>
     <string name="teacher_list_item_name">{0} （老师）</string>
+
+    <!--门店地图-->
+    <string name="shop_map_title">门店地图</string>
+
+    <!--门店全部评论-->
+    <string name="shop_comment_list_title">门店全部评价</string>
+    <string name="shop_comment_list_rating">打分</string>
+
+    <string name="shop_comment_detail_title">评价详情</string>
 </resources>

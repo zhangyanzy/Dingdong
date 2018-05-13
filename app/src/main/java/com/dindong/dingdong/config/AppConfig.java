@@ -15,6 +15,7 @@ public class AppConfig {
     public static final String SUMMARY = "summary";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
+    public static final String ID = "id";
   }
 
   // 第三方申请key

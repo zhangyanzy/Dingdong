@@ -23,6 +23,6 @@ public class ListTeacherCase extends BaseUseCase<ShopServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(true).listTeacher(shopId, queryParam);
+    return createConnection(BaseUseCase.isMock).listTeacher(shopId, queryParam);
   }
 }

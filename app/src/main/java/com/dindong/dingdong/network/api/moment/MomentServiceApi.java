@@ -16,7 +16,7 @@ import rx.Observable;
 /**
  * Created by wcong on 2018/5/5.
  * <p>
- * 动态api </>
+ * 动态相关api </>
  */
 
 public interface MomentServiceApi {

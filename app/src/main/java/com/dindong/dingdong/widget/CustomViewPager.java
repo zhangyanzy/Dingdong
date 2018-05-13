@@ -7,6 +7,7 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -31,9 +32,10 @@ public class CustomViewPager extends ViewPager {
     addOnPageChangeListener(onPageChangeListener);
   }
 
-  public void attachToScroll(NestedScrollView scrollView){
-    this.scrollView=scrollView;
+  public void attachToScroll(NestedScrollView scrollView) {
+    this.scrollView = scrollView;
   }
+
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
@@ -60,13 +62,13 @@ public class CustomViewPager extends ViewPager {
       public void run() {
         getLayoutParams().height = itemHeights.get(position);
         requestLayout();
-          post(new Runnable() {
-            @Override
-            public void run() {
-              if (scrollView!=null)
-                scrollView.scrollTo(0,0);
-            }
-          });
+        post(new Runnable() {
+          @Override
+          public void run() {
+            if (scrollView != null)
+              scrollView.scrollTo(0, 0);
+          }
+        });
       }
     });
   }
@@ -79,7 +81,7 @@ public class CustomViewPager extends ViewPager {
 
     @Override
     public void onPageSelected(final int position) {
-//      updateHeight(position);
+      updateHeight(position);
     }
 
     @Override
@@ -87,5 +89,15 @@ public class CustomViewPager extends ViewPager {
 
     }
   };
+
+  @Override
+  public boolean onTouchEvent(MotionEvent arg0) {
+    return false;
+  }
+
+  @Override
+  public boolean onInterceptTouchEvent(MotionEvent arg0) {
+    return false;
+  }
 
 }
