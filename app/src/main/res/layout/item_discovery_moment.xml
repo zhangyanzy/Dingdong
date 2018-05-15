@@ -94,7 +94,6 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxEms="4"
-                    android:text="asjdklasjdl"
                     android:singleLine="true"
                     android:textColor="#888888"
                     android:textSize="14dp" />

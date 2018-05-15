@@ -184,7 +184,8 @@ public class DiscoveryMomentFragment extends BaseFragment {
       itemDiscoveryMomentBinding.pl.setRatio(0.6f);
       itemDiscoveryMomentBinding.pl.setSource(itemDiscoveryMomentBinding.getItem().getImages(),
           true);
-      TextFoldUtil.attach(itemDiscoveryMomentBinding.txtContent, itemDiscoveryMomentBinding.txtFold,
+      TextFoldUtil.attach(itemDiscoveryMomentBinding.txtContent,
+          itemDiscoveryMomentBinding.txtBottomContent, itemDiscoveryMomentBinding.txtFold,
           itemDiscoveryMomentBinding.getItem().getMessage(), position);
     }
   }
