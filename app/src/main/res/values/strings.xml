@@ -13,7 +13,7 @@
 
     <!--defaultRefresh-->
     <string name="load_data_refresh">加载中···</string>
-    <string name="all_shop">全部门店</string>
+    <string name="all_shop">门店列表</string>
     <string name="menu_search">搜索</string>
     <string name="menu_setting">设置</string>
     <string name="shop_teacher_list">门店老师列表</string>
@@ -35,4 +35,5 @@
     <string name="qq">QQ</string>
     <string name="wex">微信</string>
     <string name="weibo">微博</string>
+    <string name="label_view">浏览{0}</string>
 </resources>

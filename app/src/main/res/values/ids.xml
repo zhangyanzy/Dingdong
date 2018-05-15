@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="text_fold_state" type="id" />
+    <item name="text_fold_content" type="id" />
+    <item name="text_fold_bottom_content" type="id" />
+    <item name="text_fold_id" type="id" />
+</resources>

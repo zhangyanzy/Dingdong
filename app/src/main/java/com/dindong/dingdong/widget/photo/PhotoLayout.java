@@ -164,27 +164,10 @@ public class PhotoLayout extends GridLayout {
 
   private void addImg(final ItemWidgetPhotoBinding binding, GlobalImage image,
       boolean isShowDelete) {
-    if (!isLogo) {
-      if (itemParams != null) {
-        binding.imgPhoto.getLayoutParams().height = itemParams.height;
-        binding.imgPhoto.getLayoutParams().width = itemParams.width;
-        binding.imgPhoto.setLayoutParams(binding.imgPhoto.getLayoutParams());
-      }
-    } else {
-      post(new Runnable() {
-        @Override
-        public void run() {
-          int width = (getMeasuredWidth()
-              - DensityUtil.dip2px(getContext(), margin) * (columnCount - 1)) / columnCount;
-          binding.imgPhoto.getLayoutParams().height = (int) (width * ratio);
-          binding.imgPhoto.getLayoutParams().width = width;
-          binding.imgPhoto.setLayoutParams(binding.imgPhoto.getLayoutParams());
-        }
-      });
-    }
     // if (resource != null)
     // binding.imgPhoto.setImageBitmap(drawableToBitmap(resource));
     // binding.txtUpload.setText(null);
+
     binding.txtUpload.setVisibility(GONE);
     binding.setPresenter(new Presenter());
     binding.setHasImage(true);
@@ -218,8 +201,8 @@ public class PhotoLayout extends GridLayout {
       post(new Runnable() {
         @Override
         public void run() {
-          int width = (getMeasuredWidth()
-              - DensityUtil.dip2px(getContext(), margin) * (columnCount - 1)) / columnCount;
+          int width = (getMeasuredWidth() - DensityUtil.dip2px(getContext(), margin) * columnCount)
+              / columnCount;
           newBinding.imgPhoto.getLayoutParams().height = (int) (width * ratio);
           newBinding.imgPhoto.getLayoutParams().width = width;
           newBinding.imgPhoto.setLayoutParams(newBinding.imgPhoto.getLayoutParams());
@@ -318,7 +301,7 @@ public class PhotoLayout extends GridLayout {
     public void onRemove(View view, int index) {
       removeView(itemUploadPhotoBindings.get(index).getRoot());
       source.remove(index);
-      itemUploadPhotoBindings.remove(itemUploadPhotoBindings.size() - 1);
+      itemUploadPhotoBindings.remove(index);
       invalidate();
       boolean hasAdd = false;
       for (ItemWidgetPhotoBinding binding : itemUploadPhotoBindings) {

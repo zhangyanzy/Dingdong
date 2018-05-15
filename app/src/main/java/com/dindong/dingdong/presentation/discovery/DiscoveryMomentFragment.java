@@ -8,7 +8,8 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentDiscoveryMomentBinding;
 import com.dindong.dingdong.databinding.ItemDiscoveryMomentBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.like.PraiseLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.CancelPraiseLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
 import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.bean.Response;
@@ -17,6 +18,7 @@ import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
+import com.dindong.dingdong.util.TextFoldUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
@@ -24,6 +26,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -45,6 +48,8 @@ public class DiscoveryMomentFragment extends BaseFragment {
   private SingleTypeAdapter<Comment> adapter;
 
   private String relationId = null;
+
+  private final int INTENT_REQUEST = 0x01;
 
   @Override
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
@@ -103,6 +108,23 @@ public class DiscoveryMomentFragment extends BaseFragment {
     listMoment(true, true);
   }
 
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == INTENT_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+      // 接收到详情界面的最新信息时，同步列表中数据
+      Comment intentComment = (Comment) data.getSerializableExtra(AppConfig.IntentKey.DATA);
+      for (Comment comment : adapter.getData()) {
+        if (intentComment.getId().equals(comment.getId())) {
+          comment.setCommentCount(intentComment.getCommentCount());
+          comment.setPraise(intentComment.isPraise());
+          comment.setPraiseCount(intentComment.getPraiseCount());
+        }
+      }
+      adapter.notifyDataSetChanged();
+    }
+  }
+
   // private void initPhotoLayout() {
   // binding.pl.setSource(images, true);
   // }
@@ -136,6 +158,7 @@ public class DiscoveryMomentFragment extends BaseFragment {
 
   private void loadRecyclerView(List<Comment> data, boolean isRefresh, boolean isMore) {
     if (isRefresh) {
+      TextFoldUtil.clean();
       adapter.clear();
       binding.refreshLayout.stopRefresh();
     } else
@@ -161,6 +184,8 @@ public class DiscoveryMomentFragment extends BaseFragment {
       itemDiscoveryMomentBinding.pl.setRatio(0.6f);
       itemDiscoveryMomentBinding.pl.setSource(itemDiscoveryMomentBinding.getItem().getImages(),
           true);
+      TextFoldUtil.attach(itemDiscoveryMomentBinding.txtContent, itemDiscoveryMomentBinding.txtFold,
+          itemDiscoveryMomentBinding.getItem().getMessage(), position);
     }
   }
 
@@ -196,6 +221,12 @@ public class DiscoveryMomentFragment extends BaseFragment {
             });
   }
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    TextFoldUtil.clean();
+  }
+
   public class Presenter implements BaseViewAdapter.Presenter {
     /**
      * 查看详情
@@ -205,7 +236,7 @@ public class DiscoveryMomentFragment extends BaseFragment {
     public void onItemClick(Comment comment) {
       Intent intent = new Intent(getContext(), DiscoveryDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, comment);
-      startActivity(intent);
+      startActivityForResult(intent, INTENT_REQUEST);
     }
 
     /**
@@ -243,9 +274,29 @@ public class DiscoveryMomentFragment extends BaseFragment {
      */
     public void onPraise(final Comment comment) {
       if (comment.isPraise()) {
-        ToastUtil.toastHint(getContext(), R.string.discovery_praised);
+        // 取消点赞
+        new CancelPraiseLikeCase(comment.getId()).execute(new HttpSubscriber<Void>(getContext()) {
+          @Override
+          public void onFailure(String errorMsg, Response<Void> response) {
+            DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+          }
+
+          @Override
+          public void onSuccess(Response<Void> response) {
+            ToastUtil.toastHint(getContext(), R.string.discovery_cancel_praise_success);
+            for (Comment comment1 : adapter.getData()) {
+              if (comment1.getId().equals(comment1.getId())) {
+                comment1.setPraise(false);
+                comment1.setPraiseCount(comment1.getPraiseCount() - 1);
+              }
+            }
+            adapter.notifyDataSetChanged();
+          }
+        });
+
         return;
       }
+      // 点赞
       new PraiseLikeCase(comment.getId()).execute(new HttpSubscriber<Void>(getContext()) {
         @Override
         public void onFailure(String errorMsg, Response<Void> response) {
@@ -258,6 +309,7 @@ public class DiscoveryMomentFragment extends BaseFragment {
           for (Comment comment1 : adapter.getData()) {
             if (comment.getId().equals(comment1.getId())) {
               comment.setPraise(true);
+              comment1.setPraiseCount(comment1.getPraiseCount() + 1);
             }
 
           }

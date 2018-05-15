@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -64,6 +65,15 @@ public interface MomentServiceApi {
    * @param id
    * @return
    */
-  @GET("/moments/{id}")
-  Observable<Response<Comment>> get(@Query("id") String id);
+  @GET("moments/{id}")
+  Observable<Response<Comment>> get(@Path("id") String id);
+
+  /**
+   * 统计指定动态的数据
+   * 
+   * @param id
+   * @return
+   */
+  @GET("moments/statistics/{id}")
+  Observable<Response<Comment>> statistics(@Path("id") String id);
 }

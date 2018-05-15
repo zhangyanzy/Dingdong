@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.entity.Ucn;
+import com.dindong.dingdong.network.bean.store.Shop;
 
 /**
  * Created by wcong on 2018/4/14.
@@ -15,7 +16,7 @@ import com.dindong.dingdong.network.bean.entity.Ucn;
  * 评论/回复实体 </>
  */
 
-public class Comment implements Serializable{
+public class Comment implements Serializable {
   private String id;
   private String relationId;// 关联关系ID
   private Ucn ucn;// 评论/回复人信息
@@ -28,6 +29,8 @@ public class Comment implements Serializable{
   private int praiseCount = 0;// 点赞次数
   private BigDecimal rating = BigDecimal.ZERO;// 评分
   private int shareCount = 0;// 分享次数
+  private int viewCount = 0;// 浏览量
+  private Shop store;
 
   public String getId() {
     return id;
@@ -123,5 +126,21 @@ public class Comment implements Serializable{
 
   public void setShareCount(int shareCount) {
     this.shareCount = shareCount;
+  }
+
+  public int getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
+
+  public Shop getStore() {
+    return store;
+  }
+
+  public void setStore(Shop store) {
+    this.store = store;
   }
 }

@@ -7,18 +7,22 @@ import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityDiscoveryDetailBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.like.PraiseLikeCase;
-import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
+import com.dindong.dingdong.network.api.like.usecase.CancelPraiseLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
+import com.dindong.dingdong.network.api.moment.usecase.GetMomentCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCommentCase;
+import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
+import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,6 +60,7 @@ public class DiscoveryDetailActivity extends BaseActivity {
     binding.pl.setRatio(0.6f);
     binding.pl.setSource(comment.getImages(), true);
     listComment();
+    statistic(comment.getId());
   }
 
   @Override
@@ -96,6 +101,38 @@ public class DiscoveryDetailActivity extends BaseActivity {
     binding.lst.setAdapter(adapter);
   }
 
+  /**
+   * 统计访问量
+   * 
+   * @param id
+   */
+  private void statistic(String id) {
+    new GetMomentCase(id).execute(new HttpSubscriber<Comment>() {
+      @Override
+      public void onFailure(String errorMsg, Response<Comment> response) {
+
+      }
+
+      @Override
+      public void onSuccess(Response<Comment> response) {
+        binding.txtViewCount.setText(
+            StringUtil.format(getString(R.string.label_view), response.getData().getViewCount()));
+        comment = response.getData();
+      }
+    });
+  }
+
+  private void setResult() {
+    Intent intent = new Intent();
+    intent.putExtra(AppConfig.IntentKey.DATA, comment);
+    setResult(RESULT_OK, intent);
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+  }
+
   public class Presenter {
     /**
      * 评论
@@ -105,8 +142,8 @@ public class DiscoveryDetailActivity extends BaseActivity {
         ToastUtil.toastHint(DiscoveryDetailActivity.this, R.string.discovery_comment_empty);
         return;
       }
-      new MomentCase(MomentConverter
-          .createComment(binding.edtComment.getText().toString(), comment.getId()))
+      new MomentCase(
+          MomentConverter.createComment(binding.edtComment.getText().toString(), comment.getId()))
               .execute(new HttpSubscriber<Comment>(DiscoveryDetailActivity.this) {
                 @Override
                 public void onFailure(String errorMsg, Response<Comment> response) {
@@ -119,6 +156,8 @@ public class DiscoveryDetailActivity extends BaseActivity {
                   KeyboardUtil.control(binding.edtComment, false);
                   ToastUtil.toastHint(DiscoveryDetailActivity.this,
                       R.string.discovery_comment_success);
+                  comment.setCommentCount(comment.getCommentCount() + 1);
+                  setResult();
                   listComment();
                 }
               });
@@ -131,9 +170,27 @@ public class DiscoveryDetailActivity extends BaseActivity {
      */
     public void onPraise(final Comment comment) {
       if (comment.isPraise()) {
-        ToastUtil.toastHint(DiscoveryDetailActivity.this, R.string.discovery_praised);
+        // 取消赞
+        new CancelPraiseLikeCase(comment.getId())
+            .execute(new HttpSubscriber<Void>(DiscoveryDetailActivity.this) {
+              @Override
+              public void onFailure(String errorMsg, Response<Void> response) {
+                DialogUtil.getErrorDialog(DiscoveryDetailActivity.this, errorMsg).show();
+              }
+
+              @Override
+              public void onSuccess(Response<Void> response) {
+                ToastUtil.toastHint(DiscoveryDetailActivity.this,
+                    R.string.discovery_cancel_praise_success);
+                comment.setPraise(false);
+                binding.setComment(comment);
+                setResult();
+              }
+            });
+
         return;
       }
+      // 点赞
       new PraiseLikeCase(comment.getId())
           .execute(new HttpSubscriber<Void>(DiscoveryDetailActivity.this) {
             @Override
@@ -146,6 +203,7 @@ public class DiscoveryDetailActivity extends BaseActivity {
               ToastUtil.toastHint(DiscoveryDetailActivity.this, R.string.discovery_praise_success);
               comment.setPraise(true);
               binding.setComment(comment);
+              setResult();
             }
           });
     }

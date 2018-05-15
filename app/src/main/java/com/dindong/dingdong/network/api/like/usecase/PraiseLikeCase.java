@@ -1,6 +1,7 @@
-package com.dindong.dingdong.network.api.like;
+package com.dindong.dingdong.network.api.like.usecase;
 
 import com.dindong.dingdong.network.BaseUseCase;
+import com.dindong.dingdong.network.api.like.LikeServiceApi;
 
 import rx.Observable;
 

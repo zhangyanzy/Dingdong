@@ -3,6 +3,7 @@ package com.dindong.dingdong.network.api.like;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.like.LikeEntityType;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -46,4 +47,13 @@ public interface LikeServiceApi {
    */
   @POST("like/praise/{entityId}")
   Observable<Response<Void>> praiseLike(@Path("entityId") String entityId);
+
+  /**
+   * 取消点赞
+   * 
+   * @param entityId
+   * @return
+   */
+  @DELETE("like/praise/{entityId}")
+  Observable<Response<Void>> cancelPraiseLike(@Path("entityId") String entityId);
 }

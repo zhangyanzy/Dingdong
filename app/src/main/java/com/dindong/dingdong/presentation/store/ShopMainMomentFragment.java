@@ -8,7 +8,7 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentShopMainMomentBinding;
 import com.dindong.dingdong.databinding.ItemShopMainMomentBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.like.PraiseLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
@@ -23,7 +23,6 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;

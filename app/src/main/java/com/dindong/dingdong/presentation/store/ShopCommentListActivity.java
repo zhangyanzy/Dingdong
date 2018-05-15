@@ -12,7 +12,7 @@ import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.comment.usecase.CommentCase;
 import com.dindong.dingdong.network.api.comment.usecase.ListCommentCase;
 import com.dindong.dingdong.network.api.comment.usecase.ListCommentOfCommentCase;
-import com.dindong.dingdong.network.api.like.PraiseLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.network.bean.entity.FilterParam;

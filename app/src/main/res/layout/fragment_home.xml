@@ -8,7 +8,7 @@
             type="com.dindong.dingdong.presentation.main.fragment.HomeFragment.Presenter" />
     </data>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -279,9 +279,9 @@
                         android:layout_height="50dp">
 
                         <ImageView
-                            android:scaleType="fitXY"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:scaleType="fitXY"
                             android:src="@mipmap/ic_dingdong" />
                     </FrameLayout>
 
@@ -430,7 +430,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </layout>
