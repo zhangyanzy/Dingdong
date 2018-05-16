@@ -1,9 +1,14 @@
 package com.dindong.dingdong.network.api.like;
 
+import java.util.List;
+
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.like.LikeEntity;
 import com.dindong.dingdong.network.bean.like.LikeEntityType;
+import com.dindong.dingdong.network.bean.like.LikeType;
 
 import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -56,4 +61,15 @@ public interface LikeServiceApi {
    */
   @DELETE("like/praise/{entityId}")
   Observable<Response<Void>> cancelPraiseLike(@Path("entityId") String entityId);
+
+  /**
+   * 获取点赞/关注/收藏用户列表
+   * 
+   * @param likeType
+   * @param entityId
+   * @return
+   */
+  @GET("like/list/{likeType}/{entityId}")
+  Observable<Response<List<LikeEntity>>> listLike(@Path("likeType") LikeType likeType,
+      @Path("entityId") String entityId);
 }

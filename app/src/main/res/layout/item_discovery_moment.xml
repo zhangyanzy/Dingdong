@@ -28,99 +28,108 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{()->presenter.onItemClick(item)}"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:paddingTop="12dp">
 
-            <RelativeLayout
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/mine_fragment_photo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="12dp"
+                app:imageUserResourceUrl="@{item.ucn.image.url}" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp">
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="vertical"
+                android:paddingTop="2dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/mine_fragment_photo"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        app:imageUserResourceUrl="@{item.ucn.image.url}" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{item.ucn.userName}"
+                            android:textColor="#2B4C77"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="@{item.ucn.userName}"
-                        android:textColor="#2B4C77"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="@{DateUtil.format(item.date,DateUtil.DEFAULT_DATE_FORMAT_3)}"
+                        android:textColor="#888888"
                         android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="14dp"
+                    android:text="@{item.message}"
+                    android:textColor="#888888"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:id="@+id/layout_bottom_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="17dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_bottom_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="4"
+                        android:singleLine="true"
+                        android:textColor="#888888"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/txt_fold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="全文"
+                        android:textColor="#468DE6"
+                        android:textSize="14dp" />
+
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="@{DateUtil.format(item.date,DateUtil.DEFAULT_DATE_FORMAT_3)}"
-                    android:textColor="#888888"
-                    android:textSize="12dp" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/txt_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:text="@{item.message}"
-                android:textColor="#888888"
-                android:textSize="14dp" />
-
-            <LinearLayout
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:id="@+id/layout_bottom_root"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txt_bottom_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxEms="4"
-                    android:singleLine="true"
-                    android:textColor="#888888"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:id="@+id/txt_fold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="全文"
-                    android:textColor="#468DE6"
-                    android:textSize="14dp" />
-
             </LinearLayout>
-
-            <com.dindong.dingdong.widget.photo.PhotoLayout
-                android:id="@+id/pl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp" />
         </LinearLayout>
+
+        <com.dindong.dingdong.widget.photo.PhotoLayout
+            android:id="@+id/pl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="8dp" />
 
         <View
             style="@style/divider_item"
             android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="8dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -140,7 +149,7 @@
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@mipmap/ic_use" />
+                    android:src="@mipmap/ic_forword" />
 
                 <TextView
                     android:layout_width="wrap_content"

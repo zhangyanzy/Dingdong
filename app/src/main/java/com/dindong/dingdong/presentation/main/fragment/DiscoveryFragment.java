@@ -8,7 +8,6 @@ import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentDiscoveryBinding;
 import com.dindong.dingdong.presentation.discovery.DiscoveryMomentFragment;
 import com.dindong.dingdong.presentation.main.MainActivity;
-import com.dindong.dingdong.util.ToastUtil;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -57,8 +56,8 @@ public class DiscoveryFragment extends BaseFragment {
 
     fragments = new ArrayList<>();
 
-    fragments.add(new DiscoveryMomentFragment());
-    fragments.add(new DiscoveryMomentFragment());
+    fragments.add(new DiscoveryMomentFragment(DiscoveryMomentFragment.FragmentType.moment));
+    fragments.add(new DiscoveryMomentFragment(DiscoveryMomentFragment.FragmentType.impressive));
     binding.vp.setOffscreenPageLimit(2);
     binding.vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
       @Override
@@ -85,17 +84,11 @@ public class DiscoveryFragment extends BaseFragment {
   private void setTabSelect(int index) {
     if (tabViews == null)
       return;
-    if (index==1){
-      ToastUtil.toastHint(getContext(),"暂未开放，敬请期待");
-      binding.vp.setCurrentItem(0);
-      return;
-    }
     binding.vp.setCurrentItem(index);
     lastSelectView.setSelected(false);
     lastSelectView = tabViews.get(index);
     lastSelectView.setSelected(true);
   }
-
 
   @Override
   public void setUserVisibleHint(boolean isVisibleToUser) {

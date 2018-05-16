@@ -1,15 +1,12 @@
 package com.dindong.dingdong.presentation.main.fragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.amap.api.location.AMapLocation;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.adapter.StoreAdapter;
 import com.dindong.dingdong.adapter.StorePresenter;
-import com.dindong.dingdong.adapter.SubjectAdapter;
 import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
@@ -19,7 +16,6 @@ import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.banner.usecase.ListBannerCase;
 import com.dindong.dingdong.network.api.shop.usecase.ListShopCase;
-import com.dindong.dingdong.network.api.subject.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.banner.Banner;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
@@ -52,7 +48,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 /**
@@ -92,7 +87,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       refreshData();
     }
   }
-
 
   /**
    * GridView点击事件
@@ -154,8 +148,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
    * 加载列表数据
    */
   private void loadListData() {
-    listHotSubject();
-    listShop();
+    listShop(0);
+    listShop(1);
   }
 
   /**
@@ -182,49 +176,15 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
   }
 
   /**
-   * 获取热门推荐课程
+   * 获取门店，最多6条
+   * 
+   * @param type
+   *          0-品质门店，1-附近门第
    */
-  private void listHotSubject() {
-    QueryParam queryParam = new QueryParam();
-    queryParam.setLimit(6);
-    queryParam.getFilters()
-        .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
-    if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
-      queryParam.getFilters()
-          .add(new FilterParam("longitude", SessionMgr.getCurrentAdd().getLongitude()));
-      queryParam.getFilters()
-          .add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
-    }
-
-    new ListHotSubjectCase(queryParam).execute(new HttpSubscriber<List<Subject>>() {
-      @Override
-      public void onFailure(String errorMsg, Response<List<Subject>> response) {
-      }
-
-      @Override
-      public void onSuccess(Response<List<Subject>> response) {
-        SubjectAdapter subjectAdapter = new SubjectAdapter(getContext());
-        subjectAdapter.setPresenter(new Presenter());
-        subjectAdapter.set(response.getData());
-        LinearLayoutManager manager = new LinearLayoutManager(getContext()) {
-          @Override
-          public boolean canScrollVertically() {
-            return false;
-          }
-        };
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.lstHotSubject.setLayoutManager(manager);
-        binding.lstHotSubject.setAdapter(subjectAdapter);
-      }
-    });
-  }
-
-  /**
-   * 获取附近门店，最多6条
-   */
-  private void listShop() {
+  private void listShop(final int type) {
     QueryParam param = new QueryParam();
     param.setLimit(6);
+    param.getFilters().add(new FilterParam("queryType:", type == 0 ? "recommend" : "near"));
     param.getFilters()
         .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
     if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
@@ -251,8 +211,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
           }
         };
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.lstNearShop.setLayoutManager(manager);
-        binding.lstNearShop.setAdapter(storeAdapter);
+        if (type == 0) {
+          binding.lstRecommendShop.setLayoutManager(manager);
+          binding.lstRecommendShop.setAdapter(storeAdapter);
+        } else if (type == 1) {
+          binding.lstNearShop.setLayoutManager(manager);
+          binding.lstNearShop.setAdapter(storeAdapter);
+        }
+
       }
     });
   }
@@ -316,9 +282,15 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
       switch (index) {
       case 0:
         // 拼团上课
+        Intent intent = new Intent(getContext(), ShopListActivity.class);
+        intent.putExtra(AppConfig.IntentKey.DATA, ShopListActivity.ShopQueryType.groupbuy);
+        startActivity(intent);
         break;
       case 1:
         // 试听课
+        Intent intent2 = new Intent(getContext(), ShopListActivity.class);
+        intent2.putExtra(AppConfig.IntentKey.DATA, ShopListActivity.ShopQueryType.audition);
+        startActivity(intent2);
         break;
       case 2:
         // 所有课程
@@ -350,17 +322,21 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     /**
-     * 更多课程
+     * 更多品质门店
      */
-    public void onMoreSubject() {
-      startActivity(new Intent(getContext(), SubjectListActivity.class));
+    public void onMoreRecommendShop() {
+      Intent intent = new Intent(getContext(), ShopListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, ShopListActivity.ShopQueryType.recommend);
+      startActivity(intent);
     }
 
     /**
-     * 更多门店
+     * 更多附近门店
      */
-    public void onMoreStore() {
-      startActivity(new Intent(getContext(), ShopListActivity.class));
+    public void onNearStore() {
+      Intent intent = new Intent(getContext(), ShopListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, ShopListActivity.ShopQueryType.near);
+      startActivity(intent);
     }
 
     @Override

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--门店列表标题-->
+    <string name="shop_list_title_group">拼团上课</string>
+    <string name="shop_list_title_audition">试听课</string>
+    <string name="shop_list_title_all">门店列表</string>
+    <string name="shop_list_title_recommend">品质优选</string>
+    <string name="shop_list_title_near">附近门店</string>
+
     <!--门店列表-->
     <string name="shop_list_near">附近</string>
     <string name="shop_list_group">团</string>

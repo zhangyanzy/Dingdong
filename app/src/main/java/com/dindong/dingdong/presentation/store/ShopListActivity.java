@@ -1,5 +1,6 @@
 package com.dindong.dingdong.presentation.store;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.dindong.dingdong.R;
@@ -38,16 +39,21 @@ public class ShopListActivity extends BaseActivity {
 
   private StoreAdapter adapter;
 
+  private ShopQueryType shopQueryType = ShopQueryType.all;
+
   @Override
   protected void initComponent() {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_shop_list);
-    binding.nb.setCenterTitleText(R.string.all_shop);
 
     adapter = new StoreAdapter(this);
   }
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
+    if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
+      shopQueryType = (ShopQueryType) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+    }
+    setTitle();
     listShop(true, true);
   }
 
@@ -74,6 +80,22 @@ public class ShopListActivity extends BaseActivity {
     });
   }
 
+  private void setTitle() {
+    String title = "";
+    if (shopQueryType.equals(ShopQueryType.groupbuy)) {
+      title = getString(R.string.shop_list_title_group);
+    } else if (shopQueryType.equals(ShopQueryType.audition)) {
+      title = getString(R.string.shop_list_title_audition);
+    } else if (shopQueryType.equals(ShopQueryType.all)) {
+      title = getString(R.string.shop_list_title_all);
+    } else if (shopQueryType.equals(ShopQueryType.recommend)) {
+      title = getString(R.string.shop_list_title_recommend);
+    } else if (shopQueryType.equals(ShopQueryType.near)) {
+      title = getString(R.string.shop_list_title_near);
+    }
+    binding.nb.setCenterTitleText(title);
+  }
+
   /**
    * 查询附近门店
    * 
@@ -81,17 +103,19 @@ public class ShopListActivity extends BaseActivity {
    * @param isRefresh
    */
   private void listShop(boolean showProgress, final boolean isRefresh) {
-    final QueryParam param = new QueryParam();
+    QueryParam queryParam = new QueryParam();
     if (isRefresh)
-      param.setStart(0);
+      queryParam.setStart(0);
     else
-      param.setStart(adapter.getData().size());
-    param.getFilters()
+      queryParam.setStart(adapter.getData().size());
+    queryParam.getFilters().add(new FilterParam("queryType:", shopQueryType.toString()));
+    queryParam.getFilters()
         .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
     if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
-      param.getFilters()
+      queryParam.getFilters()
           .add(new FilterParam("longitude", SessionMgr.getCurrentAdd().getLongitude()));
-      param.getFilters().add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
+      queryParam.getFilters()
+          .add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
     }
 
     SweetAlertDialog sweetAlertDialog = null;
@@ -101,7 +125,7 @@ public class ShopListActivity extends BaseActivity {
     }
 
     final SweetAlertDialog finalSweetAlertDialog = sweetAlertDialog;
-    new ListShopCase(param).execute(new HttpSubscriber<List<Shop>>() {
+    new ListShopCase(queryParam).execute(new HttpSubscriber<List<Shop>>() {
       @Override
       public void onFailure(String errorMsg, Response<List<Shop>> response) {
         if (finalSweetAlertDialog != null)
@@ -144,5 +168,28 @@ public class ShopListActivity extends BaseActivity {
       intent.putExtra(AppConfig.IntentKey.DATA, shop);
       startActivity(intent);
     }
+  }
+
+  public enum ShopQueryType implements Serializable {
+    /**
+     * 试听课
+     */
+    audition
+    /**
+     * 拼团上课
+     */
+    , groupbuy
+    /**
+     * 全部课程
+     */
+    , all
+    /**
+     * 品质优选
+     */
+    , recommend
+    /**
+     * 附近门店
+     */
+    ,near
   }
 }

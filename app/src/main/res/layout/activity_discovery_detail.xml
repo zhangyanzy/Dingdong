@@ -132,7 +132,7 @@
                                 <ImageView
                                     android:layout_width="16dp"
                                     android:layout_height="16dp"
-                                    android:src="@mipmap/ic_use" />
+                                    android:src="@mipmap/ic_forword" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -198,6 +198,43 @@
                     <View
                         style="@style/divider_item"
                         android:layout_marginTop="13dp" />
+
+                    <LinearLayout
+                        android:id="@+id/root_praise"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginTop="18dp"
+                                android:src="@mipmap/ic_zan_line" />
+
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:id="@+id/layout_praise_user"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:alignItems="stretch"
+                                app:flexWrap="nowrap">
+
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.flexbox.FlexboxLayout>
+                        </LinearLayout>
+
+                        <View
+                            style="@style/divider_item"
+                            android:layout_marginTop="12dp" />
+                    </LinearLayout>
+
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/lst"

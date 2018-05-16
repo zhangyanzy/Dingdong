@@ -6,14 +6,18 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityDiscoveryDetailBinding;
+import com.dindong.dingdong.databinding.ItemPraiseUserBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.like.usecase.CancelPraiseLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.ListLikeCase;
 import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
 import com.dindong.dingdong.network.api.moment.usecase.GetMomentCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCommentCase;
 import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
+import com.dindong.dingdong.network.bean.like.LikeEntity;
+import com.dindong.dingdong.network.bean.like.LikeType;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
@@ -26,6 +30,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
 
 /**
  * 发现详情
@@ -57,9 +63,11 @@ public class DiscoveryDetailActivity extends BaseActivity {
   protected void loadData(Bundle savedInstanceState) {
     comment = (Comment) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
     binding.setComment(comment);
-    binding.pl.setRatio(0.6f);
+    binding.pl.setRatio(1f);
+    binding.pl.setMargin(4);
     binding.pl.setSource(comment.getImages(), true);
     listComment();
+    listPraise();
     statistic(comment.getId());
   }
 
@@ -82,7 +90,6 @@ public class DiscoveryDetailActivity extends BaseActivity {
     new ListMomentCommentCase(comment.getId()).execute(new HttpSubscriber<List<Comment>>(this) {
       @Override
       public void onFailure(String errorMsg, Response<List<Comment>> response) {
-        DialogUtil.getErrorDialog(DiscoveryDetailActivity.this, errorMsg).show();
       }
 
       @Override
@@ -92,6 +99,28 @@ public class DiscoveryDetailActivity extends BaseActivity {
     });
   }
 
+  /**
+   * 获取点赞用户
+   */
+  private void listPraise() {
+    new ListLikeCase(LikeType.praise, comment.getId())
+        .execute(new HttpSubscriber<List<LikeEntity>>(this) {
+          @Override
+          public void onFailure(String errorMsg, Response<List<LikeEntity>> response) {
+          }
+
+          @Override
+          public void onSuccess(Response<List<LikeEntity>> response) {
+            loadPraiseUser(response.getData());
+          }
+        });
+  }
+
+  /**
+   * 加载评论
+   * 
+   * @param data
+   */
   private void loadRecyclerView(List<Comment> data) {
     adapter.clear();
     adapter.addAll(data);
@@ -102,8 +131,29 @@ public class DiscoveryDetailActivity extends BaseActivity {
   }
 
   /**
-   * 统计访问量
+   * 加载点赞列表
    * 
+   * @param data
+   */
+  private void loadPraiseUser(List<LikeEntity> data) {
+    if (IsEmpty.list(data)) {
+      binding.rootPraise.setVisibility(View.GONE);
+    } else {
+      binding.rootPraise.setVisibility(View.VISIBLE);
+      binding.layoutPraiseUser.removeAllViews();
+      for (LikeEntity likeEntity : data) {
+        ItemPraiseUserBinding itemPraiseUserBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(DiscoveryDetailActivity.this), R.layout.item_praise_user, null,
+            false);
+        itemPraiseUserBinding.setItem(likeEntity);
+        binding.layoutPraiseUser.addView(itemPraiseUserBinding.getRoot());
+      }
+    }
+  }
+
+  /**
+   * 统计访问量
+   *
    * @param id
    */
   private void statistic(String id) {
@@ -180,6 +230,7 @@ public class DiscoveryDetailActivity extends BaseActivity {
 
               @Override
               public void onSuccess(Response<Void> response) {
+                listPraise();
                 ToastUtil.toastHint(DiscoveryDetailActivity.this,
                     R.string.discovery_cancel_praise_success);
                 comment.setPraise(false);
@@ -200,6 +251,7 @@ public class DiscoveryDetailActivity extends BaseActivity {
 
             @Override
             public void onSuccess(Response<Void> response) {
+              listPraise();
               ToastUtil.toastHint(DiscoveryDetailActivity.this, R.string.discovery_praise_success);
               comment.setPraise(true);
               binding.setComment(comment);

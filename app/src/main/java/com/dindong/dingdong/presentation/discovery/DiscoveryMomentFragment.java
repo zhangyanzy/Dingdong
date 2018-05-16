@@ -10,6 +10,7 @@ import com.dindong.dingdong.databinding.ItemDiscoveryMomentBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.like.usecase.CancelPraiseLikeCase;
 import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
+import com.dindong.dingdong.network.api.moment.usecase.ListImpressiveCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
 import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.bean.Response;
@@ -26,6 +27,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -42,6 +44,7 @@ import android.view.ViewGroup;
  * 发现-动态</>
  */
 
+@SuppressLint("ValidFragment")
 public class DiscoveryMomentFragment extends BaseFragment {
   FragmentDiscoveryMomentBinding binding;
 
@@ -51,11 +54,20 @@ public class DiscoveryMomentFragment extends BaseFragment {
 
   private final int INTENT_REQUEST = 0x01;
 
+  private FragmentType fragmentType;// moment-动态，impressive-有声有色
+
+  private TextFoldUtil textFoldUtil;
+
+  public DiscoveryMomentFragment(FragmentType fragmentType) {
+    this.fragmentType = fragmentType;
+  }
+
   @Override
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_discovery_moment, container,
         false);
 
+    textFoldUtil = new TextFoldUtil();
     addInterceptView(binding.layoutEdit);
     return binding.getRoot();
   }
@@ -73,13 +85,13 @@ public class DiscoveryMomentFragment extends BaseFragment {
     binding.refreshLayout.setOnRefreshListener(new BaseHeaderView.OnRefreshListener() {
       @Override
       public void onRefresh(BaseHeaderView baseHeaderView) {
-        listMoment(false, true);
+        loadData(false, true);
       }
     });
     binding.refreshLayout.setOnLoadListener(new BaseFooterView.OnLoadListener() {
       @Override
       public void onLoad(BaseFooterView baseFooterView) {
-        listMoment(false, false);
+        loadData(false, false);
       }
     });
     KeyboardUtil.setKeyboardVisibleListener(binding.edtComment, getActivity(),
@@ -105,7 +117,7 @@ public class DiscoveryMomentFragment extends BaseFragment {
   @Override
   protected void firstVisible() {
     super.firstVisible();
-    listMoment(true, true);
+    loadData(true, true);
   }
 
   @Override
@@ -128,6 +140,20 @@ public class DiscoveryMomentFragment extends BaseFragment {
   // private void initPhotoLayout() {
   // binding.pl.setSource(images, true);
   // }
+
+  /**
+   * 根据fragment不同类型，加载数据
+   * 
+   * @param showProgress
+   * @param isRefresh
+   */
+  private void loadData(boolean showProgress, final boolean isRefresh) {
+    if (fragmentType.equals(FragmentType.moment)) {
+      listMoment(showProgress, isRefresh);
+    } else if (fragmentType.equals(FragmentType.impressive)) {
+      listImpressive(showProgress, isRefresh);
+    }
+  }
 
   /**
    * 获取动态
@@ -156,9 +182,36 @@ public class DiscoveryMomentFragment extends BaseFragment {
         });
   }
 
+  /**
+   * 获取有声有色列表
+   * 
+   * @param showProgress
+   * @param isRefresh
+   */
+  private void listImpressive(boolean showProgress, final boolean isRefresh) {
+    final QueryParam param = new QueryParam();
+    if (isRefresh)
+      param.setStart(0);
+    else
+      param.setStart(adapter.getData().size());
+
+    new ListImpressiveCase(param)
+        .execute(new HttpSubscriber<List<Comment>>(showProgress ? getContext() : null) {
+          @Override
+          public void onFailure(String errorMsg, Response<List<Comment>> response) {
+            DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+          }
+
+          @Override
+          public void onSuccess(Response<List<Comment>> response) {
+            loadRecyclerView(response.getData(), isRefresh, response.isMore());
+          }
+        });
+  }
+
   private void loadRecyclerView(List<Comment> data, boolean isRefresh, boolean isMore) {
     if (isRefresh) {
-      TextFoldUtil.clean();
+      textFoldUtil.clean();
       adapter.clear();
       binding.refreshLayout.stopRefresh();
     } else
@@ -181,10 +234,11 @@ public class DiscoveryMomentFragment extends BaseFragment {
         return;
       ItemDiscoveryMomentBinding itemDiscoveryMomentBinding = (ItemDiscoveryMomentBinding) holder
           .getBinding();
-      itemDiscoveryMomentBinding.pl.setRatio(0.6f);
+      itemDiscoveryMomentBinding.pl.setRatio(1f);
+      itemDiscoveryMomentBinding.pl.setMargin(4);
       itemDiscoveryMomentBinding.pl.setSource(itemDiscoveryMomentBinding.getItem().getImages(),
           true);
-      TextFoldUtil.attach(itemDiscoveryMomentBinding.txtContent,
+      textFoldUtil.attach(itemDiscoveryMomentBinding.txtContent,
           itemDiscoveryMomentBinding.txtBottomContent, itemDiscoveryMomentBinding.txtFold,
           itemDiscoveryMomentBinding.getItem().getMessage(), position);
     }
@@ -225,7 +279,6 @@ public class DiscoveryMomentFragment extends BaseFragment {
   @Override
   public void onDestroy() {
     super.onDestroy();
-    TextFoldUtil.clean();
   }
 
   public class Presenter implements BaseViewAdapter.Presenter {
@@ -318,5 +371,9 @@ public class DiscoveryMomentFragment extends BaseFragment {
         }
       });
     }
+  }
+
+  public enum FragmentType {
+    moment, impressive
   }
 }

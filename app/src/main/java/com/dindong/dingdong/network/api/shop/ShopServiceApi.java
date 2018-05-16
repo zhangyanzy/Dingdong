@@ -32,6 +32,8 @@ public interface ShopServiceApi {
    *          cityCode，城市编号<br/>
    *          districtCode，地区编号<br/>
    *          range，距离<br/>
+   *          queryType:
+   *          audition-试听课，groupbuy-拼团上课，all-全部课程，recommend-品质优选，near-附近门店<br/>
    * @return
    */
   @POST("shop/list")

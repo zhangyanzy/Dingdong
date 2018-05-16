@@ -51,6 +51,15 @@ public interface MomentServiceApi {
   Observable<Response<List<Comment>>> listMoment(@Body QueryParam queryParam);
 
   /**
+   * 获取有声有色列表
+   * 
+   * @param queryParam
+   * @return
+   */
+  @POST("moments/impressive/list")
+  Observable<Response<List<Comment>>> listImpressive(@Body QueryParam queryParam);
+
+  /**
    * 删除动态
    * 
    * @param id

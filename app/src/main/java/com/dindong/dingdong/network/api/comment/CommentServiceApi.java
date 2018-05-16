@@ -7,7 +7,9 @@ import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -37,9 +39,28 @@ public interface CommentServiceApi {
 
   /**
    * 获取评论列表
+   * 
    * @param queryParam
    * @return
    */
   @POST("comments/list")
   Observable<Response<List<Comment>>> listComment(@Body QueryParam queryParam);
+
+  /**
+   * 统计指定动态的数据
+   * 
+   * @param id
+   * @return
+   */
+  @GET("comments/statistics/{id}")
+  Observable<Response<Comment>> statistic(@Path("id") String id);
+
+  /**
+   * 获取指定评论
+   * 
+   * @param id
+   * @return
+   */
+  @GET("comments/{id}")
+  Observable<Response<Comment>> get(@Path("id") String id);
 }

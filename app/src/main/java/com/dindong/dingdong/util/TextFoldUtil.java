@@ -19,25 +19,39 @@ import android.widget.TextView;
 
 public class TextFoldUtil {
 
-  private static SparseArray<Integer> mTextStateList;// 保存文本状态集合
-  private static Map<Integer, String> mBottomLineStr;// 保存末位文本
+  private SparseArray<Integer> mTextStateList;// 保存文本状态集合
+  private Map<Integer, String> mBottomLineStr;// 保存末位文本
 
-  private static final int STATE_UNKNOW = -1;// 未知状态
+  private final int STATE_UNKNOW = -1;// 未知状态
 
-  private static final int STATE_NOT_OVERFLOW = 1;// 文本行数小于最大可显示行数
+  private final int STATE_NOT_OVERFLOW = 1;// 文本行数小于最大可显示行数
 
-  private static final int STATE_COLLAPSED = 2;// 折叠状态
+  private final int STATE_COLLAPSED = 2;// 折叠状态
 
-  private static final int STATE_EXPANDED = 3;// 展开状态
+  private final int STATE_EXPANDED = 3;// 展开状态
 
-  public static void clean() {
+  public TextFoldUtil() {
     mTextStateList = new SparseArray<>();
     mBottomLineStr = new HashMap<>();
   }
 
-  public static void attach(final TextView contentTextView, final TextView bottomTextView,
+  public void clean() {
+    mTextStateList = new SparseArray<>();
+    mBottomLineStr = new HashMap<>();
+  }
+
+  /**
+   * 默认6行折叠
+   * 
+   * @param contentTextView
+   * @param bottomTextView
+   * @param foldView
+   * @param content
+   * @param position
+   */
+  public void attach(final TextView contentTextView, final TextView bottomTextView,
       final TextView foldView, String content, int position) {
-    attach(3, contentTextView, bottomTextView, foldView, content, position);
+    attach(6, contentTextView, bottomTextView, foldView, content, position);
   }
 
   /**
@@ -53,7 +67,7 @@ public class TextFoldUtil {
    *          显示文本
    * @param position
    */
-  public static void attach(final int maxLine, final TextView contentTextView,
+  public void attach(final int maxLine, final TextView contentTextView,
       final TextView bottomTextView, final TextView foldView, String content, final int position) {
     final int foldLine = maxLine - 1;
     foldView.setVisibility(View.GONE);
@@ -140,7 +154,7 @@ public class TextFoldUtil {
    * @param contentTextView
    * @param foldView
    */
-  private static void showFold(boolean isFold, final int foldLine, final TextView contentTextView,
+  private void showFold(boolean isFold, final int foldLine, final TextView contentTextView,
       final TextView bottomTextView, final TextView foldView) {
     foldView.setVisibility(View.VISIBLE);
     if (isFold) {
