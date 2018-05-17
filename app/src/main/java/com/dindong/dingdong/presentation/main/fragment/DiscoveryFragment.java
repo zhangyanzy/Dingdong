@@ -90,6 +90,22 @@ public class DiscoveryFragment extends BaseFragment {
     lastSelectView.setSelected(true);
   }
 
+  /**
+   * 显示有声有色
+   */
+  public void showImpressive() {
+    binding.vp.setCurrentItem(1);
+  }
+
+  /**
+   * 主动刷新动态
+   */
+  public void refreshMoment() {
+    if (binding.vp.getCurrentItem() == 0 && fragments.get(0) instanceof DiscoveryMomentFragment) {
+      ((DiscoveryMomentFragment) fragments.get(0)).loadData(true, true);
+    }
+  }
+
   @Override
   public void setUserVisibleHint(boolean isVisibleToUser) {
     super.setUserVisibleHint(isVisibleToUser);

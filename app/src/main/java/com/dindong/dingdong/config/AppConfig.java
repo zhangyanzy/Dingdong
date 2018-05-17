@@ -21,6 +21,7 @@ public class AppConfig {
   // 第三方申请key
   public static class PartyKey {
     public static final String GD_MAP = "c6b87d66ff3941cb8f1d63d69807b5e4";// 高德地图
+    public static final String WEX_PAY = "wx5b0c56b85d8488f3";// 微信支付
   }
 
   public static class Wrist {

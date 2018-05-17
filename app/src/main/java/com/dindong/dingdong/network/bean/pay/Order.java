@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.dindong.dingdong.network.bean.store.ShopGood;
-import com.dindong.dingdong.network.bean.store.Subject;
+import com.dindong.dingdong.network.bean.store.Shop;
 
 /**
  * Created by wangcong on 2018/3/22.
@@ -16,22 +15,26 @@ import com.dindong.dingdong.network.bean.store.Subject;
 public class Order implements Serializable {
   private String id;// UUID
   private Date date;// 订单创建时间
-  private String orderNum;// 订单号
+  private String billNo;// 订单号
 
-  private OrderType orderType;// 订单类型
-  private OrderState orderState;// 订单状态
-  private BigDecimal price = BigDecimal.ZERO;// 商品现价
-  private BigDecimal originalPrice = BigDecimal.ZERO;// 商品原价
-  private BigDecimal count = BigDecimal.ZERO;// 购买数量
-  private BigDecimal totalAmount = BigDecimal.ZERO;// 商品总额
-  private BigDecimal payAmount = BigDecimal.ZERO;// 支付金额
-  private BigDecimal favourAmount = BigDecimal.ZERO;// 优惠金额
+  private String state;// 订单状态
+  private String stateName;// 订单状态名称
+  private BigDecimal disPrice = BigDecimal.ZERO;// 商品现价
+  private BigDecimal price = BigDecimal.ZERO;// 商品原价
+  private BigDecimal qty = BigDecimal.ZERO;// 购买数量
+  private BigDecimal realAmount = BigDecimal.ZERO;// 商品总额
   private PayMode payMode;// 支付方式
-  private String code;// 销核码
+  private String checkCode;// 销核码
+  private Shop store;
 
-  // 具体订单商品信息，购买类型为课程则shopGood=null，类型为门店商品subject=null
-  private Subject subject;
-  private ShopGood shopGood;
+  // 商品信息
+  private String itemId;// 课程/商品/活动ID
+  private String itemImageUrl;// 课程/商品/活动图片
+  private String itemName;// 课程/商品/活动名称
+  private String itemType;// 类型：课程/商品/活动
+  private String itemTypeName;// 订单类型名称
+
+  private String userId;//
 
   public String getId() {
     return id;
@@ -49,28 +52,36 @@ public class Order implements Serializable {
     this.date = date;
   }
 
-  public String getOrderNum() {
-    return orderNum;
+  public String getBillNo() {
+    return billNo;
   }
 
-  public void setOrderNum(String orderNum) {
-    this.orderNum = orderNum;
+  public void setBillNo(String billNo) {
+    this.billNo = billNo;
   }
 
-  public OrderType getOrderType() {
-    return orderType;
+  public String getItemTypeName() {
+    return itemTypeName;
   }
 
-  public void setOrderType(OrderType orderType) {
-    this.orderType = orderType;
+  public void setItemTypeName(String itemTypeName) {
+    this.itemTypeName = itemTypeName;
   }
 
-  public OrderState getOrderState() {
-    return orderState;
+  public String getState() {
+    return state;
   }
 
-  public void setOrderState(OrderState orderState) {
-    this.orderState = orderState;
+  public void setState(String state) {
+    this.state = state;
+  }
+
+  public BigDecimal getDisPrice() {
+    return disPrice;
+  }
+
+  public void setDisPrice(BigDecimal disPrice) {
+    this.disPrice = disPrice;
   }
 
   public BigDecimal getPrice() {
@@ -81,44 +92,20 @@ public class Order implements Serializable {
     this.price = price;
   }
 
-  public BigDecimal getOriginalPrice() {
-    return originalPrice;
+  public BigDecimal getQty() {
+    return qty;
   }
 
-  public void setOriginalPrice(BigDecimal originalPrice) {
-    this.originalPrice = originalPrice;
+  public void setQty(BigDecimal qty) {
+    this.qty = qty;
   }
 
-  public BigDecimal getCount() {
-    return count;
+  public BigDecimal getRealAmount() {
+    return realAmount;
   }
 
-  public void setCount(BigDecimal count) {
-    this.count = count;
-  }
-
-  public BigDecimal getTotalAmount() {
-    return totalAmount;
-  }
-
-  public void setTotalAmount(BigDecimal totalAmount) {
-    this.totalAmount = totalAmount;
-  }
-
-  public BigDecimal getPayAmount() {
-    return payAmount;
-  }
-
-  public void setPayAmount(BigDecimal payAmount) {
-    this.payAmount = payAmount;
-  }
-
-  public BigDecimal getFavourAmount() {
-    return favourAmount;
-  }
-
-  public void setFavourAmount(BigDecimal favourAmount) {
-    this.favourAmount = favourAmount;
+  public void setRealAmount(BigDecimal realAmount) {
+    this.realAmount = realAmount;
   }
 
   public PayMode getPayMode() {
@@ -129,27 +116,67 @@ public class Order implements Serializable {
     this.payMode = payMode;
   }
 
-  public String getCode() {
-    return code;
+  public String getCheckCode() {
+    return checkCode;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setCheckCode(String checkCode) {
+    this.checkCode = checkCode;
   }
 
-  public Subject getSubject() {
-    return subject;
+  public String getStateName() {
+    return stateName;
   }
 
-  public void setSubject(Subject subject) {
-    this.subject = subject;
+  public void setStateName(String stateName) {
+    this.stateName = stateName;
   }
 
-  public ShopGood getShopGood() {
-    return shopGood;
+  public String getItemId() {
+    return itemId;
   }
 
-  public void setShopGood(ShopGood shopGood) {
-    this.shopGood = shopGood;
+  public void setItemId(String itemId) {
+    this.itemId = itemId;
+  }
+
+  public String getItemImageUrl() {
+    return itemImageUrl;
+  }
+
+  public void setItemImageUrl(String itemImageUrl) {
+    this.itemImageUrl = itemImageUrl;
+  }
+
+  public String getItemName() {
+    return itemName;
+  }
+
+  public void setItemName(String itemName) {
+    this.itemName = itemName;
+  }
+
+  public String getItemType() {
+    return itemType;
+  }
+
+  public void setItemType(String itemType) {
+    this.itemType = itemType;
+  }
+
+  public Shop getStore() {
+    return store;
+  }
+
+  public void setStore(Shop store) {
+    this.store = store;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 }

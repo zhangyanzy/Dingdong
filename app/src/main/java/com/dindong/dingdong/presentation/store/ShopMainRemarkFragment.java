@@ -8,6 +8,7 @@ import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
+import com.dindong.dingdong.util.StringUtil;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -39,8 +40,10 @@ public class ShopMainRemarkFragment extends BaseFragment {
   @Override
   protected void loadData(Bundle savedInstanceState) {
     if (getArguments().getSerializable(AppConfig.IntentKey.DATA) != null) {
-      initShopImg(((Shop) getArguments().getSerializable(AppConfig.IntentKey.DATA)).getLogoImage());
-      ((ShopMainActivity)getActivity()).updateViewPagerHeight();
+      Shop shop = ((Shop) getArguments().getSerializable(AppConfig.IntentKey.DATA));
+      binding.txtShopName.setText(StringUtil.format("{0}机构", shop.getName()));
+      initShopImg(shop.getLogoImage());
+      ((ShopMainActivity) getActivity()).updateViewPagerHeight();
     }
 
   }

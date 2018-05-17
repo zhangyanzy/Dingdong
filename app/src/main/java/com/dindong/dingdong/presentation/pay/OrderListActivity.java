@@ -80,10 +80,10 @@ public class OrderListActivity extends BaseActivity {
   private void initViewPager() {
     fragments = new ArrayList<>();
     fragments.add(new OrderListFragment(null));
-    fragments.add(new OrderListFragment(OrderState.wait));
-    fragments.add(new OrderListFragment(OrderState.wait_group));
-    fragments.add(new OrderListFragment(OrderState.can_use));
-    fragments.add(new OrderListFragment(OrderState.success));
+    fragments.add(new OrderListFragment(OrderState.waitPay));
+    fragments.add(new OrderListFragment(OrderState.grouping));
+    fragments.add(new OrderListFragment(OrderState.confirmed));
+    fragments.add(new OrderListFragment(OrderState.finished));
 
     binding.vp.setAdapter(new CheckMainAdapter(getSupportFragmentManager()));
     binding.vp.setOffscreenPageLimit(fragments.size());

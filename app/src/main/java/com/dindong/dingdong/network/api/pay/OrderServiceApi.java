@@ -9,6 +9,8 @@ import com.dindong.dingdong.network.bean.pay.Order;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -18,7 +20,7 @@ import rx.Observable;
  * 支付API</>
  */
 
-public interface PayServiceApi {
+public interface OrderServiceApi {
   /**
    * 预下单
    * 
@@ -26,7 +28,7 @@ public interface PayServiceApi {
    * @param order
    * @return
    */
-  @POST("pay/submit/pre")
+  @POST("order")
   Observable<Response<Order>> preSubmit(@Query("userId") String userId, @Body Order order);
 
   /**
@@ -43,13 +45,11 @@ public interface PayServiceApi {
   /**
    * 取消订单
    * 
-   * @param userId
    * @param orderId
    * @return
    */
-  @POST("pay/cancel")
-  Observable<Response<Order>> cancel(@Query("userId") String userId,
-      @Query("orderId") String orderId);
+  @PUT("order/cancel/{id}")
+  Observable<Response<Void>> cancel(@Path("id") String orderId);
 
   /**
    * 商品销核
@@ -66,16 +66,14 @@ public interface PayServiceApi {
   /**
    * 查询所有订单,支持分页查询
    * 
-   * @param userId
    * @param param
-   *          state:=，订单状态{@link com.dindong.dingdong.network.bean.pay.OrderState}
+   *          state，订单状态{@link com.dindong.dingdong.network.bean.pay.OrderState}
    *          为空则查询全部<br/>
    *          type:=，订单类型{@link com.dindong.dingdong.network.bean.pay.OrderType}
    *          为空则查询全部<br/>
    * @return
    */
-  @POST("pay/order/list")
-  Observable<Response<List<Order>>> listOrder(@Query("userId") String userId,
-      @Body QueryParam param);
+  @POST("order/list")
+  Observable<Response<List<Order>>> listOrder(@Body QueryParam param);
 
 }

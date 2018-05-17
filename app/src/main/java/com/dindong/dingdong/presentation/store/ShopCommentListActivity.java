@@ -12,6 +12,7 @@ import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.comment.usecase.CommentCase;
 import com.dindong.dingdong.network.api.comment.usecase.ListCommentCase;
 import com.dindong.dingdong.network.api.comment.usecase.ListCommentOfCommentCase;
+import com.dindong.dingdong.network.api.like.usecase.CancelPraiseLikeCase;
 import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
@@ -321,7 +322,26 @@ public class ShopCommentListActivity extends BaseActivity {
      */
     public void onPraise(final Comment comment) {
       if (comment.isPraise()) {
-        ToastUtil.toastHint(ShopCommentListActivity.this, R.string.discovery_praised);
+        // 取消赞
+        new CancelPraiseLikeCase(comment.getId()).execute(new HttpSubscriber<Void>(ShopCommentListActivity.this) {
+          @Override
+          public void onFailure(String errorMsg, Response<Void> response) {
+            DialogUtil.getErrorDialog(ShopCommentListActivity.this, errorMsg).show();
+          }
+
+          @Override
+          public void onSuccess(Response<Void> response) {
+            ToastUtil.toastHint(ShopCommentListActivity.this, R.string.discovery_cancel_praise_success);
+            for (Comment comment1 : adapter.getData()) {
+              if (comment.getId().equals(comment1.getId())) {
+                comment.setPraise(false);
+                comment.setPraiseCount(comment.getPraiseCount() - 1);
+              }
+
+            }
+            adapter.notifyDataSetChanged();
+          }
+        });
         return;
       }
       new PraiseLikeCase(comment.getId())

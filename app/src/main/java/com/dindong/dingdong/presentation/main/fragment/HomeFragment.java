@@ -23,6 +23,7 @@ import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.entity.Region;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
+import com.dindong.dingdong.presentation.main.MainActivity;
 import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
 import com.dindong.dingdong.presentation.store.ShopListActivity;
 import com.dindong.dingdong.presentation.store.ShopMainActivity;
@@ -33,7 +34,6 @@ import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.RegionStorageUtil;
-import com.dindong.dingdong.util.ToastUtil;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
@@ -46,7 +46,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -54,7 +53,7 @@ import android.widget.Toast;
  * Created by wcong on 2018/3/10. 首页
  */
 
-public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class HomeFragment extends BaseFragment {
 
   private FragmentHomeBinding binding;
 
@@ -86,32 +85,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         return;
       refreshData();
     }
-  }
-
-  /**
-   * GridView点击事件
-   */
-  @Override
-  public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-    switch (i) {
-    case 0:
-      // 附近门店
-      startActivity(new Intent(getContext(), ShopListActivity.class));
-      break;
-    case 1:
-      // 拼团上课
-      ToastUtil.toastSuccess(getContext(), "拼团上课");
-      break;
-    case 2:
-      // 全部课程
-      startActivity(new Intent(getContext(), SubjectListActivity.class));
-      break;
-    case 3:
-      // 叮咚公益
-      startActivity(new Intent(getContext(), BlueWristMainActivity.class));
-      break;
-    }
-
   }
 
   /**
@@ -196,7 +169,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     new ListShopCase(param).execute(new HttpSubscriber<List<Shop>>() {
       @Override
       public void onFailure(String errorMsg, Response<List<Shop>> response) {
-        DialogUtil.getErrorDialog(getContext(), errorMsg).show();
       }
 
       @Override
@@ -259,6 +231,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
   }
 
+  public void startImpressive() {
+    ((MainActivity) getActivity()).showImpressive();
+  }
+
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -298,6 +274,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         break;
       case 3:
         // 有声有色
+        startImpressive();
         break;
       case 4:
         // 叮咚公益

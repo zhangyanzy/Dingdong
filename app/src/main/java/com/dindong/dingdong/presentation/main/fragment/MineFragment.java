@@ -63,7 +63,7 @@ public class MineFragment extends BaseFragment {
         intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_USE);
         break;
       case 3:
-        // 待评价
+        // 已完成
         intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_FINISH);
         break;
       }

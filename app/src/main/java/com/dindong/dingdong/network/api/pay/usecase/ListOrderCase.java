@@ -1,8 +1,7 @@
 package com.dindong.dingdong.network.api.pay.usecase;
 
-import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.BaseUseCase;
-import com.dindong.dingdong.network.api.pay.PayServiceApi;
+import com.dindong.dingdong.network.api.pay.OrderServiceApi;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 
 import rx.Observable;
@@ -13,7 +12,7 @@ import rx.Observable;
  * </>
  */
 
-public class ListOrderCase extends BaseUseCase<PayServiceApi> {
+public class ListOrderCase extends BaseUseCase<OrderServiceApi> {
   private QueryParam queryParam;
 
   public ListOrderCase(QueryParam queryParam) {
@@ -22,6 +21,6 @@ public class ListOrderCase extends BaseUseCase<PayServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(BaseUseCase.isMock).listOrder(SessionMgr.getUser().getId(), queryParam);
+    return createConnection().listOrder(queryParam);
   }
 }

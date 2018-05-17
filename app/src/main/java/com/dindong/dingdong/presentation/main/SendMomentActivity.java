@@ -75,6 +75,7 @@ public class SendMomentActivity extends BaseActivity {
               @Override
               public void onSuccess(Response<Comment> response) {
                 ToastUtil.toastHint(SendMomentActivity.this, R.string.send_moment_success);
+                setResult(RESULT_OK);
                 finish();
               }
             });

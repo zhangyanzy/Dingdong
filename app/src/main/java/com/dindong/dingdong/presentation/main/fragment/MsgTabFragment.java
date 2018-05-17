@@ -74,7 +74,7 @@ public class MsgTabFragment extends BaseFragment {
 
   @Override
   protected void firstVisible() {
-    loadMsg(true, true);
+    loadMsg(type == 1, true);
   }
 
   private void loadMsg(boolean showProgress, final boolean isRefresh) {

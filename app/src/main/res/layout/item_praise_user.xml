@@ -27,7 +27,7 @@
                 android:id="@+id/mine_fragment_photo"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                app:imageResourceUrl="@{item.userImageUrl}" />
+                app:imageUserResourceUrl="@{item.userImageUrl}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

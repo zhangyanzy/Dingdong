@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             app:title_text="@string/shop_comment_detail_title" />
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -295,7 +295,7 @@
                         android:layout_height="match_parent" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
         <LinearLayout
             android:id="@+id/layout_edit"

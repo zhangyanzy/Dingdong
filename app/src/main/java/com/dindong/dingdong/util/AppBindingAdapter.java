@@ -27,18 +27,36 @@ public class AppBindingAdapter {
 
   private static void loadImage(ImageView view, Object resourceUrl, boolean isUser) {
     RequestOptions options = new RequestOptions();
-    options.placeholder(isUser ? R.mipmap.img_jigou : R.mipmap.img_placeholder);
-    options.error(isUser ? R.mipmap.img_jigou : R.mipmap.img_load_failed);
+    options.placeholder(isUser ? R.mipmap.img_head : R.mipmap.img_placeholder);
+    options.error(isUser ? R.mipmap.img_head : R.mipmap.img_load_failed);
 
     if (IsEmpty.object(resourceUrl) | IsEmpty.string(String.valueOf(resourceUrl))) {
-      Glide.with(view.getContext()).load(isUser ? R.mipmap.img_jigou : R.mipmap.img_placeholder)
+      Glide.with(view.getContext()).load(isUser ? R.mipmap.img_head : R.mipmap.img_placeholder)
           .apply(options).into(view);
     } else if (resourceUrl instanceof String) {
       Glide.with(view.getContext()).load(resourceUrl).apply(options).into(view);
     } else if (resourceUrl instanceof Integer) {
       Glide.with(view.getContext()).load((Integer) resourceUrl).apply(options).into(view);
     } else {
-      Glide.with(view.getContext()).load(R.mipmap.img_placeholder).apply(options).into(view);
+      Glide.with(view.getContext()).load(isUser ? R.mipmap.img_head : R.mipmap.img_placeholder)
+          .apply(options).into(view);
+    }
+  }
+
+  @BindingAdapter("imageMineUserResourceUrl")
+  public static void loadMineUserImage(ImageView view, Object resourceUrl) {
+    RequestOptions options = new RequestOptions();
+    options.placeholder(R.mipmap.img_user_portrait);
+    options.error(R.mipmap.img_user_portrait);
+
+    if (IsEmpty.object(resourceUrl) | IsEmpty.string(String.valueOf(resourceUrl))) {
+      Glide.with(view.getContext()).load(R.mipmap.img_user_portrait).apply(options).into(view);
+    } else if (resourceUrl instanceof String) {
+      Glide.with(view.getContext()).load(resourceUrl).apply(options).into(view);
+    } else if (resourceUrl instanceof Integer) {
+      Glide.with(view.getContext()).load((Integer) resourceUrl).apply(options).into(view);
+    } else {
+      Glide.with(view.getContext()).load(R.mipmap.img_user_portrait).apply(options).into(view);
     }
   }
 }

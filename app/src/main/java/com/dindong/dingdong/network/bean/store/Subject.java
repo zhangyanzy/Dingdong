@@ -17,6 +17,7 @@ public class Subject implements Serializable {
   private String name;// 课程名称
   private SubjectType subjectType;// 课程类型
   private Shop store;// 所属门店
+  private GlobalImage image;// 课程主图
   private List<GlobalImage> images = new ArrayList<>();// 课程图片
   private List<Tag> tags = new ArrayList<>();// 课程分类
 
@@ -97,6 +98,14 @@ public class Subject implements Serializable {
 
   public void setBoughtCount(BigDecimal boughtCount) {
     this.boughtCount = boughtCount;
+  }
+
+  public GlobalImage getImage() {
+    return image;
+  }
+
+  public void setImage(GlobalImage image) {
+    this.image = image;
   }
 
   public List<GlobalImage> getImages() {

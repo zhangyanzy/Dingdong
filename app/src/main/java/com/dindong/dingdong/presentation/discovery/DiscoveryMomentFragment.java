@@ -117,7 +117,7 @@ public class DiscoveryMomentFragment extends BaseFragment {
   @Override
   protected void firstVisible() {
     super.firstVisible();
-    loadData(true, true);
+    loadData(fragmentType.equals(FragmentType.impressive), true);
   }
 
   @Override
@@ -147,7 +147,7 @@ public class DiscoveryMomentFragment extends BaseFragment {
    * @param showProgress
    * @param isRefresh
    */
-  private void loadData(boolean showProgress, final boolean isRefresh) {
+  public void loadData(boolean showProgress, final boolean isRefresh) {
     if (fragmentType.equals(FragmentType.moment)) {
       listMoment(showProgress, isRefresh);
     } else if (fragmentType.equals(FragmentType.impressive)) {

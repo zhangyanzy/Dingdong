@@ -11,5 +11,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/txt_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/light_black"
+            android:textSize="16dp"
+            android:textStyle="bold" />
     </LinearLayout>
 </layout>

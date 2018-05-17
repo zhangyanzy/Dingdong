@@ -8,9 +8,9 @@ import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.pay.usecase.CancelOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
-import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.util.CuteR;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
@@ -56,24 +56,15 @@ public class OrderDetailActivity extends BaseActivity {
    * @param order
    */
   private void initOrderView(Order order) {
-    binding.imgCode.setImageBitmap(CuteR.ProductNormal(order.getCode(), false, 0));
-    if (order.getOrderType().equals(OrderType.subject)) {
-      binding.txtShopName.setText(order.getSubject().getStore().getName());
-      binding.txtShopAddress.setText(order.getSubject().getStore().getAddress().toString());
-      binding.txtRange.setText(StringUtil.format(getString(R.string.global_range),
-          StringUtil.formatRange(order.getSubject().getStore().getRange())));
-      PhotoUtil.load(this, order.getSubject().getImages().get(0).getUrl(), binding.img);
-      binding.txtGoodName.setText(order.getSubject().getName());
-      binding.txtAmount.setText(StringUtil.amount(order.getSubject().getAmount()));
-    } else if (order.getOrderType().equals(OrderType.good)) {
-      binding.txtShopName.setText(order.getShopGood().getStore().getName());
-      binding.txtShopAddress.setText(order.getShopGood().getStore().getAddress().toString());
-      binding.txtRange.setText(StringUtil.format(getString(R.string.global_range),
-          StringUtil.formatRange(order.getShopGood().getStore().getRange())));
-      PhotoUtil.load(this, order.getShopGood().getImages().get(0).getUrl(), binding.img);
-      binding.txtGoodName.setText(order.getShopGood().getName());
-      binding.txtAmount.setText(StringUtil.amount(order.getShopGood().getAmount()));
-    }
+    if (!IsEmpty.string(order.getCheckCode()))
+      binding.imgCode.setImageBitmap(CuteR.ProductNormal(order.getCheckCode(), false, 0));
+    binding.txtShopName.setText(order.getStore().getName());
+    binding.txtShopAddress.setText(order.getStore().getAddress().toString());
+    binding.txtRange.setText(StringUtil.format(getString(R.string.global_range),
+        StringUtil.formatRange(order.getStore().getRange())));
+    PhotoUtil.load(this, order.getItemImageUrl(), binding.img);
+    binding.txtGoodName.setText(order.getItemName());
+    binding.txtAmount.setText(StringUtil.amount(order.getPrice()));
   }
 
   public class Presenter {

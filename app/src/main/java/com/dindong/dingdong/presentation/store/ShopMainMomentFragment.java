@@ -8,6 +8,7 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentShopMainMomentBinding;
 import com.dindong.dingdong.databinding.ItemShopMainMomentBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.like.usecase.CancelPraiseLikeCase;
 import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
 import com.dindong.dingdong.network.bean.Response;
@@ -163,7 +164,7 @@ public class ShopMainMomentFragment extends BaseFragment {
         return;
       ItemShopMainMomentBinding itemShopMainMomentBinding = (ItemShopMainMomentBinding) holder
           .getBinding();
-      itemShopMainMomentBinding.pl.setRatio(0.67f);
+      itemShopMainMomentBinding.pl.setRatio(1f);
       itemShopMainMomentBinding.pl.setSource(itemShopMainMomentBinding.getItem().getImages(), true);
       if (position == binding.lst.getAdapter().getItemCount() - 1)
         // 图片全部加载完时更新UI
@@ -198,7 +199,26 @@ public class ShopMainMomentFragment extends BaseFragment {
      */
     public void onPraise(final Comment comment) {
       if (comment.isPraise()) {
-        ToastUtil.toastHint(getContext(), R.string.discovery_praised);
+        // 取消赞
+        new CancelPraiseLikeCase(comment.getId()).execute(new HttpSubscriber<Void>(getContext()) {
+          @Override
+          public void onFailure(String errorMsg, Response<Void> response) {
+            DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+          }
+
+          @Override
+          public void onSuccess(Response<Void> response) {
+            ToastUtil.toastHint(getContext(), R.string.discovery_cancel_praise_success);
+            for (Comment comment1 : adapter.getData()) {
+              if (comment.getId().equals(comment1.getId())) {
+                comment.setPraise(false);
+                comment.setPraiseCount(comment.getPraiseCount() - 1);
+              }
+
+            }
+            adapter.notifyDataSetChanged();
+          }
+        });
         return;
       }
       new PraiseLikeCase(comment.getId()).execute(new HttpSubscriber<Void>(getContext()) {

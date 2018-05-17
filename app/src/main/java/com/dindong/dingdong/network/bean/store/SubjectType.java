@@ -5,7 +5,7 @@ package com.dindong.dingdong.network.bean.store;
  */
 
 public enum SubjectType {
-  NORMAL("普通"), GROUP("团购");
+  NORMAL("普通"), GROUP("团购"), AUDITION("试听");
 
   private String name;
 

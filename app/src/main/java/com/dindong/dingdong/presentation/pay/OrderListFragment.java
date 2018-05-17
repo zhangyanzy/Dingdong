@@ -15,9 +15,8 @@ import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderState;
-import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.util.DialogUtil;
-import com.dindong.dingdong.util.PhotoUtil;
+import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
@@ -103,7 +102,7 @@ public class OrderListFragment extends BaseFragment {
     else
       param.setStart(adapter.getData().size());
     if (orderState != null)
-      param.getFilters().add(new FilterParam("state:=", orderState));
+      param.getFilters().add(new FilterParam("state", orderState));
 
     SweetAlertDialog sweetAlertDialog = null;
     if (showProgress) {
@@ -155,17 +154,8 @@ public class OrderListFragment extends BaseFragment {
         return;
       ItemOrderListBinding itemBinding = (ItemOrderListBinding) holder.getBinding();
 
-      PhotoUtil.load(getContext(),
-          itemBinding.getItem().getOrderType().equals(OrderType.subject)
-              ? itemBinding.getItem().getSubject().getImages().get(0).getUrl()
-              : itemBinding.getItem().getShopGood().getImages().get(0).getUrl(),
-          itemBinding.img);
-      itemBinding.txtName.setText(itemBinding.getItem().getOrderType().equals(OrderType.subject)
-          ? itemBinding.getItem().getSubject().getName()
-          : itemBinding.getItem().getShopGood().getName());
-      itemBinding.txtShopName.setText(itemBinding.getItem().getOrderType().equals(OrderType.subject)
-          ? itemBinding.getItem().getSubject().getStore().getName()
-          : itemBinding.getItem().getShopGood().getStore().getName());
+      itemBinding.txtName.setText(itemBinding.getItem().getItemName());
+      itemBinding.txtShopName.setText(itemBinding.getItem().getStore().getName());
     }
   }
 
@@ -203,6 +193,7 @@ public class OrderListFragment extends BaseFragment {
             orders.remove(index);
             adapter.notifyDataSetChanged();
           }
+          ToastUtil.toastSuccess(getContext(), "取消成功");
         }
       });
     }

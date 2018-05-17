@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
-                    android:text="@{OrderXml.getStateStr(order.orderState)}"
+                    android:text="@{OrderXml.getStateStr(order.state)}"
                     android:textColor="@color/light_black"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="@{order.orderState.equals(OrderState.wait)||order.orderState.equals(OrderState.wait_group)?View.GONE:View.VISIBLE}">
+                    android:visibility="@{order.state.equals(OrderState.waitPay.toString())||order.state.equals(OrderState.grouping.toString())?View.GONE:View.VISIBLE}">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{order.code}"
+                                android:text="@{order.checkCode}"
                                 android:textColor="#468DE6"
                                 android:textSize="17dp"
                                 android:textStyle="bold" />
@@ -221,12 +221,12 @@
                                     android:layout_width="52dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="8dp"
-                                    android:background="@{OrderXml.getStateDrawable(order.orderState)}"
+                                    android:background="@{OrderXml.getStateDrawable(order.state)}"
                                     android:gravity="center"
-                                    android:text="@{order.orderState.equals(OrderState.can_use)?@string/order_detail_tip_can_use:@string/order_detail_tip_wait_group}"
+                                    android:text="@{order.state.equals(OrderState.confirmed.toString())?@string/order_detail_tip_can_use:@string/order_detail_tip_wait_group}"
                                     android:textColor="@color/white"
                                     android:textSize="13dp"
-                                    android:visibility="@{order.orderState.equals(OrderState.can_use)||order.orderState.equals(OrderState.wait_group)?View.VISIBLE:View.GONE}" />
+                                    android:visibility="@{order.state.equals(OrderState.confirmed.toString())||order.state.equals(OrderState.grouping.toString())?View.VISIBLE:View.GONE}" />
 
                                 <TextView
                                     android:id="@+id/txt_good_name"
@@ -287,7 +287,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:text="@{order.orderNum}"
+                            android:text="@{order.billNo}"
                             android:textColor="@color/light_black"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -333,7 +333,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:text="@{order.orderState.equals(OrderState.wait)||order.orderState.equals(OrderState.wait_group)?@string/order_detail_pay_online:order.orderNum}"
+                            android:text="@{order.state.equals(OrderState.waitPay.toString())||order.state.equals(OrderState.grouping.toString())?@string/order_detail_pay_online:order.billNo}"
                             android:textColor="@color/light_black"
                             android:textSize="14dp" />
                     </LinearLayout>
@@ -380,7 +380,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
-                                android:text="@{StringUtil.amount(order.totalAmount)}"
+                                android:text="@{StringUtil.amount(order.realAmount)}"
                                 android:textColor="@color/light_black"
                                 android:textSize="17dp" />
 
@@ -421,7 +421,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
-                                android:text="@{StringUtil.amount(order.favourAmount)}"
+                                android:text="0.00"
                                 android:textColor="@color/light_black"
                                 android:textSize="17dp" />
 
@@ -467,7 +467,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
-                                android:text="@{StringUtil.amount(order.payAmount)}"
+                                android:text="@{StringUtil.amount(order.realAmount)}"
                                 android:textColor="#FF9C09"
                                 android:textSize="17dp" />
 
@@ -488,7 +488,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="@{order.orderState.equals(OrderState.wait)||order.orderState.equals(OrderState.wait_group)?View.VISIBLE:View.GONE}">
+            android:visibility="@{order.state.equals(OrderState.waitPay.toString())||order.state.equals(OrderState.grouping.toString())?View.VISIBLE:View.GONE}">
 
             <LinearLayout style="@style/divider_title" />
 

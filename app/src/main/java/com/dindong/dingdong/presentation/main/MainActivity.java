@@ -14,6 +14,7 @@ import com.dindong.dingdong.presentation.main.fragment.MineFragment;
 import com.dindong.dingdong.presentation.main.fragment.MsgFragment;
 import com.dindong.dingdong.presentation.main.fragment.WorkFragment;
 import com.dindong.dingdong.util.ExitHelper;
+import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.util.PermissionUtil;
 import com.dindong.dingdong.util.UpgradeUtil;
@@ -51,6 +52,7 @@ public class MainActivity extends BaseActivity {
 
   public static final int IDENTIFICATION_DISCOVERY = 0X01;
   public static final int IDENTIFICATION_MSG = 0X02;
+  private static final int SEND_MOMENT_SUCCESS = 0X03;
 
   private NotifyTimerJob discoveryJob;
   private NotifyTimerJob msgJob;
@@ -59,6 +61,8 @@ public class MainActivity extends BaseActivity {
       Manifest.permission.ACCESS_COARSE_LOCATION };
 
   private ExitHelper.TwicePressHolder mExitHelper;
+
+  public static int TAB_POSITION_MINE = 3;
 
   @Override
   protected void initComponent() {
@@ -79,8 +83,9 @@ public class MainActivity extends BaseActivity {
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
       AuthIdentity identity = (AuthIdentity) getIntent()
           .getSerializableExtra(AppConfig.IntentKey.DATA);
-      initFragment(identity);
-      initTab(identity);
+      int position = getIntent().getIntExtra("position", -1);
+      initTab(identity, position);
+      initFragment(identity, position);
     }
 
     UpgradeUtil.getInstance().checkVersion(this);
@@ -134,9 +139,19 @@ public class MainActivity extends BaseActivity {
 
   }
 
-  private void initTab(AuthIdentity identity) {
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == SEND_MOMENT_SUCCESS && resultCode == RESULT_OK
+        && binding.vp.getCurrentItem() == 1 && fragments.get(1) instanceof DiscoveryFragment) {
+      ((DiscoveryFragment) fragments.get(1)).refreshMoment();
+    }
+  }
+
+  private void initTab(AuthIdentity identity, int position) {
     tabViews = new ArrayList<>();
     int tabPosition = 0;
+    int defaultPosition = position < 0 ? 0 : position;
     if (identity.equals(AuthIdentity.MEMBER))
       tabs = tab_member;
     else if (identity.equals(AuthIdentity.INSTITUTION))
@@ -154,16 +169,16 @@ public class MainActivity extends BaseActivity {
         continue;
       }
       tabViews.add((ViewGroup) ((ViewGroup) binding.tab.getChildAt(i)).getChildAt(0));
-      if (tabPosition == 0) {
-        lastSelectView = tabViews.get(0);
-        setTabSelect(0);
+      if (tabPosition == defaultPosition) {
+        lastSelectView = tabViews.get(defaultPosition);
+        setTabSelect(defaultPosition);
       }
       ((TextView) ((ViewGroup) tabViews.get(tabPosition)).getChildAt(1))
           .setText(tabs[tabPosition++]);
     }
   }
 
-  private void initFragment(AuthIdentity identity) {
+  private void initFragment(AuthIdentity identity, int position) {
     fragments = new ArrayList<>();
     if (identity.equals(AuthIdentity.MEMBER)) {
       fragments.add(new HomeFragment());
@@ -200,7 +215,7 @@ public class MainActivity extends BaseActivity {
     MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
     binding.vp.setAdapter(adapter);
 
-    binding.vp.setCurrentItem(0);
+    binding.vp.setCurrentItem(position < 0 ? 0 : position);
   }
 
   private void setTabSelect(int index) {
@@ -209,6 +224,17 @@ public class MainActivity extends BaseActivity {
     lastSelectView.setSelected(false);
     lastSelectView = tabViews.get(index);
     lastSelectView.setSelected(true);
+  }
+
+  /**
+   * 显示有声有色
+   */
+  public void showImpressive() {
+    if (binding.vp.getChildCount() >= 2 && !IsEmpty.list(fragments)
+        && fragments.get(1) instanceof DiscoveryFragment) {
+      binding.vp.setCurrentItem(1);
+      ((DiscoveryFragment) fragments.get(1)).showImpressive();
+    }
   }
 
   /**
@@ -297,7 +323,8 @@ public class MainActivity extends BaseActivity {
      * 发动态
      */
     public void onSendMoment() {
-      startActivity(new Intent(MainActivity.this, SendMomentActivity.class));
+      startActivityForResult(new Intent(MainActivity.this, SendMomentActivity.class),
+          SEND_MOMENT_SUCCESS);
     }
   }
 }

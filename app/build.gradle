@@ -88,4 +88,7 @@ dependencies {
     implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
     compile 'com.google.android:flexbox:0.2.0'
+    dependencies {
+        compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    }
 }

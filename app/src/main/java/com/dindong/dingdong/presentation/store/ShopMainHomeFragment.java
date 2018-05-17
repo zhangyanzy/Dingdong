@@ -98,6 +98,8 @@ public class ShopMainHomeFragment extends BaseFragment {
     binding.lstHotSubject.setNestedScrollingEnabled(false);
   }
 
+  private ListTeacherCase listTeacherCase;
+
   /**
    * 获取老师列表
    */
@@ -105,7 +107,8 @@ public class ShopMainHomeFragment extends BaseFragment {
     final QueryParam param = new QueryParam();
     param.setLimit(4);
 
-    new ListTeacherCase(shopId, param).execute(new HttpSubscriber<List<Teacher>>() {
+    listTeacherCase = new ListTeacherCase(shopId, param);
+    listTeacherCase.execute(new HttpSubscriber<List<Teacher>>() {
       @Override
       public void onFailure(String errorMsg, Response<List<Teacher>> response) {
         ((ShopMainActivity) getActivity()).updateViewPagerHeight();
@@ -127,6 +130,8 @@ public class ShopMainHomeFragment extends BaseFragment {
     });
   }
 
+  private ListCommentCase listCommentCase;
+
   /**
    * 获取门店评论
    * 
@@ -138,57 +143,66 @@ public class ShopMainHomeFragment extends BaseFragment {
     param.setLimit(999);
     param.getFilters().add(new FilterParam("relationId", shopId));
 
-    new ListCommentCase(param)
-        .execute(new HttpSubscriber<List<Comment>>(showProgress ? getContext() : null) {
-          @Override
-          public void onFailure(String errorMsg, Response<List<Comment>> response) {
-            DialogUtil.getErrorDialog(getContext(), errorMsg).show();
-            ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+    listCommentCase = new ListCommentCase(param);
+    listCommentCase.execute(new HttpSubscriber<List<Comment>>(showProgress ? getContext() : null) {
+      @Override
+      public void onFailure(String errorMsg, Response<List<Comment>> response) {
+        DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+      }
+
+      @Override
+      public void onSuccess(Response<List<Comment>> response) {
+
+        isMore = response.isMore();
+        comments = response.getData();
+        // 计算平均评分
+        BigDecimal ratingTotal = BigDecimal.ZERO;
+        for (Comment comment : response.getData()) {
+          ratingTotal = ratingTotal.add(comment.getRating());
+        }
+        ratingTotal = ratingTotal.compareTo(BigDecimal.ZERO) == 0 ? ratingTotal
+            : ratingTotal.divide(new BigDecimal(response.getData().size()), 1,
+                BigDecimal.ROUND_HALF_UP);
+        if (new BigDecimal(ratingTotal.intValue()).compareTo(ratingTotal) != 0) {
+          String rating = StringUtil.format("{0,number,0.0}", ratingTotal);
+          if (rating.indexOf(".") > 0) {
+            BigDecimal point = new BigDecimal(
+                rating.substring(rating.indexOf(".") + 1, rating.length()));
+            ratingTotal.setScale(0,
+                point.compareTo(BigDecimal.valueOf(5)) >= 0 ? BigDecimal.ROUND_UP
+                    : BigDecimal.ROUND_DOWN);
           }
+        }
+        binding.rating.setRating(ratingTotal.floatValue());
 
-          @Override
-          public void onSuccess(Response<List<Comment>> response) {
+        binding.txtRatingTotal.setText(StringUtil
+            .format(getString(R.string.shop_main_comment_title), response.getData().size()));
 
-            isMore = response.isMore();
-            comments = response.getData();
-            // 计算平均评分
-            BigDecimal ratingTotal = BigDecimal.ZERO;
-            for (Comment comment : response.getData()) {
-              ratingTotal = ratingTotal.add(comment.getRating());
-            }
-            ratingTotal = ratingTotal.compareTo(BigDecimal.ZERO) == 0 ? ratingTotal
-                : ratingTotal.divide(new BigDecimal(response.getData().size()), 1,
-                    BigDecimal.ROUND_HALF_UP);
-            if (new BigDecimal(ratingTotal.intValue()).compareTo(ratingTotal) != 0) {
-              String rating = StringUtil.format("{0,number,0.0}", ratingTotal);
-              if (rating.indexOf(".") > 0) {
-                BigDecimal point = new BigDecimal(
-                    rating.substring(rating.indexOf(".") + 1, rating.length()));
-                ratingTotal.setScale(0,
-                    point.compareTo(BigDecimal.valueOf(5)) >= 0 ? BigDecimal.ROUND_UP
-                        : BigDecimal.ROUND_DOWN);
-              }
-            }
-            binding.rating.setRating(ratingTotal.floatValue());
+        SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(),
+            R.layout.item_shop_main_home_comment);
+        adapter.addAll(
+            response.getData().size() >= 3 ? response.getData().subList(0, 3) : response.getData());
+        adapter.setDecorator(new Decorator());
+        adapter.setPresenter(new Presenter());
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.lstComment.setLayoutManager(manager);
+        binding.lstComment.setAdapter(adapter);
+        binding.lstComment.setNestedScrollingEnabled(false);
 
-            binding.txtRatingTotal.setText(StringUtil
-                .format(getString(R.string.shop_main_comment_title), response.getData().size()));
+        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+      }
+    });
+  }
 
-            SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(),
-                R.layout.item_shop_main_home_comment);
-            adapter.addAll(response.getData().size() >= 3 ? response.getData().subList(0, 3)
-                : response.getData());
-            adapter.setDecorator(new Decorator());
-            adapter.setPresenter(new Presenter());
-            LinearLayoutManager manager = new LinearLayoutManager(getContext());
-            manager.setOrientation(LinearLayoutManager.VERTICAL);
-            binding.lstComment.setLayoutManager(manager);
-            binding.lstComment.setAdapter(adapter);
-            binding.lstComment.setNestedScrollingEnabled(false);
-
-            ((ShopMainActivity) getActivity()).updateViewPagerHeight();
-          }
-        });
+  @Override
+  public void onDestroy() {
+    if (listTeacherCase != null)
+      listTeacherCase.unSubscribe();
+    if (listCommentCase != null)
+      listCommentCase.unSubscribe();
+    super.onDestroy();
   }
 
   public class Decorator implements BaseViewAdapter.Decorator {
@@ -217,7 +231,6 @@ public class ShopMainHomeFragment extends BaseFragment {
       intent.putExtra(AppConfig.IntentKey.SUMMARY, shop);
       startActivity(intent);
     }
-
 
     public void onCommentItemClick(Comment comment) {
       Intent intent = new Intent(getContext(), ShopCommentDetailActivity.class);

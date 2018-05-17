@@ -2,7 +2,7 @@ package com.dindong.dingdong.network.api.pay.usecase;
 
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.BaseUseCase;
-import com.dindong.dingdong.network.api.pay.PayServiceApi;
+import com.dindong.dingdong.network.api.pay.OrderServiceApi;
 
 import rx.Observable;
 
@@ -12,7 +12,7 @@ import rx.Observable;
  * 取消订单 </>
  */
 
-public class CancelOrderCase extends BaseUseCase<PayServiceApi> {
+public class CancelOrderCase extends BaseUseCase<OrderServiceApi> {
   private String orderId;
 
   public CancelOrderCase(String orderId) {
@@ -21,6 +21,6 @@ public class CancelOrderCase extends BaseUseCase<PayServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(BaseUseCase.isMock).cancel(SessionMgr.getUser().getId(), orderId);
+    return createConnection(BaseUseCase.isMock).cancel(orderId);
   }
 }

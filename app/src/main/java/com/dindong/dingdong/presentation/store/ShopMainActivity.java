@@ -95,12 +95,12 @@ public class ShopMainActivity extends BaseActivity {
   public void updateViewPagerHeight() {
     if (binding.vp == null)
       return;
-    binding.vp.post(new Runnable() {
+    binding.vp.postDelayed(new Runnable() {
       @Override
       public void run() {
         binding.vp.updateHeight(binding.vp.getCurrentItem());
       }
-    });
+    },100);
 
   }
 

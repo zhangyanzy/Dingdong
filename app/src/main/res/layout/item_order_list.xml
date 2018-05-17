@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="@{StringUtil.format(@string/order_list_num,item.orderNum)}"
+                android:text="@{StringUtil.format(@string/order_list_num,item.billNo)}"
                 android:textColor="#666666"
                 android:textSize="13dp" />
 
@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="@{item.orderState.name}"
-                android:textColor="@{OrderXml.getTextColorByState(item.orderState)}"
+                android:text="@{item.stateName}"
+                android:textColor="@{OrderXml.getTextColorByState(item.state)}"
                 android:textSize="13dp" />
 
         </RelativeLayout>
@@ -69,7 +69,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:scaleType="fitXY"
-                app:imageResourceUrl='@{IsEmpty.list(item.subject.images)?"":item.subject.images.get(0).url}' />
+                app:imageResourceUrl='@{item.itemImageUrl}' />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="2dp"
-                            android:text="@{StringUtil.amount(item.payAmount)}"
+                            android:text="@{StringUtil.amount(item.realAmount)}"
                             android:textColor="#FF9C09"
                             android:textSize="17dp" />
                     </LinearLayout>
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:visibility="@{item.orderState.equals(OrderState.wait)?View.VISIBLE:View.GONE}">
+            android:visibility="@{item.state.equals(OrderState.waitPay.toString())?View.VISIBLE:View.GONE}">
 
             <LinearLayout
                 android:layout_width="wrap_content"
