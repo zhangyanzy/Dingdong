@@ -117,7 +117,7 @@ public class DiscoveryMomentFragment extends BaseFragment {
   @Override
   protected void firstVisible() {
     super.firstVisible();
-    loadData(fragmentType.equals(FragmentType.impressive), true);
+    loadData(true, true);
   }
 
   @Override

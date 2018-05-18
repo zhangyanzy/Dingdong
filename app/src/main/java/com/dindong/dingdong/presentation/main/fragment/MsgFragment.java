@@ -34,13 +34,17 @@ public class MsgFragment extends BaseFragment {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_msg, container, false);
 
     binding.nb.setLeftImageVisiable();
-    initViewPager();
     return binding.getRoot();
   }
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
 
+  }
+
+  @Override
+  protected void firstVisible() {
+    initViewPager();
   }
 
   @Override

@@ -41,12 +41,16 @@ public class DiscoveryFragment extends BaseFragment {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    initFragment();
   }
 
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
+  }
+
+  @Override
+  protected void firstVisible() {
+    initFragment();
   }
 
   private void initFragment() {

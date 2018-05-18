@@ -68,13 +68,16 @@ public class HomeFragment extends BaseFragment {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-
-    refreshData();
   }
 
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
+  }
+
+  @Override
+  protected void firstVisible() {
+    refreshData();
   }
 
   @Override

@@ -153,9 +153,9 @@ public class OrderConfirmActivity extends BaseActivity {
                     // 支付成功，跳转到订单列表
                     Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
                     intent
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(AppConfig.IntentKey.DATA,
-                            SessionMgr.getUser().getIdentities().get(0));
+                        SessionMgr.getUser().getIdentities().get(0));
                     intent.putExtra("position", MainActivity.TAB_POSITION_MINE);
                     startActivity(intent);
 
@@ -168,19 +168,6 @@ public class OrderConfirmActivity extends BaseActivity {
                   public void onPayFailure() {
                     ToastUtil.toastFailure(OrderConfirmActivity.this, "支付失败");
                     PayCallback.clean();
-
-                    // 支付成功，跳转到订单列表
-                    Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
-                    intent
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(AppConfig.IntentKey.DATA,
-                        SessionMgr.getUser().getIdentities().get(0));
-                    intent.putExtra("position", MainActivity.TAB_POSITION_MINE);
-                    startActivity(intent);
-
-                    Intent intent2 = new Intent(OrderConfirmActivity.this, OrderListActivity.class);
-                    intent2.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_FINISH);
-                    startActivity(intent2);
                   }
                 });
 
@@ -193,7 +180,6 @@ public class OrderConfirmActivity extends BaseActivity {
                 request.packageValue = response.getData().getPackage2();
                 request.nonceStr = response.getData().getNoncestr();
                 request.timeStamp = response.getData().getTimestamp();
-                request.timeStamp = response.getData().getTimestamp();
                 request.sign = response.getData().getSign();
 
                 api.sendReq(request);
@@ -201,6 +187,11 @@ public class OrderConfirmActivity extends BaseActivity {
             });
       }
     });
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
   }
 
   public class Presenter {
@@ -216,7 +207,10 @@ public class OrderConfirmActivity extends BaseActivity {
     }
 
     public void onPay(View view) {
-      preSubmit();
+      if (tabIndex == 0)
+        preSubmit();
+      else if (tabIndex == 1)
+        ToastUtil.toastHint(OrderConfirmActivity.this, "暂不支付微信支付");
     }
   }
 }

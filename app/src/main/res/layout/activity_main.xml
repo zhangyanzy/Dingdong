@@ -43,20 +43,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:gravity="center_horizontal"
                         android:onClick="@{presenter.onTabSelect}"
                         android:orientation="vertical"
                         android:paddingBottom="2dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:paddingTop="8dp">
+                        android:paddingTop="5dp">
 
                         <FrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="22dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:src="@drawable/bg_main_tab_home" />
 
                             <de.hdodenhof.circleimageview.CircleImageView
@@ -74,7 +75,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/color_main_tab" />
+                            android:layout_marginTop="1dp"
+                            android:textColor="@color/color_main_tab"
+                            android:textSize="11dp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -95,15 +98,15 @@
                         android:paddingBottom="2dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:paddingTop="8dp">
+                        android:paddingTop="5dp">
 
                         <FrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="22dp"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
                                 android:src="@drawable/bg_main_tab_find" />
 
                             <de.hdodenhof.circleimageview.CircleImageView
@@ -121,7 +124,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/color_main_tab" />
+                            android:layout_marginTop="1dp"
+                            android:textColor="@color/color_main_tab"
+                            android:textSize="11dp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -160,16 +165,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:gravity="center_horizontal"
                         android:onClick="@{presenter.onTabSelect}"
                         android:orientation="vertical"
                         android:paddingBottom="2dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:paddingTop="8dp">
+                        android:paddingTop="5dp">
 
                         <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_width="27dp"
+                            android:layout_height="27dp">
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -191,7 +197,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/color_main_tab" />
+                            android:layout_marginTop="1dp"
+                            android:textColor="@color/color_main_tab"
+                            android:textSize="11dp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -200,6 +208,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -211,17 +220,19 @@
                         android:paddingBottom="2dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:paddingTop="8dp">
+                        android:paddingTop="5dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
                             android:src="@drawable/bg_main_tab_mine" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/color_main_tab" />
+                            android:layout_marginTop="1dp"
+                            android:textColor="@color/color_main_tab"
+                            android:textSize="11dp" />
                     </LinearLayout>
 
                 </LinearLayout>

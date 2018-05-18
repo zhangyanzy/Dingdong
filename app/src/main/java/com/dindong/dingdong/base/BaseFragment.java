@@ -53,7 +53,7 @@ public abstract class BaseFragment extends RxFragment {
   public void setUserVisibleHint(boolean isVisibleToUser) {
     super.setUserVisibleHint(isVisibleToUser);
     if (isVisibleToUser) {
-      if (isFirstVisible && hasCreate) {
+      if (isFirstVisible && hasCreate && mRootView != null) {
         isFirstVisible = false;
         firstVisible();
       }
