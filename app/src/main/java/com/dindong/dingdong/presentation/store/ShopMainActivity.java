@@ -10,9 +10,13 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityShopMainBinding;
 import com.dindong.dingdong.databinding.TabOrderListBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.like.usecase.CancelFollowLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.FollowLikeCase;
 import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
+import com.dindong.dingdong.network.api.shop.usecase.GetShopCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
+import com.dindong.dingdong.network.bean.like.LikeEntityType;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.discovery.MomentConverter;
@@ -21,15 +25,12 @@ import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.util.PhoneUtil;
-import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
-import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -79,16 +80,36 @@ public class ShopMainActivity extends BaseActivity {
   protected void loadData(Bundle savedInstanceState) {
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
       shop = (Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
-      binding.setItem(shop);
-      initViewPager(binding);
-
-      binding.topLayout.post(new Runnable() {
-        @Override
-        public void run() {
-          topHeight = binding.topLayout.getMeasuredHeight();
-        }
-      });
+      getShop(shop.getId());
     }
+  }
+
+  /**
+   * 获取门店信息
+   * 
+   * @param shopId
+   */
+  private void getShop(String shopId) {
+    new GetShopCase(shopId).execute(new HttpSubscriber<Shop>() {
+      @Override
+      public void onFailure(String errorMsg, Response<Shop> response) {
+        DialogUtil.getErrorDialog(ShopMainActivity.this, errorMsg).show();
+      }
+
+      @Override
+      public void onSuccess(Response<Shop> response) {
+        shop = response.getData();
+        binding.setItem(shop);
+        initViewPager(binding);
+
+        binding.topLayout.post(new Runnable() {
+          @Override
+          public void run() {
+            topHeight = binding.topLayout.getMeasuredHeight();
+          }
+        });
+      }
+    });
   }
 
   /**
@@ -102,7 +123,7 @@ public class ShopMainActivity extends BaseActivity {
       public void run() {
         binding.vp.updateHeight(binding.vp.getCurrentItem());
       }
-    },100);
+    }, 200);
 
   }
 
@@ -420,6 +441,48 @@ public class ShopMainActivity extends BaseActivity {
       startActivity(intent);
     }
 
+    /**
+     * 关注/取消关注门店
+     * 
+     * @param shop
+     */
+    public void follow(final Shop shop) {
+      if (shop.isFavorite()) {
+        // 如果已关注，则取消关注
+        new CancelFollowLikeCase(LikeEntityType.store, shop.getId())
+            .execute(new HttpSubscriber<Void>(ShopMainActivity.this) {
+              @Override
+              public void onFailure(String errorMsg, Response<Void> response) {
+                DialogUtil.getErrorDialog(ShopMainActivity.this, errorMsg).show();
+              }
+
+              @Override
+              public void onSuccess(Response<Void> response) {
+                ToastUtil.toastHint(ShopMainActivity.this, "取消关注");
+                shop.setFavorite(false);
+                shop.setFavoriteCount(shop.getFavoriteCount() - 1);
+                binding.setItem(shop);
+              }
+            });
+        return;
+      }
+      // 关注该门店
+      new FollowLikeCase(LikeEntityType.store, shop.getId())
+          .execute(new HttpSubscriber<Void>(ShopMainActivity.this) {
+            @Override
+            public void onFailure(String errorMsg, Response<Void> response) {
+              DialogUtil.getErrorDialog(ShopMainActivity.this, errorMsg).show();
+            }
+
+            @Override
+            public void onSuccess(Response<Void> response) {
+              ToastUtil.toastHint(ShopMainActivity.this, "关注成功");
+              shop.setFavorite(true);
+              shop.setFavoriteCount(shop.getFavoriteCount() + 1);
+              binding.setItem(shop);
+            }
+          });
+    }
   }
 
 }

@@ -116,7 +116,42 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"></LinearLayout>
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="12dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="56dp"
+                                    android:layout_height="24dp"
+                                    android:background="@drawable/btn_gradient_corner50_blue"
+                                    android:gravity="center"
+                                    android:onClick="@{()->presenter.follow(item)}"
+                                    android:text="@{item.favorite?@string/shop_main_favorite:@string/shop_main_un_favorite}"
+                                    android:textColor="@color/white" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="center_vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{StringUtil.transQty(item.favoriteCount,1)}"
+                                        android:textColor="#FF8082"
+                                        android:textSize="14dp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="4dp"
+                                        android:text="粉丝"
+                                        android:textColor="@color/light_black"
+                                        android:textSize="12dp" />
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <RelativeLayout

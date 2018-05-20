@@ -14,6 +14,8 @@
 
     <!--门店主页-->
     <string name="shop_main_title">门店主页</string>
+    <string name="shop_main_favorite">已关注</string>
+    <string name="shop_main_un_favorite">关注</string>
     <string name="shop_main_msg_prove">已认证教学场地与工商登记</string>
     <string name="shop_main_label_prove">认</string>
     <string name="shop_main_activity">本店活动</string>
@@ -46,4 +48,7 @@
     <string name="shop_comment_list_rating">打分</string>
 
     <string name="shop_comment_detail_title">评价详情</string>
+
+    <!--账户明细-->
+    <string name="account_log_description">来自{0}</string>
 </resources>

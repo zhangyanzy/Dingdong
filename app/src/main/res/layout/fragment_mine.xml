@@ -390,6 +390,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_white"
+                android:onClick="@{()->presenter.onHome()}"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp">
 
@@ -410,7 +411,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:onClick="@{()->presenter.onHome()}"
                         android:text="@string/mine_label_home"
                         android:textColor="#333333"
                         android:textSize="14dp" />
@@ -440,6 +440,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_white"
+                android:onClick="@{()->presenter.onAccount()}"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp">
 

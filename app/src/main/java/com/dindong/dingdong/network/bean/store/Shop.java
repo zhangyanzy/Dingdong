@@ -31,6 +31,8 @@ public class Shop implements Serializable {
   private List<Subject> subjects = new ArrayList<>();// 课程列表，当为门店列表时最多有两个课程
   private String remark;// 门店介绍
   private BigDecimal praise = BigDecimal.ZERO;// 门店平均星数
+  private boolean favorite = false;// 当前用户是否关注
+  private int favoriteCount = 0;// 收藏数量
 
   public String getId() {
     return id;
@@ -142,5 +144,21 @@ public class Shop implements Serializable {
 
   public void setPraise(BigDecimal praise) {
     this.praise = praise;
+  }
+
+  public boolean isFavorite() {
+    return favorite;
+  }
+
+  public void setFavorite(boolean favorite) {
+    this.favorite = favorite;
+  }
+
+  public int getFavoriteCount() {
+    return favoriteCount;
+  }
+
+  public void setFavoriteCount(int favoriteCount) {
+    this.favoriteCount = favoriteCount;
   }
 }

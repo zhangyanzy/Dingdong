@@ -56,13 +56,16 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c6b87d66ff3941cb8f1d63d69807b5e4" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="wx5b0c56b85d8488f3" />
             </intent-filter>
         </activity>
@@ -130,7 +133,9 @@
         <activity
             android:name=".presentation.store.ShopCommentListActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden" />
-        <activity android:name=".presentation.store.ShopCommentDetailActivity"></activity>
+        <activity android:name=".presentation.store.ShopCommentDetailActivity" />
+        <activity android:name=".presentation.user.UserMainActivity" />
+        <activity android:name=".presentation.user.UserAccountActivity"></activity>
     </application>
 
 </manifest>

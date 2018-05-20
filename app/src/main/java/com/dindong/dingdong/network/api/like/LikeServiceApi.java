@@ -42,7 +42,18 @@ public interface LikeServiceApi {
    */
   @POST("like/follow/{entityType}/{entityId}")
   Observable<Response<Void>> followLike(@Path("entityType") LikeEntityType entityType,
-      String entityId);
+      @Path("entityId") String entityId);
+
+  /**
+   * 取消关注
+   * 
+   * @param entityType
+   * @param entityId
+   * @return
+   */
+  @DELETE("like/follow/{entityType}/{entityId}")
+  Observable<Response<Void>> cancelFollowLike(@Path("entityType") LikeEntityType entityType,
+      @Path("entityId") String entityId);
 
   /**
    * 点赞

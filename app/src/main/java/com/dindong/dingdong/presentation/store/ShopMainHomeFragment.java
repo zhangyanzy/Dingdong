@@ -89,7 +89,8 @@ public class ShopMainHomeFragment extends BaseFragment {
     SubjectAdapter subjectAdapter = new SubjectAdapter(getContext());
     subjectAdapter.setPresenter(new Presenter());
     subjectAdapter.setMargin100(true);
-    subjectAdapter.set(subjects);
+    subjectAdapter.addAll(subjects.size() >= 2 ? subjects.subList(0, 2) : subjects);
+
     subjectAdapter.setShop(shop);
     LinearLayoutManager manager = new LinearLayoutManager(getContext());
     manager.setOrientation(LinearLayoutManager.VERTICAL);

@@ -7,6 +7,8 @@ import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.presentation.pay.OrderListActivity;
 import com.dindong.dingdong.presentation.user.SettingActivity;
+import com.dindong.dingdong.presentation.user.UserAccountActivity;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 
 import android.content.Intent;
@@ -115,8 +117,18 @@ public class MineFragment extends BaseFragment {
       startActivity(new Intent(getContext(), BlueWristMainActivity.class));
     }
 
+    /**
+     * 个人主页
+     */
     public void onHome() {
+      startActivity(new Intent(getContext(), UserMainActivity.class));
+    }
 
+    /**
+     * 查看账户明细
+     */
+    public void onAccount() {
+      startActivity(new Intent(getContext(), UserAccountActivity.class));
     }
   }
 }

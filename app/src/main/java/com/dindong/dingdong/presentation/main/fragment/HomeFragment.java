@@ -30,7 +30,6 @@ import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
-import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.RegionStorageUtil;
@@ -86,7 +85,7 @@ public class HomeFragment extends BaseFragment {
     if (isVisibleToUser) {
       if (binding == null)
         return;
-      refreshData();
+      // refreshData();
     }
   }
 
@@ -247,9 +246,10 @@ public class HomeFragment extends BaseFragment {
               .equals(SessionMgr.getCurrentAdd().getCity().getId()))
         return;
       Region city = (Region) data.getSerializableExtra(AppConfig.IntentKey.DATA);
-      SessionMgr.SessionAddress address = new SessionMgr.SessionAddress();
-      address.setCity(city);
-      SessionMgr.setCurrentAdd(address);
+      // SessionMgr.SessionAddress address = new SessionMgr.SessionAddress();
+      // address.setCity(city);
+      // SessionMgr.setCurrentAdd(address);
+      SessionMgr.getCurrentAdd().setCity(city);
       binding.txtProvince.setText(city.getText());
       loadListData();
     }

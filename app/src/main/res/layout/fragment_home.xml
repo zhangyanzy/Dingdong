@@ -79,7 +79,7 @@
                         android:drawablePadding="10dp"
                         android:gravity="center_vertical"
                         android:hint="@string/main_home_edit_hint"
-                        android:inputType="phone"
+                        android:inputType="text"
                         android:maxLines="1"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"

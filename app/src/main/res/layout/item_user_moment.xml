@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.dindong.dingdong.presentation.discovery.DiscoveryXml" />
+
+        <import type="com.dindong.dingdong.util.DateUtil" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.presentation.store.ShopMainMomentFragment.Presenter" />
+
+        <variable
+            name="item"
+            type="com.dindong.dingdong.network.bean.comment.Comment" />
+
+        <import type="com.dindong.dingdong.util.StringUtil" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->presenter.onItemClick(item)}"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/mine_fragment_photo"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        app:imageUserResourceUrl="@{item.ucn.image.url}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:text="@{DateUtil.format(item.date,DateUtil.DEFAULT_DATE_FORMAT_3)}"
+                        android:textColor="#888888"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:text="@{item.message}"
+                android:textColor="#888888"
+                android:textSize="14dp" />
+
+            <com.dindong.dingdong.widget.photo.PhotoLayout
+                android:id="@+id/pl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <View
+            style="@style/divider_item"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:onClick="@{()->presenter.onCommentShopMoment(item)}"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@mipmap/ic_chat" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:text="@{StringUtil.transQty(item.commentCount,1)}"
+                    android:textColor="#666666"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <View
+                style="@style/divider_up_item"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:onClick="@{()->presenter.onPraise(item)}"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@{DiscoveryXml.getPraiseDrawable(item.praise)}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:text="@{StringUtil.transQty(item.praiseCount,1)}"
+                    android:textColor="#666666"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/space_item" />
+    </LinearLayout>
+</layout>
