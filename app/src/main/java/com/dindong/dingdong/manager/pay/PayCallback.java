@@ -1,4 +1,4 @@
-package com.dindong.dingdong.manager;
+package com.dindong.dingdong.manager.pay;
 
 /**
  * Created by wcong on 2018/5/18.

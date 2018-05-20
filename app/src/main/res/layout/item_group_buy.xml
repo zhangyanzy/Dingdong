@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.dindong.dingdong.util.StringUtil" />
+
+        <import type="com.dindong.dingdong.util.DateUtil" />
+
+        <import type="com.dindong.dingdong.presentation.subject.SubjectXml" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.presentation.subject.SubjectDetailActivity.Presenter" />
+
+        <variable
+            name="item"
+            type="com.dindong.dingdong.network.bean.groupbuy.GroupBuy" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/mine_fragment_photo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="12dp"
+                    app:imageUserResourceUrl="@{item.userAvatarUrl}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{item.userName}"
+                    android:textColor="@color/light_black"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:visibility='@{item.state.equals("ready")?View.GONE:View.VISIBLE}'>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{StringUtil.format(@string/subject_detail_group_member_count,item.groupOrderNumber-item.memberCount)}"
+                            android:textColor="@color/light_black"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@{StringUtil.format(@string/subject_detail_group_end_time,DateUtil.format(item.endTime,DateUtil.DEFAULT_DATE_FORMAT_10))}"
+                            android:textColor="#888888"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已成团"
+                        android:textColor="@color/light_black"
+                        android:textSize="15dp"
+                        android:visibility='@{item.state.equals("ready")?View.VISIBLE:View.GONE}' />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@{SubjectXml.getGroupBtnBg(item.state)}"
+                    android:onClick="@{()->presenter.onGroupBuyClick(item)}"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="9dp"
+                    android:paddingRight="9dp"
+                    android:paddingTop="5dp"
+                    android:text="@{SubjectXml.getGroupBtnTxt(item.state)}"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

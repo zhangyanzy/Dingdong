@@ -5,6 +5,7 @@ import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.databinding.ActivitySettingBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.manager.ShortcutMgr;
+import com.dindong.dingdong.network.bean.auth.AuthIdentity;
 import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
@@ -23,7 +24,7 @@ public class SettingActivity extends BaseActivity {
 
     binding.nb.setContent(NavigationTopBar.ContentType.WHITE);
     binding.txtIdentity.setText(StringUtil.format(getString(R.string.setting_current_identity),
-        SessionMgr.getUser().getIdentities().get(0).getName()));
+        AuthIdentity.getAuthIdentity(SessionMgr.getUser().getIdentitie()).getName()));
   }
 
   @Override

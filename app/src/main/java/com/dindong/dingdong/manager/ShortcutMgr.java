@@ -23,7 +23,7 @@ public class ShortcutMgr {
     SessionMgr.updateUser(user);
     Intent intent = new Intent(DDApp.getInstance(), MainActivity.class);
     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra(AppConfig.IntentKey.DATA, user.getIdentities().get(0));
+//    intent.putExtra(AppConfig.IntentKey.DATA, user.getIdentities().get(0));
     DDApp.getInstance().startActivity(intent);
   }
 

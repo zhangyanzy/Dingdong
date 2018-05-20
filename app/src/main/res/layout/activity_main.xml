@@ -219,6 +219,7 @@
                         android:orientation="vertical"
                         android:paddingBottom="2dp"
                         android:paddingLeft="10dp"
+                        android:gravity="center_horizontal"
                         android:paddingRight="10dp"
                         android:paddingTop="5dp">
 

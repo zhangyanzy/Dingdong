@@ -9,6 +9,9 @@
     <!--课程详情-->
     <string name="subject_detail_title">课程详情</string>
     <string name="subject_detail_btn_fav">收藏</string>
-    <string name="subject_detail_btn_pay_normal">立即拼团</string>
+    <string name="subject_detail_btn_pay_normal">发起拼团</string>
     <string name="subject_detail_btn_pay_group">立即购买</string>
+    <string name="subject_detail_group_count">{0}人在开团，可直接参与</string>
+    <string name="subject_detail_group_end_time">剩余{0}</string>
+    <string name="subject_detail_group_member_count">还差{0}人拼团</string>
 </resources>

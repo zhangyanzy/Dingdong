@@ -22,12 +22,25 @@ public class DateUtil {
   public static String DEFAULT_DATE_FORMAT_7 = "HH:mm";
   public static String DEFAULT_DATE_FORMAT_8 = "yyyyMMdd HH:mm";
   public static String DEFAULT_DATE_FORMAT_9 = "M月dd日";
+  public static String DEFAULT_DATE_FORMAT_10 = "HH:mm:ss";
 
   public static String format(Date date, String format) {
     if (IsEmpty.object(date))
       return null;
     SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
     return sdf.format(date);
+  }
+
+  public static String format(String date, String format) {
+    if (IsEmpty.object(date))
+      return null;
+    SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
+    try {
+      return sdf.format(parse(date, DEFAULT_DATE_FORMAT));
+    } catch (ParseException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   public static Date parse(String date, String format) throws ParseException {

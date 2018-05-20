@@ -8,25 +8,25 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityOrderConfirmBinding;
-import com.dindong.dingdong.manager.PayCallback;
 import com.dindong.dingdong.manager.SessionMgr;
+import com.dindong.dingdong.manager.pay.PayCallback;
+import com.dindong.dingdong.manager.pay.PayManager;
 import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.pay.usecase.GroupBuyCase;
 import com.dindong.dingdong.network.api.pay.usecase.PreSubmitOrderCase;
-import com.dindong.dingdong.network.api.wxpay.usecase.WxUnifiedOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderType;
+import com.dindong.dingdong.network.bean.pay.PayMode;
 import com.dindong.dingdong.network.bean.store.Subject;
-import com.dindong.dingdong.network.bean.wxpay.WxUnifiedOrderResult;
+import com.dindong.dingdong.network.bean.store.SubjectType;
 import com.dindong.dingdong.presentation.main.MainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.CountView;
 import com.dindong.dingdong.widget.NavigationTopBar;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -47,10 +47,15 @@ public class OrderConfirmActivity extends BaseActivity {
 
   private Order order;
 
+  private SweetAlertDialog dialog;
+
+  private String groupId = null;
+
   @Override
   protected void initComponent() {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_order_confirm);
 
+    dialog = DialogUtil.getProgressDialog(this);
     binding.nb.setContent(NavigationTopBar.ContentType.WHITE);
     binding.cv.setMaxValue(BigDecimal.valueOf(99));
     lastTab = binding.tabWex;
@@ -60,6 +65,7 @@ public class OrderConfirmActivity extends BaseActivity {
   @Override
   protected void loadData(Bundle savedInstanceState) {
     subject = (Subject) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+    groupId = getIntent().getStringExtra("groupId");
     binding.setSubject(subject);
   }
 
@@ -122,71 +128,75 @@ public class OrderConfirmActivity extends BaseActivity {
    * 预下单
    */
   private void preSubmit() {
-    if (order == null)
+    if (order == null) {
       // 防止由于网络错误，创建新订单
       order = createOrder();
-    new PreSubmitOrderCase(order).execute(new HttpSubscriber<Order>(this) {
-      @Override
-      public void onFailure(String errorMsg, Response<Order> response) {
-        DialogUtil.getErrorDialog(OrderConfirmActivity.this, errorMsg).show();
-      }
+      if (dialog != null)
+        dialog.show();
+      if (subject.getSubjectType().equals(SubjectType.GROUP)) {
+        if (groupId != null)
+          // 如果参团，则需传原始团id
+          order.setGroupBuyId(groupId);
+        // 团购商品则下单拼团
+        new GroupBuyCase(order).execute(orderHttpSubscriber);
+      } else
+        // 正常商品则下单购买
+        new PreSubmitOrderCase(order).execute(orderHttpSubscriber);
+    } else {
+      // 如果已经创建订单，则直接去支付
+      pay(order);
+    }
 
-      @Override
-      public void onSuccess(Response<Order> response) {
-        order = response.getData();
-        ToastUtil.toastSuccess(OrderConfirmActivity.this, "下单成功");
-        new WxUnifiedOrderCase(order.getId())
-            .execute(new HttpSubscriber<WxUnifiedOrderResult>(OrderConfirmActivity.this) {
-              @Override
-              public void onFailure(String errorMsg, Response<WxUnifiedOrderResult> response) {
-                DialogUtil.getErrorDialog(OrderConfirmActivity.this, errorMsg).show();
-              }
+  }
 
-              @Override
-              public void onSuccess(Response<WxUnifiedOrderResult> response) {
-                PayCallback.register(new PayCallback.Callback() {
-                  @Override
-                  public void onPaySuccess() {
-                    ToastUtil.toastSuccess(OrderConfirmActivity.this, "支付成功");
-                    PayCallback.clean();
+  /**
+   * 统一下单回调
+   */
+  private HttpSubscriber<Order> orderHttpSubscriber = new HttpSubscriber<Order>() {
+    @Override
+    public void onFailure(String errorMsg, Response<Order> response) {
+      if (dialog != null)
+        dialog.dismiss();
+      DialogUtil.getErrorDialog(OrderConfirmActivity.this, errorMsg).show();
+      // 请求失败，则清空订单，重新创建新订单
+      order = null;
+    }
 
-                    // 支付成功，跳转到订单列表
-                    Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
-                    intent
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(AppConfig.IntentKey.DATA,
-                        SessionMgr.getUser().getIdentities().get(0));
-                    intent.putExtra("position", MainActivity.TAB_POSITION_MINE);
-                    startActivity(intent);
+    @Override
+    public void onSuccess(Response<Order> response) {
+      if (dialog != null)
+        dialog.dismiss();
+      order = response.getData();
+      ToastUtil.toastSuccess(OrderConfirmActivity.this, "下单成功");
+      pay(order);// 下单成功后，去支付
+    }
+  };
 
-                    Intent intent2 = new Intent(OrderConfirmActivity.this, OrderListActivity.class);
-                    intent2.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_FINISH);
-                    startActivity(intent2);
-                  }
+  private void pay(Order order) {
+    new PayManager(OrderConfirmActivity.this, PayMode.weiXin).setOrder(order)
+        .setCallback(new PayCallback.Callback() {
+          @Override
+          public void onPaySuccess() {
+            ToastUtil.toastSuccess(OrderConfirmActivity.this, "支付成功");
 
-                  @Override
-                  public void onPayFailure() {
-                    ToastUtil.toastFailure(OrderConfirmActivity.this, "支付失败");
-                    PayCallback.clean();
-                  }
-                });
+            // 支付成功，跳转到订单列表
+            Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(AppConfig.IntentKey.DATA, SessionMgr.getUser().getIdentities().get(0));
+            intent.putExtra("position", MainActivity.TAB_POSITION_MINE);
+            startActivity(intent);
 
-                IWXAPI api = WXAPIFactory.createWXAPI(OrderConfirmActivity.this,
-                    AppConfig.PartyKey.WEX_PAY);
-                PayReq request = new PayReq();
-                request.appId = response.getData().getAppid();
-                request.partnerId = response.getData().getPartnerid();
-                request.prepayId = response.getData().getPrepayid();
-                request.packageValue = response.getData().getPackage2();
-                request.nonceStr = response.getData().getNoncestr();
-                request.timeStamp = response.getData().getTimestamp();
-                request.sign = response.getData().getSign();
+            Intent intent2 = new Intent(OrderConfirmActivity.this, OrderListActivity.class);
+            intent2.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_USE);
+            startActivity(intent2);
+          }
 
-                api.sendReq(request);
-              }
-            });
-      }
-    });
+          @Override
+          public void onPayFailure() {
+            ToastUtil.toastFailure(OrderConfirmActivity.this, "支付失败");
+          }
+        }).pay();
+
   }
 
   @Override
@@ -210,7 +220,7 @@ public class OrderConfirmActivity extends BaseActivity {
       if (tabIndex == 0)
         preSubmit();
       else if (tabIndex == 1)
-        ToastUtil.toastHint(OrderConfirmActivity.this, "暂不支付微信支付");
+        ToastUtil.toastHint(OrderConfirmActivity.this, "暂不支付支付宝支付");
     }
   }
 }

@@ -15,6 +15,8 @@
     <color name="silver">#C6C6C8</color><!-- 提示文本色 -->
     <color name="silverTwo">#DCDDDF</color><!-- 强分割线 -->
     <color name="silverThree">#EBECEE</color><!-- 弱分割线，默认按钮底色 -->
+    <color name="cool_grey">#979799</color>
+    <color name="charcoal_grey">#2C3036</color>
 
     <color name="float_transparent">#00000000</color>
     <color name="red">#fa364e</color>

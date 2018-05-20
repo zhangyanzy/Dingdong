@@ -7,7 +7,7 @@ package com.dindong.dingdong.network.bean.pay;
  */
 
 public enum OrderState {
-  waitPay("待付款"), grouping("拼团中"), confirmed("可使用"), finished("已完成"), canceled("支付失败");
+  waitPay("待付款"), grouping("拼团中"), confirmed("可使用"), finished("已完成"), cannceled("已取消");
   private String name;
 
   OrderState(String name) {

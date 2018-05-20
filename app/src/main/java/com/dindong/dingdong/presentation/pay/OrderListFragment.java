@@ -7,6 +7,7 @@ import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentOrderListBinding;
 import com.dindong.dingdong.databinding.ItemOrderListBinding;
+import com.dindong.dingdong.manager.pay.PayCallback;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.pay.usecase.CancelOrderCase;
 import com.dindong.dingdong.network.api.pay.usecase.ListOrderCase;
@@ -95,7 +96,7 @@ public class OrderListFragment extends BaseFragment {
     });
   }
 
-  private void listOrder(boolean showProgress, final boolean isRefresh) {
+  public void listOrder(boolean showProgress, final boolean isRefresh) {
     final QueryParam param = new QueryParam();
     if (isRefresh)
       param.setStart(0);
@@ -162,6 +163,10 @@ public class OrderListFragment extends BaseFragment {
   public class Presenter implements BaseViewAdapter.Presenter {
 
     public void onItemClick(Order order) {
+      if (order.getState().equals(OrderState.cannceled)) {
+        // 订单已取消无法查看
+        return;
+      }
       Intent intent = new Intent(getContext(), OrderDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, order);
       startActivityForResult(intent, REQUEST_CODE);
@@ -190,7 +195,11 @@ public class OrderListFragment extends BaseFragment {
             }
           }
           if (index >= 0) {
-            orders.remove(index);
+            if (orderState == null) {
+              // 如果列表状态为全部，则只订单状态
+              orders.get(index).setState(OrderState.cannceled.toString());
+            } else
+              orders.remove(index);
             adapter.notifyDataSetChanged();
           }
           ToastUtil.toastSuccess(getContext(), "取消成功");
@@ -204,9 +213,20 @@ public class OrderListFragment extends BaseFragment {
      * @param order
      */
     public void onCommit(Order order) {
-      Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-      intent.putExtra(AppConfig.IntentKey.DATA, order);
-      startActivityForResult(intent, REQUEST_CODE);
+      new PayModeSelectDialog(getContext(), order).setPayCallback(new PayCallback.Callback() {
+        @Override
+        public void onPaySuccess() {
+          ToastUtil.toastSuccess(getContext(), "支付成功");
+          Intent intent2 = new Intent(getContext(), OrderListActivity.class);
+          intent2.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_USE);
+          startActivity(intent2);
+        }
+
+        @Override
+        public void onPayFailure() {
+          ToastUtil.toastFailure(getContext(), "支付失败");
+        }
+      }).show();
     }
 
   }

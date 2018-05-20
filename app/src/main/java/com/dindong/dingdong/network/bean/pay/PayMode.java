@@ -18,4 +18,14 @@ public enum PayMode {
   public String getName() {
     return name;
   }
+
+  public static String getName(String code) {
+    for (PayMode payMode : PayMode.values()) {
+      if (code.equals(payMode.toString())) {
+        return payMode.getName();
+      }
+    }
+    return "";
+  }
+
 }

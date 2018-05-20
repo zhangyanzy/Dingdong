@@ -32,6 +32,15 @@ public interface OrderServiceApi {
   Observable<Response<Order>> preSubmit(@Query("userId") String userId, @Body Order order);
 
   /**
+   * 新增团购订单
+   *
+   * @param order
+   * @return
+   */
+  @POST("order/groupbuy")
+  Observable<Response<Order>> groupBuy(@Body Order order);
+
+  /**
    * 订单查询
    *
    * @param userId

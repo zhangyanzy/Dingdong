@@ -1,8 +1,10 @@
 package com.dindong.dingdong.util;
 
 import com.dindong.dingdong.R;
+import com.dindong.dingdong.widget.EnterInfoDialog;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
@@ -32,6 +34,24 @@ public class DialogUtil {
     SweetAlertDialog dialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
     dialog.setTitleText(string);
     dialog.getProgressHelper().setBarColor(ContextCompat.getColor(context, R.color.colorPrimary));
+    return dialog;
+  }
+
+  public static Dialog getEnterDialog(Context context, String title, String hint,
+      String defaultValue, EnterInfoDialog.OnConfirmListener listener) {
+
+    return getEnterDialog(context, title, hint, defaultValue, -1, -1, listener);
+  }
+
+  public static Dialog getEnterDialog(Context context, String title, String hint,
+      String defaultValue, int length, int inputType, EnterInfoDialog.OnConfirmListener listener) {
+    EnterInfoDialog dialog = new EnterInfoDialog(context, title, listener);
+    dialog.setHint(hint);
+    dialog.setDefaultValue(defaultValue);
+    if (length > 0)
+      dialog.setEnterLength(length);
+    if (inputType > -1)
+      dialog.setInputType(inputType);
     return dialog;
   }
 

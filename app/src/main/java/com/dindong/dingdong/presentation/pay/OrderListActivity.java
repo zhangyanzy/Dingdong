@@ -12,6 +12,7 @@ import com.dindong.dingdong.network.bean.pay.OrderState;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,6 +48,30 @@ public class OrderListActivity extends BaseActivity {
   @Override
   protected void loadData(Bundle savedInstanceState) {
     int intentType = getIntent().getIntExtra(AppConfig.IntentKey.DATA, -1);
+    if (intentType != -1) {
+      switch (intentType) {
+      case OrderListActivity.TYPE_WAIT_PAY:
+        tabPosition = 1;
+        break;
+      case OrderListActivity.TYPE_GROUP:
+        tabPosition = 2;
+        break;
+      case OrderListActivity.TYPE_USE:
+        tabPosition = 3;
+        break;
+      case OrderListActivity.TYPE_FINISH:
+        tabPosition = 4;
+        break;
+      }
+    }
+    initViewPager();
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+
+    int intentType = intent.getIntExtra(AppConfig.IntentKey.DATA, -1);
     if (intentType != -1) {
       switch (intentType) {
       case OrderListActivity.TYPE_WAIT_PAY:

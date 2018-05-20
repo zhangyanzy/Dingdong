@@ -9,6 +9,10 @@
         <variable
             name="user"
             type="com.dindong.dingdong.network.bean.auth.User" />
+
+        <variable
+            name="presenter"
+            type="com.dindong.dingdong.presentation.user.UserInfoActivity.Presenter" />
     </data>
 
     <LinearLayout
@@ -42,6 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_white"
+                        android:onClick="@{()->presenter.onModifyAvatar()}"
                         android:paddingBottom="12dp"
                         android:paddingTop="12dp">
 
@@ -75,6 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_white"
+                        android:onClick="@{()->presenter.onModifyName()}"
                         android:paddingBottom="12dp"
                         android:paddingTop="12dp">
 
@@ -126,6 +132,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_white"
+                        android:onClick="@{()->presenter.onModifySex()}"
                         android:paddingBottom="12dp"
                         android:paddingTop="12dp">
 
@@ -177,6 +184,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_white"
+                        android:onClick="@{()->presenter.onModifyBirthday()}"
                         android:paddingBottom="12dp"
                         android:paddingTop="12dp">
 
@@ -228,6 +236,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_white"
+                        android:onClick="@{()->presenter.onModifyDescription()}"
                         android:paddingBottom="12dp"
                         android:paddingTop="12dp">
 

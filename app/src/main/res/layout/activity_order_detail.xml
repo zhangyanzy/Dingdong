@@ -110,27 +110,19 @@
                     <include layout="@layout/space_item" />
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingBottom="7dp"
                     android:paddingTop="7dp">
-
-                    <ImageView
-                        android:id="@+id/img_mobile"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="23dp"
-                        android:layout_marginRight="12dp"
-                        android:src="@mipmap/ic_phone" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/img_mobile"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -182,7 +174,32 @@
                         </RelativeLayout>
 
                     </LinearLayout>
-                </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:onClick="@{()->presenter.onMobile(order.store.phone)}"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:layout_marginRight="12dp"
+                            android:background="#E5E5E5" />
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="12dp"
+                            android:src="@mipmap/ic_phone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
                 <include layout="@layout/space_item" />
@@ -316,11 +333,13 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_pay_mode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginTop="12dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="70dp"
@@ -330,12 +349,14 @@
                             android:textSize="14dp" />
 
                         <TextView
+                            android:id="@+id/txt_pay_mode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:text="@{order.state.equals(OrderState.waitPay.toString())||order.state.equals(OrderState.grouping.toString())?@string/order_detail_pay_online:order.billNo}"
+                            android:text="在线支付"
                             android:textColor="@color/light_black"
                             android:textSize="14dp" />
+                        <!--android:text="@{order.state.equals(OrderState.waitPay.toString())||order.state.equals(OrderState.grouping.toString())?@string/order_detail_pay_online:order.billNo}"-->
                     </LinearLayout>
                 </LinearLayout>
 

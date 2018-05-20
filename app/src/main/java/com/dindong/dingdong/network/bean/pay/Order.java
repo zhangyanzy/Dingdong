@@ -23,7 +23,7 @@ public class Order implements Serializable {
   private BigDecimal price = BigDecimal.ZERO;// 商品原价
   private BigDecimal qty = BigDecimal.ZERO;// 购买数量
   private BigDecimal realAmount = BigDecimal.ZERO;// 商品总额
-  private PayMode payMode;// 支付方式
+  private String payMode;// 支付方式
   private String checkCode;// 销核码
   private Shop store;
 
@@ -34,7 +34,9 @@ public class Order implements Serializable {
   private String itemType;// 类型：课程/商品/活动
   private String itemTypeName;// 订单类型名称
 
-  private String userId;//
+  private String userId;//会员用户ID
+
+  private String groupBuyId;//参团ID
 
   public String getId() {
     return id;
@@ -108,11 +110,11 @@ public class Order implements Serializable {
     this.realAmount = realAmount;
   }
 
-  public PayMode getPayMode() {
+  public String getPayMode() {
     return payMode;
   }
 
-  public void setPayMode(PayMode payMode) {
+  public void setPayMode(String payMode) {
     this.payMode = payMode;
   }
 
@@ -178,5 +180,13 @@ public class Order implements Serializable {
 
   public void setUserId(String userId) {
     this.userId = userId;
+  }
+
+  public String getGroupBuyId() {
+    return groupBuyId;
+  }
+
+  public void setGroupBuyId(String groupBuyId) {
+    this.groupBuyId = groupBuyId;
   }
 }

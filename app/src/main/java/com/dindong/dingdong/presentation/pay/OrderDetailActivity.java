@@ -4,19 +4,25 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityOrderDetailBinding;
+import com.dindong.dingdong.manager.pay.PayCallback;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.pay.usecase.CancelOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
+import com.dindong.dingdong.network.bean.pay.PayMode;
 import com.dindong.dingdong.util.CuteR;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.PhoneUtil;
 import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.StringUtil;
+import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.View;
 
 public class OrderDetailActivity extends BaseActivity {
 
@@ -65,6 +71,10 @@ public class OrderDetailActivity extends BaseActivity {
     PhotoUtil.load(this, order.getItemImageUrl(), binding.img);
     binding.txtGoodName.setText(order.getItemName());
     binding.txtAmount.setText(StringUtil.amount(order.getPrice()));
+    if (!IsEmpty.string(order.getPayMode())) {
+      binding.layoutPayMode.setVisibility(View.VISIBLE);
+      binding.txtPayMode.setText(PayMode.getName(order.getPayMode()));
+    }
   }
 
   public class Presenter {
@@ -98,8 +108,27 @@ public class OrderDetailActivity extends BaseActivity {
      */
     public void onPay(Order order) {
       // 通知上一界面刷新数据
-      setResult(RESULT_OK);
-      finish();
+      new PayModeSelectDialog(OrderDetailActivity.this, order)
+          .setPayCallback(new PayCallback.Callback() {
+            @Override
+            public void onPaySuccess() {
+              ToastUtil.toastSuccess(OrderDetailActivity.this, "支付成功");
+              Intent intent2 = new Intent(OrderDetailActivity.this, OrderListActivity.class);
+              intent2.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_USE);
+              startActivity(intent2);
+              finish();
+            }
+
+            @Override
+            public void onPayFailure() {
+              ToastUtil.toastFailure(OrderDetailActivity.this, "支付失败");
+            }
+          }).show();
+
+    }
+
+    public void onMobile(final String mobile) {
+      PhoneUtil.call(OrderDetailActivity.this, mobile);
     }
   }
 }

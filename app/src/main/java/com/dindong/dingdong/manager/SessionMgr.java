@@ -62,6 +62,10 @@ public class SessionMgr {
     StorageMgr.set(KEY_SESSION, session, StorageMgr.LEVEL_GLOBAL);
   }
 
+  public static void updateUser() {
+    StorageMgr.set(KEY_SESSION, session, StorageMgr.LEVEL_GLOBAL);
+  }
+
   // 获取 Session
   public static AuthSession getSession() {
     return session;

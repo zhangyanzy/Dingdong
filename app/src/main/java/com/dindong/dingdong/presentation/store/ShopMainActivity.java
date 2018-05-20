@@ -20,6 +20,8 @@ import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
+import com.dindong.dingdong.util.PhoneUtil;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
@@ -404,22 +406,7 @@ public class ShopMainActivity extends BaseActivity {
     }
 
     public void onMobile(final String mobile) {
-      SweetAlertDialog dialog = DialogUtil.getConfirmDialog(ShopMainActivity.this, mobile);
-      dialog.setConfirmText(getString(R.string.shop_main_mobile));
-      dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-        @Override
-        public void onClick(SweetAlertDialog sweetAlertDialog) {
-          try {
-            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mobile)));
-          } catch (Exception e) {
-            e.printStackTrace();
-            ToastUtil.toastFailure(ShopMainActivity.this, getString(R.string.shop_main_mobile_err));
-          }
-          sweetAlertDialog.dismiss();
-        }
-      });
-      dialog.setCanceledOnTouchOutside(true);
-      dialog.show();
+      PhoneUtil.call(ShopMainActivity.this, mobile);
     }
 
     /**

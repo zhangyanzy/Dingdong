@@ -22,7 +22,7 @@ public class OrderXml {
    */
   public static int getTextColorByState(String orderState) {
     if (orderState == null)
-      return Color.parseColor("#FF9C09");
+      return Color.parseColor("#333333");
     if (orderState.equals(OrderState.waitPay.toString()))
       return Color.parseColor("#FF9C09");
     else if (orderState.equals(OrderState.grouping.toString()))
@@ -31,7 +31,7 @@ public class OrderXml {
       return Color.parseColor("#FF8082");
     else if (orderState.equals(OrderState.finished.toString()))
       return Color.parseColor("#888888");
-    return Color.parseColor("#FF9C09");
+    return Color.parseColor("#333333");
   }
 
   /**

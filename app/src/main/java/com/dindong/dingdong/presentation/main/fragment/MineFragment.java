@@ -37,6 +37,13 @@ public class MineFragment extends BaseFragment {
   }
 
   @Override
+  public void onResume() {
+    super.onResume();
+    if (binding != null)
+      binding.setUser(SessionMgr.getUser());
+  }
+
+  @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
   }

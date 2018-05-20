@@ -3,10 +3,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="com.dindong.dingdong.util.IsEmpty" />
 
         <import type="com.dindong.dingdong.util.StringUtil" />
 
+        <import type="com.dindong.dingdong.presentation.store.ShopXml" />
+
+        <import type="com.dindong.dingdong.network.bean.store.SubjectType" />
 
         <variable
             name="store"
@@ -24,7 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/btn_white"
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{()->presenter.onSubjectItemClick(item)}"
         android:orientation="vertical">
@@ -57,13 +62,34 @@
                     android:layout_marginLeft="12dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{item.name}"
-                        android:textColor="#333333"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:background="@{ShopXml.getSubjectBg(item.subjectType)}"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:text="@{ShopXml.getSubjectStr(item.subjectType)}"
+                            android:textColor="@color/white"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            android:visibility="@{item.subjectType.equals(SubjectType.GROUP)?View.VISIBLE:View.GONE}" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{item.name}"
+                            android:textColor="#333333"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"

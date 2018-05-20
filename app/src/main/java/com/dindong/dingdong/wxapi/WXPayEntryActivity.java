@@ -1,7 +1,7 @@
 package com.dindong.dingdong.wxapi;
 
 import com.dindong.dingdong.config.AppConfig;
-import com.dindong.dingdong.manager.PayCallback;
+import com.dindong.dingdong.manager.pay.PayCallback;
 import com.dindong.dingdong.util.IsEmpty;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -47,9 +47,11 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
       if (resp.errCode == 0) // 支付成功
       {
         PayCallback.requestSuccess();
+        PayCallback.clean();
         Log.i(TAG, "支付成功");
       } else {
         PayCallback.requestFailure();
+        PayCallback.clean();
         Log.e(TAG, "支付失败" + resp.errCode);
         if (!IsEmpty.string(resp.errStr))
           Log.e(TAG, resp.errStr);

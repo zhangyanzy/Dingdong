@@ -18,6 +18,7 @@ import com.dindong.dingdong.util.IsEmpty;
 public class User extends ShallowCopy<User> implements Serializable, Cloneable {
   private String id;// UUID
   private List<AuthIdentity> identities;// 用户身份
+  private String identitie;// 用户身份
   private String name;// 昵称
   private String mobile;// 手机号
   private String sex;// 性别
@@ -132,5 +133,13 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
 
   public void setUserImage(GlobalImage userImage) {
     this.userImage = userImage;
+  }
+
+  public String getIdentitie() {
+    return identitie;
+  }
+
+  public void setIdentitie(String identitie) {
+    this.identitie = identitie;
   }
 }

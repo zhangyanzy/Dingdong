@@ -5,7 +5,7 @@ package com.dindong.dingdong.network.bean.auth;
  */
 
 public enum AuthIdentity {
-  INSTITUTION("机构"), MEMBER("会员/老师");
+  INSTITUTION("机构"), MEMBER("会员"), PTEACHER("平台老师"), ITEACHER("机构老师");
   private String name;
 
   AuthIdentity(String name) {
@@ -14,5 +14,15 @@ public enum AuthIdentity {
 
   public String getName() {
     return name;
+  }
+
+  public static AuthIdentity getAuthIdentity(String code) {
+    for (AuthIdentity identity : AuthIdentity.values()) {
+      if (code.equals(identity.toString()) || code.equals(identity.toString().toUpperCase())
+          || code.equals(identity.toString().toLowerCase())) {
+        return identity;
+      }
+    }
+    return null;
   }
 }
