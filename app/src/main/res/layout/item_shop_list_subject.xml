@@ -12,13 +12,15 @@
             type="com.dindong.dingdong.network.bean.store.Subject" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center_vertical">
@@ -54,6 +56,6 @@
             android:text="@{@string/global_amount_unit+StringUtil.amount(item.amount)}"
             android:textColor="#FF9C09"
             android:textSize="17dp" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

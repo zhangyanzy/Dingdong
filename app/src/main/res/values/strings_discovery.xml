@@ -2,7 +2,7 @@
 <resources>
     <string name="discovery_title">发现</string>
     <string name="discovery_tab_moment">最新动态</string>
-    <string name="discovery_tab_sound">有声有色</string>
+    <string name="discovery_tab_sound">叮咚头条</string>
     <string name="discovery_reward">打赏</string>
     <string name="discovery_praise">赞</string>
     <string name="discovery_praised">已经赞过该动态啦</string>

@@ -5,11 +5,14 @@ import com.amap.api.maps2d.CameraUpdate;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityShopMapBinding;
 import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
 import android.databinding.DataBindingUtil;
@@ -39,9 +42,18 @@ public class ShopMapActivity extends BaseActivity {
       aMap = binding.map.getMap();
       aMap.getUiSettings().setZoomControlsEnabled(false);// 隐藏缩放按钮
     }
-    CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(
-        new LatLng(Double.valueOf(latitude), Double.valueOf(longitude)), 15, 0, 30));
+
+    LatLng latLng = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
+
+    CameraUpdate cameraUpdate = CameraUpdateFactory
+        .newCameraPosition(new CameraPosition(latLng, 19, 0, 30));
     aMap.moveCamera(cameraUpdate);
+
+    final Marker marker = aMap.addMarker(new MarkerOptions()
+        .position(latLng).title(shop.getName()).snippet(StringUtil
+            .format(getString(R.string.global_range), StringUtil.formatRange(shop.getRange())))
+        .anchor(1.0f, 1f));// 绘制点标记
+    marker.showInfoWindow();
   }
 
   @Override

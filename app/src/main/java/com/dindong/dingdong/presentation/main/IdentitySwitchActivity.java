@@ -49,6 +49,6 @@ public class IdentitySwitchActivity extends BaseActivity {
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    LocationMgr.stopLocation();
+//    LocationMgr.stopLocation();
   }
 }

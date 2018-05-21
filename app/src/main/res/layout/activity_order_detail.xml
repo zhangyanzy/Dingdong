@@ -154,7 +154,8 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginTop="4dp"
                                 android:layout_toLeftOf="@id/txt_range"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:onClick="@{()->presenter.onAdd(order.store)}">
 
                                 <ImageView
                                     android:layout_width="22dp"

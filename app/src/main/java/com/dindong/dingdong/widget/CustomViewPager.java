@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.dindong.dingdong.util.DensityUtil;
+
 /**
  * Created by wcong on 2018/5/9.
  * <p>
@@ -45,7 +47,7 @@ public class CustomViewPager extends ViewPager {
       View child = getChildAt(i);
       child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
       int h = child.getMeasuredHeight();
-      itemHeights.add(h);
+      itemHeights.add(i==0?h+ DensityUtil.dip2px(getContext(),30):h);
       height = h;
     }
 

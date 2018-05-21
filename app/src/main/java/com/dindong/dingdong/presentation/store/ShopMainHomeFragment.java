@@ -56,7 +56,7 @@ public class ShopMainHomeFragment extends BaseFragment {
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_main_home, container, false);
 
-    ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+    updateViewPagerHeight();
     binding.txtRatingTotal
         .setText(StringUtil.format(getString(R.string.shop_main_comment_title), 0));
     return binding.getRoot();
@@ -67,7 +67,7 @@ public class ShopMainHomeFragment extends BaseFragment {
     if (getArguments().getSerializable(AppConfig.IntentKey.DATA) != null) {
       shop = (Shop) getArguments().getSerializable(AppConfig.IntentKey.DATA);
       initHotSubject(shop.getSubjects());
-      listTeacher(shop.getId());
+//      listTeacher(shop.getId());
       listComment(false, shop.getId());
     }
 
@@ -112,7 +112,7 @@ public class ShopMainHomeFragment extends BaseFragment {
     listTeacherCase.execute(new HttpSubscriber<List<Teacher>>() {
       @Override
       public void onFailure(String errorMsg, Response<List<Teacher>> response) {
-        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+        updateViewPagerHeight();
       }
 
       @Override
@@ -126,9 +126,19 @@ public class ShopMainHomeFragment extends BaseFragment {
         binding.lstTeacher.setAdapter(adapter);
         binding.lstTeacher.setNestedScrollingEnabled(false);
 
+        updateViewPagerHeight();
+      }
+    });
+  }
+
+  private void updateViewPagerHeight(){
+    binding.getRoot().post(new Runnable() {
+      @Override
+      public void run() {
         ((ShopMainActivity) getActivity()).updateViewPagerHeight();
       }
     });
+
   }
 
   private ListCommentCase listCommentCase;
@@ -149,7 +159,7 @@ public class ShopMainHomeFragment extends BaseFragment {
       @Override
       public void onFailure(String errorMsg, Response<List<Comment>> response) {
         DialogUtil.getErrorDialog(getContext(), errorMsg).show();
-        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+        updateViewPagerHeight();
       }
 
       @Override
@@ -192,7 +202,7 @@ public class ShopMainHomeFragment extends BaseFragment {
         binding.lstComment.setAdapter(adapter);
         binding.lstComment.setNestedScrollingEnabled(false);
 
-        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+        updateViewPagerHeight();
       }
     });
   }
@@ -219,7 +229,7 @@ public class ShopMainHomeFragment extends BaseFragment {
           .setSource(itemShopMainHomeCommentBinding.getItem().getImages(), true);
       if (position == binding.lstComment.getAdapter().getItemCount() - 1)
         // 图片全部加载完时更新UI
-        ((ShopMainActivity) getActivity()).updateViewPagerHeight();
+        updateViewPagerHeight();
     }
   }
 

@@ -16,15 +16,18 @@ import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.api.shop.usecase.GetShopCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
+import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.like.LikeEntityType;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.discovery.MomentConverter;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
+import com.dindong.dingdong.util.DensityUtil;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.util.PhoneUtil;
+import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -43,6 +46,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 /**
  * 门店主页
@@ -80,6 +85,7 @@ public class ShopMainActivity extends BaseActivity {
   protected void loadData(Bundle savedInstanceState) {
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
       shop = (Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+      initShopImage(shop);
       getShop(shop.getId());
     }
   }
@@ -93,12 +99,21 @@ public class ShopMainActivity extends BaseActivity {
     new GetShopCase(shopId).execute(new HttpSubscriber<Shop>() {
       @Override
       public void onFailure(String errorMsg, Response<Shop> response) {
-        DialogUtil.getErrorDialog(ShopMainActivity.this, errorMsg).show();
+        binding.setItem(shop);
+        initViewPager(binding);
+
+        binding.topLayout.post(new Runnable() {
+          @Override
+          public void run() {
+            topHeight = binding.topLayout.getMeasuredHeight();
+          }
+        });
       }
 
       @Override
       public void onSuccess(Response<Shop> response) {
-        shop = response.getData();
+        shop.setFavoriteCount(response.getData().getFavoriteCount());
+        shop.setFavorite(response.getData().isFavorite());
         binding.setItem(shop);
         initViewPager(binding);
 
@@ -110,6 +125,26 @@ public class ShopMainActivity extends BaseActivity {
         });
       }
     });
+  }
+
+  /**
+   * 加载门店展示图
+   * 
+   * @param shop
+   */
+  private void initShopImage(Shop shop) {
+    if (shop == null || shop.getImages() == null)
+      return;
+    for (GlobalImage image : shop.getImages()) {
+      ImageView imageView = new ImageView(this);
+      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtil.dip2px(this, 85),
+          DensityUtil.dip2px(this, 66));
+      params.rightMargin = DensityUtil.dip2px(this, 4);
+      imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+      imageView.setLayoutParams(params);
+      PhotoUtil.load(this, image.getUrl(), imageView);
+      binding.layoutShopImg.addView(imageView);
+    }
   }
 
   /**

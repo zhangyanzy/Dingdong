@@ -31,7 +31,18 @@ public interface LikeServiceApi {
    */
   @POST("like/favorite/{entityType}/{entityId}")
   Observable<Response<Void>> favoriteLike(@Path("entityType") LikeEntityType entityType,
-      String entityId);
+      @Path("entityId") String entityId);
+
+  /**
+   * 取消收藏
+   * 
+   * @param entityType
+   * @param entityId
+   * @return
+   */
+  @DELETE("like/favorite/{entityType}/{entityId}")
+  Observable<Response<Void>> cancelFavoriteLike(@Path("entityType") LikeEntityType entityType,
+      @Path("entityId") String entityId);
 
   /**
    * 关注

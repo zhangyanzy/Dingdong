@@ -178,6 +178,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginTop="4dp"
+                            android:onClick="@{()->presenter.onAdd(shop==null?subject.store:shop)}"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -355,8 +356,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_white"
                     android:gravity="center"
-                    android:onClick="@{()->presenter.onFav()}"
-                    android:text="@string/subject_detail_btn_fav"
+                    android:onClick="@{()->presenter.onFav(subject)}"
+                    android:text="@{subject.favorite?@string/subject_detail_btn_fav:@string/subject_detail_btn_un_fav}"
                     android:textColor="#666666"
                     android:textSize="16dp"
                     android:textStyle="bold" />

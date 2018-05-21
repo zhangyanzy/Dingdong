@@ -7,7 +7,9 @@ import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Subject;
 
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -44,5 +46,19 @@ public interface SubjectServiceApi {
    */
   @POST("subject/hot/list")
   Observable<Response<List<Subject>>> listHotSubject(@Body QueryParam param);
+
+  /**
+   * 根据ID获取课程详情
+   * 
+   * @param id
+   * @param longitude
+   *          经度
+   * @param latitude
+   *          纬度
+   * @return
+   */
+  @GET("subject/get")
+  Observable<Response<Subject>> getSubject(@Query("id") String id,
+      @Query("longitude") String longitude, @Query("latitude") String latitude);
 
 }

@@ -54,7 +54,7 @@ public class DDApp extends MultiDexApplication {
       @Override
       public void onActivityDestroyed(Activity activity) {
         super.onActivityDestroyed(activity);
-        LocationMgr.stopLocation();
+//        LocationMgr.stopLocation();
         Log.i("registerActivityLifecycleCallbacks","onActivityDestroyed");
       }
     });

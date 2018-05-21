@@ -8,17 +8,24 @@ import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivitySubjectDetailBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.groupbuy.usecase.ListGroupBuyCase;
+import com.dindong.dingdong.network.api.like.usecase.CancelFavoriteLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.FavoriteLikeCase;
+import com.dindong.dingdong.network.api.subject.usecase.GetSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.network.bean.groupbuy.GroupBuy;
+import com.dindong.dingdong.network.bean.like.LikeEntityType;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.network.bean.store.SubjectType;
 import com.dindong.dingdong.presentation.pay.OrderConfirmActivity;
+import com.dindong.dingdong.presentation.store.ShopMapActivity;
+import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhoneUtil;
 import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.StringUtil;
+import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
@@ -64,9 +71,7 @@ public class SubjectDetailActivity extends BaseActivity {
   protected void loadData(Bundle savedInstanceState) {
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
       subject = (Subject) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
-      binding.setSubject(subject);
-      initSubjectImg(subject.getImage());
-      initSubjectDescriptionImg(subject.getImages());
+      getSubject(subject.getId());
     }
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY) != null) {
       binding.setShop((Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY));
@@ -78,6 +83,30 @@ public class SubjectDetailActivity extends BaseActivity {
     super.onResume();
     if (subject != null && binding != null)
       listGroup(subject.getId());
+  }
+
+  /**
+   * 获取课程信息
+   * 
+   * @param subjectId
+   */
+  private void getSubject(String subjectId) {
+    new GetSubjectCase(subjectId).execute(new HttpSubscriber<Subject>() {
+      @Override
+      public void onFailure(String errorMsg, Response<Subject> response) {
+        binding.setSubject(subject);
+        initSubjectImg(subject.getImage());
+        initSubjectDescriptionImg(subject.getImages());
+      }
+
+      @Override
+      public void onSuccess(Response<Subject> response) {
+        subject = response.getData();
+        binding.setSubject(subject);
+        initSubjectImg(subject.getImage());
+        initSubjectDescriptionImg(subject.getImages());
+      }
+    });
   }
 
   @Override
@@ -162,6 +191,17 @@ public class SubjectDetailActivity extends BaseActivity {
 
   public class Presenter implements BaseViewAdapter.Presenter {
 
+    /**
+     * 地址详情
+     *
+     * @param shop
+     */
+    public void onAdd(Shop shop) {
+      Intent intent = new Intent(SubjectDetailActivity.this, ShopMapActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+      startActivity(intent);
+    }
+
     public void onGroupBuyClick(GroupBuy groupBuy) {
       Intent intent = new Intent(SubjectDetailActivity.this, OrderConfirmActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, subject);
@@ -169,8 +209,47 @@ public class SubjectDetailActivity extends BaseActivity {
       startActivity(intent);
     }
 
-    public void onFav() {
+    /**
+     * 收藏/取消收藏
+     * 
+     * @param subject
+     */
+    public void onFav(final Subject subject) {
+      if (subject.isFavorite()) {
+        // 如果已收藏，则取消收藏
+        new CancelFavoriteLikeCase(LikeEntityType.store, subject.getId())
+            .execute(new HttpSubscriber<Void>(SubjectDetailActivity.this) {
+              @Override
+              public void onFailure(String errorMsg, Response<Void> response) {
+                DialogUtil.getErrorDialog(SubjectDetailActivity.this, errorMsg).show();
+              }
 
+              @Override
+              public void onSuccess(Response<Void> response) {
+                ToastUtil.toastHint(SubjectDetailActivity.this, "取消收藏");
+                subject.setFavorite(false);
+                subject.setFavCount(subject.getFavCount() - 1);
+                binding.setSubject(subject);
+              }
+            });
+        return;
+      }
+      // 收藏该课程
+      new FavoriteLikeCase(LikeEntityType.store, subject.getId())
+          .execute(new HttpSubscriber<Void>(SubjectDetailActivity.this) {
+            @Override
+            public void onFailure(String errorMsg, Response<Void> response) {
+              DialogUtil.getErrorDialog(SubjectDetailActivity.this, errorMsg).show();
+            }
+
+            @Override
+            public void onSuccess(Response<Void> response) {
+              ToastUtil.toastHint(SubjectDetailActivity.this, "收藏成功");
+              subject.setFavorite(true);
+              subject.setFavCount(subject.getFavCount() + 1);
+              binding.setSubject(subject);
+            }
+          });
     }
 
     public void onMobile(final String mobile) {
@@ -183,6 +262,7 @@ public class SubjectDetailActivity extends BaseActivity {
       intent.putExtra(AppConfig.IntentKey.DATA, subject);
       startActivity(intent);
     }
+
   }
 
 }

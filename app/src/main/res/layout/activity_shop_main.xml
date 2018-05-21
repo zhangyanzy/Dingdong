@@ -154,6 +154,18 @@
                             </LinearLayout>
                         </LinearLayout>
 
+                        <HorizontalScrollView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:id="@+id/layout_shop_img"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" />
+                        </HorizontalScrollView>
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

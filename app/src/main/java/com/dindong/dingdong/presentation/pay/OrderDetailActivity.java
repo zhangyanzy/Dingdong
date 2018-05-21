@@ -10,6 +10,9 @@ import com.dindong.dingdong.network.api.pay.usecase.CancelOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.PayMode;
+import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.presentation.store.ShopMapActivity;
+import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.CuteR;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -78,6 +81,18 @@ public class OrderDetailActivity extends BaseActivity {
   }
 
   public class Presenter {
+
+    /**
+     * 地址详情
+     *
+     * @param shop
+     */
+    public void onAdd(Shop shop) {
+      Intent intent = new Intent(OrderDetailActivity.this, ShopMapActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+      startActivity(intent);
+    }
+
     /**
      * 取消订单
      * 
