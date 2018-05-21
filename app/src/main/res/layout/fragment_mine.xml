@@ -4,12 +4,17 @@
 
     <data>
 
+        <import type="com.dindong.dingdong.network.bean.auth.AuthIdentity" />
 
         <import type="com.dindong.dingdong.util.StringUtil" />
 
         <variable
             name="user"
             type="com.dindong.dingdong.network.bean.auth.User" />
+
+        <variable
+            name="statistics"
+            type="com.dindong.dingdong.network.bean.favorite.FavoriteStatic" />
 
         <variable
             name="presenter"
@@ -27,14 +32,17 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_gradient_blue">
+                android:background="@drawable/bg_gradient_blue"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="horizontal"
                     android:paddingBottom="27dp"
                     android:paddingTop="27dp">
@@ -44,6 +52,7 @@
                         android:layout_width="46dp"
                         android:layout_height="46dp"
                         android:layout_marginLeft="18dp"
+                        android:onClick="@{()->presenter.onUserInfo()}"
                         app:imageMineUserResourceUrl="@{user.userImage.url}" />
 
                     <LinearLayout
@@ -52,12 +61,32 @@
                         android:layout_marginLeft="17dp"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{user.name}"
-                            android:textColor="@color/white"
-                            android:textSize="16dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{user.name}"
+                                android:textColor="@color/white"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/bg_member_tag"
+                                android:paddingBottom="3dp"
+                                android:paddingLeft="6dp"
+                                android:paddingRight="6dp"
+                                android:paddingTop="3dp"
+                                android:text="@{AuthIdentity.getName(user.identitie)}"
+                                android:textColor="@color/light_black"
+                                android:textSize="11dp" />
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -94,23 +123,61 @@
                     android:layout_marginRight="6dp"
                     android:padding="6dp"
                     android:src="@mipmap/ic_right_w" />
-            </RelativeLayout>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/mine_my_order"
-                android:textColor="@color/light_black"
-                android:textSize="14dp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_my_order"
+                        android:textColor="#333333"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->presenter.onAllOrder()}"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="全部订单"
+                        android:textColor="@color/light_black"
+                        android:textSize="14dp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@mipmap/ic_chevron_grey" />
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <View
                 style="@style/divider_item"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginLeft="12dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -253,7 +320,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="@{()->presenter.onOrderStateSelect(0)}"
+                    android:onClick="@{()->presenter.onFavSelect(0)}"
                     android:orientation="vertical"
                     android:paddingBottom="13dp"
                     android:paddingTop="13dp">
@@ -268,7 +335,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringUtil.formatAmount(user.favShop)}"
+                            android:text="@{String.valueOf(statistics.storeCount)}"
                             android:textColor="#FF9C09"
                             android:textSize="16dp" />
 
@@ -286,7 +353,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="@{()->presenter.onOrderStateSelect(1)}"
+                    android:onClick="@{()->presenter.onFavSelect(1)}"
                     android:orientation="vertical"
                     android:paddingBottom="13dp"
                     android:paddingTop="13dp">
@@ -301,7 +368,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringUtil.formatAmount(user.favSubject)}"
+                            android:text="@{String.valueOf(statistics.courseCount)}"
                             android:textColor="#FF9C09"
                             android:textSize="16dp" />
 
@@ -319,7 +386,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="@{()->presenter.onOrderStateSelect(2)}"
+                    android:onClick="@{()->presenter.onFavSelect(2)}"
                     android:orientation="vertical"
                     android:paddingBottom="13dp"
                     android:paddingTop="13dp">
@@ -334,7 +401,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringUtil.formatAmount(user.favUser)}"
+                            android:text="@{String.valueOf(statistics.memberCount)}"
                             android:textColor="#FF9C09"
                             android:textSize="16dp" />
 
@@ -352,7 +419,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="@{()->presenter.onOrderStateSelect(3)}"
+                    android:onClick="@{()->presenter.onFavSelect(3)}"
                     android:orientation="vertical"
                     android:paddingBottom="13dp"
                     android:paddingTop="13dp">
@@ -367,7 +434,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{StringUtil.formatAmount(user.fans)}"
+                            android:text="@{String.valueOf(statistics.fansCount)}"
                             android:textColor="#FF9C09"
                             android:textSize="16dp" />
 

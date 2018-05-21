@@ -25,6 +25,8 @@ public class ShopXml {
       return DDApp.getInstance().getResources().getDrawable(R.drawable.bg_subject_group);
     else if (type.equals(SubjectType.NORMAL))
       return DDApp.getInstance().getResources().getDrawable(R.drawable.bg_subject_normal);
+    else if (type.equals(SubjectType.AUDITION))
+      return DDApp.getInstance().getResources().getDrawable(R.drawable.bg_subject_audition);
     return DDApp.getInstance().getResources().getDrawable(R.drawable.bg_subject_normal);
   }
 
@@ -39,6 +41,8 @@ public class ShopXml {
       return DDApp.getInstance().getString(R.string.shop_list_group);
     else if (type.equals(SubjectType.NORMAL))
       return DDApp.getInstance().getString(R.string.shop_list_normal);
+    else if (type.equals(SubjectType.AUDITION))
+      return DDApp.getInstance().getString(R.string.shop_list_audition);
     return DDApp.getInstance().getString(R.string.shop_list_normal);
   }
 }

@@ -17,6 +17,7 @@ import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
@@ -26,6 +27,9 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 public class SubjectListActivity extends BaseActivity {
 
@@ -67,6 +71,20 @@ public class SubjectListActivity extends BaseActivity {
         listSubject(false, false);
       }
     });
+    binding.edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+          handled = true;
+
+          listSubject(true, true);
+          KeyboardUtil.control(binding.edtSearch, false);
+        }
+        return handled;
+      }
+    });
+
   }
 
   /**
@@ -81,6 +99,10 @@ public class SubjectListActivity extends BaseActivity {
       param.setStart(0);
     else
       param.setStart(adapter.getData().size());
+    if (!IsEmpty.string(binding.edtSearch.getText().toString())) {
+      param.getFilters()
+              .add(new FilterParam("keyword", binding.edtSearch.getText().toString()));
+    }
     param.getFilters()
         .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
     if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {

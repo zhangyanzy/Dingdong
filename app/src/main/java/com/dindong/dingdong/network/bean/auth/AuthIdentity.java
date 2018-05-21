@@ -16,6 +16,10 @@ public enum AuthIdentity {
     return name;
   }
 
+  public static String getName(String code) {
+    return getAuthIdentity(code).getName();
+  }
+
   public static AuthIdentity getAuthIdentity(String code) {
     for (AuthIdentity identity : AuthIdentity.values()) {
       if (code.equals(identity.toString()) || code.equals(identity.toString().toUpperCase())

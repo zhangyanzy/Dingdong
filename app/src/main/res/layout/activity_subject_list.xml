@@ -66,7 +66,7 @@
                     android:src="@mipmap/icon_global_search" />
 
                 <com.dindong.dingdong.widget.cleartextfield.ClearEditText
-                    android:id="@+id/mobile_et"
+                    android:id="@+id/edt_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -77,6 +77,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:hint="@string/subject_list_search_hint"
+                    android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingBottom="5dp"

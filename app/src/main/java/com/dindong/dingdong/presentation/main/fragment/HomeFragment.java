@@ -319,6 +319,15 @@ public class HomeFragment extends BaseFragment {
       startActivity(intent);
     }
 
+    /**
+     * 搜索全部门店
+     */
+    public void onSearchShop() {
+      Intent intent = new Intent(getContext(), ShopListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, ShopListActivity.ShopQueryType.all);
+      startActivity(intent);
+    }
+
     @Override
     public void onStoreItemClick(Shop shop) {
       Intent intent = new Intent(getContext(), ShopMainActivity.class);

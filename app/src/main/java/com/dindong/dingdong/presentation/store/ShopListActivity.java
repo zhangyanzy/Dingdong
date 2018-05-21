@@ -18,6 +18,7 @@ import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
@@ -28,6 +29,9 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 /**
  * Created by wcong on 2018/3/10. 门店列表
@@ -78,6 +82,19 @@ public class ShopListActivity extends BaseActivity {
         listShop(false, false);
       }
     });
+    binding.edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+          handled = true;
+
+          listShop(true, true);
+          KeyboardUtil.control(binding.edtSearch, false);
+        }
+        return handled;
+      }
+    });
   }
 
   private void setTitle() {
@@ -97,7 +114,7 @@ public class ShopListActivity extends BaseActivity {
   }
 
   /**
-   * 查询附近门店
+   * 查询门店
    * 
    * @param showProgress
    * @param isRefresh
@@ -108,6 +125,10 @@ public class ShopListActivity extends BaseActivity {
       queryParam.setStart(0);
     else
       queryParam.setStart(adapter.getData().size());
+    if (!IsEmpty.string(binding.edtSearch.getText().toString())) {
+      queryParam.getFilters()
+          .add(new FilterParam("keyword", binding.edtSearch.getText().toString()));
+    }
     queryParam.getFilters().add(new FilterParam("queryType:", shopQueryType.toString()));
     queryParam.getFilters()
         .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));

@@ -5,9 +5,14 @@ import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
+import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.favorite.usecase.StatisticFavoriteCase;
+import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.favorite.FavoriteStatic;
 import com.dindong.dingdong.presentation.pay.OrderListActivity;
 import com.dindong.dingdong.presentation.user.SettingActivity;
 import com.dindong.dingdong.presentation.user.UserAccountActivity;
+import com.dindong.dingdong.presentation.user.UserInfoActivity;
 import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 
@@ -30,12 +35,20 @@ public class MineFragment extends BaseFragment {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mine, container, false);
 
     binding.setUser(SessionMgr.getUser());
+    binding.setStatistics(new FavoriteStatic());
     return binding.getRoot();
   }
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
 
+  }
+
+  @Override
+  public void setUserVisibleHint(boolean isVisibleToUser) {
+    super.setUserVisibleHint(isVisibleToUser);
+    if (binding != null && isVisibleToUser)
+      statisticFavorite();
   }
 
   @Override
@@ -48,6 +61,23 @@ public class MineFragment extends BaseFragment {
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
+  }
+
+  /**
+   * 获取用户关注信息
+   */
+  private void statisticFavorite() {
+    new StatisticFavoriteCase().execute(new HttpSubscriber<FavoriteStatic>() {
+      @Override
+      public void onFailure(String errorMsg, Response<FavoriteStatic> response) {
+
+      }
+
+      @Override
+      public void onSuccess(Response<FavoriteStatic> response) {
+        binding.setStatistics(response.getData());
+      }
+    });
   }
 
   public class Presenter {
@@ -129,6 +159,22 @@ public class MineFragment extends BaseFragment {
      */
     public void onAccount() {
       startActivity(new Intent(getContext(), UserAccountActivity.class));
+    }
+
+    /**
+     * 查看个人信息
+     */
+    public void onUserInfo() {
+      startActivity(new Intent(getContext(), UserInfoActivity.class));
+    }
+
+    /**
+     * 查看全部订单
+     */
+    public void onAllOrder() {
+      Intent intent = new Intent(getContext(), OrderListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, OrderListActivity.TYPE_ALL);
+      startActivity(intent);
     }
   }
 }
