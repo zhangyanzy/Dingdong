@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
-import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityMainBinding;
 import com.dindong.dingdong.network.bean.auth.AuthIdentity;
 import com.dindong.dingdong.presentation.main.fragment.DiscoveryFragment;
@@ -80,18 +79,26 @@ public class MainActivity extends BaseActivity {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-//    if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
-//      AuthIdentity identity = (AuthIdentity) getIntent()
-//          .getSerializableExtra(AppConfig.IntentKey.DATA);
-//      int position = getIntent().getIntExtra("position", -1);
-//      initTab(identity, position);
-//      initFragment(identity, position);
-//    }
+    // if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
+    // AuthIdentity identity = (AuthIdentity) getIntent()
+    // .getSerializableExtra(AppConfig.IntentKey.DATA);
+    // int position = getIntent().getIntExtra("position", -1);
+    // initTab(identity, position);
+    // initFragment(identity, position);
+    // }
     int position = getIntent().getIntExtra("position", -1);
     initTab(AuthIdentity.MEMBER, position);
     initFragment(AuthIdentity.MEMBER, position);
     UpgradeUtil.getInstance().checkVersion(this);
 
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    if (intent != null && intent.getIntExtra("position", -1) != -1 && binding != null) {
+      binding.vp.setCurrentItem(intent.getIntExtra("position", -1));
+    }
   }
 
   @Override

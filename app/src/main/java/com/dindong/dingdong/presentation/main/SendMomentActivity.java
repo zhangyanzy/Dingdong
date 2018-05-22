@@ -45,7 +45,7 @@ public class SendMomentActivity extends BaseActivity {
     textView.setText(R.string.send_moment_confirm);
     binding.nb.addRightView(textView);
 
-    binding.pl.setMaxLength(9);
+    binding.pl.setMaxLength(6);
     binding.pl.init();
   }
 

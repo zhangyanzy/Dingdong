@@ -181,8 +181,6 @@ public class OrderConfirmActivity extends BaseActivity {
 
             // 支付成功，跳转到订单列表
             Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(AppConfig.IntentKey.DATA, SessionMgr.getUser().getIdentities().get(0));
             intent.putExtra("position", MainActivity.TAB_POSITION_MINE);
             startActivity(intent);
 

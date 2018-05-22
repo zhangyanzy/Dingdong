@@ -41,6 +41,9 @@ public interface CommentServiceApi {
    * 获取评论列表
    * 
    * @param queryParam
+   *          relationId，关联id，适用查询所有评论<br/>
+   *          storeId，门店id，只适用查询门店评论<br/>
+   *          orderId，订单id，只适用查询订单评论<br/>
    * @return
    */
   @POST("comments/list")

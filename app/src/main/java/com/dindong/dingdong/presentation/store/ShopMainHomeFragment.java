@@ -152,7 +152,7 @@ public class ShopMainHomeFragment extends BaseFragment {
   public void listComment(boolean showProgress, String shopId) {
     final QueryParam param = new QueryParam();
     param.setLimit(999);
-    param.getFilters().add(new FilterParam("relationId", shopId));
+    param.getFilters().add(new FilterParam("storeId", shopId));
 
     listCommentCase = new ListCommentCase(param);
     listCommentCase.execute(new HttpSubscriber<List<Comment>>(showProgress ? getContext() : null) {

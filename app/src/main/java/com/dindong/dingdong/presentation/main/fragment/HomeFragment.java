@@ -42,6 +42,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,11 @@ public class HomeFragment extends BaseFragment {
     LocationMgr.startLocation(new LocationMgr.ILocationCallback() {
       @Override
       public void onSuccess(AMapLocation location) {
+        Log.i("setCountry", location.getCountry());
+        Log.i("getAddress", location.getAddress());
+        Log.i("getRoad", location.getRoad());
+        Log.i("getProvince", location.getProvince());
+        Log.i("getCity", location.getCity());
         SessionMgr.SessionAddress add = new SessionMgr.SessionAddress();
         Region city = new Region();
         city.setId(location.getAdCode());
@@ -106,7 +112,7 @@ public class HomeFragment extends BaseFragment {
         add.setLongitude(location.getLongitude() + "");
         add.setLatitude(location.getLatitude() + "");
         SessionMgr.setCurrentAdd(add);
-        binding.txtProvince.setText(location.getProvince());
+        binding.txtProvince.setText(location.getCity());
         RegionStorageUtil.add(city);
         loadListData();
       }
@@ -144,7 +150,7 @@ public class HomeFragment extends BaseFragment {
           mBannerList.add(banner.getImageUrl());
         }
         binding.bannerHomeFragment.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-            .setIndicatorGravity(BannerConfig.CENTER).setDelayTime(2000)
+            .setIndicatorGravity(BannerConfig.CENTER).setDelayTime(7000)
             .setImageLoader(new GlideImageLoader()).setImages(mBannerList).start();
       }
     });

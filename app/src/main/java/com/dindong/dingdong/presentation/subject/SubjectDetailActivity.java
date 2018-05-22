@@ -235,7 +235,7 @@ public class SubjectDetailActivity extends BaseActivity {
         return;
       }
       // 收藏该课程
-      new FavoriteLikeCase(LikeEntityType.store, subject.getId())
+      new FavoriteLikeCase(LikeEntityType.course, subject.getId())
           .execute(new HttpSubscriber<Void>(SubjectDetailActivity.this) {
             @Override
             public void onFailure(String errorMsg, Response<Void> response) {

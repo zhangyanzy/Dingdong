@@ -132,19 +132,37 @@ public class ShopMainActivity extends BaseActivity {
    * 
    * @param shop
    */
-  private void initShopImage(Shop shop) {
+  private void initShopImage(final Shop shop) {
     if (shop == null || shop.getImages() == null)
       return;
-    for (GlobalImage image : shop.getImages()) {
-      ImageView imageView = new ImageView(this);
-      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtil.dip2px(this, 85),
-          DensityUtil.dip2px(this, 66));
-      params.rightMargin = DensityUtil.dip2px(this, 4);
-      imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-      imageView.setLayoutParams(params);
-      PhotoUtil.load(this, image.getUrl(), imageView);
-      binding.layoutShopImg.addView(imageView);
-    }
+    final int column = 3;
+    final int margin = DensityUtil.dip2px(this,4);// px
+    binding.getRoot().post(new Runnable() {
+      @Override
+      public void run() {
+        int itemWidth = (binding.getRoot().getMeasuredWidth() - margin * (column - 1)) / column;
+        int position = 0;
+        for (GlobalImage image : shop.getImages()) {
+          ImageView imageView = new ImageView(ShopMainActivity.this);
+          LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(itemWidth, itemWidth);
+          params.rightMargin = margin;
+          imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+          imageView.setLayoutParams(params);
+          imageView.setTag(R.id.position, position++);
+          PhotoUtil.load(ShopMainActivity.this, image.getUrl(), imageView);
+          imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              PhotoUtil.preview(ShopMainActivity.this, (Integer) v.getTag(R.id.position),
+                  shop.getImages());
+            }
+          });
+          binding.layoutShopImg.addView(imageView);
+        }
+        updateViewPagerHeight();
+      }
+    });
+
   }
 
   /**

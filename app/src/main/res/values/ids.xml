@@ -4,4 +4,6 @@
     <item name="text_fold_content" type="id" />
     <item name="text_fold_bottom_content" type="id" />
     <item name="text_fold_id" type="id" />
+    <item name="position" type="id" />
+    <item name="data" type="id" />
 </resources>

@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="@string/main_home_hot_subject"
+                    android:text="本店课程"
                     android:textColor="#333333"
                     android:textSize="15dp" />
 

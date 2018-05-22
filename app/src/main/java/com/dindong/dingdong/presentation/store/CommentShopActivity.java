@@ -49,7 +49,7 @@ public class CommentShopActivity extends BaseActivity {
     textView.setText(R.string.send_moment_confirm);
     binding.nb.addRightView(textView);
 
-    binding.pl.setMaxLength(9);
+    binding.pl.setMaxLength(6);
     binding.pl.init();
   }
 
@@ -81,6 +81,7 @@ public class CommentShopActivity extends BaseActivity {
         binding.edtMsg.getText().toString().trim());
     comment.setRating(new BigDecimal(binding.rating.getRating()));
     comment.setRelationId(relationId);
+    comment.setStoreId(relationId);
     new CommentCase(comment).execute(new HttpSubscriber<Comment>(CommentShopActivity.this) {
       @Override
       public void onFailure(String errorMsg, Response<Comment> response) {

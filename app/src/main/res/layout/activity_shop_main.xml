@@ -155,7 +155,7 @@
                         </LinearLayout>
 
                         <HorizontalScrollView
-
+                            android:id="@+id/root_shop_img"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 

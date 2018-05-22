@@ -25,11 +25,15 @@ public class StringUtil {
   }
 
   public static String qty(BigDecimal qty) {
-    return MessageFormat.format("{0,number,0}", qty);
+    return format("{0,number,0}",qty);
+  }
+
+  public static String amount(String amount) {
+    return amount(new BigDecimal(amount));
   }
 
   public static String amount(BigDecimal amount) {
-    return MessageFormat.format("{0,number,0.00}", amount);
+    return format("{0,number,0.00}", amount);
   }
 
   /**

@@ -19,6 +19,8 @@ import com.dindong.dingdong.network.bean.store.Shop;
 public class Comment implements Serializable {
   private String id;
   private String relationId;// 关联关系ID
+  private String storeId;// 所属门店Id
+  private String orderId;// 所属订单Id
   private Ucn ucn;// 评论/回复人信息
   private String message;// 评论/回复内容
   private Date date;// 评论/回复时间 格式:YYYY-MM-DD HH:mm:ss
@@ -142,5 +144,21 @@ public class Comment implements Serializable {
 
   public void setStore(Shop store) {
     this.store = store;
+  }
+
+  public String getStoreId() {
+    return storeId;
+  }
+
+  public void setStoreId(String storeId) {
+    this.storeId = storeId;
+  }
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
   }
 }

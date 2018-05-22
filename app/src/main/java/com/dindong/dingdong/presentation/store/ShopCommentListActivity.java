@@ -138,7 +138,7 @@ public class ShopCommentListActivity extends BaseActivity {
       param.setStart(0);
     else
       param.setStart(adapter.getData().size());
-    param.getFilters().add(new FilterParam("relationId", shop.getId()));
+    param.getFilters().add(new FilterParam("storeId", shop.getId()));
 
     new ListCommentCase(param).execute(
         new HttpSubscriber<List<Comment>>(showProgress ? ShopCommentListActivity.this : null) {

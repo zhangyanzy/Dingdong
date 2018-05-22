@@ -86,6 +86,7 @@
 
         <activity
             android:name=".presentation.main.MainActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 全部门店 -->
         <activity
