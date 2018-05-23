@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.dindong.dingdong.util.StringUtil" />
+
+        <variable
+            name="item"
+            type="com.dindong.dingdong.network.bean.good.ShopGood" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                app:imageResourceUrl='@{item.image==null?"":item.image.url}' />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.name}"
+                    android:textColor="@color/light_black"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{StringUtil.amount(item.amount)}"
+                        android:textColor="#FF9C09"
+                        android:textSize="17dp" />
+
+                    <TextView
+                        android:id="@+id/unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="#888888"
+                        android:textSize="11dp" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_original_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="原价："
+                            android:textColor="#888888"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/txt_original_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:textColor="#888888"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            style="@style/divider_item"
+            android:layout_marginLeft="12dp" />
+    </LinearLayout>
+</layout>

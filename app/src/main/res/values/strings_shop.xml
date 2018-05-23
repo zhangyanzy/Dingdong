@@ -17,6 +17,7 @@
     <string name="shop_main_title">门店主页</string>
     <string name="shop_main_favorite">已关注</string>
     <string name="shop_main_un_favorite">关注</string>
+    <string name="shop_main_dingdong_id">叮咚号：D{0}</string>
     <string name="shop_main_msg_prove">已认证教学场地与工商登记</string>
     <string name="shop_main_label_prove">认</string>
     <string name="shop_main_activity">本店活动</string>
@@ -26,6 +27,8 @@
     <string name="shop_main_join">我是机构，入驻让人气翻倍</string>
     <string name="shop_main_mobile">拨打</string>
     <string name="shop_main_mobile_err">当前设备不支持拨号功能</string>
+    <string name="shop_main_activity_date">报名日期：{0}~{1}</string>
+    <string name="shop_main_activity_fav">已有 {0} 人报名</string>
     <string-array name="shop_main_tabs">
         <item>首页</item>
         <item>动态</item>

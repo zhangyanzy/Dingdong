@@ -5,6 +5,7 @@ import java.util.List;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.pay.Order;
+import com.dindong.dingdong.network.bean.pay.OrderStatictis;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -84,5 +85,13 @@ public interface OrderServiceApi {
    */
   @POST("order/list")
   Observable<Response<List<Order>>> listOrder(@Body QueryParam param);
+
+  /**
+   * 统计订单各状态订单数量
+   * 
+   * @return
+   */
+  @GET("order/statistics")
+  Observable<Response<OrderStatictis>> statisticOrder();
 
 }

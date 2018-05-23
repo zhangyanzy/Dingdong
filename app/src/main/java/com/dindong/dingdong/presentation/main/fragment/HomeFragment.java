@@ -218,24 +218,24 @@ public class HomeFragment extends BaseFragment {
       }
       PhotoUtil.load(getContext(), path, imageView);
       final int finalIndex = index;
-      imageView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          switch (finalIndex) {
-          case 0:
-            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
-            break;
-          case 1:
-            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
-            break;
-          case 2:
-            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
-            break;
-          default:
-            break;
-          }
-        }
-      });
+//      imageView.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//          switch (finalIndex) {
+//          case 0:
+//            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+//            break;
+//          case 1:
+//            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+//            break;
+//          case 2:
+//            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+//            break;
+//          default:
+//            break;
+//          }
+//        }
+//      });
     }
   }
 

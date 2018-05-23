@@ -33,10 +33,11 @@ public class Order implements Serializable {
   private String itemName;// 课程/商品/活动名称
   private String itemType;// 类型：课程/商品/活动
   private String itemTypeName;// 订单类型名称
+  private boolean groupBuyOrder;// 是否团购订单
 
-  private String userId;//会员用户ID
+  private String userId;// 会员用户ID
 
-  private String groupBuyId;//参团ID
+  private String groupBuyId;// 参团ID
 
   public String getId() {
     return id;
@@ -188,5 +189,13 @@ public class Order implements Serializable {
 
   public void setGroupBuyId(String groupBuyId) {
     this.groupBuyId = groupBuyId;
+  }
+
+  public boolean isGroupBuyOrder() {
+    return groupBuyOrder;
+  }
+
+  public void setGroupBuyOrder(boolean groupBuyOrder) {
+    this.groupBuyOrder = groupBuyOrder;
   }
 }

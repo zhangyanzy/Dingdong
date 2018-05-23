@@ -117,6 +117,10 @@ public class ShopMainActivity extends BaseActivity {
         binding.setItem(shop);
         initViewPager(binding);
 
+        ((ShopMainHomeFragment) fragments.get(0))
+            .initHotSubject(response.getData().getSubjects().size() >= 2
+                ? response.getData().getSubjects().subList(0, 2)
+                : response.getData().getSubjects());
         binding.topLayout.post(new Runnable() {
           @Override
           public void run() {
@@ -136,7 +140,7 @@ public class ShopMainActivity extends BaseActivity {
     if (shop == null || shop.getImages() == null)
       return;
     final int column = 3;
-    final int margin = DensityUtil.dip2px(this,4);// px
+    final int margin = DensityUtil.dip2px(this, 4);// px
     binding.getRoot().post(new Runnable() {
       @Override
       public void run() {

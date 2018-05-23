@@ -11,13 +11,18 @@ import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentShopMainHomeBinding;
 import com.dindong.dingdong.databinding.ItemShopMainHomeCommentBinding;
+import com.dindong.dingdong.databinding.ItemShopMainHomeGoodBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.activity.usecase.ListActivityCase;
 import com.dindong.dingdong.network.api.comment.usecase.ListCommentCase;
+import com.dindong.dingdong.network.api.good.usecase.ListGoodsCase;
 import com.dindong.dingdong.network.api.shop.usecase.ListTeacherCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.activity.ShopActivity;
 import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
+import com.dindong.dingdong.network.bean.good.ShopGood;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.network.bean.store.Teacher;
@@ -31,6 +36,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,8 +73,10 @@ public class ShopMainHomeFragment extends BaseFragment {
     if (getArguments().getSerializable(AppConfig.IntentKey.DATA) != null) {
       shop = (Shop) getArguments().getSerializable(AppConfig.IntentKey.DATA);
       initHotSubject(shop.getSubjects());
-//      listTeacher(shop.getId());
+      // listTeacher(shop.getId());
       listComment(false, shop.getId());
+      listActivity(shop.getId());
+      listGoods(shop.getId());
     }
 
   }
@@ -83,12 +91,21 @@ public class ShopMainHomeFragment extends BaseFragment {
    *
    * @param subjects
    */
-  private void initHotSubject(List<Subject> subjects) {
-    if (IsEmpty.list(subjects))
+  public void initHotSubject(List<Subject> subjects) {
+    if (subjects == null || binding == null)
       return;
     SubjectAdapter subjectAdapter = new SubjectAdapter(getContext());
     subjectAdapter.setPresenter(new Presenter());
     subjectAdapter.setMargin100(true);
+    subjectAdapter.setDecorator(new SubjectAdapter.Decorator() {
+      @Override
+      public void decorator(BindingViewHolder holder, int position, int viewType) {
+        super.decorator(holder, position, viewType);
+        if (holder == null || holder.getBinding() == null)
+          return;
+        updateViewPagerHeight();
+      }
+    });
     subjectAdapter.addAll(subjects.size() >= 2 ? subjects.subList(0, 2) : subjects);
 
     subjectAdapter.setShop(shop);
@@ -131,10 +148,83 @@ public class ShopMainHomeFragment extends BaseFragment {
     });
   }
 
-  private void updateViewPagerHeight(){
+  private ListActivityCase listActivityCase;
+
+  /**
+   * 获取活动列表
+   * 
+   * @param shopId
+   */
+  private void listActivity(String shopId) {
+    final QueryParam param = new QueryParam();
+    param.setLimit(2);
+    param.getFilters().add(new FilterParam("shop", shopId));
+
+    listActivityCase = new ListActivityCase(param);
+    listActivityCase.execute(new HttpSubscriber<List<ShopActivity>>() {
+      @Override
+      public void onFailure(String errorMsg, Response<List<ShopActivity>> response) {
+        updateViewPagerHeight();
+      }
+
+      @Override
+      public void onSuccess(Response<List<ShopActivity>> response) {
+        SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(),
+            R.layout.item_shop_main_home_activity);
+        adapter.addAll(response.getData());
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.lstActivity.setLayoutManager(manager);
+        binding.lstActivity.setAdapter(adapter);
+        binding.lstActivity.setNestedScrollingEnabled(false);
+
+        updateViewPagerHeight();
+      }
+    });
+  }
+
+  private ListGoodsCase listGoodsCase;
+
+  /**
+   * 获取门店商品
+   * 
+   * @param shopId
+   */
+  private void listGoods(String shopId) {
+    final QueryParam param = new QueryParam();
+    param.setLimit(2);
+    param.getFilters().add(new FilterParam("shop", shopId));
+
+    listGoodsCase = new ListGoodsCase(param);
+    listGoodsCase.execute(new HttpSubscriber<List<ShopGood>>() {
+      @Override
+      public void onFailure(String errorMsg, Response<List<ShopGood>> response) {
+        updateViewPagerHeight();
+      }
+
+      @Override
+      public void onSuccess(Response<List<ShopGood>> response) {
+        SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(),
+            R.layout.item_shop_main_home_good);
+        adapter.addAll(response.getData());
+        adapter.setDecorator(new ShopGoodDecorator());
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.lstGood.setLayoutManager(manager);
+        binding.lstGood.setAdapter(adapter);
+        binding.lstGood.setNestedScrollingEnabled(false);
+
+        updateViewPagerHeight();
+      }
+    });
+  }
+
+  private void updateViewPagerHeight() {
     binding.getRoot().post(new Runnable() {
       @Override
       public void run() {
+        if (getActivity() == null)
+          return;
         ((ShopMainActivity) getActivity()).updateViewPagerHeight();
       }
     });
@@ -213,6 +303,10 @@ public class ShopMainHomeFragment extends BaseFragment {
       listTeacherCase.unSubscribe();
     if (listCommentCase != null)
       listCommentCase.unSubscribe();
+    if (listActivityCase != null)
+      listActivityCase.unSubscribe();
+    if (listGoodsCase != null)
+      listGoodsCase.unSubscribe();
     super.onDestroy();
   }
 
@@ -230,6 +324,30 @@ public class ShopMainHomeFragment extends BaseFragment {
       if (position == binding.lstComment.getAdapter().getItemCount() - 1)
         // 图片全部加载完时更新UI
         updateViewPagerHeight();
+    }
+  }
+
+  public class ShopGoodDecorator implements BaseViewAdapter.Decorator {
+
+    @Override
+    public void decorator(BindingViewHolder holder, int position, int viewType) {
+      if (holder == null || holder.getBinding() == null)
+        return;
+      ItemShopMainHomeGoodBinding itemBinding = (ItemShopMainHomeGoodBinding) holder.getBinding();
+
+      // 设置商品单位
+      itemBinding.unit.setVisibility(
+          IsEmpty.string(itemBinding.getItem().getUnit()) ? View.GONE : View.VISIBLE);
+      itemBinding.unit.setText("元/" + itemBinding.getItem().getUnit());
+
+      // 设置商品原价
+      itemBinding.layoutOriginalAmount.setVisibility(itemBinding.getItem().getAmount()
+          .compareTo(itemBinding.getItem().getOriginalAmount()) == 0 ? View.GONE : View.VISIBLE);
+      itemBinding.txtOriginalAmount
+          .setText("¥\b" + StringUtil.amount(itemBinding.getItem().getOriginalAmount()));
+      itemBinding.txtOriginalAmount.getPaint()
+          .setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+      updateViewPagerHeight();
     }
   }
 

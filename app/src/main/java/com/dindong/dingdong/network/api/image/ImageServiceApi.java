@@ -2,6 +2,7 @@ package com.dindong.dingdong.network.api.image;
 
 import java.util.List;
 
+import com.dindong.dingdong.network.PartName;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 
@@ -37,5 +38,5 @@ public interface ImageServiceApi {
    */
   @POST("image/upload/multi")
   @Multipart
-  Observable<Response<List<GlobalImage>>> uploadMulti(@Part MultipartBody.Part[] files);
+  Observable<Response<List<GlobalImage>>> uploadMulti(@PartName("files") @Part MultipartBody.Part[] files);
 }

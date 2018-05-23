@@ -23,6 +23,7 @@ public class DateUtil {
   public static String DEFAULT_DATE_FORMAT_8 = "yyyyMMdd HH:mm";
   public static String DEFAULT_DATE_FORMAT_9 = "M月dd日";
   public static String DEFAULT_DATE_FORMAT_10 = "HH:mm:ss";
+  public static String DEFAULT_DATE_FORMAT_11 = "yyyy.MM.dd";
 
   public static String format(Date date, String format) {
     if (IsEmpty.object(date))

@@ -25,10 +25,11 @@ public class Subject implements Serializable {
   private BigDecimal originalAmount = BigDecimal.ZERO;// 课程价格，原价
   private BigDecimal qty = BigDecimal.ZERO;// 数量
   private String unit;// 价格单位即课时，如果10课节
-  private int  favCount = 0;// 收藏数
+  private int favCount = 0;// 收藏数
   private BigDecimal boughtCount = BigDecimal.ZERO;// 购买量
   private boolean prove = false;
-  private boolean favorite  = false;//当前用户是否关注
+  private boolean favorite = false;// 当前用户是否关注
+  private int memberNumber;// 已购买数
 
   public String getId() {
     return id;
@@ -148,5 +149,13 @@ public class Subject implements Serializable {
 
   public void setFavorite(boolean favorite) {
     this.favorite = favorite;
+  }
+
+  public int getMemberNumber() {
+    return memberNumber;
+  }
+
+  public void setMemberNumber(int memberNumber) {
+    this.memberNumber = memberNumber;
   }
 }

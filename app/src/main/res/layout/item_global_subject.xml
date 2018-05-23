@@ -172,7 +172,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{StringUtil.qty(item.boughtCount)}"
+                        android:text="@{String.valueOf(item.memberNumber)}"
                         android:textColor="#FF9C09"
                         android:textSize="13dp" />
 

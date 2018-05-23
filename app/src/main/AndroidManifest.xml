@@ -95,7 +95,9 @@
         <!-- 门店教育列表 -->
         <activity android:name=".presentation.main.ShopInfoActivity" />
         <activity android:name=".presentation.main.IdentitySwitchActivity" />
-        <activity android:name=".presentation.store.ShopMainActivity" />
+        <activity
+            android:name=".presentation.store.ShopMainActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".presentation.subject.SubjectListActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
@@ -148,7 +150,8 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden" />
         <activity android:name=".presentation.store.ShopCommentDetailActivity" />
         <activity android:name=".presentation.user.UserMainActivity" />
-        <activity android:name=".presentation.user.UserAccountActivity"></activity>
+        <activity android:name=".presentation.user.UserAccountActivity" />
+        <activity android:name=".presentation.store.ShopGoodActivity"></activity>
     </application>
 
 </manifest>

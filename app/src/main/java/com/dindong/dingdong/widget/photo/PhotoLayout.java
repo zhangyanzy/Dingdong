@@ -12,7 +12,7 @@ import java.util.List;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.databinding.ItemWidgetPhotoBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.image.usecase.UploadImageCase;
+import com.dindong.dingdong.network.api.image.usecase.UploadMultiImageCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.GlobalImage;
 import com.dindong.dingdong.util.DensityUtil;
@@ -219,11 +219,11 @@ public class PhotoLayout extends GridLayout {
   private void startPhotoSelect() {
     Intent intent = new Intent(getContext(), PhotoSelectActivity.class);
     int count = getSource().size();
-    // if (count <= maxLength) {
-    // intent.putExtra(SELECT_COUNT, maxLength - count);
-    // } else {
-    intent.putExtra(SELECT_COUNT, 1);
-    // }
+    if (count <= maxLength) {
+      intent.putExtra(SELECT_COUNT, maxLength - count);
+    } else {
+      intent.putExtra(SELECT_COUNT, 1);
+    }
     getContext().startActivity(intent);
     PhotoSelectActivity.setPhotoListener(new PhotoSelectActivity.PhotoListener() {
       @Override
@@ -237,24 +237,51 @@ public class PhotoLayout extends GridLayout {
     if (IsEmpty.list(photos))
       return;
 
-    File file = new File(photos.get(0));
-    final RequestBody requestFile;
-    requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-    MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file", file.getName(),
-        requestFile);
+    // File file = new File(photos.get(0));
+    // final RequestBody requestFile;
+    // requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),
+    // file);
+    // MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file",
+    // file.getName(),
+    // requestFile);
 
-    new UploadImageCase(imagePart).execute(new HttpSubscriber<GlobalImage>(getContext()) {
+    // new UploadImageCase(imagePart).execute(new
+    // HttpSubscriber<GlobalImage>(getContext()) {
+    // @Override
+    // public void onFailure(String errorMsg, Response<GlobalImage> response) {
+    // DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+    // }
+    //
+    // @Override
+    // public void onSuccess(Response<GlobalImage> response) {
+    // addItem(response.getData(), true);
+    // }
+    // });
+
+    MultipartBody.Part[] parts = new MultipartBody.Part[photos.size()];
+
+    for (int i = 0; i < photos.size(); i++) {
+      File file = new File(photos.get(i));
+      RequestBody requestFile;
+      requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+      MultipartBody.Part imagePart = MultipartBody.Part.createFormData("files", file.getName(),
+          requestFile);
+      parts[i] = imagePart;
+    }
+
+    new UploadMultiImageCase(parts).execute(new HttpSubscriber<List<GlobalImage>>() {
       @Override
-      public void onFailure(String errorMsg, Response<GlobalImage> response) {
+      public void onFailure(String errorMsg, Response<List<GlobalImage>> response) {
         DialogUtil.getErrorDialog(getContext(), errorMsg).show();
       }
 
       @Override
-      public void onSuccess(Response<GlobalImage> response) {
-        addItem(response.getData(), true);
+      public void onSuccess(Response<List<GlobalImage>> response) {
+        for (GlobalImage image : response.getData()) {
+          addItem(image, true);
+        }
       }
     });
-
   }
 
   private Bitmap drawableToBitmap(Drawable drawable) {

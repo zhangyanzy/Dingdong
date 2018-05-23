@@ -1,5 +1,6 @@
 package com.dindong.dingdong.adapter;
 
+import com.dindong.dingdong.DDApp;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.databinding.ItemGlobalSubjectBinding;
 import com.dindong.dingdong.network.bean.store.Shop;
@@ -20,9 +21,9 @@ import android.widget.LinearLayout;
  */
 
 public class SubjectAdapter extends SingleTypeAdapter {
-  private Shop shop = null;
+  private static Shop shop = null;
 
-  private boolean isMargin100 = false;
+  private static boolean isMargin100 = false;
 
   public SubjectAdapter(Context context) {
     super(context, R.layout.item_global_subject);
@@ -41,7 +42,7 @@ public class SubjectAdapter extends SingleTypeAdapter {
     isMargin100 = margin100;
   }
 
-  class Decorator implements BaseViewAdapter.Decorator {
+  public static class Decorator implements BaseViewAdapter.Decorator {
     @Override
     public void decorator(BindingViewHolder holder, int position, int viewType) {
       if (holder == null || holder.getBinding() == null)
@@ -56,8 +57,9 @@ public class SubjectAdapter extends SingleTypeAdapter {
         itemBinding.layoutAmount.post(new Runnable() {
           @Override
           public void run() {
-            LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) itemBinding.layoutAmount.getLayoutParams();
-            params.leftMargin= DensityUtil.dip2px(context,100);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) itemBinding.layoutAmount
+                .getLayoutParams();
+            params.leftMargin = DensityUtil.dip2px(DDApp.getInstance(), 100);
 
           }
         });

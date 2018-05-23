@@ -4,19 +4,27 @@
 
     <data>
 
+        <import type="com.dindong.dingdong.util.IsEmpty" />
+
         <import type="com.dindong.dingdong.util.StringUtil" />
 
-        <import type="com.dindong.dingdong.network.bean.store.SubjectType" />
-
         <import type="android.view.View" />
+
+        <variable
+            name="unit"
+            type="String" />
+
+        <variable
+            name="isGroup"
+            type="Boolean" />
 
         <variable
             name="presenter"
             type="com.dindong.dingdong.presentation.pay.OrderConfirmActivity.Presenter" />
 
         <variable
-            name="subject"
-            type="com.dindong.dingdong.network.bean.store.Subject" />
+            name="order"
+            type="com.dindong.dingdong.network.bean.pay.Order" />
     </data>
 
     <LinearLayout
@@ -56,7 +64,7 @@
                         android:paddingTop="10dp">
 
                         <TextView
-                            android:id="@+id/txt_label_subject"
+                            android:id="@+id/txt_label_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -74,7 +82,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="8dp"
                             android:gravity="right"
-                            android:text="@{subject.name}"
+                            android:text="@{order.itemName}"
                             android:textColor="#888888"
                             android:textSize="15dp" />
 
@@ -103,6 +111,7 @@
                             android:textSize="15dp" />
 
                         <TextView
+                            android:id="@+id/txt_shop_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -110,7 +119,6 @@
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/txt_label_shop"
                             android:gravity="right"
-                            android:text="@{subject.store.name}"
                             android:textColor="#888888"
                             android:textSize="15dp" />
 
@@ -129,7 +137,7 @@
                         android:text="@string/order_confirm_group_msg"
                         android:textColor="#FF1E1E"
                         android:textSize="13dp"
-                        android:visibility="@{subject.subjectType.equals(SubjectType.GROUP)?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{isGroup?View.VISIBLE:View.GONE}" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -166,7 +174,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
-                                android:text="@{StringUtil.amount(subject.amount)}"
+                                android:text="@{StringUtil.amount(order.disPrice)}"
                                 android:textColor="#FF9C09"
                                 android:textSize="17dp" />
 
@@ -174,9 +182,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text='@{"/"+subject.unit}'
+                                android:text='@{"/"+unit}'
                                 android:textColor="#888888"
-                                android:textSize="11dp" />
+                                android:textSize="11dp"
+                                android:visibility="@{IsEmpty.string(unit)?View.GONE:View.VISIBLE}" />
                         </LinearLayout>
 
                     </RelativeLayout>
@@ -197,7 +206,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/order_confirm_subject_amount"
+                            android:text="@string/order_confirm_count"
                             android:textColor="#333333"
                             android:textSize="15dp" />
 
@@ -251,7 +260,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
-                                android:text="@{StringUtil.amount(subject.amount)}"
+                                android:text="@{StringUtil.amount(order.disPrice)}"
                                 android:textColor="#FF9C09"
                                 android:textSize="17dp" />
                         </LinearLayout>
@@ -322,7 +331,8 @@
                     android:layout_margin="12dp"
                     android:text="@string/order_confirm_msg"
                     android:textColor="#888888"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:visibility="@{isGroup?View.VISIBLE:View.GONE}" />
             </LinearLayout>
         </ScrollView>
 
@@ -359,7 +369,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
-                        android:text="@{StringUtil.format(@string/global_amount_format,subject.amount)}"
+                        android:text="@{StringUtil.format(@string/global_amount_format,order.disPrice)}"
                         android:textColor="#FF9C09"
                         android:textSize="18dp" />
                 </LinearLayout>

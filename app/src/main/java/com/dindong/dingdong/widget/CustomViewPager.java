@@ -47,7 +47,7 @@ public class CustomViewPager extends ViewPager {
       View child = getChildAt(i);
       child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
       int h = child.getMeasuredHeight();
-      itemHeights.add(i==0?h+ DensityUtil.dip2px(getContext(),30):h);
+      itemHeights.add(i==0?h+ DensityUtil.dip2px(getContext(),50):h);
       height = h;
     }
 

@@ -35,6 +35,7 @@
     <string name="order_detail_state_success">订单待付款</string>
     <string name="order_detail_tip_wait_group">未成团</string>
     <string name="order_detail_tip_can_use">已成团</string>
+    <string name="order_detail_tip_finish">已完成</string>
     <string name="order_detail_msg_cancel">把确认码出示给门店核销上课</string>
     <string name="order_detail_order_num">订单编号：</string>
     <string name="order_detail_order_date">订单时间：</string>

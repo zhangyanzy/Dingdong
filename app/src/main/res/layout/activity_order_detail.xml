@@ -241,7 +241,7 @@
                                     android:layout_marginRight="8dp"
                                     android:background="@{OrderXml.getStateDrawable(order.state)}"
                                     android:gravity="center"
-                                    android:text="@{order.state.equals(OrderState.confirmed.toString())?@string/order_detail_tip_can_use:@string/order_detail_tip_wait_group}"
+                                    android:text="@{order.state.equals(OrderState.confirmed.toString())?(order.groupBuyOrder?@string/order_detail_tip_can_use:@string/order_detail_tip_finish):@string/order_detail_tip_wait_group}"
                                     android:textColor="@color/white"
                                     android:textSize="13dp"
                                     android:visibility="@{order.state.equals(OrderState.confirmed.toString())||order.state.equals(OrderState.grouping.toString())?View.VISIBLE:View.GONE}" />

@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="com.dindong.dingdong.util.IsEmpty" />
+
         <import type="com.dindong.dingdong.util.StringUtil" />
 
         <variable
@@ -79,17 +81,10 @@
                                     android:layout_marginLeft="12dp"
                                     android:orientation="vertical">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@{item.name}"
-                                        android:textColor="#333333"
-                                        android:textSize="14dp" />
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="8dp"
                                         android:gravity="center_vertical">
 
                                         <TextView
@@ -103,13 +98,24 @@
                                             android:textSize="12dp" />
 
                                         <TextView
+
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginLeft="6dp"
-                                            android:text="@string/shop_main_msg_prove"
-                                            android:textColor="#888888"
-                                            android:textSize="11dp" />
+                                            android:layout_marginLeft="8dp"
+                                            android:text="@{item.name}"
+                                            android:textColor="#333333"
+                                            android:textSize="14dp" />
+
                                     </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:text='@{StringUtil.format(@string/shop_main_dingdong_id,IsEmpty.string(item.dingdongId)?"":item.dingdongId)}'
+                                        android:textColor="#888888"
+                                        android:textSize="12dp" />
+
                                 </LinearLayout>
                             </LinearLayout>
 

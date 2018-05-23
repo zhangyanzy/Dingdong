@@ -7,8 +7,10 @@ import com.dindong.dingdong.databinding.FragmentMineBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.favorite.usecase.StatisticFavoriteCase;
+import com.dindong.dingdong.network.api.pay.usecase.StatisticOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.favorite.FavoriteStatic;
+import com.dindong.dingdong.network.bean.pay.OrderStatictis;
 import com.dindong.dingdong.presentation.pay.OrderListActivity;
 import com.dindong.dingdong.presentation.user.SettingActivity;
 import com.dindong.dingdong.presentation.user.UserAccountActivity;
@@ -47,20 +49,60 @@ public class MineFragment extends BaseFragment {
   @Override
   public void setUserVisibleHint(boolean isVisibleToUser) {
     super.setUserVisibleHint(isVisibleToUser);
-    if (binding != null && isVisibleToUser)
+    if (binding != null && isVisibleToUser) {
       statisticFavorite();
+      statisticOrder();
+    }
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    if (binding != null)
+    if (binding != null) {
       binding.setUser(SessionMgr.getUser());
+      statisticOrder();
+      statisticFavorite();
+    }
+
   }
 
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
+  }
+
+  /**
+   * 获取各状态的订单数量
+   */
+  private void statisticOrder() {
+    new StatisticOrderCase().execute(new HttpSubscriber<OrderStatictis>() {
+      @Override
+      public void onFailure(String errorMsg, Response<OrderStatictis> response) {
+
+      }
+
+      @Override
+      public void onSuccess(Response<OrderStatictis> response) {
+        binding.txtWaitPayCount
+            .setVisibility(response.getData().getWaitPayCount() <= 0 ? View.GONE : View.VISIBLE);
+        binding.txtGroupCount
+            .setVisibility(response.getData().getGroupingCount() <= 0 ? View.GONE : View.VISIBLE);
+        binding.txtConfirmedCount
+            .setVisibility(response.getData().getConfirmedCount() <= 0 ? View.GONE : View.VISIBLE);
+        binding.txtWaitCommentCount.setVisibility(
+            response.getData().getWaitCommentCount() <= 0 ? View.GONE : View.VISIBLE);
+
+        binding.txtWaitPayCount.setText(
+            (response.getData().getWaitPayCount() >= 99 ? 99 : response.getData().getWaitPayCount())
+                + "");
+        binding.txtGroupCount.setText((response.getData().getGroupingCount() >= 99 ? 99
+            : response.getData().getGroupingCount()) + "");
+        binding.txtConfirmedCount.setText((response.getData().getConfirmedCount() >= 99 ? 99
+            : response.getData().getConfirmedCount()) + "");
+        binding.txtWaitCommentCount.setText((response.getData().getWaitCommentCount() >= 99 ? 99
+            : response.getData().getWaitCommentCount()) + "");
+      }
+    });
   }
 
   /**

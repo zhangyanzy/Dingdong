@@ -1,14 +1,12 @@
 package com.dindong.dingdong.presentation.pay;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.UUID;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityOrderConfirmBinding;
-import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.manager.pay.PayCallback;
 import com.dindong.dingdong.manager.pay.PayManager;
 import com.dindong.dingdong.network.HttpSubscriber;
@@ -16,12 +14,10 @@ import com.dindong.dingdong.network.api.pay.usecase.GroupBuyCase;
 import com.dindong.dingdong.network.api.pay.usecase.PreSubmitOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
-import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.network.bean.pay.PayMode;
-import com.dindong.dingdong.network.bean.store.Subject;
-import com.dindong.dingdong.network.bean.store.SubjectType;
 import com.dindong.dingdong.presentation.main.MainActivity;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.CountView;
@@ -40,8 +36,6 @@ public class OrderConfirmActivity extends BaseActivity {
 
   ActivityOrderConfirmBinding binding;
 
-  private Subject subject;
-
   private View lastTab;
   private int tabIndex = 0;// 0-微信，1-支付宝
 
@@ -49,7 +43,7 @@ public class OrderConfirmActivity extends BaseActivity {
 
   private SweetAlertDialog dialog;
 
-  private String groupId = null;
+  private boolean isGroup;// 是否为团购，仅支持课程
 
   @Override
   protected void initComponent() {
@@ -64,9 +58,12 @@ public class OrderConfirmActivity extends BaseActivity {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    subject = (Subject) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
-    groupId = getIntent().getStringExtra("groupId");
-    binding.setSubject(subject);
+    order = (Order) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+    binding.txtShopName.setText(getIntent().getStringExtra("shop"));
+    isGroup = getIntent().getBooleanExtra("isGroup", false);
+    binding.setUnit(getIntent().getStringExtra("unit"));
+    binding.setIsGroup(isGroup);
+    binding.setOrder(order);
   }
 
   @Override
@@ -83,7 +80,7 @@ public class OrderConfirmActivity extends BaseActivity {
       @Override
       public void onCountChange(BigDecimal count) {
         // 数量变化时，更新总金额
-        BigDecimal totalAmount = count.multiply(subject.getAmount());
+        BigDecimal totalAmount = count.multiply(order.getDisPrice());
         binding.txtTotalAmount.setText(StringUtil.amount(totalAmount));
         binding.txtPayAmount
             .setText(StringUtil.format(getString(R.string.global_amount_format), totalAmount));
@@ -104,40 +101,17 @@ public class OrderConfirmActivity extends BaseActivity {
   }
 
   /**
-   * 创建订单
-   * 
-   * @return
-   */
-  private Order createOrder() {
-    Order order = new Order();
-    order.setId(UUID.randomUUID().toString());
-    order.setDate(new Date());
-    order.setItemId(subject.getId());
-    order.setItemImageUrl(subject.getImage().getUrl());
-    order.setItemType(OrderType.course.toString());
-    order.setDisPrice(subject.getAmount());
-    order.setPrice(subject.getOriginalAmount());
-    order.setQty(binding.cv.getCount());
-    order.setRealAmount(subject.getAmount().multiply(binding.cv.getCount()));
-    order.setUserId(SessionMgr.getUser().getId());
-    // order.setPayMode(tabIndex == 0 ? PayMode.weiXin : PayMode.aliPay);
-    return order;
-  }
-
-  /**
    * 预下单
    */
   private void preSubmit() {
-    if (order == null) {
+    order.setQty(binding.cv.getCount());
+    order.setRealAmount(order.getDisPrice().multiply(binding.cv.getCount()));
+    if (IsEmpty.string(order.getId()) || order.getQty().compareTo(binding.cv.getCount()) != 0) {
       // 防止由于网络错误，创建新订单
-      order = createOrder();
+      order.setId(UUID.randomUUID().toString());
       if (dialog != null)
         dialog.show();
-      if (subject.getSubjectType().equals(SubjectType.GROUP)) {
-        if (groupId != null)
-          // 如果参团，则需传原始团id
-          order.setGroupBuyId(groupId);
-        // 团购商品则下单拼团
+      if (isGroup) {
         new GroupBuyCase(order).execute(orderHttpSubscriber);
       } else
         // 正常商品则下单购买

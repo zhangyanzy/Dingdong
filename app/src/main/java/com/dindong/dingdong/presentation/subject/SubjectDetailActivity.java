@@ -18,7 +18,8 @@ import com.dindong.dingdong.network.bean.like.LikeEntityType;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.network.bean.store.SubjectType;
-import com.dindong.dingdong.presentation.pay.OrderConfirmActivity;
+import com.dindong.dingdong.presentation.pay.OrderUtil;
+import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.presentation.store.ShopMapActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -34,6 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
@@ -48,12 +50,14 @@ public class SubjectDetailActivity extends BaseActivity {
   ActivitySubjectDetailBinding binding;
 
   private Subject subject;
+  private Shop shop;
 
   @Override
   protected void initComponent() {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_subject_detail);
 
     binding.nb.setContent(NavigationTopBar.ContentType.WHITE);
+    binding.txtOriginal.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
     TextView textView = new TextView(this);
     textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
     textView.setTextColor(Color.parseColor("#468DE6"));
@@ -71,10 +75,12 @@ public class SubjectDetailActivity extends BaseActivity {
   protected void loadData(Bundle savedInstanceState) {
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
       subject = (Subject) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+      shop = subject.getStore();
       getSubject(subject.getId());
     }
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY) != null) {
-      binding.setShop((Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY));
+      shop = (Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY);
+      binding.setShop(shop);
     }
   }
 
@@ -202,11 +208,27 @@ public class SubjectDetailActivity extends BaseActivity {
       startActivity(intent);
     }
 
-    public void onGroupBuyClick(GroupBuy groupBuy) {
-      Intent intent = new Intent(SubjectDetailActivity.this, OrderConfirmActivity.class);
-      intent.putExtra(AppConfig.IntentKey.DATA, subject);
-      intent.putExtra("groupId", groupBuy.getId());
+    /**
+     * 跳到门店界面
+     * 
+     * @param shop
+     */
+    public void onShopHome(Shop shop) {
+      Intent intent = new Intent(SubjectDetailActivity.this, ShopMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
       startActivity(intent);
+    }
+
+    /**
+     * 去参团
+     * 
+     * @param groupBuy
+     */
+    public void onGroupBuyClick(GroupBuy groupBuy) {
+      OrderUtil.startOrderConfirmActivity(SubjectDetailActivity.this,
+          OrderUtil.createOrder(subject, groupBuy.getId()), shop.getName(), true,
+          subject.getUnit());
+
     }
 
     /**
@@ -256,11 +278,15 @@ public class SubjectDetailActivity extends BaseActivity {
       PhoneUtil.call(SubjectDetailActivity.this, mobile);
     }
 
+    /**
+     * 去支付
+     * 
+     * @param subject
+     */
     public void onPay(Subject subject) {
-      // ToastUtil.toastHint(SubjectDetailActivity.this, "暂未开放");
-      Intent intent = new Intent(SubjectDetailActivity.this, OrderConfirmActivity.class);
-      intent.putExtra(AppConfig.IntentKey.DATA, subject);
-      startActivity(intent);
+      OrderUtil.startOrderConfirmActivity(SubjectDetailActivity.this,
+          OrderUtil.createOrder(subject, null), shop.getName(),
+          subject.getSubjectType().equals(SubjectType.GROUP), subject.getUnit());
     }
 
   }

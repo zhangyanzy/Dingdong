@@ -6,7 +6,6 @@ import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.ShopComment;
-import com.dindong.dingdong.network.bean.store.ShopGood;
 import com.dindong.dingdong.network.bean.store.Teacher;
 
 import retrofit2.http.Body;
@@ -57,17 +56,6 @@ public interface ShopServiceApi {
    */
   @POST("shop/{shopId}/teacher/list")
   Observable<Response<List<Teacher>>> listTeacher(@Path("shopId") String shopId,
-      @Body QueryParam param);
-
-  /**
-   * 获取门店商品
-   * 
-   * @param shopId
-   * @param param
-   * @return
-   */
-  @POST("shop/{shopId}/good/list")
-  Observable<Response<List<ShopGood>>> listGood(@Path("shopId") String shopId,
       @Body QueryParam param);
 
   /**
