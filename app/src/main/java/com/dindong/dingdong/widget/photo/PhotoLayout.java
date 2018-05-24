@@ -60,6 +60,8 @@ public class PhotoLayout extends GridLayout {
 
   private float ratio = 1f;// 宽高比
 
+  private View customAddView = null;
+
   public PhotoLayout(Context context) {
     super(context);
   }
@@ -95,6 +97,10 @@ public class PhotoLayout extends GridLayout {
 
   public void setResourceListener(ResourceListener resourceListener) {
     this.resourceListener = resourceListener;
+  }
+
+  public void setCustomAddView(View customAddView) {
+    this.customAddView = customAddView;
   }
 
   public void setIsLogo(boolean logo) {
@@ -176,6 +182,10 @@ public class PhotoLayout extends GridLayout {
     source.add(image);
     if (resourceListener != null)
       resourceListener.onReady(image);
+    if (customAddView != null) {
+      binding.customAddContainer.removeView(customAddView);
+      binding.imgPhoto.setVisibility(VISIBLE);
+    }
     createView();
   }
 
@@ -205,7 +215,16 @@ public class PhotoLayout extends GridLayout {
               / columnCount;
           newBinding.imgPhoto.getLayoutParams().height = (int) (width * ratio);
           newBinding.imgPhoto.getLayoutParams().width = width;
-          newBinding.imgPhoto.setLayoutParams(newBinding.imgPhoto.getLayoutParams());
+          newBinding.imgPhoto.requestLayout();
+          if (customAddView != null) {
+            newBinding.imgPhoto.setVisibility(GONE);
+            newBinding.customAddContainer.setVisibility(VISIBLE);
+            newBinding.customAddContainer.addView(customAddView);
+
+            newBinding.customAddContainer.getLayoutParams().height = (int) (width * ratio);
+            newBinding.customAddContainer.getLayoutParams().width = width;
+            newBinding.customAddContainer.requestLayout();
+          }
         }
       });
     }

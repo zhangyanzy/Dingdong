@@ -163,7 +163,7 @@ public class OrderListFragment extends BaseFragment {
   public class Presenter implements BaseViewAdapter.Presenter {
 
     public void onItemClick(Order order) {
-      if (order.getState().equals(OrderState.cannceled)) {
+      if (order.getState().equals(OrderState.cannceled.toString())) {
         // 订单已取消无法查看
         return;
       }

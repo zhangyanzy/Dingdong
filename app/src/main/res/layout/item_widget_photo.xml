@@ -31,16 +31,20 @@
             android:longClickable="true">
 
 
-                <ImageView
-                    android:id="@+id/img_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:onClick="@{()->presenter.onAdd(hasImage,index)}"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_uploadpic" />
+            <ImageView
+                android:id="@+id/img_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="@{()->presenter.onAdd(hasImage,index)}"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_uploadpic" />
+
+            <RelativeLayout
+                android:id="@+id/custom_add_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="@{()->presenter.onAdd(hasImage,index)}"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/img_del"

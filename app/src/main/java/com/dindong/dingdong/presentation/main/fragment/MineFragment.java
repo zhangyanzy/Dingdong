@@ -16,6 +16,7 @@ import com.dindong.dingdong.presentation.user.SettingActivity;
 import com.dindong.dingdong.presentation.user.UserAccountActivity;
 import com.dindong.dingdong.presentation.user.UserInfoActivity;
 import com.dindong.dingdong.presentation.user.UserMainActivity;
+import com.dindong.dingdong.presentation.user.cooperation.ApplyMainActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 
 import android.content.Intent;
@@ -201,6 +202,13 @@ public class MineFragment extends BaseFragment {
      */
     public void onAccount() {
       startActivity(new Intent(getContext(), UserAccountActivity.class));
+    }
+
+    /**
+     * 合作
+     */
+    public void onCooperation() {
+      startActivity(new Intent(getContext(), ApplyMainActivity.class));
     }
 
     /**

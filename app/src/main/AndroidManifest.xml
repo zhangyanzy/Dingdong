@@ -155,7 +155,11 @@
         <activity android:name=".presentation.good.ShopGoodListActivity" />
         <activity android:name=".presentation.good.ShopGoodDetailActivity" />
         <activity android:name=".presentation.activity.ShopActivityDetailActivity" />
-        <activity android:name=".presentation.activity.ShopActivityListActivity"></activity>
+        <activity android:name=".presentation.activity.ShopActivityListActivity" />
+        <activity android:name=".presentation.user.cooperation.ApplyProxyActivity" />
+        <activity android:name=".presentation.user.cooperation.ApplyMainActivity" />
+        <activity android:name=".presentation.user.cooperation.ApplyTeacherActivity" />
+        <activity android:name=".presentation.user.cooperation.ApplyInstitutionActivity"></activity>
     </application>
 
 </manifest>
