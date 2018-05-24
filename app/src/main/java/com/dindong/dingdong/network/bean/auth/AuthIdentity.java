@@ -1,5 +1,7 @@
 package com.dindong.dingdong.network.bean.auth;
 
+import com.dindong.dingdong.util.IsEmpty;
+
 /**
  * Created by wcong on 2018/3/9.
  */
@@ -17,10 +19,12 @@ public enum AuthIdentity {
   }
 
   public static String getName(String code) {
-    return getAuthIdentity(code).getName();
+    return IsEmpty.string(code) ? null : getAuthIdentity(code).getName();
   }
 
   public static AuthIdentity getAuthIdentity(String code) {
+    if (IsEmpty.string(code))
+      return null;
     for (AuthIdentity identity : AuthIdentity.values()) {
       if (code.equals(identity.toString()) || code.equals(identity.toString().toUpperCase())
           || code.equals(identity.toString().toLowerCase())) {
