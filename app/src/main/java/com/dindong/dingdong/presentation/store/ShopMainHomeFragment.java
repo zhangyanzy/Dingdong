@@ -26,6 +26,10 @@ import com.dindong.dingdong.network.bean.good.ShopGood;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.network.bean.store.Teacher;
+import com.dindong.dingdong.presentation.activity.ShopActivityDetailActivity;
+import com.dindong.dingdong.presentation.activity.ShopActivityListActivity;
+import com.dindong.dingdong.presentation.good.ShopGoodDetailActivity;
+import com.dindong.dingdong.presentation.good.ShopGoodListActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -172,6 +176,7 @@ public class ShopMainHomeFragment extends BaseFragment {
         SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(),
             R.layout.item_shop_main_home_activity);
         adapter.addAll(response.getData());
+        adapter.setPresenter(new Presenter());
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.lstActivity.setLayoutManager(manager);
@@ -207,6 +212,7 @@ public class ShopMainHomeFragment extends BaseFragment {
         SingleTypeAdapter adapter = new SingleTypeAdapter(getContext(),
             R.layout.item_shop_main_home_good);
         adapter.addAll(response.getData());
+        adapter.setPresenter(new Presenter());
         adapter.setDecorator(new ShopGoodDecorator());
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -336,9 +342,8 @@ public class ShopMainHomeFragment extends BaseFragment {
       ItemShopMainHomeGoodBinding itemBinding = (ItemShopMainHomeGoodBinding) holder.getBinding();
 
       // 设置商品单位
-      itemBinding.unit.setVisibility(
-          IsEmpty.string(itemBinding.getItem().getUnit()) ? View.GONE : View.VISIBLE);
-      itemBinding.unit.setText("元/" + itemBinding.getItem().getUnit());
+      itemBinding.unit.setText("元" + (IsEmpty.string(itemBinding.getItem().getUnit()) ? ""
+          : "/" + itemBinding.getItem().getUnit()));
 
       // 设置商品原价
       itemBinding.layoutOriginalAmount.setVisibility(itemBinding.getItem().getAmount()
@@ -353,6 +358,23 @@ public class ShopMainHomeFragment extends BaseFragment {
 
   public class Presenter implements SubjectPresenter {
 
+    /**
+     * 选中活动，跳到活动详情
+     * 
+     * @param shopActivity
+     */
+    public void onShopActivityItemClick(ShopActivity shopActivity) {
+      Intent intent = new Intent(getContext(), ShopActivityDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shopActivity);
+      intent.putExtra(AppConfig.IntentKey.SUMMARY, shop);
+      startActivity(intent);
+    }
+
+    /**
+     * 选中课程，跳到课程详情
+     *
+     * @param subject
+     */
     @Override
     public void onSubjectItemClick(Subject subject) {
       Intent intent = new Intent(getContext(), SubjectDetailActivity.class);
@@ -361,9 +383,26 @@ public class ShopMainHomeFragment extends BaseFragment {
       startActivity(intent);
     }
 
+    /**
+     * 选中评论，跳到评论详情
+     * 
+     * @param comment
+     */
     public void onCommentItemClick(Comment comment) {
       Intent intent = new Intent(getContext(), ShopCommentDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, comment);
+      intent.putExtra(AppConfig.IntentKey.SUMMARY, shop);
+      startActivity(intent);
+    }
+
+    /**
+     * 选中商品，跳到商品详情
+     * 
+     * @param good
+     */
+    public void onGoodItemClick(ShopGood good) {
+      Intent intent = new Intent(getContext(), ShopGoodDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, good);
       intent.putExtra(AppConfig.IntentKey.SUMMARY, shop);
       startActivity(intent);
     }
@@ -378,6 +417,15 @@ public class ShopMainHomeFragment extends BaseFragment {
     }
 
     /**
+     * 门店更多活动
+     */
+    public void onMoreShopActivity() {
+      Intent intent = new Intent(getContext(), ShopActivityListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+      startActivity(intent);
+    }
+
+    /**
      * 更多评论
      */
     public void onMoreComment() {
@@ -385,6 +433,15 @@ public class ShopMainHomeFragment extends BaseFragment {
       intent.putExtra(AppConfig.IntentKey.DATA, shop);
       // intent.putExtra(AppConfig.IntentKey.SUMMARY, isMore);
       // intent.putExtra(AppConfig.IntentKey.ID, shop.getId());
+      startActivity(intent);
+    }
+
+    /**
+     * 更多商品
+     */
+    public void onMoreShopGood() {
+      Intent intent = new Intent(getContext(), ShopGoodListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
       startActivity(intent);
     }
 

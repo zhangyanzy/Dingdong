@@ -76,6 +76,9 @@ public class SubjectDetailActivity extends BaseActivity {
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
       subject = (Subject) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
       shop = subject.getStore();
+      binding.setSubject(subject);
+      initSubjectImg(subject.getImage());
+      initSubjectDescriptionImg(subject.getImages());
       getSubject(subject.getId());
     }
     if (getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY) != null) {

@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
+                android:onClick="@{()->presenter.onMoreShopActivity()}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -185,6 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
+                    android:onClick="@{()->presenter.onMoreShopGood()}"
                     android:text="@string/global_more"
                     android:textColor="#888888"
                     android:textSize="14dp" />

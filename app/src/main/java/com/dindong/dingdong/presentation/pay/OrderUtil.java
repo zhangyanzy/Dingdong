@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.manager.SessionMgr;
+import com.dindong.dingdong.network.bean.activity.ShopActivity;
+import com.dindong.dingdong.network.bean.good.ShopGood;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.network.bean.store.Subject;
@@ -38,10 +40,47 @@ public class OrderUtil {
     order.setDisPrice(subject.getAmount());
     order.setPrice(subject.getOriginalAmount());
     order.setUserId(SessionMgr.getUser().getId());
-    order.setItemType(OrderType.course.toString());
     if (!IsEmpty.string(groupId))
       // 参团商品，需添加团ID
       order.setGroupBuyId(groupId);
+    return order;
+  }
+
+  /**
+   * 根据商品创建订单
+   * 
+   * @param good
+   * @return
+   */
+  public static Order createOrder(ShopGood good) {
+    Order order = new Order();
+    order.setDate(new Date());
+    order.setItemId(good.getId());
+    order.setItemImageUrl(good.getImage().getUrl());
+    order.setItemName(good.getName());
+    order.setItemType(OrderType.goods.toString());
+    order.setDisPrice(good.getAmount());
+    order.setPrice(good.getOriginalAmount());
+    order.setUserId(SessionMgr.getUser().getId());
+    return order;
+  }
+
+  /**
+   * 根据活动创建订单
+   * 
+   * @param shopActivity
+   * @return
+   */
+  public static Order createOrder(ShopActivity shopActivity) {
+    Order order = new Order();
+    order.setDate(new Date());
+    order.setItemId(shopActivity.getId());
+    order.setItemImageUrl(shopActivity.getImage().getUrl());
+    order.setItemName(shopActivity.getName());
+    order.setItemType(OrderType.activity.toString());
+    order.setDisPrice(shopActivity.getAmount());
+    order.setPrice(shopActivity.getOriginalAmount());
+    order.setUserId(SessionMgr.getUser().getId());
     return order;
   }
 

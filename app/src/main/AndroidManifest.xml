@@ -151,7 +151,11 @@
         <activity android:name=".presentation.store.ShopCommentDetailActivity" />
         <activity android:name=".presentation.user.UserMainActivity" />
         <activity android:name=".presentation.user.UserAccountActivity" />
-        <activity android:name=".presentation.store.ShopGoodActivity"></activity>
+        <activity android:name=".presentation.store.ShopGoodActivity" />
+        <activity android:name=".presentation.good.ShopGoodListActivity" />
+        <activity android:name=".presentation.good.ShopGoodDetailActivity" />
+        <activity android:name=".presentation.activity.ShopActivityDetailActivity" />
+        <activity android:name=".presentation.activity.ShopActivityListActivity"></activity>
     </application>
 
 </manifest>

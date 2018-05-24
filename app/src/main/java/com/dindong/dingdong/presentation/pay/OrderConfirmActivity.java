@@ -14,6 +14,7 @@ import com.dindong.dingdong.network.api.pay.usecase.GroupBuyCase;
 import com.dindong.dingdong.network.api.pay.usecase.PreSubmitOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
+import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.network.bean.pay.PayMode;
 import com.dindong.dingdong.presentation.main.MainActivity;
 import com.dindong.dingdong.util.DialogUtil;
@@ -64,6 +65,8 @@ public class OrderConfirmActivity extends BaseActivity {
     binding.setUnit(getIntent().getStringExtra("unit"));
     binding.setIsGroup(isGroup);
     binding.setOrder(order);
+
+    initLabel(order.getItemType());
   }
 
   @Override
@@ -91,6 +94,19 @@ public class OrderConfirmActivity extends BaseActivity {
       }
     });
 
+  }
+
+  /**
+   * 根据订单不同类型，加载左侧不同label
+   */
+  private void initLabel(String itemType) {
+    if (itemType.equals(OrderType.goods.toString())) {
+      binding.txtLabelName.setText("商品");
+      binding.txtLabelAmount.setText("商品价格");
+    } else if (itemType.equals(OrderType.activity.toString())) {
+      binding.txtLabelName.setText("活动");
+      binding.txtLabelAmount.setText("活动价格");
+    }
   }
 
   private void tabSwitch(View currentView, int tabIndex) {

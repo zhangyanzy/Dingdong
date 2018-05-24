@@ -10,7 +10,7 @@
 
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.store.ShopMainHomeFragment.Presenter" />
+            type="com.dindong.dingdong.presentation.activity.ShopActivityListActivity.Presenter" />
 
         <variable
             name="item"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_white"
-        android:onClick="@{()->presenter.onShopActivityItemClick(item)}"
+        android:onClick="@{()->presenter.onItemClick(item)}"
         android:orientation="vertical">
 
         <LinearLayout

@@ -12,7 +12,6 @@ import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.PayMode;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.presentation.store.ShopMapActivity;
-import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.CuteR;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -73,7 +72,7 @@ public class OrderDetailActivity extends BaseActivity {
         StringUtil.formatRange(order.getStore().getRange())));
     PhotoUtil.load(this, order.getItemImageUrl(), binding.img);
     binding.txtGoodName.setText(order.getItemName());
-    binding.txtAmount.setText(StringUtil.amount(order.getPrice()));
+    binding.txtAmount.setText(StringUtil.amount(order.getDisPrice()));
     if (!IsEmpty.string(order.getPayMode())) {
       binding.layoutPayMode.setVisibility(View.VISIBLE);
       binding.txtPayMode.setText(PayMode.getName(order.getPayMode()));
