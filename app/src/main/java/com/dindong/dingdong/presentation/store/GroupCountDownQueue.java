@@ -1,11 +1,11 @@
 package com.dindong.dingdong.presentation.store;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import com.dindong.dingdong.util.DateUtil;
+import java.util.TimeZone;
 
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -18,8 +18,6 @@ import android.widget.TextView;
 
 public class GroupCountDownQueue {
   private static GroupCountDownQueue instance;
-
-  private CountDownTimer timer;
 
   private List<CountDownTimer> timerQueue;
 
@@ -50,7 +48,7 @@ public class GroupCountDownQueue {
 
     if (new Date().compareTo(endDate) >= 0) {
       // 当前时间大于等于结束时间，则为活动已结束
-      Log.e(this.getClass().getSimpleName(), textView.toString() + "活动已结束");
+      Log.e(this.getClass().getSimpleName(), textView.toString() + "已结束");
       return;
     }
 
@@ -59,17 +57,37 @@ public class GroupCountDownQueue {
         100) {
       @Override
       public void onTick(long millisUntilFinished) {
-        textView.setText(
-            DateUtil.format(new Date(millisUntilFinished), DateUtil.DEFAULT_DATE_FORMAT_10));
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss.S");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+        String hms = formatter.format(millisUntilFinished);
+        if (hms.indexOf(".") > 0 && hms.length() - hms.indexOf(".") > 1) {
+          hms = hms.substring(0, hms.length() - (hms.length() - hms.indexOf(".") - 2));
+        }
+
+        Log.e(this.getClass().getSimpleName(), textView.toString() + hms);
+        textView.setText(hms);
       }
 
       @Override
       public void onFinish() {
-        Log.e(this.getClass().getSimpleName(), textView.toString() + "活动已结束");
+        textView.setText("已结束");
+        Log.e(this.getClass().getSimpleName(), textView.toString() + "已结束");
       }
     };
     timerQueue.add(countDownTimer);
     countDownTimer.start();
+  }
+
+  /**
+   * 停止队列里所有线程，此方法必须在activity销毁时调用
+   */
+  public void cancel() {
+    if (timerQueue == null)
+      return;
+    for (CountDownTimer timer : timerQueue)
+      if (timer != null)
+        timer.cancel();
+    timerQueue = new ArrayList<>();
   }
 
 }
