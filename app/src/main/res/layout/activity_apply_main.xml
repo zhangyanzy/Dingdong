@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="认证成为平台老师 "
+                        android:text="教师认证 "
                         android:textColor="#333333"
                         android:textSize="14dp" />
 

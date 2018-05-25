@@ -64,7 +64,6 @@ public class GroupCountDownQueue {
           hms = hms.substring(0, hms.length() - (hms.length() - hms.indexOf(".") - 2));
         }
 
-        Log.e(this.getClass().getSimpleName(), textView.toString() + hms);
         textView.setText(hms);
       }
 

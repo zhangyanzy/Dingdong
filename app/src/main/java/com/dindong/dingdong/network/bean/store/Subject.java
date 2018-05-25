@@ -30,6 +30,7 @@ public class Subject implements Serializable {
   private boolean prove = false;
   private boolean favorite = false;// 当前用户是否关注
   private int memberNumber;// 已购买数
+  private String description;// 课程说明
 
   public String getId() {
     return id;
@@ -157,5 +158,13 @@ public class Subject implements Serializable {
 
   public void setMemberNumber(int memberNumber) {
     this.memberNumber = memberNumber;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 }

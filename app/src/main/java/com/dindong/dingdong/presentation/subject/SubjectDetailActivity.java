@@ -1,11 +1,15 @@
 package com.dindong.dingdong.presentation.subject;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivitySubjectDetailBinding;
+import com.dindong.dingdong.databinding.ItemGroupBuyBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.groupbuy.usecase.ListGroupBuyCase;
 import com.dindong.dingdong.network.api.like.usecase.CancelFavoriteLikeCase;
@@ -19,6 +23,7 @@ import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.network.bean.store.SubjectType;
 import com.dindong.dingdong.presentation.pay.OrderUtil;
+import com.dindong.dingdong.presentation.store.GroupCountDownQueue;
 import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.presentation.store.ShopMapActivity;
 import com.dindong.dingdong.util.DialogUtil;
@@ -29,6 +34,7 @@ import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
+import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 
 import android.content.Context;
@@ -111,6 +117,8 @@ public class SubjectDetailActivity extends BaseActivity {
       @Override
       public void onSuccess(Response<Subject> response) {
         subject = response.getData();
+        if (response.getData().getStore()!=null)
+          shop=response.getData().getStore();
         binding.setSubject(subject);
         initSubjectImg(subject.getImage());
         initSubjectDescriptionImg(subject.getImages());
@@ -172,6 +180,23 @@ public class SubjectDetailActivity extends BaseActivity {
 
       @Override
       public void onSuccess(Response<List<GroupBuy>> response) {
+        // 过滤掉已过期的团
+        List<Integer> deleteIndex = new ArrayList<>();
+        for (int i = 0; i < response.getData().size(); i++) {
+          Calendar calendar = Calendar.getInstance();
+          calendar.setTime(response.getData().get(i).getEndTime());
+
+          calendar.set(Calendar.MILLISECOND, 0);
+
+          if (new Date().compareTo(calendar.getTime()) >= 0) {
+            // 当前时间大于等于结束时间，则为活动已结束
+            deleteIndex.add(i);
+          }
+        }
+        for (int i = deleteIndex.size() - 1; i >= 0; i--) {
+          response.getData().remove(i);
+        }
+
         binding.layoutGroup.setVisibility(
             subject.getSubjectType().equals(SubjectType.GROUP) && !IsEmpty.list(response.getData())
                 ? View.VISIBLE
@@ -183,6 +208,7 @@ public class SubjectDetailActivity extends BaseActivity {
         adapter.addAll(
             response.getData().size() >= 2 ? response.getData().subList(0, 2) : response.getData());
         adapter.setPresenter(new Presenter());
+        adapter.setDecorator(new Decorator());
         LinearLayoutManager manager = new LinearLayoutManager(SubjectDetailActivity.this);
         binding.lstGroup.setLayoutManager(manager);
         binding.lstGroup.setNestedScrollingEnabled(false);
@@ -196,6 +222,23 @@ public class SubjectDetailActivity extends BaseActivity {
     super.onPause();
     if (listGroupBuyCase != null)
       listGroupBuyCase.unSubscribe();
+  }
+
+  public class Decorator implements BaseViewAdapter.Decorator {
+    @Override
+    public void decorator(BindingViewHolder holder, int position, int viewType) {
+      if (holder == null || holder.getBinding() == null)
+        return;
+      final ItemGroupBuyBinding itemBinding = (ItemGroupBuyBinding) holder.getBinding();
+      GroupCountDownQueue.getInstance().attach(itemBinding.txtEndTime,
+          itemBinding.getItem().getEndTime());
+    }
+  }
+
+  @Override
+  protected void onDestroy() {
+    GroupCountDownQueue.getInstance().cancel();
+    super.onDestroy();
   }
 
   public class Presenter implements BaseViewAdapter.Presenter {

@@ -1,6 +1,10 @@
 package com.dindong.dingdong.network.bean.groupbuy;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.util.Date;
+
+import com.dindong.dingdong.util.DateUtil;
 
 /**
  * Created by wcong on 2018/5/20.
@@ -33,8 +37,12 @@ public class GroupBuy implements Serializable {
     this.billNo = billNo;
   }
 
-  public String getEndTime() {
-    return endTime;
+  public Date getEndTime() {
+    try {
+      return DateUtil.parse(endTime, DateUtil.DEFAULT_DATE_FORMAT);
+    } catch (ParseException e) {
+      return new Date();
+    }
   }
 
   public void setEndTime(String endTime) {

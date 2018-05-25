@@ -36,4 +36,5 @@
     <string name="wex">微信</string>
     <string name="weibo">微博</string>
     <string name="label_view">浏览{0}</string>
+    <string name="empty_remark">暂无简介</string>
 </resources>

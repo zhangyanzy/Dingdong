@@ -89,10 +89,10 @@
                             android:textSize="13dp" />
 
                         <TextView
+                            android:id="@+id/txt_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="@{StringUtil.format(@string/subject_detail_group_end_time,DateUtil.format(item.endTime,DateUtil.DEFAULT_DATE_FORMAT_10))}"
                             android:textColor="#888888"
                             android:textSize="15dp" />
                     </LinearLayout>

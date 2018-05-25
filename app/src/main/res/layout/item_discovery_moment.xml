@@ -148,27 +148,27 @@
                 android:textColor="#888888"
                 android:textSize="12dp" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center_vertical|center_horizontal"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingTop="8dp">-->
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@mipmap/ic_forword" />
+                <!--<ImageView-->
+                    <!--android:layout_width="16dp"-->
+                    <!--android:layout_height="16dp"-->
+                    <!--android:src="@mipmap/ic_forword" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="@string/discovery_reward"
-                    android:textColor="#FF9C09"
-                    android:textSize="13dp" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="11dp"-->
+                    <!--android:text="@string/discovery_reward"-->
+                    <!--android:textColor="#FF9C09"-->
+                    <!--android:textSize="13dp" />-->
+            <!--</LinearLayout>-->
 
             <View
                 style="@style/divider_up_item"

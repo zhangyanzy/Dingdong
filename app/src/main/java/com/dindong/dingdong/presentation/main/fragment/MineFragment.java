@@ -17,6 +17,10 @@ import com.dindong.dingdong.presentation.user.UserAccountActivity;
 import com.dindong.dingdong.presentation.user.UserInfoActivity;
 import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.presentation.user.cooperation.ApplyMainActivity;
+import com.dindong.dingdong.presentation.user.favorite.UserFavFansActivity;
+import com.dindong.dingdong.presentation.user.favorite.UserFavMemberActivity;
+import com.dindong.dingdong.presentation.user.favorite.UserFavShopActivity;
+import com.dindong.dingdong.presentation.user.favorite.UserFavSubjectActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 
 import android.content.Intent;
@@ -161,15 +165,19 @@ public class MineFragment extends BaseFragment {
       switch (index) {
       case 0:
         // 门店关注
+        startActivity(new Intent(getContext(), UserFavShopActivity.class));
         break;
       case 1:
         // 课程关注
+        startActivity(new Intent(getContext(), UserFavSubjectActivity.class));
         break;
       case 2:
         // 关注
+        startActivity(new Intent(getContext(), UserFavMemberActivity.class));
         break;
       case 3:
         // 粉丝
+        startActivity(new Intent(getContext(), UserFavFansActivity.class));
         break;
       }
     }
