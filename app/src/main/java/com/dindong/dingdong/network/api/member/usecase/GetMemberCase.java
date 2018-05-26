@@ -6,20 +6,20 @@ import com.dindong.dingdong.network.api.member.MemberServiceApi;
 import rx.Observable;
 
 /**
- * Created by wcong on 2018/5/20.
+ * Created by wcong on 2018/5/26.
  * <p>
  * </>
  */
 
-public class ModifyAvatarCase extends BaseUseCase<MemberServiceApi> {
-  private String avatar;
+public class GetMemberCase extends BaseUseCase<MemberServiceApi> {
+  private String id;
 
-  public ModifyAvatarCase(String avatar) {
-    this.avatar = avatar;
+  public GetMemberCase(String id) {
+    this.id = id;
   }
 
   @Override
   protected Observable buildCase() {
-    return createConnection().modifyAvatar(avatar);
+    return createConnection().getMember(id);
   }
 }

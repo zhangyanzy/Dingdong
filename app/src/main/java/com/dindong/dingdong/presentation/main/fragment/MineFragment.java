@@ -1,14 +1,18 @@
 package com.dindong.dingdong.presentation.main.fragment;
 
+import java.util.List;
+
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMineBinding;
+import com.dindong.dingdong.databinding.ItemShopTagBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.favorite.usecase.StatisticFavoriteCase;
 import com.dindong.dingdong.network.api.pay.usecase.StatisticOrderCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.auth.AuthIdentity;
 import com.dindong.dingdong.network.bean.favorite.FavoriteStatic;
 import com.dindong.dingdong.network.bean.pay.OrderStatictis;
 import com.dindong.dingdong.presentation.pay.OrderListActivity;
@@ -25,7 +29,9 @@ import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +48,7 @@ public class MineFragment extends BaseFragment {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mine, container, false);
 
     binding.setUser(SessionMgr.getUser());
+    initIdentity(SessionMgr.getUser().getIdentities());
     binding.setStatistics(new FavoriteStatic());
     return binding.getRoot();
   }
@@ -127,6 +134,28 @@ public class MineFragment extends BaseFragment {
     });
   }
 
+  /**
+   * 加载用户身份
+   * 
+   * @param identities
+   */
+  private void initIdentity(List<String> identities) {
+    binding.layoutTag.removeAllViews();
+    for (int i = 0; i < identities.size(); i++) {
+      if (identities.get(i).equals(AuthIdentity.MEMBER.toString()))
+        continue;
+      ItemShopTagBinding itemShopTagBinding = DataBindingUtil
+          .inflate(LayoutInflater.from(getContext()), R.layout.item_shop_tag, null, false);
+      itemShopTagBinding.root
+          .setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bg_member_tag));
+
+      itemShopTagBinding.txtTag.setText(AuthIdentity.getName(identities.get(i)));
+      itemShopTagBinding.txtTag.setTextColor(Color.parseColor("#333333"));
+      binding.layoutTag.addView(itemShopTagBinding.getRoot());
+    }
+
+  }
+
   public class Presenter {
     /**
      * 订单选择
@@ -202,7 +231,9 @@ public class MineFragment extends BaseFragment {
      * 个人主页
      */
     public void onHome() {
-      startActivity(new Intent(getContext(), UserMainActivity.class));
+      Intent intent = new Intent(getContext(), UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, SessionMgr.getUser().getId());
+      startActivity(intent);
     }
 
     /**

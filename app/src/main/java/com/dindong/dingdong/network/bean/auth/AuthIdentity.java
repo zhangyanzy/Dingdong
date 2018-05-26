@@ -7,7 +7,7 @@ import com.dindong.dingdong.util.IsEmpty;
  */
 
 public enum AuthIdentity {
-  INSTITUTION("机构"), MEMBER("会员"), PTEACHER("平台老师"), ITEACHER("机构老师");
+  INSTITUTION("机构"), MEMBER("会员"), PTEACHER("平台老师"), ITEACHER("机构老师"), PROXY("代理");
   private String name;
 
   AuthIdentity(String name) {

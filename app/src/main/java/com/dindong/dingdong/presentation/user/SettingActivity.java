@@ -23,8 +23,13 @@ public class SettingActivity extends BaseActivity {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_setting);
 
     binding.nb.setContent(NavigationTopBar.ContentType.WHITE);
-    binding.txtIdentity.setText(StringUtil.format(getString(R.string.setting_current_identity),
-        AuthIdentity.getAuthIdentity(SessionMgr.getUser().getIdentitie()).getName()));
+    String txIdentity = "";
+    for (int i = 0; i < SessionMgr.getUser().getIdentities().size(); i++) {
+      txIdentity += (i == 0 ? "" : "/")
+          + AuthIdentity.getName(SessionMgr.getUser().getIdentities().get(i));
+    }
+    binding.txtIdentity
+        .setText(StringUtil.format(getString(R.string.setting_current_identity), txIdentity));
   }
 
   @Override

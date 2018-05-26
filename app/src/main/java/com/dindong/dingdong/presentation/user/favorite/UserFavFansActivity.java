@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityUserFavFansBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.favorite.usecase.ListFavFansCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.auth.User;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
@@ -17,6 +19,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -114,6 +117,9 @@ public class UserFavFansActivity extends BaseActivity {
   public class Presenter implements BaseViewAdapter.Presenter {
 
     public void onItemClick(User user) {
+      Intent intent = new Intent(UserFavFansActivity.this, UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, user.getId());
+      startActivity(intent);
     }
 
   }

@@ -1,8 +1,11 @@
 package com.dindong.dingdong.network.api.member;
 
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.auth.User;
 
+import retrofit2.http.GET;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -12,7 +15,7 @@ import rx.Observable;
  * 会员信息相关api</>
  */
 
-public interface MemeberServiceApi {
+public interface MemberServiceApi {
   /**
    * 修改用户头像
    * 
@@ -62,4 +65,13 @@ public interface MemeberServiceApi {
    */
   @PUT("member/modify/sex")
   Observable<Response<Void>> modifySex(@Query("sex") String sex);
+
+  /**
+   * 获取会员信息
+   * 
+   * @param id
+   * @return
+   */
+  @GET("member/{id}")
+  Observable<Response<User>> getMember(@Path("id") String id);
 }

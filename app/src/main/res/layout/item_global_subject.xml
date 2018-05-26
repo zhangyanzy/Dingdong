@@ -111,12 +111,12 @@
                             android:layout_alignParentRight="true"
                             android:text="@{StringUtil.format(@string/global_range,store!=null?StringUtil.formatRange(store.range):StringUtil.formatRange(item.store.range))}"
                             android:textColor="#888888"
-                            android:textSize="13dp" />
+                            android:textSize="13dp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
                             android:layout_toLeftOf="@id/txt_range"
                             android:text="@{store!=null?store.address.toString():item.store.address.toString()}"
                             android:textColor="#666666"

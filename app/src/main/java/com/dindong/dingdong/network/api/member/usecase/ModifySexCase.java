@@ -1,7 +1,7 @@
 package com.dindong.dingdong.network.api.member.usecase;
 
 import com.dindong.dingdong.network.BaseUseCase;
-import com.dindong.dingdong.network.api.member.MemeberServiceApi;
+import com.dindong.dingdong.network.api.member.MemberServiceApi;
 
 import rx.Observable;
 
@@ -11,7 +11,7 @@ import rx.Observable;
  * </>
  */
 
-public class ModifySexCase extends BaseUseCase<MemeberServiceApi> {
+public class ModifySexCase extends BaseUseCase<MemberServiceApi> {
   private String sex;
 
   public ModifySexCase(String sex) {

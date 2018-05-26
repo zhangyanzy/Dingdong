@@ -36,6 +36,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="12dp"
+                android:onClick="@{()->presenter.onSeeUser(item.ucn.userId)}"
                 app:imageUserResourceUrl="@{item.ucn.image.url}" />
 
             <LinearLayout
@@ -122,7 +123,7 @@
             android:id="@+id/pl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="64dp"
+            android:layout_marginLeft="68dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="8dp" />
 
@@ -149,25 +150,25 @@
                 android:textSize="12dp" />
 
             <!--<LinearLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical|center_horizontal"-->
-                <!--android:paddingBottom="8dp"-->
-                <!--android:paddingTop="8dp">-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_vertical|center_horizontal"-->
+            <!--android:paddingBottom="8dp"-->
+            <!--android:paddingTop="8dp">-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="16dp"-->
-                    <!--android:layout_height="16dp"-->
-                    <!--android:src="@mipmap/ic_forword" />-->
+            <!--<ImageView-->
+            <!--android:layout_width="16dp"-->
+            <!--android:layout_height="16dp"-->
+            <!--android:src="@mipmap/ic_forword" />-->
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="11dp"-->
-                    <!--android:text="@string/discovery_reward"-->
-                    <!--android:textColor="#FF9C09"-->
-                    <!--android:textSize="13dp" />-->
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="11dp"-->
+            <!--android:text="@string/discovery_reward"-->
+            <!--android:textColor="#FF9C09"-->
+            <!--android:textSize="13dp" />-->
             <!--</LinearLayout>-->
 
             <View

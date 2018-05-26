@@ -28,7 +28,6 @@ import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
 import com.dindong.dingdong.presentation.store.ShopListActivity;
 import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
-import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
@@ -47,7 +46,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 /**
  * Created by wcong on 2018/3/10. 首页
@@ -218,24 +216,24 @@ public class HomeFragment extends BaseFragment {
       }
       PhotoUtil.load(getContext(), path, imageView);
       final int finalIndex = index;
-//      imageView.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//          switch (finalIndex) {
-//          case 0:
-//            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
-//            break;
-//          case 1:
-//            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
-//            break;
-//          case 2:
-//            Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
-//            break;
-//          default:
-//            break;
-//          }
-//        }
-//      });
+      // imageView.setOnClickListener(new View.OnClickListener() {
+      // @Override
+      // public void onClick(View view) {
+      // switch (finalIndex) {
+      // case 0:
+      // Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+      // break;
+      // case 1:
+      // Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+      // break;
+      // case 2:
+      // Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+      // break;
+      // default:
+      // break;
+      // }
+      // }
+      // });
     }
   }
 
@@ -278,8 +276,10 @@ public class HomeFragment extends BaseFragment {
         startActivity(intent2);
         break;
       case 2:
-        // 所有课程
-        startActivity(new Intent(getContext(), SubjectListActivity.class));
+        // 所有门店
+        Intent intent3 = new Intent(getContext(), ShopListActivity.class);
+        intent3.putExtra(AppConfig.IntentKey.DATA, ShopListActivity.ShopQueryType.all);
+        startActivity(intent3);
         break;
       case 3:
         // 有声有色

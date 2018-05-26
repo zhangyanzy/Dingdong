@@ -4,7 +4,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="com.dindong.dingdong.util.IsEmpty" />
+
         <import type="com.dindong.dingdong.util.StringUtil" />
+
+        <variable
+            name="isCurrentUser"
+            type="Boolean" />
 
         <variable
             name="presenter"
@@ -70,7 +78,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@{user.name}"
                                 android:textColor="@color/light_black"
-                                android:textSize="16dp"
+                                android:textSize="14dp"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -95,29 +103,63 @@
                                     android:textSize="14dp" />
                             </LinearLayout>
 
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:id="@+id/layout_tag"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                app:alignItems="stretch"
+                                app:flexWrap="nowrap">
+
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.flexbox.FlexboxLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:gravity="center_vertical">
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{StringUtil.transQty(user.fans,1)}"
-                                android:textColor="#FF8082"
-                                android:textSize="14dp" />
+                                android:layout_width="56dp"
+                                android:layout_height="24dp"
+                                android:background="@drawable/btn_gradient_corner50_blue"
+                                android:gravity="center"
+                                android:onClick="@{()->presenter.follow(user)}"
+                                android:text="@{user.favorite?@string/shop_main_favorite:@string/shop_main_un_favorite}"
+                                android:textColor="@color/white"
+                                android:visibility="@{isCurrentUser?View.GONE:View.VISIBLE}" />
 
-                            <TextView
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:text="粉丝"
-                                android:textColor="#888888"
-                                android:textSize="12dp" />
+                                android:layout_marginTop="4dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{StringUtil.transQty(user.fans,1)}"
+                                    android:textColor="#FF8082"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="4dp"
+                                    android:text="粉丝"
+                                    android:textColor="#888888"
+                                    android:textSize="12dp" />
+                            </LinearLayout>
+
                         </LinearLayout>
+
 
                     </LinearLayout>
 
@@ -134,7 +176,7 @@
                             android:layout_weight="1"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="@{user.remark}"
+                            android:text="@{IsEmpty.string(user.remark)?@string/empty_remark:user.remark}"
                             android:textColor="#666666"
                             android:textSize="14dp" />
 
@@ -150,70 +192,78 @@
 
                 <include layout="@layout/space_item" />
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/layout_subject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="7dp">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:paddingBottom="7dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingTop="7dp">
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_title" />
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:text="推荐课程"
-                            android:textColor="#333333"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                    </LinearLayout>
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@mipmap/ic_title" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="推荐课程"
+                                android:textColor="#333333"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:onClick="@{()->presenter.onMoreSubject()}"
-                        android:orientation="horizontal">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="@string/global_more"
-                            android:textColor="#888888"
-                            android:textSize="14dp" />
+                            android:layout_alignParentRight="true"
+                            android:gravity="center_vertical"
+                            android:onClick="@{()->presenter.onMoreSubject()}"
+                            android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@mipmap/ic_chevron_grey" />
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="4dp"
+                                android:text="@string/global_more"
+                                android:textColor="#888888"
+                                android:textSize="14dp" />
 
-                </RelativeLayout>
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@mipmap/ic_chevron_grey" />
+                        </LinearLayout>
 
-                <LinearLayout style="@style/divider_item" />
+                    </RelativeLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/lst_hot_subject"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <LinearLayout style="@style/divider_item" />
 
-                <include layout="@layout/space_item" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/lst_hot_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include layout="@layout/space_item" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"

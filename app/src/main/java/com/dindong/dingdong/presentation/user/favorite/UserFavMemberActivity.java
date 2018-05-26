@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityUserFavMemberBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.favorite.usecase.ListFavMemberCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.auth.User;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
@@ -17,6 +19,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,12 +51,12 @@ public class UserFavMemberActivity extends BaseActivity {
   @Override
   protected void createEventHandlers() {
     binding.nb
-            .setNavigationTopBarClickListener(new NavigationTopBar.NavigationTopBarClickListener() {
-              @Override
-              public void leftImageClick() {
-                finish();
-              }
-            });
+        .setNavigationTopBarClickListener(new NavigationTopBar.NavigationTopBarClickListener() {
+          @Override
+          public void leftImageClick() {
+            finish();
+          }
+        });
     binding.refreshLayout.setOnRefreshListener(new BaseHeaderView.OnRefreshListener() {
       @Override
       public void onRefresh(BaseHeaderView baseHeaderView) {
@@ -82,17 +85,17 @@ public class UserFavMemberActivity extends BaseActivity {
       param.setStart(adapter.getData().size());
 
     new ListFavMemberCase(param)
-            .execute(new HttpSubscriber<List<User>>(showProgress ? this : null) {
-              @Override
-              public void onFailure(String errorMsg, Response<List<User>> response) {
-                DialogUtil.getErrorDialog(UserFavMemberActivity.this, errorMsg).show();
-              }
+        .execute(new HttpSubscriber<List<User>>(showProgress ? this : null) {
+          @Override
+          public void onFailure(String errorMsg, Response<List<User>> response) {
+            DialogUtil.getErrorDialog(UserFavMemberActivity.this, errorMsg).show();
+          }
 
-              @Override
-              public void onSuccess(Response<List<User>> response) {
-                loadRecyclerView(response.getData(), isRefresh, response.isMore());
-              }
-            });
+          @Override
+          public void onSuccess(Response<List<User>> response) {
+            loadRecyclerView(response.getData(), isRefresh, response.isMore());
+          }
+        });
   }
 
   private void loadRecyclerView(List<User> data, boolean isRefresh, boolean isMore) {
@@ -115,6 +118,9 @@ public class UserFavMemberActivity extends BaseActivity {
   public class Presenter implements BaseViewAdapter.Presenter {
 
     public void onItemClick(User user) {
+      Intent intent = new Intent(UserFavMemberActivity.this, UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, user.getId());
+      startActivity(intent);
     }
 
   }

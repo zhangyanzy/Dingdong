@@ -2,6 +2,7 @@ package com.dindong.dingdong.network.bean.auth;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import com.dindong.dingdong.util.IsEmpty;
 
 public class User extends ShallowCopy<User> implements Serializable, Cloneable {
   private String id;// UUID
-  private List<AuthIdentity> identities;// 用户身份
+  private List<String> identities=new ArrayList<>();// 用户身份
   private String identitie;// 用户身份
   private String name;// 昵称
   private String mobile;// 手机号
@@ -28,8 +29,10 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
   private BigDecimal favShop = BigDecimal.ZERO;// 关注门店数
   private BigDecimal favSubject = BigDecimal.ZERO;// 关注课程数
   private BigDecimal favUser = BigDecimal.ZERO;// 关注人数
-  private BigDecimal fans = BigDecimal.ZERO;// 粉丝
+  private int fans = 0;// 粉丝
   private GlobalImage userImage;// 用户头像
+  private boolean favorite;// 是否已关注
+  private List<String> tags = new ArrayList<>();// 个人标签
 
   public String getId() {
     return id;
@@ -39,11 +42,11 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
     this.id = id;
   }
 
-  public List<AuthIdentity> getIdentities() {
+  public List<String> getIdentities() {
     return identities;
   }
 
-  public void setIdentities(List<AuthIdentity> identities) {
+  public void setIdentities(List<String> identities) {
     this.identities = identities;
   }
 
@@ -119,11 +122,11 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
     this.favUser = favUser;
   }
 
-  public BigDecimal getFans() {
+  public int getFans() {
     return fans;
   }
 
-  public void setFans(BigDecimal fans) {
+  public void setFans(int fans) {
     this.fans = fans;
   }
 
@@ -141,5 +144,21 @@ public class User extends ShallowCopy<User> implements Serializable, Cloneable {
 
   public void setIdentitie(String identitie) {
     this.identitie = identitie;
+  }
+
+  public boolean isFavorite() {
+    return favorite;
+  }
+
+  public void setFavorite(boolean favorite) {
+    this.favorite = favorite;
+  }
+
+  public List<String> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
   }
 }

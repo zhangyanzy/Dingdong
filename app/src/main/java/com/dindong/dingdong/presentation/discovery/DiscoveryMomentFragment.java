@@ -16,6 +16,7 @@ import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
@@ -282,6 +283,17 @@ public class DiscoveryMomentFragment extends BaseFragment {
   }
 
   public class Presenter implements BaseViewAdapter.Presenter {
+    /**
+     * 查看用户主页
+     * 
+     * @param userId
+     */
+    public void onSeeUser(String userId) {
+      Intent intent = new Intent(getContext(), UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, userId);
+      startActivity(intent);
+    }
+
     /**
      * 查看详情
      * 
