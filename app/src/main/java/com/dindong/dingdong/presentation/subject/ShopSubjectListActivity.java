@@ -1,26 +1,25 @@
-package com.dindong.dingdong.presentation.store;
+package com.dindong.dingdong.presentation.subject;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.dindong.dingdong.R;
-import com.dindong.dingdong.adapter.StoreAdapter;
-import com.dindong.dingdong.adapter.StorePresenter;
+import com.dindong.dingdong.adapter.SubjectAdapter;
+import com.dindong.dingdong.adapter.SubjectPresenter;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.config.AppConfig;
-import com.dindong.dingdong.databinding.ActivityShopListBinding;
+import com.dindong.dingdong.databinding.ActivityShopSubjectListBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.shop.usecase.ListShopCase;
+import com.dindong.dingdong.network.api.subject.usecase.ListSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
-import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
@@ -34,32 +33,27 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 /**
- * Created by wcong on 2018/3/10. 门店列表
+ * 门店课程列表
  */
+public class ShopSubjectListActivity extends BaseActivity {
 
-public class ShopListActivity extends BaseActivity {
+  ActivityShopSubjectListBinding binding;
 
-  private ActivityShopListBinding binding;
+  private SubjectAdapter adapter;
 
-  private StoreAdapter adapter;
-
-  private ShopQueryType shopQueryType = ShopQueryType.all;
+  private Shop shop;
 
   @Override
   protected void initComponent() {
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_shop_list);
-    binding.setPresenter(new Presenter());
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_shop_subject_list);
 
-    adapter = new StoreAdapter(this);
+    adapter = new SubjectAdapter(this);
   }
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    if (getIntent().getSerializableExtra(AppConfig.IntentKey.DATA) != null) {
-      shopQueryType = (ShopQueryType) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
-    }
-    setTitle();
-    listShop(true, true);
+    shop = (Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.DATA);
+    listSubject(true, true);
   }
 
   @Override
@@ -71,16 +65,17 @@ public class ShopListActivity extends BaseActivity {
             finish();
           }
         });
+
     binding.refreshLayout.setOnRefreshListener(new BaseHeaderView.OnRefreshListener() {
       @Override
       public void onRefresh(BaseHeaderView baseHeaderView) {
-        listShop(false, true);
+        listSubject(false, true);
       }
     });
     binding.refreshLayout.setOnLoadListener(new BaseFooterView.OnLoadListener() {
       @Override
       public void onLoad(BaseFooterView baseFooterView) {
-        listShop(false, false);
+        listSubject(false, false);
       }
     });
     binding.edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -90,55 +85,38 @@ public class ShopListActivity extends BaseActivity {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
           handled = true;
 
-          listShop(true, true);
+          listSubject(true, true);
           KeyboardUtil.control(binding.edtSearch, false);
         }
         return handled;
       }
     });
-  }
 
-  private void setTitle() {
-    String title = "";
-    if (shopQueryType.equals(ShopQueryType.groupbuy)) {
-      title = getString(R.string.shop_list_title_group);
-    } else if (shopQueryType.equals(ShopQueryType.audition)) {
-      title = getString(R.string.shop_list_title_audition);
-    } else if (shopQueryType.equals(ShopQueryType.all)) {
-      title = getString(R.string.shop_list_title_all);
-    } else if (shopQueryType.equals(ShopQueryType.recommend)) {
-      title = getString(R.string.shop_list_title_recommend);
-    } else if (shopQueryType.equals(ShopQueryType.near)) {
-      title = getString(R.string.shop_list_title_near);
-    }
-    binding.nb.setCenterTitleText(title);
   }
 
   /**
-   * 查询门店
-   * 
+   * 查询所有课程
+   *
    * @param showProgress
    * @param isRefresh
    */
-  private void listShop(boolean showProgress, final boolean isRefresh) {
-    QueryParam queryParam = new QueryParam();
+  private void listSubject(boolean showProgress, final boolean isRefresh) {
+    final QueryParam param = new QueryParam();
     if (isRefresh)
-      queryParam.setStart(0);
+      param.setStart(0);
     else
-      queryParam.setStart(adapter.getData().size());
+      param.setStart(adapter.getData().size());
     if (!IsEmpty.string(binding.edtSearch.getText().toString())) {
-      queryParam.getFilters()
-          .add(new FilterParam("keyword", binding.edtSearch.getText().toString()));
+      param.getFilters().add(new FilterParam("keyword", binding.edtSearch.getText().toString()));
     }
-    queryParam.getFilters().add(new FilterParam("queryType:", shopQueryType.toString()));
-    queryParam.getFilters()
+    param.getFilters()
         .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
     if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
-      queryParam.getFilters()
+      param.getFilters()
           .add(new FilterParam("longitude", SessionMgr.getCurrentAdd().getLongitude()));
-      queryParam.getFilters()
-          .add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
+      param.getFilters().add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
     }
+    param.getFilters().add(new FilterParam("shop", shop.getId()));
 
     SweetAlertDialog sweetAlertDialog = null;
     if (showProgress) {
@@ -147,16 +125,16 @@ public class ShopListActivity extends BaseActivity {
     }
 
     final SweetAlertDialog finalSweetAlertDialog = sweetAlertDialog;
-    new ListShopCase(queryParam).execute(new HttpSubscriber<List<Shop>>() {
+    new ListSubjectCase(param).execute(new HttpSubscriber<List<Subject>>() {
       @Override
-      public void onFailure(String errorMsg, Response<List<Shop>> response) {
+      public void onFailure(String errorMsg, Response<List<Subject>> response) {
         if (finalSweetAlertDialog != null)
           finalSweetAlertDialog.dismiss();
-        DialogUtil.getErrorDialog(ShopListActivity.this, errorMsg).show();
+        DialogUtil.getErrorDialog(ShopSubjectListActivity.this, errorMsg).show();
       }
 
       @Override
-      public void onSuccess(Response<List<Shop>> response) {
+      public void onSuccess(Response<List<Subject>> response) {
         loadRecyclerView(response.getData(), isRefresh, response.isMore());
         if (finalSweetAlertDialog != null)
           finalSweetAlertDialog.dismiss();
@@ -165,7 +143,7 @@ public class ShopListActivity extends BaseActivity {
     });
   }
 
-  private void loadRecyclerView(List<Shop> data, boolean isRefresh, boolean isMore) {
+  private void loadRecyclerView(List<Subject> data, boolean isRefresh, boolean isMore) {
     if (isRefresh) {
       adapter.clear();
       binding.refreshLayout.stopRefresh();
@@ -182,43 +160,15 @@ public class ShopListActivity extends BaseActivity {
     }
   }
 
-  public class Presenter implements BaseViewAdapter.Presenter, StorePresenter {
+  public class Presenter implements SubjectPresenter {
 
     @Override
-    public void onStoreItemClick(Shop shop) {
-      Intent intent = new Intent(ShopListActivity.this, ShopMainActivity.class);
-      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+    public void onSubjectItemClick(Subject subject) {
+      Intent intent = new Intent(ShopSubjectListActivity.this, SubjectDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, subject);
+      intent.putExtra(AppConfig.IntentKey.SUMMARY, shop);
       startActivity(intent);
     }
 
-    /**
-     * 地图找门店
-     */
-    public void onShopDistributionMap() {
-      startActivity(new Intent(ShopListActivity.this, ShopDistributionMapActivity.class));
-    }
-  }
-
-  public enum ShopQueryType implements Serializable {
-    /**
-     * 试听课
-     */
-    audition
-    /**
-     * 拼团上课
-     */
-    , groupbuy
-    /**
-     * 全部课程
-     */
-    , all
-    /**
-     * 品质优选
-     */
-    , recommend
-    /**
-     * 附近门店
-     */
-    ,near
   }
 }

@@ -3,6 +3,8 @@ package com.dindong.dingdong.util;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.MessageFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.dindong.dingdong.network.bean.entity.Address;
 
@@ -25,7 +27,7 @@ public class StringUtil {
   }
 
   public static String qty(BigDecimal qty) {
-    return format("{0,number,0}",qty);
+    return format("{0,number,0}", qty);
   }
 
   public static String amount(String amount) {
@@ -120,5 +122,23 @@ public class StringUtil {
     return range.compareTo(BigDecimal.valueOf(1000)) >= 0
         ? range.divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP) + "k"
         : qty(range);
+  }
+
+  /**
+   * 校验正确手机号
+   * 
+   * @param mobile
+   * @return
+   */
+  public static boolean checkMobile(String mobile) {
+    String regex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
+
+    if (mobile.length() != 11) {
+      return false;
+    } else {
+      Pattern p = Pattern.compile(regex);
+      Matcher m = p.matcher(mobile);
+      return m.matches();
+    }
   }
 }

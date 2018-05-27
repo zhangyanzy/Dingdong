@@ -17,6 +17,7 @@ import com.dindong.dingdong.network.bean.entity.Address;
 import com.dindong.dingdong.network.bean.entity.Region;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.picker.AddressPicker;
@@ -195,6 +196,10 @@ public class ApplyInstitutionActivity extends BaseActivity {
       validator.validateAll(new ValidateResultCall() {
         @Override
         public void onSuccess() {
+          if (!StringUtil.checkMobile(binding.edtMobile.getText().toString())) {
+            ToastUtil.toastHint(ApplyInstitutionActivity.this, "手机号不正确");
+            return;
+          }
           if (tempAddress == null || tempAddress.getProvince() == null
               || tempAddress.getCity() == null) {
             ToastUtil.toastHint(ApplyInstitutionActivity.this,

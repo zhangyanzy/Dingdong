@@ -30,6 +30,7 @@ import com.dindong.dingdong.presentation.activity.ShopActivityDetailActivity;
 import com.dindong.dingdong.presentation.activity.ShopActivityListActivity;
 import com.dindong.dingdong.presentation.good.ShopGoodDetailActivity;
 import com.dindong.dingdong.presentation.good.ShopGoodListActivity;
+import com.dindong.dingdong.presentation.subject.ShopSubjectListActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -441,6 +442,15 @@ public class ShopMainHomeFragment extends BaseFragment {
      */
     public void onMoreShopGood() {
       Intent intent = new Intent(getContext(), ShopGoodListActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, shop);
+      startActivity(intent);
+    }
+
+    /**
+     * 更多课程
+     */
+    public void onMoreSubject() {
+      Intent intent = new Intent(getContext(), ShopSubjectListActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, shop);
       startActivity(intent);
     }

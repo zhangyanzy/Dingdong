@@ -67,6 +67,10 @@ public class ShopGoodDetailActivity extends BaseActivity {
       binding.setShop(shop);
     }
 
+    if (!IsEmpty.string(getIntent().getStringExtra(AppConfig.IntentKey.ID))) {
+      getShopGood(getIntent().getStringExtra(AppConfig.IntentKey.ID));
+    }
+
   }
 
   @Override
@@ -132,6 +136,10 @@ public class ShopGoodDetailActivity extends BaseActivity {
       public void onSuccess(Response<ShopGood> response) {
         // 获取到最新信息重新加载
         shopGood = response.getData();
+        if (response.getData().getStore() != null) {
+          shop = response.getData().getStore();
+          binding.setShop(shop);
+        }
         binding.setGood(shopGood);
         initLogo(shopGood.getImage());
         initDescriptionImg(shopGood.getImages());

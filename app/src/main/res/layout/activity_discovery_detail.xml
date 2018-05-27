@@ -48,6 +48,7 @@
                     android:id="@+id/mine_fragment_photo"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:onClick="@{()->presenter.onSeeUser(comment.ucn.userId)}"
                     app:imageUserResourceUrl="@{comment.ucn.image.url}" />
 
                 <LinearLayout

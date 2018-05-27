@@ -1,35 +1,37 @@
-package com.dindong.dingdong.presentation;
+package com.dindong.dingdong.presentation.store;
 
 import java.util.List;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocation;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdate;
 import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
-import com.dindong.dingdong.databinding.ActivityMain2Binding;
+import com.dindong.dingdong.databinding.ActivityShopDistributionMapBinding;
+import com.dindong.dingdong.manager.LocationMgr;
+import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.shop.usecase.ListShopCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
-import com.dindong.dingdong.presentation.store.ShopListActivity;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.ToastUtil;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
 
-public class Main2Activity extends BaseActivity {
-
-  ActivityMain2Binding binding;
+/**
+ * 地图找门店
+ */
+public class ShopDistributionMapActivity extends BaseActivity {
+  ActivityShopDistributionMapBinding binding;
 
   private AMap aMap;
 
@@ -41,13 +43,14 @@ public class Main2Activity extends BaseActivity {
 
   @Override
   protected void initComponent() {
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_main2);
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_shop_distribution_map);
   }
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    final String latitude = "30.869070";
-    final String longitude = "120.106040";
+    cityCode = SessionMgr.getCurrentAdd().getCity().getId();
+    final String latitude = SessionMgr.getCurrentAdd().getLatitude();
+    final String longitude = SessionMgr.getCurrentAdd().getLongitude();
     binding.map.onCreate(savedInstanceState);// 此方法必须重写
     if (aMap == null) {
       aMap = binding.map.getMap();
@@ -55,7 +58,7 @@ public class Main2Activity extends BaseActivity {
       aMap.setOnCameraChangeListener(onCameraChangeListener);
 
       // 设置我的定位
-//      aMap.setLocationSource(locationSource);// 设置定位监听
+      // aMap.setLocationSource(locationSource);// 设置定位监听
       aMap.getUiSettings().setMyLocationButtonEnabled(true); // 是否显示默认的定位按钮
       aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
     }
@@ -74,11 +77,33 @@ public class Main2Activity extends BaseActivity {
       }
     });
 
+    // 进入界面时，定位一次
+    LocationMgr.startLocation(new LocationMgr.ILocationCallback() {
+      @Override
+      public void onSuccess(AMapLocation location) {
+
+        LatLng latLng = new LatLng(Double.valueOf(location.getLatitude()),
+            Double.valueOf(location.getLongitude()));
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory
+            .newCameraPosition(new CameraPosition(latLng, 19, 0, 30));
+        aMap.moveCamera(cameraUpdate);
+
+        cityCode = location.getAdCode();
+        queryShop(latitude, longitude, String.valueOf(aMap.getScalePerPixel() * mapHeight));
+      }
+
+      @Override
+      public void onFailure(int errorCode, String msg) {
+        ToastUtil.toastFailure(ShopDistributionMapActivity.this, "定位失败");
+      }
+    });
+
   }
 
   /**
    * 向地图中添加标记点
-   * 
+   *
    * @param latitude
    * @param longitude
    */
@@ -111,7 +136,7 @@ public class Main2Activity extends BaseActivity {
 
   /**
    * 查询附近门店，并在地图上标记
-   * 
+   *
    * @param latitude
    *          纬度
    * @param longitude
@@ -150,45 +175,45 @@ public class Main2Activity extends BaseActivity {
     });
   }
 
-//  private LocationSource locationSource = new LocationSource() {
-//    /**
-//     * 激活定位
-//     *
-//     * @param onLocationChangedListener
-//     */
-//    @Override
-//    public void activate(OnLocationChangedListener onLocationChangedListener) {
-//      mListener = listener;
-//      if (mlocationClient == null) {
-//        mlocationClient = new AMapLocationClient(this);
-//        mLocationOption = new AMapLocationClientOption();
-//        // 设置定位监听
-//        mlocationClient.setLocationListener(this);
-//        // 设置为高精度定位模式
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-//        // 设置定位参数
-//        mlocationClient.setLocationOption(mLocationOption);
-//        // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
-//        // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
-//        // 在定位结束后，在合适的生命周期调用onDestroy()方法
-//        // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
-//        mlocationClient.startLocation();
-//      }
-//    }
-//
-//    /**
-//     * 停止定位
-//     */
-//    @Override
-//    public void deactivate() {
-//      mListener = null;
-//      if (mlocationClient != null) {
-//        mlocationClient.stopLocation();
-//        mlocationClient.onDestroy();
-//      }
-//      mlocationClient = null;
-//    }
-//  };
+  // private LocationSource locationSource = new LocationSource() {
+  // /**
+  // * 激活定位
+  // *
+  // * @param onLocationChangedListener
+  // */
+  // @Override
+  // public void activate(OnLocationChangedListener onLocationChangedListener) {
+  // mListener = listener;
+  // if (mlocationClient == null) {
+  // mlocationClient = new AMapLocationClient(this);
+  // mLocationOption = new AMapLocationClientOption();
+  // // 设置定位监听
+  // mlocationClient.setLocationListener(this);
+  // // 设置为高精度定位模式
+  // mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+  // // 设置定位参数
+  // mlocationClient.setLocationOption(mLocationOption);
+  // // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+  // // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
+  // // 在定位结束后，在合适的生命周期调用onDestroy()方法
+  // // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+  // mlocationClient.startLocation();
+  // }
+  // }
+  //
+  // /**
+  // * 停止定位
+  // */
+  // @Override
+  // public void deactivate() {
+  // mListener = null;
+  // if (mlocationClient != null) {
+  // mlocationClient.stopLocation();
+  // mlocationClient.onDestroy();
+  // }
+  // mlocationClient = null;
+  // }
+  // };
 
   /**
    * 方法必须重写

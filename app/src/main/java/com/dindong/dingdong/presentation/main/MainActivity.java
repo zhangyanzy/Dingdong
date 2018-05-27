@@ -16,7 +16,7 @@ import com.dindong.dingdong.util.ExitHelper;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.util.PermissionUtil;
-import com.dindong.dingdong.util.UpgradeUtil;
+import com.dindong.dingdong.widget.upgrade.UpgradeUtil;
 
 import android.Manifest;
 import android.content.Intent;

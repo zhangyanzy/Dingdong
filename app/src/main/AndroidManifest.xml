@@ -163,7 +163,9 @@
         <activity android:name=".presentation.user.favorite.UserFavSubjectActivity" />
         <activity android:name=".presentation.user.favorite.UserFavShopActivity" />
         <activity android:name=".presentation.user.favorite.UserFavMemberActivity" />
-        <activity android:name=".presentation.user.favorite.UserFavFansActivity"></activity>
+        <activity android:name=".presentation.user.favorite.UserFavFansActivity" />
+        <activity android:name=".presentation.subject.ShopSubjectListActivity" />
+        <activity android:name=".presentation.store.ShopDistributionMapActivity"></activity>
     </application>
 
 </manifest>

@@ -28,6 +28,7 @@ import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
 import com.dindong.dingdong.presentation.store.ShopListActivity;
 import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
+import com.dindong.dingdong.presentation.user.cooperation.ApplyInstitutionActivity;
 import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
@@ -339,6 +340,13 @@ public class HomeFragment extends BaseFragment {
       Intent intent = new Intent(getContext(), ShopMainActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, shop);
       startActivity(intent);
+    }
+
+    /**
+     * 机构入驻
+     */
+    public void onApplyInstitution() {
+      startActivity(new Intent(getContext(), ApplyInstitutionActivity.class));
     }
   }
 }

@@ -95,7 +95,7 @@ public class ShopMainActivity extends BaseActivity {
    * 
    * @param shopId
    */
-  private void getShop(String shopId) {
+  private void getShop(final String shopId) {
     new GetShopCase(shopId).execute(new HttpSubscriber<Shop>() {
       @Override
       public void onFailure(String errorMsg, Response<Shop> response) {
@@ -114,6 +114,8 @@ public class ShopMainActivity extends BaseActivity {
       public void onSuccess(Response<Shop> response) {
         shop.setFavoriteCount(response.getData().getFavoriteCount());
         shop.setFavorite(response.getData().isFavorite());
+        shop.setLongitude(response.getData().getLongitude());
+        shop.setLatitude(response.getData().getLatitude());
         binding.setItem(shop);
         initViewPager(binding);
 

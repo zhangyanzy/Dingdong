@@ -9,9 +9,13 @@ import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.pay.usecase.CancelOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
+import com.dindong.dingdong.network.bean.pay.OrderType;
 import com.dindong.dingdong.network.bean.pay.PayMode;
 import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.presentation.activity.ShopActivityDetailActivity;
+import com.dindong.dingdong.presentation.good.ShopGoodDetailActivity;
 import com.dindong.dingdong.presentation.store.ShopMapActivity;
+import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.util.CuteR;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
@@ -21,6 +25,7 @@ import com.dindong.dingdong.util.StringUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -80,6 +85,27 @@ public class OrderDetailActivity extends BaseActivity {
   }
 
   public class Presenter {
+
+    /**
+     * 查看商品详情
+     * 
+     * @param order
+     */
+    public void onItemClick(Order order) {
+      Intent intent = new Intent();
+      intent.putExtra(AppConfig.IntentKey.ID, order.getItemId());
+      if (order.getItemType().equals(OrderType.course.toString())) {
+        intent
+            .setComponent(new ComponentName(OrderDetailActivity.this, SubjectDetailActivity.class));
+      } else if (order.getItemType().equals(OrderType.goods.toString())) {
+        intent.setComponent(
+            new ComponentName(OrderDetailActivity.this, ShopGoodDetailActivity.class));
+      } else if (order.getItemType().equals(OrderType.activity.toString())) {
+        intent.setComponent(
+            new ComponentName(OrderDetailActivity.this, ShopActivityDetailActivity.class));
+      }
+      startActivity(intent);
+    }
 
     /**
      * 地址详情

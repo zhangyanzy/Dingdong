@@ -91,6 +91,9 @@ public class SubjectDetailActivity extends BaseActivity {
       shop = (Shop) getIntent().getSerializableExtra(AppConfig.IntentKey.SUMMARY);
       binding.setShop(shop);
     }
+    if (!IsEmpty.string(getIntent().getStringExtra(AppConfig.IntentKey.ID))) {
+      getSubject(getIntent().getStringExtra(AppConfig.IntentKey.ID));
+    }
   }
 
   @Override
@@ -117,8 +120,10 @@ public class SubjectDetailActivity extends BaseActivity {
       @Override
       public void onSuccess(Response<Subject> response) {
         subject = response.getData();
-        if (response.getData().getStore()!=null)
-          shop=response.getData().getStore();
+        if (response.getData().getStore() != null) {
+          shop = response.getData().getStore();
+          binding.setShop(shop);
+        }
         binding.setSubject(subject);
         initSubjectImg(subject.getImage());
         initSubjectDescriptionImg(subject.getImages());

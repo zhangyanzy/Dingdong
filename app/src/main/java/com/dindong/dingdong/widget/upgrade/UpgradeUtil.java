@@ -1,9 +1,10 @@
-package com.dindong.dingdong.util;
+package com.dindong.dingdong.widget.upgrade;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dindong.dingdong.widget.sweetAlert.SweetAlertDialog;
+import com.dindong.dingdong.util.ToastUtil;
+import com.dindong.dingdong.widget.EnterInfoDialog;
 import com.tencent.tmassistantbase.common.download.TMAssistantDownloadTaskState;
 import com.tencent.tmselfupdatesdk.ITMSelfUpdateListener;
 import com.tencent.tmselfupdatesdk.TMSelfUpdateConst;
@@ -115,13 +116,21 @@ public class UpgradeUtil {
               .checkYYBInstallState() == TMAssistantDownloadTaskState.ALREADY_INSTALLED
               && tmSelfUpdateUpdateInfo.getPatchSize() != 0) {
 
-            DialogUtil.getConfirmDialog(context, "有新版本，请立即更新")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            // DialogUtil.getConfirmDialog(context, "有新版本，请立即更新")
+            // .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            // @Override
+            // public void onClick(SweetAlertDialog sweetAlertDialog) {
+            // TMSelfUpdateManager.getInstance().startSelfUpdate(true);
+            // }
+            // }).show();
+            new AppUpgradeDialog(context, tmSelfUpdateUpdateInfo.versionname,
+                tmSelfUpdateUpdateInfo.getNewFeature(), new EnterInfoDialog.OnConfirmListener() {
                   @Override
-                  public void onClick(SweetAlertDialog sweetAlertDialog) {
+                  public void onConfirm(String code) {
                     TMSelfUpdateManager.getInstance().startSelfUpdate(true);
                   }
                 }).show();
+
           } else {
             Uri uri = Uri.parse("http://app.qq.com");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);

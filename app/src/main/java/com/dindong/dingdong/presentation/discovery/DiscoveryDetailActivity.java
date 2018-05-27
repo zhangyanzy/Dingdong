@@ -18,6 +18,7 @@ import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.network.bean.like.LikeEntity;
 import com.dindong.dingdong.network.bean.like.LikeType;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
@@ -184,6 +185,17 @@ public class DiscoveryDetailActivity extends BaseActivity {
   }
 
   public class Presenter {
+    /**
+     * 查看用户主页
+     *
+     * @param userId
+     */
+    public void onSeeUser(String userId) {
+      Intent intent = new Intent(DiscoveryDetailActivity.this, UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, userId);
+      startActivity(intent);
+    }
+
     /**
      * 评论
      */

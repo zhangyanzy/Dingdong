@@ -18,6 +18,7 @@ import com.dindong.dingdong.network.api.member.usecase.GetMemberCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
 import com.dindong.dingdong.network.api.subject.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.auth.AuthIdentity;
 import com.dindong.dingdong.network.bean.auth.User;
 import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
@@ -70,8 +71,13 @@ public class UserMainActivity extends BaseActivity {
     binding.setIsCurrentUser(isCurrentUser);
     getMember(userId);
     if (isCurrentUser) {
-      listHotSubject();
       binding.setUser(SessionMgr.getUser());
+      for (String identity:SessionMgr.getUser().getIdentities()){
+        if (identity.equals(AuthIdentity.ITEACHER.toString())||identity.equals(AuthIdentity.PTEACHER.toString())){
+          listHotSubject();// 只有当前用户是老师身份才查看推荐课程
+          continue;
+        }
+      }
       initTag(SessionMgr.getUser().getTags());
     }
 

@@ -68,6 +68,11 @@ public class ShopActivityDetailActivity extends BaseActivity {
       binding.setShop(shop);
     }
 
+    if (!IsEmpty.string(getIntent().getStringExtra(AppConfig.IntentKey.ID))) {
+      getShopActivity(getIntent().getStringExtra(AppConfig.IntentKey.ID));
+    }
+
+
   }
 
   @Override
@@ -133,6 +138,10 @@ public class ShopActivityDetailActivity extends BaseActivity {
       public void onSuccess(Response<ShopActivity> response) {
         // 获取到最新信息重新加载
         shopActivity = response.getData();
+        if (response.getData().getStore() != null) {
+          shop = response.getData().getStore();
+          binding.setShop(shop);
+        }
         binding.setShopActivity(shopActivity);
         initLogo(shopActivity.getImage());
         initDescriptionImg(shopActivity.getImages());
