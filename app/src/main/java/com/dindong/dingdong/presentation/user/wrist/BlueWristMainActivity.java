@@ -53,6 +53,7 @@ public class BlueWristMainActivity extends BaseActivity {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
+    listWrist();
   }
 
   @Override
@@ -76,7 +77,7 @@ public class BlueWristMainActivity extends BaseActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    listWrist();
+    // listWrist();
   }
 
   /**
@@ -110,6 +111,7 @@ public class BlueWristMainActivity extends BaseActivity {
       views.add(itemBinding.getRoot());
     }
     binding.cvp.setViewList(views);
+    binding.cvp.setCurrentItem(0);
   }
 
   public class Presenter {

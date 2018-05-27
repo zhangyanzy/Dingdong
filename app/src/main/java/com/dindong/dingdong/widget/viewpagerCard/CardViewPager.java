@@ -40,13 +40,15 @@ public class CardViewPager extends RelativeLayout implements CardAdapter.OnPageS
     init();
   }
 
-  private void init() {
+  public void init() {
     mAdapter = new CardAdapter(mViewList, getContext());
     mAdapter.setOnPageSelectListener(this);
     mAdapter.setViewChangeListener(viewChangeListener);
     mViewPager.setAdapter(mAdapter);
     mViewPager.addOnPageChangeListener(mAdapter);
     mViewPager.setOffscreenPageLimit(0);
+    mViewList.clear();
+    mAdapter.notifyDataSetChanged();
 
     setOnTouchListener(new OnTouchListener() {
       @Override

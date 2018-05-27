@@ -1,7 +1,7 @@
-package com.dindong.dingdong.network.api.message.usecase;
+package com.dindong.dingdong.network.api.notice.usecase;
 
 import com.dindong.dingdong.network.BaseUseCase;
-import com.dindong.dingdong.network.api.message.MessageServiceApi;
+import com.dindong.dingdong.network.api.notice.MessageServiceApi;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 
 import rx.Observable;
@@ -21,6 +21,6 @@ public class ListMsgCase extends BaseUseCase<MessageServiceApi> {
 
   @Override
   protected Observable buildCase() {
-    return createConnection(BaseUseCase.isMock).listMsg(queryParam);
+    return createConnection().listMsg(queryParam);
   }
 }

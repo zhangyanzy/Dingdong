@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="msg_title">消息</string>
+    <string name="msg_title">公告</string>
     <string-array name="msg_tabs">
-        <item >系统消息</item>
-        <item >公告</item>
+        <item>系统消息</item>
+        <item>公告</item>
     </string-array>
 </resources>

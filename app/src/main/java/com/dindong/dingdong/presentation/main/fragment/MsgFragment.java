@@ -1,21 +1,27 @@
 package com.dindong.dingdong.presentation.main.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMsgBinding;
-import com.dindong.dingdong.databinding.TabOrderListBinding;
+import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.notice.usecase.ListMsgCase;
+import com.dindong.dingdong.network.bean.Response;
+import com.dindong.dingdong.network.bean.entity.QueryParam;
+import com.dindong.dingdong.network.bean.notice.PublicNotice;
 import com.dindong.dingdong.presentation.main.MainActivity;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
+import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
+import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
+import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +33,14 @@ import android.view.ViewGroup;
 public class MsgFragment extends BaseFragment {
   private FragmentMsgBinding binding;
 
-  private List<Fragment> fragments;
+  private SingleTypeAdapter adapter;
 
   @Override
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_msg, container, false);
 
     binding.nb.setLeftImageVisiable();
+    adapter = new SingleTypeAdapter(getContext(), R.layout.item_msg);
     return binding.getRoot();
   }
 
@@ -44,7 +51,23 @@ public class MsgFragment extends BaseFragment {
 
   @Override
   protected void firstVisible() {
-    initViewPager();
+    loadMsg(true, true);
+  }
+
+  @Override
+  protected void createEventHandlers() {
+    binding.refreshLayout.setOnRefreshListener(new BaseHeaderView.OnRefreshListener() {
+      @Override
+      public void onRefresh(BaseHeaderView baseHeaderView) {
+        loadMsg(false, true);
+      }
+    });
+    binding.refreshLayout.setOnLoadListener(new BaseFooterView.OnLoadListener() {
+      @Override
+      public void onLoad(BaseFooterView baseFooterView) {
+        loadMsg(false, false);
+      }
+    });
   }
 
   @Override
@@ -55,41 +78,56 @@ public class MsgFragment extends BaseFragment {
       ((MainActivity) getActivity()).updateNotifyItem(MainActivity.IDENTIFICATION_MSG, false);
   }
 
-  private void initViewPager() {
-    fragments = new ArrayList<>();
-    fragments.add(new MsgTabFragment(0));
-    fragments.add(new MsgTabFragment(1));
+  /**
+   * 获取公告
+   * 
+   * @param showProgress
+   * @param isRefresh
+   */
+  private void loadMsg(boolean showProgress, final boolean isRefresh) {
+    final QueryParam param = new QueryParam();
+    if (isRefresh)
+      param.setStart(0);
+    else
+      param.setStart(adapter.getData().size());
 
-    binding.vp.setAdapter(new TabAdapter(getChildFragmentManager()));
-    binding.vp.setOffscreenPageLimit(3);
-    final String[] tabs = getResources().getStringArray(R.array.msg_tabs);
-    binding.stLayout.setCustomTabView(new SmartTabLayout.TabProvider() {
-      @Override
-      public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        TabOrderListBinding tabOrderListBinding = DataBindingUtil
-            .inflate(LayoutInflater.from(getContext()), R.layout.tab_order_list, container, false);
-        tabOrderListBinding.txt.setText(tabs[position]);
-        if (position == 0)
-          tabOrderListBinding.getRoot().setSelected(true);
-        return tabOrderListBinding.getRoot();
-      }
-    });
-    binding.stLayout.setViewPager(binding.vp);
+    new ListMsgCase(param)
+        .execute(new HttpSubscriber<List<PublicNotice>>(showProgress ? getContext() : null) {
+          @Override
+          public void onFailure(String errorMsg, Response<List<PublicNotice>> response) {
+            DialogUtil.getErrorDialog(getContext(), errorMsg).show();
+          }
+
+          @Override
+          public void onSuccess(Response<List<PublicNotice>> response) {
+            loadRecyclerView(response.getData(), isRefresh, response.isMore());
+
+          }
+        });
   }
 
-  private class TabAdapter extends FragmentStatePagerAdapter {
-    public TabAdapter(FragmentManager fm) {
-      super(fm);
+  private void loadRecyclerView(List<PublicNotice> data, boolean isRefresh, boolean isMore) {
+    if (isRefresh) {
+      adapter.clear();
+      binding.refreshLayout.stopRefresh();
+    } else
+      binding.refreshLayout.stopLoad();
+    adapter.addAll(data);
+    adapter.setPresenter(new Presenter());
+    binding.refreshLayout.setHasFooter(isMore);
+    if (isRefresh) {
+      LinearLayoutManager manager = new LinearLayoutManager(getContext());
+      manager.setOrientation(LinearLayoutManager.VERTICAL);
+      binding.lst.setLayoutManager(manager);
+      binding.lst.setAdapter(adapter);
     }
+  }
 
-    @Override
-    public Fragment getItem(int position) {
-      return fragments.get(position);
-    }
-
-    @Override
-    public int getCount() {
-      return fragments.size();
+  public class Presenter implements BaseViewAdapter.Presenter {
+    public void onItemClick(PublicNotice notice) {
+      Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, notice);
+      startActivity(intent);
     }
   }
 

@@ -34,7 +34,7 @@ public class LoginActivity extends BaseActivity {
 
   ActivityLoginBinding binding;
 
-  private int loginType = 0;// 0-快捷登录，1-帐号密码登录
+  private int loginType = 1;// 0-快捷登录，1-帐号密码登录
 
   private Validator shortValidator;// 快捷登录校验器
   private Validator normalValidator;// 正常登录校验器

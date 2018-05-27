@@ -119,7 +119,9 @@
         <activity
             android:name=".presentation.main.RegisterActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".presentation.user.wrist.BlueWristScanActivity" />
+        <activity
+            android:name=".presentation.user.wrist.BlueWristScanActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.user.wrist.BlueWristAddActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
@@ -165,7 +167,8 @@
         <activity android:name=".presentation.user.favorite.UserFavMemberActivity" />
         <activity android:name=".presentation.user.favorite.UserFavFansActivity" />
         <activity android:name=".presentation.subject.ShopSubjectListActivity" />
-        <activity android:name=".presentation.store.ShopDistributionMapActivity"></activity>
+        <activity android:name=".presentation.store.ShopDistributionMapActivity" />
+        <activity android:name=".presentation.main.fragment.NoticeDetailActivity"></activity>
     </application>
 
 </manifest>
