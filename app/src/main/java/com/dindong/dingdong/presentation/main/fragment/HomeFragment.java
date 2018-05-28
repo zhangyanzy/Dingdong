@@ -33,6 +33,7 @@ import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.RegionStorageUtil;
+import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
 
@@ -62,6 +63,7 @@ public class HomeFragment extends BaseFragment {
   protected View initComponent(LayoutInflater inflater, ViewGroup container) {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
+    binding.refreshLayout.setHasFooter(false);
     return binding.getRoot();
   }
 
@@ -72,6 +74,13 @@ public class HomeFragment extends BaseFragment {
   @Override
   protected void createEventHandlers() {
     binding.setPresenter(new Presenter());
+    binding.refreshLayout.setOnRefreshListener(new BaseHeaderView.OnRefreshListener() {
+      @Override
+      public void onRefresh(BaseHeaderView baseHeaderView) {
+        listBanner();
+        loadListData();
+      }
+    });
   }
 
   @Override
@@ -130,6 +139,9 @@ public class HomeFragment extends BaseFragment {
   private void loadListData() {
     listShop(0);
     listShop(1);
+    if (binding != null) {
+      binding.refreshLayout.stopRefresh();
+    }
   }
 
   /**
@@ -222,13 +234,16 @@ public class HomeFragment extends BaseFragment {
       // public void onClick(View view) {
       // switch (finalIndex) {
       // case 0:
-      // Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+      // Toast.makeText(getActivity(), (String) path,
+      // Toast.LENGTH_SHORT).show();
       // break;
       // case 1:
-      // Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+      // Toast.makeText(getActivity(), (String) path,
+      // Toast.LENGTH_SHORT).show();
       // break;
       // case 2:
-      // Toast.makeText(getActivity(), (String) path, Toast.LENGTH_SHORT).show();
+      // Toast.makeText(getActivity(), (String) path,
+      // Toast.LENGTH_SHORT).show();
       // break;
       // default:
       // break;

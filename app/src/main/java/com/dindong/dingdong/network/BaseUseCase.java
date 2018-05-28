@@ -3,10 +3,17 @@ package com.dindong.dingdong.network;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import org.greenrobot.eventbus.EventBus;
+
+import com.dindong.dingdong.network.exception.TokenExpiredException;
+import com.dindong.dingdong.util.IsEmpty;
+import com.trello.rxlifecycle.LifecycleProvider;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
@@ -21,6 +28,25 @@ public abstract class BaseUseCase<T> {
   protected Subscriber subscriber;
 
   public static final boolean isMock = true;
+
+  public void subscribe(LifecycleProvider provider, Subscriber useCaseSubscriber) {
+    if (!IsEmpty.object(provider))
+      this.subscription = this.buildCase().subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread()).compose(provider.bindToLifecycle())
+          .onErrorResumeNext(new Func1<Throwable, Observable>() {
+            @Override
+            public Observable call(Throwable throwable) {
+              if (throwable instanceof TokenExpiredException) {
+                EventBus.getDefault().post(new AuthEvent(AuthEvent.TOKEN_EXPIRED));
+                return Observable.empty();
+              } else {
+                return Observable.error(throwable);
+              }
+            }
+          }).subscribe(useCaseSubscriber);
+    else
+      execute(useCaseSubscriber);
+  }
 
   public void execute(final Subscriber response) {
     observable = buildCase();
