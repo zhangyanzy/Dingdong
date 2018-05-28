@@ -13,9 +13,12 @@ import com.dindong.dingdong.databinding.ItemUserMomentBinding;
 import com.dindong.dingdong.manager.SessionMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
 import com.dindong.dingdong.network.api.like.usecase.CancelFollowLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.CancelPraiseLikeCase;
 import com.dindong.dingdong.network.api.like.usecase.FollowLikeCase;
+import com.dindong.dingdong.network.api.like.usecase.PraiseLikeCase;
 import com.dindong.dingdong.network.api.member.usecase.GetMemberCase;
 import com.dindong.dingdong.network.api.moment.usecase.ListMomentCase;
+import com.dindong.dingdong.network.api.moment.usecase.MomentCase;
 import com.dindong.dingdong.network.api.subject.usecase.ListHotSubjectCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.auth.AuthIdentity;
@@ -25,10 +28,13 @@ import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.like.LikeEntityType;
 import com.dindong.dingdong.network.bean.store.Subject;
+import com.dindong.dingdong.presentation.discovery.DiscoveryDetailActivity;
+import com.dindong.dingdong.presentation.discovery.MomentConverter;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
 import com.dindong.dingdong.presentation.subject.SubjectListActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
+import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.util.TextFoldUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
@@ -36,6 +42,7 @@ import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.baseadapter.BindingViewHolder;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -56,12 +63,18 @@ public class UserMainActivity extends BaseActivity {
 
   private TextFoldUtil textFoldUtil;
 
+  private SingleTypeAdapter<Comment> adapter;
+
+  private String relationId = null;
+
   @Override
   protected void initComponent() {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
 
     binding.nb.setContent(NavigationTopBar.ContentType.WHITE);
     textFoldUtil = new TextFoldUtil();
+    adapter = new SingleTypeAdapter(this, R.layout.item_user_moment);
+    adapter.setPresenter(new Presenter());
   }
 
   @Override
@@ -72,8 +85,9 @@ public class UserMainActivity extends BaseActivity {
     getMember(userId);
     if (isCurrentUser) {
       binding.setUser(SessionMgr.getUser());
-      for (String identity:SessionMgr.getUser().getIdentities()){
-        if (identity.equals(AuthIdentity.ITEACHER.toString())||identity.equals(AuthIdentity.PTEACHER.toString())){
+      for (String identity : SessionMgr.getUser().getIdentities()) {
+        if (identity.equals(AuthIdentity.ITEACHER.toString())
+            || identity.equals(AuthIdentity.PTEACHER.toString())) {
           listHotSubject();// 只有当前用户是老师身份才查看推荐课程
           continue;
         }
@@ -187,6 +201,23 @@ public class UserMainActivity extends BaseActivity {
 
   }
 
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == 0x01 && resultCode == Activity.RESULT_OK && data != null) {
+      // 接收到详情界面的最新信息时，同步列表中数据
+      Comment intentComment = (Comment) data.getSerializableExtra(AppConfig.IntentKey.DATA);
+      for (Comment comment : adapter.getData()) {
+        if (intentComment.getId().equals(comment.getId())) {
+          comment.setCommentCount(intentComment.getCommentCount());
+          comment.setPraise(intentComment.isPraise());
+          comment.setPraiseCount(intentComment.getPraiseCount());
+        }
+      }
+      adapter.notifyDataSetChanged();
+    }
+  }
+
   public class Decorator implements BaseViewAdapter.Decorator {
 
     @Override
@@ -224,7 +255,6 @@ public class UserMainActivity extends BaseActivity {
   }
 
   private void loadRecyclerView(List<Comment> data, boolean isRefresh, boolean isMore) {
-    SingleTypeAdapter adapter = new SingleTypeAdapter(this, R.layout.item_user_moment);
     if (isRefresh) {
       textFoldUtil.clean();
       adapter.clear();
@@ -245,7 +275,39 @@ public class UserMainActivity extends BaseActivity {
     }
   }
 
-  public class Presenter implements SubjectPresenter {
+  /**
+   * 评论
+   *
+   */
+  private void comment(final String relationId) {
+    if (IsEmpty.string(binding.edtComment.getText().toString().trim())) {
+      ToastUtil.toastHint(UserMainActivity.this, R.string.discovery_comment_empty);
+      return;
+    }
+    new MomentCase(
+        MomentConverter.createComment(binding.edtComment.getText().toString(), relationId))
+            .execute(new HttpSubscriber<Comment>(UserMainActivity.this) {
+              @Override
+              public void onFailure(String errorMsg, Response<Comment> response) {
+                DialogUtil.getErrorDialog(UserMainActivity.this, errorMsg).show();
+              }
+
+              @Override
+              public void onSuccess(Response<Comment> response) {
+                for (Comment comment1 : adapter.getData()) {
+                  if (relationId.equals(comment1.getId())) {
+                    comment1.setCommentCount(comment1.getCommentCount() + 1);
+                  }
+                }
+                adapter.notifyDataSetChanged();
+                binding.edtComment.setText(null);
+                KeyboardUtil.control(binding.edtComment, false);
+                ToastUtil.toastHint(UserMainActivity.this, R.string.discovery_comment_success);
+              }
+            });
+  }
+
+  public class Presenter implements SubjectPresenter, BaseViewAdapter.Presenter {
     @Override
     public void onSubjectItemClick(Subject subject) {
       Intent intent = new Intent(UserMainActivity.this, SubjectDetailActivity.class);
@@ -258,6 +320,17 @@ public class UserMainActivity extends BaseActivity {
      */
     public void onMoreSubject() {
       startActivity(new Intent(UserMainActivity.this, SubjectListActivity.class));
+    }
+
+    /**
+     * 查看详情
+     *
+     * @param comment
+     */
+    public void onItemClick(Comment comment) {
+      Intent intent = new Intent(UserMainActivity.this, DiscoveryDetailActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, comment);
+      startActivityForResult(intent, 0x01);
     }
 
     /**
@@ -301,6 +374,87 @@ public class UserMainActivity extends BaseActivity {
               binding.setUser(user);
             }
           });
+    }
+
+    /**
+     * 发送评论
+     *
+     */
+    public void onComment() {
+      comment(relationId);
+    }
+
+    /**
+     * 评论
+     *
+     * @param comment
+     */
+    public void onCommentClick(Comment comment) {
+      if (relationId != null && !relationId.equals(comment.getId())) {
+        binding.edtComment.setText(null);
+      }
+      relationId = comment.getId();
+      binding.layoutEdit.setVisibility(View.VISIBLE);
+      binding.layoutEdit.post(new Runnable() {
+        @Override
+        public void run() {
+          binding.edtComment.requestFocus();
+        }
+      });
+      KeyboardUtil.control(binding.edtComment, true);
+    }
+
+    /**
+     * 点赞
+     *
+     * @param comment
+     */
+    public void onPraise(final Comment comment) {
+      if (comment.isPraise()) {
+        // 取消点赞
+        new CancelPraiseLikeCase(comment.getId())
+            .execute(new HttpSubscriber<Void>(UserMainActivity.this) {
+              @Override
+              public void onFailure(String errorMsg, Response<Void> response) {
+                DialogUtil.getErrorDialog(UserMainActivity.this, errorMsg).show();
+              }
+
+              @Override
+              public void onSuccess(Response<Void> response) {
+                ToastUtil.toastHint(UserMainActivity.this,
+                    R.string.discovery_cancel_praise_success);
+                for (Comment comment1 : adapter.getData()) {
+                  if (comment1.getId().equals(comment1.getId())) {
+                    comment1.setPraise(false);
+                    comment1.setPraiseCount(comment1.getPraiseCount() - 1);
+                  }
+                }
+                adapter.notifyDataSetChanged();
+              }
+            });
+
+        return;
+      }
+      // 点赞
+      new PraiseLikeCase(comment.getId()).execute(new HttpSubscriber<Void>(UserMainActivity.this) {
+        @Override
+        public void onFailure(String errorMsg, Response<Void> response) {
+          DialogUtil.getErrorDialog(UserMainActivity.this, errorMsg).show();
+        }
+
+        @Override
+        public void onSuccess(Response<Void> response) {
+          ToastUtil.toastHint(UserMainActivity.this, R.string.discovery_praise_success);
+          for (Comment comment1 : adapter.getData()) {
+            if (comment.getId().equals(comment1.getId())) {
+              comment.setPraise(true);
+              comment1.setPraiseCount(comment1.getPraiseCount() + 1);
+            }
+
+          }
+          adapter.notifyDataSetChanged();
+        }
+      });
     }
   }
 
