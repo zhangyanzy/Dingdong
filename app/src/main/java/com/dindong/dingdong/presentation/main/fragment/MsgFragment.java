@@ -7,7 +7,7 @@ import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.FragmentMsgBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.notice.usecase.ListMsgCase;
+import com.dindong.dingdong.network.api.notice.usecase.ListMemberMsgCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.notice.PublicNotice;
@@ -91,7 +91,7 @@ public class MsgFragment extends BaseFragment {
     else
       param.setStart(adapter.getData().size());
 
-    new ListMsgCase(param)
+    new ListMemberMsgCase(param)
         .execute(new HttpSubscriber<List<PublicNotice>>(showProgress ? getContext() : null) {
           @Override
           public void onFailure(String errorMsg, Response<List<PublicNotice>> response) {

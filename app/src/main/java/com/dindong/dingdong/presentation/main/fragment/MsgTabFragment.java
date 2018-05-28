@@ -6,7 +6,7 @@ import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseFragment;
 import com.dindong.dingdong.databinding.FragmentMsgTabBinding;
 import com.dindong.dingdong.network.HttpSubscriber;
-import com.dindong.dingdong.network.api.notice.usecase.ListMsgCase;
+import com.dindong.dingdong.network.api.notice.usecase.ListShopMsgCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
@@ -86,7 +86,7 @@ public class MsgTabFragment extends BaseFragment {
     param.getFilters()
         .add(new FilterParam("type", type == 0 ? MessageType.system : MessageType.notice));
 
-    new ListMsgCase(param)
+    new ListShopMsgCase(param)
         .execute(new HttpSubscriber<List<Message>>(showProgress ? getContext() : null) {
           @Override
           public void onFailure(String errorMsg, Response<List<Message>> response) {

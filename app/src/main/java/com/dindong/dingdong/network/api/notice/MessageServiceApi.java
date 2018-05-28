@@ -25,5 +25,14 @@ public interface MessageServiceApi {
    * @return
    */
   @POST("publicnotice/store/list")
-  Observable<Response<List<PublicNotice>>> listMsg(@Body QueryParam param);
+  Observable<Response<List<PublicNotice>>> listShopMsg(@Body QueryParam param);
+
+  /**
+   * 获取会员公告列表
+   * 
+   * @param param
+   * @return
+   */
+  @POST("publicnotice/member/list")
+  Observable<Response<List<PublicNotice>>> listMemberMsg(@Body QueryParam param);
 }

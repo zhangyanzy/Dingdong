@@ -22,7 +22,6 @@ import android.graphics.drawable.LevelListDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.Menu;
 
 /**
  * 公告详情
@@ -42,8 +41,18 @@ public class NoticeDetailActivity extends BaseActivity {
     final PublicNotice notice = (PublicNotice) getIntent()
         .getSerializableExtra(AppConfig.IntentKey.DATA);
     binding.setNotice(notice);
-    binding.txtContent
-            .setText(Html.fromHtml(notice.getContent(), new NetworkImageGetter(), null));
+    binding.txtContent.setText(Html.fromHtml(notice.getContent(), new NetworkImageGetter(), null));
+  }
+
+  @Override
+  protected void createEventHandlers() {
+    binding.nb
+        .setNavigationTopBarClickListener(new NavigationTopBar.NavigationTopBarClickListener() {
+          @Override
+          public void leftImageClick() {
+            finish();
+          }
+        });
   }
 
   private final class NetworkImageGetter implements Html.ImageGetter {

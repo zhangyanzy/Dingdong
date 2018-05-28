@@ -12,15 +12,15 @@ import rx.Observable;
  * </>
  */
 
-public class ListMsgCase extends BaseUseCase<MessageServiceApi> {
+public class ListShopMsgCase extends BaseUseCase<MessageServiceApi> {
   private QueryParam queryParam;
 
-  public ListMsgCase(QueryParam queryParam) {
+  public ListShopMsgCase(QueryParam queryParam) {
     this.queryParam = queryParam;
   }
 
   @Override
   protected Observable buildCase() {
-    return createConnection().listMsg(queryParam);
+    return createConnection().listShopMsg(queryParam);
   }
 }
