@@ -21,63 +21,186 @@
             android:layout_height="wrap_content"
             app:title_text="申请代理" />
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="身份证"
-                    android:textColor="@color/light_black"
-                    android:textSize="14dp" />
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="姓名"
+                                android:textColor="@color/light_black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="@string/global_required"
+                                android:textColor="#FD6F60"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <com.dindong.dingdong.widget.cleartextfield.ClearEditText
+                            android:id="@+id/edt_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_vertical"
+                            android:hint="请输入姓名"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/divider_item"
+                        android:layout_marginLeft="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="身份证"
+                                android:textColor="@color/light_black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="@string/global_required"
+                                android:textColor="#FD6F60"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <com.dindong.dingdong.widget.cleartextfield.ClearEditText
+                            android:id="@+id/edt_id_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_vertical"
+                            android:hint="请输入身份证号"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="*"
-                    android:textColor="#FD6F60"
-                    android:textSize="15dp" />
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="上传身份证照片"
+                            android:textColor="@color/light_black"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:text="*"
+                            android:textColor="#FD6F60"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <View style="@style/divider_item" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <com.dindong.dingdong.widget.photo.PhotoLayout
+                            android:id="@+id/card_positive"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="7dp"
+                            android:layout_marginLeft="7dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="15dp" />
+
+                        <com.dindong.dingdong.widget.photo.PhotoLayout
+                            android:id="@+id/card_opposite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="7dp"
+                            android:layout_marginLeft="7dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="7dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
             </LinearLayout>
-
-            <View style="@style/divider_item" />
-
-            <com.dindong.dingdong.widget.photo.PhotoLayout
-                android:id="@+id/card_positive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="12dp" />
-
-            <com.dindong.dingdong.widget.photo.PhotoLayout
-                android:id="@+id/card_opposite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="12dp" />
-        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/btn_corner_gradient_blue"
             android:gravity="center"
             android:onClick="@{()->presenter.onConfirm()}"
@@ -86,5 +209,9 @@
             android:text="立即申请"
             android:textColor="@color/white"
             android:textSize="18dp" />
+
+
     </LinearLayout>
+
+
 </layout>

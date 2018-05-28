@@ -15,6 +15,9 @@ public class RequestApply implements Serializable {
   private String idCardUrl1;// 身份证正面照URL
   private String idCardUrl2;// 身份证反面照URL
 
+  private String name;// 名称
+  private String idCardNo;// 身份证号
+
   public String getIdCardId1() {
     return idCardId1;
   }
@@ -45,5 +48,21 @@ public class RequestApply implements Serializable {
 
   public void setIdCardUrl2(String idCardUrl2) {
     this.idCardUrl2 = idCardUrl2;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getIdCardNo() {
+    return idCardNo;
+  }
+
+  public void setIdCardNo(String idCardNo) {
+    this.idCardNo = idCardNo;
   }
 }

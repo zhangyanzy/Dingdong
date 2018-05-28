@@ -40,48 +40,101 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
-                            android:text="个人经历"
-                            android:textColor="@color/light_black"
-                            android:textSize="14dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="姓名"
+                                android:textColor="@color/light_black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="@string/global_required"
+                                android:textColor="#FD6F60"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <com.dindong.dingdong.widget.cleartextfield.ClearEditText
+                            android:id="@+id/edt_name"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:text="*"
-                            android:textColor="#FD6F60"
-                            android:textSize="15dp" />
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_vertical"
+                            android:hint="请输入姓名"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textSize="16dp" />
                     </LinearLayout>
 
-                    <View style="@style/divider_item" />
+                    <LinearLayout
+                        style="@style/divider_item"
+                        android:layout_marginLeft="12dp" />
 
-                    <EditText
-                        android:id="@+id/edt"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:gravity="start"
-                        android:hint="请填写内容"
-                        android:lines="6"
-                        android:padding="12dp"
-                        android:textColor="@color/light_black"
-                        android:textColorHint="#888888"
-                        android:textSize="14dp" />
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="身份证"
+                                android:textColor="@color/light_black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="@string/global_required"
+                                android:textColor="#FD6F60"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <com.dindong.dingdong.widget.cleartextfield.ClearEditText
+                            android:id="@+id/edt_id_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_vertical"
+                            android:hint="请输入身份证号"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -95,7 +148,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="身份证"
+                            android:text="上传身份证照片"
                             android:textColor="@color/light_black"
                             android:textSize="14dp" />
 
@@ -110,23 +163,78 @@
 
                     <View style="@style/divider_item" />
 
-                    <com.dindong.dingdong.widget.photo.PhotoLayout
-                        android:id="@+id/card_positive"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="12dp" />
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
-                    <com.dindong.dingdong.widget.photo.PhotoLayout
-                        android:id="@+id/card_opposite"
+                        <com.dindong.dingdong.widget.photo.PhotoLayout
+                            android:id="@+id/card_positive"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="15dp" />
+
+                        <com.dindong.dingdong.widget.photo.PhotoLayout
+                            android:id="@+id/card_opposite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="7dp"
+                            android:layout_marginLeft="7dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="7dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="个人经历"
+                                android:textColor="@color/light_black"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="*"
+                                android:textColor="#FD6F60"
+                                android:textSize="15dp" />
+                        </LinearLayout>
+
+                        <View style="@style/divider_item" />
+
+                        <EditText
+                            android:id="@+id/edt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:gravity="start"
+                            android:hint="请填写内容"
+                            android:lines="6"
+                            android:padding="12dp"
+                            android:textColor="@color/light_black"
+                            android:textColorHint="#888888"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

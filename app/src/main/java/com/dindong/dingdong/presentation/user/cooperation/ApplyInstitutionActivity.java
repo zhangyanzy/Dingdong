@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityApplyInstitutionBinding;
 import com.dindong.dingdong.databinding.LayoutUploadIdCardOppositeBinding;
 import com.dindong.dingdong.databinding.LayoutUploadIdCardPositiveBinding;
@@ -15,6 +16,7 @@ import com.dindong.dingdong.network.bean.apply.RequestInstitutionApply;
 import com.dindong.dingdong.network.bean.apply.ResponseApply;
 import com.dindong.dingdong.network.bean.entity.Address;
 import com.dindong.dingdong.network.bean.entity.Region;
+import com.dindong.dingdong.presentation.main.fragment.UserAgreementActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.StringUtil;
@@ -27,6 +29,7 @@ import com.wcong.validator.Validator;
 import com.wcong.validator.rules.MinLengthRule;
 import com.wcong.validator.rules.RequiredRule;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -50,6 +53,7 @@ public class ApplyInstitutionActivity extends BaseActivity {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_apply_institution);
 
     binding.nb.setContent(NavigationTopBar.ContentType.WHITE);
+    binding.cbAgreement.setChecked(true);
     registerEditValidator();
     initUploadPhoto();
   }
@@ -80,6 +84,7 @@ public class ApplyInstitutionActivity extends BaseActivity {
     validator.register(binding.edtMobile,
         new RequiredRule(getString(R.string.wrist_add_empty_mobile)),
         new MinLengthRule(11, getString(R.string.wrist_add_len_mobile)));
+    validator.register(binding.edtLicenseNo, new RequiredRule("营业执照号不能为空"));
   }
 
   /**
@@ -139,6 +144,7 @@ public class ApplyInstitutionActivity extends BaseActivity {
     requestInstitutionApply.setFax(binding.edtFax.getText().toString());
     requestInstitutionApply.setName(binding.edtInstitutionName.getText().toString());
     requestInstitutionApply.setTel(binding.edtMobile.getText().toString());
+    requestInstitutionApply.setBusLicenseNo(binding.edtLicenseNo.getText().toString());
     requestInstitutionApply.setProvinceCode(tempAddress.getProvince().getCode());
     requestInstitutionApply.setProvinceName(tempAddress.getProvince().getName());
     requestInstitutionApply.setCityCode(tempAddress.getCity().getCode());
@@ -218,6 +224,11 @@ public class ApplyInstitutionActivity extends BaseActivity {
             ToastUtil.toastHint(ApplyInstitutionActivity.this, "反面身份证件不能为空");
             return;
           }
+          if (!binding.cbAgreement.isChecked()) {
+            ToastUtil.toastHint(ApplyInstitutionActivity.this, "请同意用户入驻条款");
+            return;
+          }
+
           applyTeacher();
 
         }
@@ -228,6 +239,15 @@ public class ApplyInstitutionActivity extends BaseActivity {
         }
       });
 
+    }
+
+    /**
+     * 用户协议
+     */
+    public void onAgreement() {
+      Intent intent = new Intent(ApplyInstitutionActivity.this, UserAgreementActivity.class);
+      intent.putExtra(AppConfig.IntentKey.URL, AppConfig.Http.AGREEMENT_INSTITUTION_URL);
+      startActivity(intent);
     }
   }
 }

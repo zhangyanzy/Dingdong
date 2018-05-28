@@ -2,6 +2,7 @@ package com.dindong.dingdong.presentation.main;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityRegisterBinding;
 import com.dindong.dingdong.manager.ShortcutMgr;
 import com.dindong.dingdong.network.HttpSubscriber;
@@ -10,6 +11,7 @@ import com.dindong.dingdong.network.api.auth.usecase.SendSmsCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.auth.RegisterRequest;
 import com.dindong.dingdong.network.bean.auth.User;
+import com.dindong.dingdong.presentation.main.fragment.UserAgreementActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.FocusValidator;
 import com.dindong.dingdong.util.IsEmpty;
@@ -21,6 +23,7 @@ import com.wcong.validator.Validator;
 import com.wcong.validator.rules.MinLengthRule;
 import com.wcong.validator.rules.RequiredRule;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.InputType;
@@ -39,7 +42,7 @@ public class RegisterActivity extends BaseActivity {
 
     binding.nb.setContent(NavigationTopBar.ContentType.WHITE);
     binding.ct.setViewType(CountTimeTextView.LayoutType.red);
-    binding.cbAgreement.setSelected(true);
+    binding.cbAgreement.setChecked(true);
     registerEditValidator();
     registerFocusValidator();
   }
@@ -134,7 +137,7 @@ public class RegisterActivity extends BaseActivity {
       validator.validateAll(new ValidateResultCall() {
         @Override
         public void onSuccess() {
-          if (!binding.cbAgreement.isSelected()) {
+          if (!binding.cbAgreement.isChecked()) {
             ToastUtil.toastHint(RegisterActivity.this, getString(R.string.login_tip_agreement));
             return;
           }
@@ -160,15 +163,6 @@ public class RegisterActivity extends BaseActivity {
       binding.edtPassword.setSelection(binding.edtPassword.getText().length());
     }
 
-    /**
-     * 授权协议
-     *
-     * @param view
-     */
-    public void onCheckAgreement(View view) {
-      view.setSelected(!view.isSelected());
-    }
-
     public void onSendSms(View view) {
       if (IsEmpty.string(binding.edtMobile.getText().toString().trim())) {
         ToastUtil.toastHint(RegisterActivity.this, getString(R.string.login_empty_msg_mobile));
@@ -180,5 +174,13 @@ public class RegisterActivity extends BaseActivity {
       sendSms(binding.edtMobile.getText().toString().trim());
     }
 
+    /**
+     * 用户协议
+     */
+    public void onAgreement() {
+      Intent intent = new Intent(RegisterActivity.this, UserAgreementActivity.class);
+      intent.putExtra(AppConfig.IntentKey.URL, AppConfig.Http.AGREEMENT_USER_URL);
+      startActivity(intent);
+    }
   }
 }

@@ -44,7 +44,7 @@ public class LoginActivity extends BaseActivity {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
     binding.ct.setViewType(CountTimeTextView.LayoutType.red);
-    binding.cbAgreement.setSelected(true);
+    binding.cbAgreement.setChecked(true);
     switchLoginType(loginType);
     registerEditValidator();
     registerFocusValidator();
@@ -184,15 +184,6 @@ public class LoginActivity extends BaseActivity {
   public class Presenter {
 
     /**
-     * 授权协议
-     * 
-     * @param view
-     */
-    public void onCheckAgreement(View view) {
-      view.setSelected(!view.isSelected());
-    }
-
-    /**
      * 登录方式切换
      * 
      * @param index
@@ -208,7 +199,7 @@ public class LoginActivity extends BaseActivity {
         shortValidator.validateAll(new ValidateResultCall() {
           @Override
           public void onSuccess() {
-            if (!binding.cbAgreement.isSelected()) {
+            if (!binding.cbAgreement.isChecked()) {
               ToastUtil.toastHint(LoginActivity.this, getString(R.string.login_tip_agreement));
               return;
             }
@@ -274,7 +265,9 @@ public class LoginActivity extends BaseActivity {
      * 用户协议
      */
     public void onAgreement() {
-      startActivity(new Intent(LoginActivity.this, UserAgreementActivity.class));
+      Intent intent = new Intent(LoginActivity.this, UserAgreementActivity.class);
+      intent.putExtra(AppConfig.IntentKey.URL, AppConfig.Http.AGREEMENT_USER_URL);
+      startActivity(intent);
     }
 
     /**

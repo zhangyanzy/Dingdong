@@ -8,6 +8,9 @@ public class AppConfig {
 
   public static class Http {
     public static final String BASE_URL = "http://console.dingdongbanxue.com/app/api/";
+
+    public static final String AGREEMENT_USER_URL = "http://terms.dingdongbanxue.com/legal-agreement/terms/person.html";// 用户协议
+    public static final String AGREEMENT_INSTITUTION_URL = "http://terms.dingdongbanxue.com/legal-agreement/terms/institution.html";// 机构入驻条款
   }
 
   public static class IntentKey {
@@ -16,6 +19,7 @@ public class AppConfig {
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String ID = "id";
+    public static final String URL = "url";
   }
 
   // 第三方申请key

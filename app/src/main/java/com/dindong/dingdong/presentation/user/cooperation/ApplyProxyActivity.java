@@ -11,6 +11,7 @@ import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.apply.RequestApply;
 import com.dindong.dingdong.network.bean.apply.ResponseApply;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.IdentityUtils;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
@@ -88,6 +89,10 @@ public class ApplyProxyActivity extends BaseActivity {
 
     requestApply.setIdCardId2(binding.cardOpposite.getSource().get(0).getId());
     requestApply.setIdCardUrl2(binding.cardOpposite.getSource().get(0).getUrl());
+
+    requestApply.setName(binding.edtName.getText().toString());
+    requestApply.setIdCardNo(binding.edtIdCard.getText().toString());
+
     new ApplyProxyCase(requestApply).execute(new HttpSubscriber<ResponseApply>(this) {
       @Override
       public void onFailure(String errorMsg, Response<ResponseApply> response) {
@@ -107,6 +112,18 @@ public class ApplyProxyActivity extends BaseActivity {
      * 提交申请
      */
     public void onConfirm() {
+      if (IsEmpty.string(binding.edtName.getText().toString())) {
+        ToastUtil.toastHint(ApplyProxyActivity.this, "姓名不能为空");
+        return;
+      }
+      if (IsEmpty.string(binding.edtIdCard.getText().toString())) {
+        ToastUtil.toastHint(ApplyProxyActivity.this, "身份证号不能为空");
+        return;
+      }
+      if (!IdentityUtils.checkIDCard(binding.edtIdCard.getText().toString())) {
+        ToastUtil.toastHint(ApplyProxyActivity.this, "请输入正确身份证号");
+        return;
+      }
       if (IsEmpty.list(binding.cardPositive.getSource())) {
         ToastUtil.toastHint(ApplyProxyActivity.this, "正面身份证件不能为空");
         return;

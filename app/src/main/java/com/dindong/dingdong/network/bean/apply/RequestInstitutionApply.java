@@ -10,6 +10,7 @@ public class RequestInstitutionApply extends RequestApply {
   private String address;// 详细地址
   private String busLicenseId;// 营业执照图ID
   private String busLicenseUrl;// 营业执照图URL
+  private String busLicenseNo;// 营业执照号
   private String cityCode;// 市编码
   private String cityName;// 市名称
   private String districtCode;// 区编码
@@ -18,7 +19,6 @@ public class RequestInstitutionApply extends RequestApply {
   private String provinceName;// 省名称
   private String contact;// 联系人
   private String fax;// 传真
-  private String name;// 机构名称
   private String tel;// 联系电话
 
   public String getAddress() {
@@ -109,19 +109,19 @@ public class RequestInstitutionApply extends RequestApply {
     this.fax = fax;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String getTel() {
     return tel;
   }
 
   public void setTel(String tel) {
     this.tel = tel;
+  }
+
+  public String getBusLicenseNo() {
+    return busLicenseNo;
+  }
+
+  public void setBusLicenseNo(String busLicenseNo) {
+    this.busLicenseNo = busLicenseNo;
   }
 }

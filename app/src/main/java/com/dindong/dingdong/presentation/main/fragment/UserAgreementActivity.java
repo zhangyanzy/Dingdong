@@ -2,6 +2,7 @@ package com.dindong.dingdong.presentation.main.fragment;
 
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
+import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.databinding.ActivityUserAgreementBinding;
 import com.dindong.dingdong.widget.NavigationTopBar;
 
@@ -23,7 +24,13 @@ public class UserAgreementActivity extends BaseActivity {
 
   @Override
   protected void loadData(Bundle savedInstanceState) {
-    binding.webView.loadUrl("http://terms.dingdongbanxue.com/legal-agreement/terms/person.html");
+    String url = getIntent().getStringExtra(AppConfig.IntentKey.URL);
+    if (url.equals(AppConfig.Http.AGREEMENT_USER_URL)) {
+      binding.nb.setCenterTitleText("用户协议");
+    } else if (url.equals(AppConfig.Http.AGREEMENT_INSTITUTION_URL)) {
+      binding.nb.setCenterTitleText("机构入驻条款");
+    }
+    binding.webView.loadUrl(url);
     binding.webView.getSettings().setJavaScriptEnabled(true);
     binding.webView.setWebChromeClient(new WebChromeClient() {
 
