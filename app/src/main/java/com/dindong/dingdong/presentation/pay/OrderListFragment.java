@@ -213,7 +213,7 @@ public class OrderListFragment extends BaseFragment {
      * @param order
      */
     public void onCommit(Order order) {
-      new PayModeSelectDialog(getContext(), order).setPayCallback(new PayCallback.Callback() {
+      new PayModeSelectDialog(getActivity(), order).setPayCallback(new PayCallback.Callback() {
         @Override
         public void onPaySuccess() {
           ToastUtil.toastSuccess(getContext(), "支付成功");

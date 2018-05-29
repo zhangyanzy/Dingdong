@@ -163,8 +163,8 @@ public class OrderConfirmActivity extends BaseActivity {
   };
 
   private void pay(Order order) {
-    new PayManager(OrderConfirmActivity.this, PayMode.weiXin).setOrder(order)
-        .setCallback(new PayCallback.Callback() {
+    new PayManager(OrderConfirmActivity.this, tabIndex == 0 ? PayMode.weiXin : PayMode.aliPay)
+        .setOrder(order).setCallback(new PayCallback.Callback() {
           @Override
           public void onPaySuccess() {
             ToastUtil.toastSuccess(OrderConfirmActivity.this, "支付成功");
@@ -205,10 +205,7 @@ public class OrderConfirmActivity extends BaseActivity {
     }
 
     public void onPay(View view) {
-      if (tabIndex == 0)
-        preSubmit();
-      else if (tabIndex == 1)
-        ToastUtil.toastHint(OrderConfirmActivity.this, "暂不支付支付宝支付");
+      preSubmit();
     }
   }
 }

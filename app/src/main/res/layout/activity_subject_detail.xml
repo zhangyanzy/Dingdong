@@ -378,7 +378,7 @@
                         <ImageView
                             android:layout_width="19dp"
                             android:layout_height="19dp"
-                            android:src="@mipmap/ic_home_hover" />
+                            android:src="@mipmap/store_line" />
 
                         <TextView
                             android:layout_width="wrap_content"

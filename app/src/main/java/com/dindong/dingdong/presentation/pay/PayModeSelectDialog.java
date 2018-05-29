@@ -6,7 +6,6 @@ import com.dindong.dingdong.manager.pay.PayCallback;
 import com.dindong.dingdong.manager.pay.PayManager;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.PayMode;
-import com.dindong.dingdong.util.ToastUtil;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -29,10 +28,12 @@ public class PayModeSelectDialog extends Dialog {
   private Order order;
 
   private PayCallback.Callback payCallback;
+  private Context context;
 
   public PayModeSelectDialog(Context context, Order order) {
     super(context, R.style.FullScreenDialog);
     this.order = order;
+    this.context = context;
     setCanceledOnTouchOutside(true);
     binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
         R.layout.layout_pay_mode_select, null, false);
@@ -64,12 +65,8 @@ public class PayModeSelectDialog extends Dialog {
     }
 
     public void pay(PayMode payMode) {
-      if (payMode.equals(PayMode.aliPay)) {
-        ToastUtil.toastHint(getContext(), "暂不支持支付宝支付");
-        return;
-      }
       dismiss();
-      new PayManager(getContext(), payMode).setOrder(order).setCallback(payCallback).pay();
+      new PayManager(context, payMode).setOrder(order).setCallback(payCallback).pay();
     }
   }
 }

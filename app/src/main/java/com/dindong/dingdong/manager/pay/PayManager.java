@@ -2,16 +2,19 @@ package com.dindong.dingdong.manager.pay;
 
 import com.dindong.dingdong.config.AppConfig;
 import com.dindong.dingdong.network.HttpSubscriber;
+import com.dindong.dingdong.network.api.alipay.usecase.AliPayTraceapPayCase;
 import com.dindong.dingdong.network.api.wxpay.usecase.WxUnifiedOrderCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.pay.Order;
 import com.dindong.dingdong.network.bean.pay.PayMode;
 import com.dindong.dingdong.network.bean.wxpay.WxUnifiedOrderResult;
 import com.dindong.dingdong.util.DialogUtil;
+import com.dindong.dingdong.util.ToastUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import android.app.Activity;
 import android.content.Context;
 
 /**
@@ -34,6 +37,10 @@ public class PayManager {
   public void pay() {
     if (payMode.equals(PayMode.weiXin))
       wexPay();
+    else if (payMode.equals(PayMode.aliPay))
+      aliPay();
+    else
+      ToastUtil.toastFailure(context, "不支持的支付方式");
   }
 
   public PayManager setOrder(Order order) {
@@ -76,6 +83,24 @@ public class PayManager {
             api.sendReq(request);
           }
         });
+
+  }
+
+  /**
+   * 支付宝支付
+   */
+  private void aliPay() {
+    new AliPayTraceapPayCase(order.getId()).execute(new HttpSubscriber<String>(context) {
+      @Override
+      public void onFailure(String errorMsg, Response<String> response) {
+        DialogUtil.getErrorDialog(context, errorMsg).show();
+      }
+
+      @Override
+      public void onSuccess(Response<String> response) {
+        new AliPayTask((Activity) context, response.getData(), callback).execute();
+      }
+    });
 
   }
 }
