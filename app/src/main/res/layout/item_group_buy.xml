@@ -14,7 +14,7 @@
 
         <variable
             name="presenter"
-            type="com.dindong.dingdong.presentation.subject.SubjectDetailActivity.Presenter" />
+            type="com.dindong.dingdong.presentation.subject.GroupBuyPresenter" />
 
         <variable
             name="item"
