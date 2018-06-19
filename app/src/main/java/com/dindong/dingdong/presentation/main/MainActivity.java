@@ -297,6 +297,12 @@ public class MainActivity extends BaseActivity {
     }
   }
 
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    UpgradeUtil.getInstance().cancel();
+  }
+
   private class MainPagerAdapter extends FragmentPagerAdapter {
     MainPagerAdapter(FragmentManager fm) {
       super(fm);

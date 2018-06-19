@@ -95,7 +95,7 @@ public class UpgradeUtil {
      *          更新信息结构体
      */
     @Override
-    public void onUpdateInfoReceived(TMSelfUpdateUpdateInfo tmSelfUpdateUpdateInfo) {
+    public void onUpdateInfoReceived(final TMSelfUpdateUpdateInfo tmSelfUpdateUpdateInfo) {
       // TODO 收到更新信息的处理逻辑
       if (null != tmSelfUpdateUpdateInfo) {
         int state = tmSelfUpdateUpdateInfo.getStatus();
@@ -107,22 +107,24 @@ public class UpgradeUtil {
         switch (tmSelfUpdateUpdateInfo.getUpdateMethod()) {
         case TMSelfUpdateUpdateInfo.UpdateMethod_NoUpdate:
           Log.i(this.getClass().getSimpleName(), "无更新");
-          // 无更新
-          // ToastUtil.toastHint(context, "已是最新版本" +
-          // tmSelfUpdateUpdateInfo.versioncode);
+          break;
+        case TMSelfUpdateUpdateInfo.UpdateMethod_Normal:
+          Log.i(this.getClass().getSimpleName(), "普通更新");
+          new AppUpgradeDialog(context, tmSelfUpdateUpdateInfo.versionname,
+              tmSelfUpdateUpdateInfo.getNewFeature(), new EnterInfoDialog.OnConfirmListener() {
+                @Override
+                public void onConfirm(String code) {
+                  // 下载最新apk
+                  TaskMgr.getTaskMgr(context).executeDownloadTask(
+                      tmSelfUpdateUpdateInfo.getUpdateDownloadUrl(),
+                      tmSelfUpdateUpdateInfo.versionname);
+                }
+              }).show();
           break;
         default:
           if (TMSelfUpdateManager.getInstance()
               .checkYYBInstallState() == TMAssistantDownloadTaskState.ALREADY_INSTALLED
               && tmSelfUpdateUpdateInfo.getPatchSize() != 0) {
-
-            // DialogUtil.getConfirmDialog(context, "有新版本，请立即更新")
-            // .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            // @Override
-            // public void onClick(SweetAlertDialog sweetAlertDialog) {
-            // TMSelfUpdateManager.getInstance().startSelfUpdate(true);
-            // }
-            // }).show();
             new AppUpgradeDialog(context, tmSelfUpdateUpdateInfo.versionname,
                 tmSelfUpdateUpdateInfo.getNewFeature(), new EnterInfoDialog.OnConfirmListener() {
                   @Override
@@ -253,4 +255,7 @@ public class UpgradeUtil {
     return "";
   }
 
+  public void cancel() {
+    TaskMgr.getTaskMgr(context).cancel();
+  }
 }
