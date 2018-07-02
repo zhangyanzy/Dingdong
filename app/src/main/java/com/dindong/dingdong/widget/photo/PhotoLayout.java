@@ -252,6 +252,8 @@ public class PhotoLayout extends GridLayout {
     });
   }
 
+  private UploadMultiImageCase uploadMultiImageCase;
+
   private void uploadPhoto(ArrayList<String> photos) {
     if (IsEmpty.list(photos))
       return;
@@ -280,15 +282,20 @@ public class PhotoLayout extends GridLayout {
     MultipartBody.Part[] parts = new MultipartBody.Part[photos.size()];
 
     for (int i = 0; i < photos.size(); i++) {
-      File file = new File(photos.get(i));
+      File file = null;
+      try {
+        file = PhotoUtil.getCompressFile(photos.get(i));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
       RequestBody requestFile;
       requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
       MultipartBody.Part imagePart = MultipartBody.Part.createFormData("files", file.getName(),
           requestFile);
       parts[i] = imagePart;
     }
-
-    new UploadMultiImageCase(parts).execute(new HttpSubscriber<List<GlobalImage>>() {
+    uploadMultiImageCase = new UploadMultiImageCase(parts);
+    uploadMultiImageCase.execute(new HttpSubscriber<List<GlobalImage>>() {
       @Override
       public void onFailure(String errorMsg, Response<List<GlobalImage>> response) {
         DialogUtil.getErrorDialog(getContext(), errorMsg).show();
@@ -325,6 +332,14 @@ public class PhotoLayout extends GridLayout {
         getChildAt(i).findViewById(R.id.img_del).setVisibility(isVisible ? View.VISIBLE : GONE);
       }
     }
+  }
+
+  /**
+   * 与activity或fragment生命周期绑定，界面销毁时调用
+   */
+  public void destroy() {
+    if (uploadMultiImageCase != null)
+      uploadMultiImageCase.unSubscribe();
   }
 
   public class Presenter {

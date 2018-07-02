@@ -25,6 +25,7 @@ import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.network.bean.store.Subject;
 import com.dindong.dingdong.presentation.main.MainActivity;
 import com.dindong.dingdong.presentation.main.RegionSwitchActivity;
+import com.dindong.dingdong.presentation.store.ShopDistributionMapActivity;
 import com.dindong.dingdong.presentation.store.ShopListActivity;
 import com.dindong.dingdong.presentation.store.ShopMainActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
@@ -33,6 +34,7 @@ import com.dindong.dingdong.presentation.user.wrist.BlueWristMainActivity;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.PhotoUtil;
 import com.dindong.dingdong.util.RegionStorageUtil;
+import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -79,6 +81,12 @@ public class HomeFragment extends BaseFragment {
       public void onRefresh(BaseHeaderView baseHeaderView) {
         listBanner();
         loadListData();
+      }
+    });
+    binding.refreshLayout.setOnLoadListener(new BaseFooterView.OnLoadListener() {
+      @Override
+      public void onLoad(BaseFooterView baseFooterView) {
+        listShop(1, true);
       }
     });
   }
@@ -137,8 +145,8 @@ public class HomeFragment extends BaseFragment {
    * 加载列表数据
    */
   private void loadListData() {
-    listShop(0);
-    listShop(1);
+    listShop(0, false);
+    listShop(1, false);
     if (binding != null) {
       binding.refreshLayout.stopRefresh();
     }
@@ -172,8 +180,10 @@ public class HomeFragment extends BaseFragment {
    * 
    * @param type
    *          0-品质门店，1-附近门第
+   * @param isLoad
+   *          是否为加载更多
    */
-  private void listShop(final int type) {
+  private void listShop(final int type, final boolean isLoad) {
     QueryParam param = new QueryParam();
     param.setLimit(6);
     param.getFilters().add(new FilterParam("queryType:", type == 0 ? "recommend" : "near"));
@@ -184,6 +194,9 @@ public class HomeFragment extends BaseFragment {
           .add(new FilterParam("longitude", SessionMgr.getCurrentAdd().getLongitude()));
       param.getFilters().add(new FilterParam("latitude", SessionMgr.getCurrentAdd().getLatitude()));
     }
+    if (isLoad) {
+      param.setStart(((StoreAdapter) binding.lstNearShop.getAdapter()).getData().size());
+    }
 
     new ListShopCase(param).execute(new HttpSubscriber<List<Shop>>() {
       @Override
@@ -193,8 +206,13 @@ public class HomeFragment extends BaseFragment {
       @Override
       public void onSuccess(Response<List<Shop>> response) {
         StoreAdapter storeAdapter = new StoreAdapter(getContext());
+        if (isLoad) {
+          storeAdapter = (StoreAdapter) binding.lstNearShop.getAdapter();
+          storeAdapter.addAll(response.getData());
+        } else
+          storeAdapter.set(response.getData());
+
         storeAdapter.setPresenter(new Presenter());
-        storeAdapter.set(response.getData());
         LinearLayoutManager manager = new LinearLayoutManager(getContext()) {
           @Override
           public boolean canScrollVertically() {
@@ -206,8 +224,13 @@ public class HomeFragment extends BaseFragment {
           binding.lstRecommendShop.setLayoutManager(manager);
           binding.lstRecommendShop.setAdapter(storeAdapter);
         } else if (type == 1) {
-          binding.lstNearShop.setLayoutManager(manager);
-          binding.lstNearShop.setAdapter(storeAdapter);
+          binding.refreshLayout.setHasFooter(response.isMore());
+          if (isLoad)
+            binding.refreshLayout.stopLoad();
+          else {
+            binding.lstNearShop.setLayoutManager(manager);
+            binding.lstNearShop.setAdapter(storeAdapter);
+          }
         }
 
       }
@@ -293,9 +316,11 @@ public class HomeFragment extends BaseFragment {
         break;
       case 2:
         // 所有门店
-        Intent intent3 = new Intent(getContext(), ShopListActivity.class);
-        intent3.putExtra(AppConfig.IntentKey.DATA, ShopListActivity.ShopQueryType.all);
-        startActivity(intent3);
+        // Intent intent3 = new Intent(getContext(), ShopListActivity.class);
+        // intent3.putExtra(AppConfig.IntentKey.DATA,
+        // ShopListActivity.ShopQueryType.all);
+        // startActivity(intent3);
+        startActivity(new Intent(getContext(), ShopDistributionMapActivity.class));
         break;
       case 3:
         // 有声有色

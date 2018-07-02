@@ -82,6 +82,12 @@ public class SendMomentActivity extends BaseActivity {
   }
 
   @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    binding.pl.destroy();
+  }
+
+  @Override
   protected void createEventHandlers() {
     binding.nb
         .setNavigationTopBarClickListener(new NavigationTopBar.NavigationTopBarClickListener() {

@@ -63,6 +63,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="@{()->presenter.onSeeUser(item.ucn.userId)}"
                             android:text="@{item.ucn.userName}"
                             android:textColor="#2B4C77"
                             android:textSize="15dp" />

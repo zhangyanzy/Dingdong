@@ -86,9 +86,8 @@ public class UserMainActivity extends BaseActivity {
     if (isCurrentUser) {
       binding.setUser(SessionMgr.getUser());
       for (String identity : SessionMgr.getUser().getIdentities()) {
-        if (identity.equals(AuthIdentity.ITEACHER.toString())
-            || identity.equals(AuthIdentity.PTEACHER.toString())) {
-          listHotSubject();// 只有当前用户是老师身份才查看推荐课程
+        if (identity.equals(AuthIdentity.ITEACHER.toString())) {
+          listHotSubject();// 只有当前用户是机构老师身份才查看推荐课程
           continue;
         }
       }
