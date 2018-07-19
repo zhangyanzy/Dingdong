@@ -59,21 +59,19 @@
             android:name="dingdong"
             android:value="1" />
 
-        <!--支付宝-->
+        <!-- 支付宝 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
 
         <service
             android:name="com.tencent.tmdownloader.TMAssistantDownloadService"
@@ -184,7 +182,8 @@
         <activity android:name=".presentation.user.favorite.UserFavFansActivity" />
         <activity android:name=".presentation.subject.ShopSubjectListActivity" />
         <activity android:name=".presentation.store.ShopDistributionMapActivity" />
-        <activity android:name=".presentation.main.fragment.NoticeDetailActivity"></activity>
+        <activity android:name=".presentation.main.fragment.NoticeDetailActivity" />
+        <activity android:name=".widget.WidgetTestActivity"></activity>
     </application>
 
 </manifest>
