@@ -26,6 +26,7 @@ import com.dindong.dingdong.util.ToastUtil;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 /**
  * 地图找门店
@@ -99,6 +100,16 @@ public class ShopDistributionMapActivity extends BaseActivity {
       }
     });
 
+  }
+
+  @Override
+  protected void createEventHandlers() {
+    binding.btnBack.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        finish();
+      }
+    });
   }
 
   /**

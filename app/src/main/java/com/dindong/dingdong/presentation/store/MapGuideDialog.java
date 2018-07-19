@@ -127,8 +127,8 @@ public class MapGuideDialog extends Dialog {
   private void gaodeiMap() {
     if (PackageUtil.isAvilible(getContext(), "com.autonavi.minimap")) {
       try {
-        Intent intent = Intent.getIntent("androidamap://navi?sourceApplication=ddbx&poiname="
-            + destinationName + "&lat=" + destinationLat + "&lon=" + destinationLon + "&dev=0");
+        Intent intent = Intent.getIntent("amapuri://route/plan/?dname=" + destinationName + "&dlat="
+            + destinationLat + "&dlon=" + destinationLon + "&dev=0&t=0");
         getContext().startActivity(intent);
       } catch (URISyntaxException e) {
         e.printStackTrace();
@@ -148,9 +148,8 @@ public class MapGuideDialog extends Dialog {
   private void txMap() {
     if (PackageUtil.isAvilible(getContext(), "com.tencent.map")) {
       try {
-        Intent intent = Intent.getIntent("http://apis.map.qq.com/uri/v1/marker?marker=coord:"
-            + destinationLat + "," + destinationLon + ";" + "title:" + destinationName + ";addr:"
-            + " " + "&referer=myapp");
+        Intent intent = Intent.getIntent("qqmap://map/routeplan?type=drive&tocoord="
+            + destinationLat + "," + destinationLon + "&to=" + destinationName + "&referer=myapp");
         getContext().startActivity(intent);
       } catch (URISyntaxException e) {
         e.printStackTrace();

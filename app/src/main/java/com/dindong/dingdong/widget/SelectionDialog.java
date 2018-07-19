@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.android.annotations.NonNull;
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.databinding.DialogSelectionBinding;
 import com.dindong.dingdong.databinding.ItemDialogSelectionBinding;
@@ -18,6 +17,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -92,7 +92,7 @@ public class SelectionDialog extends PopupWindow {
       public void run() {
         if (adapter.getData().size() >= 6) {
           recyclerView.getLayoutParams().height = (int) TypedValue.applyDimension(
-              TypedValue.COMPLEX_UNIT_DIP, 6 * 32 - 8f, Resources.getSystem().getDisplayMetrics());
+              TypedValue.COMPLEX_UNIT_DIP, 6 * 40 - 12f, Resources.getSystem().getDisplayMetrics());
           recyclerView.setLayoutManager(recyclerView.getLayoutManager());
           binding.invalidateAll();
         }
@@ -114,7 +114,7 @@ public class SelectionDialog extends PopupWindow {
    * @param data
    *          数据源
    */
-  public void setData(int position, @NonNull List<SelectionSource> data) {
+  public void setData(int position, List<SelectionSource> data) {
     if (IsEmpty.list(data) || position >= maxLen)
       return;
     for (int i = 0; i < data.size(); i++) {
@@ -170,6 +170,9 @@ public class SelectionDialog extends PopupWindow {
       if (holder == null)
         return;
       ItemDialogSelectionBinding itemBinding = (ItemDialogSelectionBinding) holder.getBinding();
+      itemBinding.root.setBackgroundDrawable(ContextCompat.getDrawable(downView.getContext(),
+          itemBinding.getItem().getPosition() < maxLen - 1 ? R.drawable.bg_item_dialog_selection
+              : R.drawable.bg_item_dialog_selection2));
       itemBinding.root
           .setSelected(((ItemDialogSelectionBinding) holder.getBinding()).getItem().isSelect());
     }

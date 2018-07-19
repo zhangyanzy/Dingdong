@@ -20,6 +20,7 @@ import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
+import com.dindong.dingdong.widget.SelectionDialog;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
@@ -30,6 +31,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -130,7 +132,7 @@ public class ShopListActivity extends BaseActivity {
       queryParam.getFilters()
           .add(new FilterParam("keyword", binding.edtSearch.getText().toString()));
     }
-    queryParam.getFilters().add(new FilterParam("queryType:", shopQueryType.toString()));
+    queryParam.getFilters().add(new FilterParam("queryType", shopQueryType.toString()));
     queryParam.getFilters()
         .add(new FilterParam("cityCode", SessionMgr.getCurrentAdd().getCity().getId()));
     if (!IsEmpty.string(SessionMgr.getCurrentAdd().getLongitude())) {
@@ -196,6 +198,16 @@ public class ShopListActivity extends BaseActivity {
      */
     public void onShopDistributionMap() {
       startActivity(new Intent(ShopListActivity.this, ShopDistributionMapActivity.class));
+    }
+
+    public void onSelectTag() {
+      new SelectionDialog(binding.topLayout).setOnItemSelectListener(new SelectionDialog.OnItemSelectListener() {
+        @Override
+        public void onItemSelect(SelectionDialog selectionDialog, int position,
+            SelectionDialog.SelectionSource data) {
+
+        }
+      }).show();
     }
   }
 
