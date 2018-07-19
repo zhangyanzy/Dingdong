@@ -20,6 +20,7 @@ import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.presentation.discovery.MomentConverter;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
@@ -316,6 +317,17 @@ public class ShopCommentListActivity extends BaseActivity {
     }
 
     /**
+     * 查看用户主页
+     *
+     * @param userId
+     */
+    public void onSeeUser(String userId) {
+      Intent intent = new Intent(ShopCommentListActivity.this, UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, userId);
+      startActivity(intent);
+    }
+
+    /**
      * 点赞
      *
      * @param comment
@@ -323,25 +335,27 @@ public class ShopCommentListActivity extends BaseActivity {
     public void onPraise(final Comment comment) {
       if (comment.isPraise()) {
         // 取消赞
-        new CancelPraiseLikeCase(comment.getId()).execute(new HttpSubscriber<Void>(ShopCommentListActivity.this) {
-          @Override
-          public void onFailure(String errorMsg, Response<Void> response) {
-            DialogUtil.getErrorDialog(ShopCommentListActivity.this, errorMsg).show();
-          }
-
-          @Override
-          public void onSuccess(Response<Void> response) {
-            ToastUtil.toastHint(ShopCommentListActivity.this, R.string.discovery_cancel_praise_success);
-            for (Comment comment1 : adapter.getData()) {
-              if (comment.getId().equals(comment1.getId())) {
-                comment.setPraise(false);
-                comment.setPraiseCount(comment.getPraiseCount() - 1);
+        new CancelPraiseLikeCase(comment.getId())
+            .execute(new HttpSubscriber<Void>(ShopCommentListActivity.this) {
+              @Override
+              public void onFailure(String errorMsg, Response<Void> response) {
+                DialogUtil.getErrorDialog(ShopCommentListActivity.this, errorMsg).show();
               }
 
-            }
-            adapter.notifyDataSetChanged();
-          }
-        });
+              @Override
+              public void onSuccess(Response<Void> response) {
+                ToastUtil.toastHint(ShopCommentListActivity.this,
+                    R.string.discovery_cancel_praise_success);
+                for (Comment comment1 : adapter.getData()) {
+                  if (comment.getId().equals(comment1.getId())) {
+                    comment.setPraise(false);
+                    comment.setPraiseCount(comment.getPraiseCount() - 1);
+                  }
+
+                }
+                adapter.notifyDataSetChanged();
+              }
+            });
         return;
       }
       new PraiseLikeCase(comment.getId())

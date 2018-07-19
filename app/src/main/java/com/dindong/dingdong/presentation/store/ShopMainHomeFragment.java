@@ -32,6 +32,7 @@ import com.dindong.dingdong.presentation.good.ShopGoodDetailActivity;
 import com.dindong.dingdong.presentation.good.ShopGoodListActivity;
 import com.dindong.dingdong.presentation.subject.ShopSubjectListActivity;
 import com.dindong.dingdong.presentation.subject.SubjectDetailActivity;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.StringUtil;
@@ -277,9 +278,8 @@ public class ShopMainHomeFragment extends BaseFragment {
           if (rating.indexOf(".") > 0) {
             BigDecimal point = new BigDecimal(
                 rating.substring(rating.indexOf(".") + 1, rating.length()));
-            ratingTotal.setScale(0,
-                point.compareTo(BigDecimal.valueOf(5)) >= 0 ? BigDecimal.ROUND_UP
-                    : BigDecimal.ROUND_DOWN);
+            ratingTotal.setScale(0, point.compareTo(BigDecimal.valueOf(5)) >= 0
+                ? BigDecimal.ROUND_UP : BigDecimal.ROUND_DOWN);
           }
         }
         binding.rating.setRating(ratingTotal.floatValue());
@@ -393,6 +393,17 @@ public class ShopMainHomeFragment extends BaseFragment {
       Intent intent = new Intent(getContext(), ShopCommentDetailActivity.class);
       intent.putExtra(AppConfig.IntentKey.DATA, comment);
       intent.putExtra(AppConfig.IntentKey.SUMMARY, shop);
+      startActivity(intent);
+    }
+
+    /**
+     * 查看用户主页
+     *
+     * @param userId
+     */
+    public void onSeeUser(String userId) {
+      Intent intent = new Intent(getContext(), UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, userId);
       startActivity(intent);
     }
 

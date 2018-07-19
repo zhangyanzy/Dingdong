@@ -44,6 +44,7 @@
                     android:id="@+id/mine_fragment_photo"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:onClick="@{()->presenter.onSeeUser(item.ucn.userId)}"
                     app:imageUserResourceUrl="@{item.ucn.image.url}" />
 
                 <LinearLayout
@@ -63,6 +64,7 @@
                             android:layout_weight="1"
                             android:ellipsize="end"
                             android:lines="1"
+                            android:onClick="@{()->presenter.onSeeUser(item.ucn.userId)}"
                             android:text="@{item.ucn.userName}"
                             android:textColor="#2B4C77"
                             android:textSize="12dp" />

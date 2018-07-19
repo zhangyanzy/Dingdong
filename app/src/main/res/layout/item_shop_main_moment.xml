@@ -48,12 +48,14 @@
                         android:id="@+id/mine_fragment_photo"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
+                        android:onClick="@{()->presenter.onSeeUser(item.ucn.userId)}"
                         app:imageUserResourceUrl="@{item.ucn.image.url}" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
+                        android:onClick="@{()->presenter.onSeeUser(item.ucn.userId)}"
                         android:text="@{item.ucn.userName}"
                         android:textColor="#2B4C77"
                         android:textSize="12dp" />

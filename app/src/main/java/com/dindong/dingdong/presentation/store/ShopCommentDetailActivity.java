@@ -22,6 +22,7 @@ import com.dindong.dingdong.network.bean.like.LikeEntity;
 import com.dindong.dingdong.network.bean.like.LikeType;
 import com.dindong.dingdong.network.bean.store.Shop;
 import com.dindong.dingdong.presentation.discovery.MomentConverter;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.KeyboardUtil;
@@ -30,6 +31,7 @@ import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
 import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -204,6 +206,17 @@ public class ShopCommentDetailActivity extends BaseActivity {
                   setResult(RESULT_OK);
                 }
               });
+    }
+
+    /**
+     * 查看用户主页
+     *
+     * @param userId
+     */
+    public void onSeeUser(String userId) {
+      Intent intent = new Intent(ShopCommentDetailActivity.this, UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, userId);
+      startActivity(intent);
     }
 
     /**

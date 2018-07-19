@@ -142,15 +142,15 @@ public class MineFragment extends BaseFragment {
   private void initIdentity(List<String> identities) {
     binding.layoutTag.removeAllViews();
     for (int i = 0; i < identities.size(); i++) {
-      if (identities.get(i).equals(AuthIdentity.MEMBER.toString())
-          || identities.get(i).equals(AuthIdentity.PTEACHER.toString()))
+      if (identities.get(i).equals(AuthIdentity.MEMBER.toString()))
         continue;
       ItemShopTagBinding itemShopTagBinding = DataBindingUtil
           .inflate(LayoutInflater.from(getContext()), R.layout.item_shop_tag, null, false);
       itemShopTagBinding.root
           .setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bg_member_tag));
 
-      itemShopTagBinding.txtTag.setText(AuthIdentity.getName(identities.get(i)));
+      itemShopTagBinding.txtTag.setText(identities.get(i).equals(AuthIdentity.PTEACHER.toString())
+          ? "老师" : AuthIdentity.getName(identities.get(i)));
       itemShopTagBinding.txtTag.setTextColor(Color.parseColor("#333333"));
       binding.layoutTag.addView(itemShopTagBinding.getRoot());
     }

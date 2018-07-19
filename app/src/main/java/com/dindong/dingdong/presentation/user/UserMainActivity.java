@@ -113,7 +113,6 @@ public class UserMainActivity extends BaseActivity {
    * 获取热门推荐课程
    */
   private void listHotSubject() {
-    binding.layoutSubject.setVisibility(View.VISIBLE);
     QueryParam queryParam = new QueryParam();
     queryParam.setLimit(2);
     queryParam.getFilters()
@@ -132,6 +131,8 @@ public class UserMainActivity extends BaseActivity {
 
       @Override
       public void onSuccess(Response<List<Subject>> response) {
+        binding.layoutSubject
+            .setVisibility(IsEmpty.list(response.getData()) ? View.GONE : View.VISIBLE);
         SubjectAdapter subjectAdapter = new SubjectAdapter(UserMainActivity.this);
         subjectAdapter.setPresenter(new Presenter());
         subjectAdapter.set(response.getData());

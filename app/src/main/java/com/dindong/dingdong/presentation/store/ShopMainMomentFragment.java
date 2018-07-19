@@ -16,6 +16,7 @@ import com.dindong.dingdong.network.bean.comment.Comment;
 import com.dindong.dingdong.network.bean.entity.FilterParam;
 import com.dindong.dingdong.network.bean.entity.QueryParam;
 import com.dindong.dingdong.network.bean.store.Shop;
+import com.dindong.dingdong.presentation.user.UserMainActivity;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.baseadapter.BaseViewAdapter;
@@ -24,6 +25,7 @@ import com.dindong.dingdong.widget.baseadapter.SingleTypeAdapter;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseFooterView;
 import com.dindong.dingdong.widget.pullrefresh.layout.BaseHeaderView;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -190,6 +192,17 @@ public class ShopMainMomentFragment extends BaseFragment {
      */
     public void onCommentShopMoment(Comment comment) {
       ((ShopMainActivity) getActivity()).commentMomentFromFragment(comment.getId());// 通知容器activity发送评论
+    }
+
+    /**
+     * 查看用户主页
+     *
+     * @param userId
+     */
+    public void onSeeUser(String userId) {
+      Intent intent = new Intent(getContext(), UserMainActivity.class);
+      intent.putExtra(AppConfig.IntentKey.DATA, userId);
+      startActivity(intent);
     }
 
     /**
