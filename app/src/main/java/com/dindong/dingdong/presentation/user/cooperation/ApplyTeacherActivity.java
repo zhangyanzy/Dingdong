@@ -1,5 +1,7 @@
 package com.dindong.dingdong.presentation.user.cooperation;
 
+import java.util.Map;
+
 import com.dindong.dingdong.R;
 import com.dindong.dingdong.base.BaseActivity;
 import com.dindong.dingdong.databinding.ActivityApplyTeacherBinding;
@@ -10,14 +12,19 @@ import com.dindong.dingdong.network.api.apply.usecase.ApplyTeacherCase;
 import com.dindong.dingdong.network.bean.Response;
 import com.dindong.dingdong.network.bean.apply.RequestTeacherApply;
 import com.dindong.dingdong.network.bean.apply.ResponseApply;
+import com.dindong.dingdong.network.bean.entity.Address;
+import com.dindong.dingdong.network.bean.entity.Region;
 import com.dindong.dingdong.util.DialogUtil;
 import com.dindong.dingdong.util.IdentityUtils;
 import com.dindong.dingdong.util.IsEmpty;
 import com.dindong.dingdong.util.ToastUtil;
 import com.dindong.dingdong.widget.NavigationTopBar;
+import com.dindong.dingdong.widget.picker.AddressPicker;
+import com.dindong.dingdong.widget.picker.PickerDialog;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
@@ -27,6 +34,8 @@ import android.widget.RelativeLayout;
 public class ApplyTeacherActivity extends BaseActivity {
 
   ActivityApplyTeacherBinding binding;
+
+  private Address tempAddress;// 缓存当前选择地址
 
   @Override
   protected void initComponent() {
@@ -110,6 +119,31 @@ public class ApplyTeacherActivity extends BaseActivity {
   }
 
   public class Presenter {
+    /**
+     * 地址选择
+     */
+    public void onAddSelect() {
+      AddressPicker dialog = new AddressPicker(ApplyTeacherActivity.this,
+          tempAddress != null ? tempAddress.getProvince() : null,
+          tempAddress != null ? tempAddress.getCity() : null);
+      dialog.setListener(new PickerDialog.ISelectListener() {
+        @Override
+        public void onSelect(Map<Integer, Region> map) {
+          if (map == null || map.isEmpty())
+            return;
+          tempAddress = new Address();
+          tempAddress.setProvince(map.get(0));
+          tempAddress.setCity(map.get(1));
+
+          binding.txtAdd
+              .setTextColor(ContextCompat.getColor(ApplyTeacherActivity.this, R.color.light_black));
+          binding.txtAdd
+              .setText(tempAddress.getProvince().getName() + tempAddress.getCity().getName());
+        }
+      });
+      dialog.show();
+    }
+
     /**
      * 提交申请
      */

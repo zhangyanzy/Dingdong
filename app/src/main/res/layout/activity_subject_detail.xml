@@ -66,15 +66,28 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
+                        <!--<TextView-->
+                        <!--android:layout_width="52dp"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:layout_marginRight="4dp"-->
+                        <!--android:background="@drawable/bg_order_state_wait_group"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="@string/order_detail_tip_wait_group"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="13dp"-->
+                        <!--android:visibility="@{subject.subjectType.equals(SubjectType.GROUP)?View.VISIBLE:View.GONE}" />-->
+
                         <TextView
-                            android:layout_width="52dp"
-                            android:layout_height="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginRight="8dp"
-                            android:background="@drawable/bg_order_state_wait_group"
-                            android:gravity="center"
-                            android:text="@string/order_detail_tip_wait_group"
+                            android:background="@drawable/bg_subject_group"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:text="团"
                             android:textColor="@color/white"
-                            android:textSize="13dp"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
                             android:visibility="@{subject.subjectType.equals(SubjectType.GROUP)?View.VISIBLE:View.GONE}" />
 
                         <TextView

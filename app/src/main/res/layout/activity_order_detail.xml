@@ -240,13 +240,26 @@
                                 <TextView
                                     android:layout_width="52dp"
                                     android:layout_height="20dp"
-                                    android:layout_marginRight="8dp"
+                                    android:layout_marginRight="4dp"
                                     android:background="@{OrderXml.getStateDrawable(order.state)}"
                                     android:gravity="center"
                                     android:text="@{order.state.equals(OrderState.confirmed.toString())?(order.groupBuyOrder?@string/order_detail_tip_can_use:@string/order_detail_tip_finish):@string/order_detail_tip_wait_group}"
                                     android:textColor="@color/white"
                                     android:textSize="13dp"
                                     android:visibility="@{order.state.equals(OrderState.confirmed.toString())||order.state.equals(OrderState.grouping.toString())?View.VISIBLE:View.GONE}" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="4dp"
+                                    android:background="@drawable/bg_subject_group"
+                                    android:paddingLeft="2dp"
+                                    android:paddingRight="2dp"
+                                    android:text="团"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:visibility="@{order.groupBuyOrder?View.VISIBLE:View.GONE}" />
 
                                 <TextView
                                     android:id="@+id/txt_good_name"
